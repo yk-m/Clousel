@@ -4,10 +4,14 @@ from accounts.models import Customer
 class ClothingCategory(models.Model):
 	name = models.CharField(max_length=255)
 
-class Uploads(models.Model):
+class UserImage(models.Model):
 	own = models.ForeignKey(Customer, on_delete=models.CASCADE)
 	category = models.ManyToManyField(ClothingCategory)
 	image = models.ImageField()
+	has_bought = BooleanField()
+
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True,auto_now_add=True)
 
 class Item(models.Model):
 	image = models.ImageField()
