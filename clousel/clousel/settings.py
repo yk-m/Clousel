@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'clothing',
+    'clothing.shop',
+    'clothing.uploader',
+    'action',
+    'wardrobe',
 ]
 
 MIDDLEWARE_CLASSES = [
