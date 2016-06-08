@@ -44,14 +44,14 @@ class Category(models.Model):
 
 
 class Item(models.Model):
-	image = models.ImageField()
+	image = models.ImageField(upload_to='shop_items')
 	category = models.ForeignKey(Category, on_delete=models.PROTECT)
 	price = models.PositiveIntegerField()
-	size = models.CharField(max_length=127)
-	brand = models.CharField(max_length=255)
-	rank = models.CharField(max_length=127)
+	size = models.CharField(max_length=127,blank=True)
+	brand = models.CharField(max_length=255,blank=True)
+	rank = models.CharField(max_length=127,blank=True)
 	page_url = models.URLField()
 	image_url = models.URLField()
-	details = models.TextField()
+	details = models.TextField(blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
