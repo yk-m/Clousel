@@ -1,8 +1,8 @@
 from django.db import models
 from accounts.models import Customer
-from clothing.models import Category
+from shop.models import Category
 
-class Image(models.Model):
+class UserImage(models.Model):
 	own = models.ForeignKey(Customer, on_delete=models.CASCADE)
 	image = models.ImageField()
 	category = models.ManyToManyField(Category)
