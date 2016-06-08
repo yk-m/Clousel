@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import Customer
-from clothing.shop.models import Item
+from shop.models import Item
 
 class Like(models.Model):
 	own = models.ForeignKey(Customer, on_delete=models.CASCADE)

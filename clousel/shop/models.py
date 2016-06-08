@@ -1,5 +1,7 @@
 from django.db import models
-from clothing.models import Category
+
+class Category(models.Model):
+	name = models.CharField(max_length=255)
 
 class Item(models.Model):
 	image = models.ImageField()
