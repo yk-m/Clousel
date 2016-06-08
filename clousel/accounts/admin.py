@@ -8,7 +8,7 @@ from accounts.models import Customer
 class CustomerInline(admin.StackedInline):
 	model = Customer
 	can_delete = False
-	verbose_name_plural = 'employee'
+	verbose_name_plural = 'customer'
 
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
