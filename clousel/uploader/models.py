@@ -7,7 +7,7 @@ class UserImage(models.Model):
 	image = models.ImageField()
 	category = models.ManyToManyField(Category)
 	has_bought = models.BooleanField()
-
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
+
 
