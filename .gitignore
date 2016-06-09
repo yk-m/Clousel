@@ -1,3 +1,5 @@
 media/shop_items/*
+!.gitkeep
 media/user_images/*
+!.gitkeep
 clousel/init/amebafurugiya.json
