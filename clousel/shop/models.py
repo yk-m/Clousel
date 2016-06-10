@@ -5,7 +5,7 @@ class Category(models.Model):
 	parent = models.ForeignKey('self', blank=True, null=True, related_name='child')
 
 	class Meta:
-		verbose_name_plural = 'Categories'
+		verbose_name_plural = 'categories'
 		ordering = ['title']
 
 	def __str__(self):
@@ -47,11 +47,22 @@ class Item(models.Model):
 	image = models.ImageField(upload_to='shop_items')
 	category = models.ForeignKey(Category, on_delete=models.PROTECT)
 	price = models.PositiveIntegerField()
-	size = models.CharField(max_length=127,blank=True)
 	brand = models.CharField(max_length=255,blank=True)
-	rank = models.CharField(max_length=127,blank=True)
-	page_url = models.URLField()
+	exhibiter = models.CharField(max_length=255,blank=True)
+	delivery_days = models.CharField(max_length=255,blank=True)
+	delivery_service = models.CharField(max_length=255,blank=True)
+	delivery_source = models.CharField(max_length=255,blank=True)
+	rank = models.CharField(max_length=255,blank=True)
+	size = models.CharField(max_length=255,blank=True)
 	image_url = models.URLField()
+	page_url = models.URLField()
 	details = models.TextField(blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		verbose_name_plural = 'shop items'
+		ordering = ['category']
+
+	def __str__(self):
+		return str( self.category )

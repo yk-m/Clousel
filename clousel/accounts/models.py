@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as BaseUser
 
-class Customer(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+class User(models.Model):
+	user = models.OneToOneField(BaseUser, on_delete=models.CASCADE)
 	MALE = 'M'
 	FEMALE = 'F'
 	OTHER = 'O'
@@ -17,5 +17,4 @@ class Customer(models.Model):
 	)
 
 	class Meta:
-		verbose_name_plural = 'customer'
-
+		verbose_name_plural = 'users'
