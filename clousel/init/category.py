@@ -1,5 +1,5 @@
 import json
-from shop.models import Category
+from clothing.models import Category
 
 d = json.load(open("init/amebafurugiya.json"))
 

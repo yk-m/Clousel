@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import User
+from django.contrib.auth.models import User
 from shop.models import Item
 
 class Like(models.Model):
