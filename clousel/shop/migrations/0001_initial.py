@@ -19,9 +19,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Item',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to=clothing.models.get_image_upload_to_path)),
-                ('binary_image', models.FileField(upload_to=clothing.models.get_binary_image_upload_to_path)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('image', models.ImageField(
+                    upload_to=clothing.models.get_image_upload_to_path)),
+                ('binary_image', models.FileField(
+                    upload_to=clothing.models.get_binary_image_upload_to_path)),
                 ('price', models.PositiveIntegerField()),
                 ('brand', models.CharField(blank=True, max_length=255)),
                 ('exhibiter', models.CharField(blank=True, max_length=255)),
@@ -35,7 +38,8 @@ class Migration(migrations.Migration):
                 ('details', models.TextField(blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='shop_item_related', to='clothing.Category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT,
+                                               related_name='shop_item_related', to='clothing.Category')),
             ],
             options={
                 'ordering': ['category'],
