@@ -17,7 +17,7 @@ d = json.load(open("init/amebafurugiya.json"))
 for row in d[:100]:
     print(str(row).encode('utf-8').decode('latin-1'))
     i = Item(
-        # image            = 'shop_items/' + row['image_paths'][0].lstrip('full/'),
+        # image='shop_items/' + row['image_paths'][0].lstrip('full/'),
         category=get_category(row['categories']),
         price=row.get('price', [''])[0],
         brand=row.get('brand', [''])[0],

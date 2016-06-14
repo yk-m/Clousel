@@ -1,5 +1,7 @@
 from django.db import models
 from clothing.models import Clothing
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 
 
 class Item(Clothing):
@@ -29,10 +31,6 @@ class Item(Clothing):
 
     def get_binary_image_upload_to_path(instance, filename):
         return 'shop_item/binary_images/' + filename
-
-
-from django.db.models.signals import pre_delete
-from django.dispatch.dispatcher import receiver
 
 
 @receiver(pre_delete, sender=Item)

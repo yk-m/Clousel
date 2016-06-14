@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from clothing.models import Clothing
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 
 
 class UserImage(Clothing):
@@ -17,10 +19,6 @@ class UserImage(Clothing):
 
     def get_binary_image_upload_to_path(instance, filename):
         return 'user/binary_images/{0}/{1}'.format(instance.own.id, filename)
-
-
-from django.db.models.signals import pre_delete
-from django.dispatch.dispatcher import receiver
 
 
 @receiver(pre_delete, sender=UserImage)
