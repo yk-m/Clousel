@@ -1,8 +1,9 @@
-from django.db import models
 from django.contrib.auth.models import User
-from clothing.models import Clothing
+from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
+
+from clothing.models import Clothing
 
 
 class UserImage(Clothing):
