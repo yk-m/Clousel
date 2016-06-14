@@ -1,7 +1,9 @@
 import json
 import string
+
 from django.core.files import File
 from django.core.files.base import ContentFile
+
 from clothing.models import Category
 from shop.models import Item
 

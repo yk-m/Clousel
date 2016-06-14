@@ -1,7 +1,8 @@
 from django.db import models
-from clothing.models import Clothing
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
+
+from clothing.models import Clothing
 
 
 class Item(Clothing):
