@@ -14,14 +14,14 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEDIA_ROOT = '/srv/app/media/'
+MEDIA_ROOT = BASE_DIR+'/clousel/media/'
 MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e)m9fq6glt(t-xfhg-@_lh!2jq1(@k^9cxr&s_%momdsr25&cm'
+SECRET_KEY = '3+8l9*1ij$jsb@1uw93kjuo@ol&h+^8s$)g+^ua#62o+x($p2@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'action',
+    'clothing',
     'shop',
     'uploader',
-    'action',
     'wardrobe',
 ]
 

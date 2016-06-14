@@ -1,14 +1,9 @@
 from django.db import models
-from accounts.models import User
-from shop.models import Category
+from django.contrib.auth.models import User
+from clothing.models import Clothing
 
-def customer_directory_path(instance, filename):
-	return 'customer_{0}/{1}'.format(instance.own.id, filename)
-
-class UserImage(models.Model):
+class UserImage(Clothing):
 	own = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ImageField()
-	category = models.ManyToManyField(Category)
 	has_bought = models.BooleanField()
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
@@ -16,4 +11,17 @@ class UserImage(models.Model):
 	class Meta:
 		verbose_name_plural = 'user images'
 
+	def get_image_upload_to_path(instance, filename):
+		return 'user/images/{0}/{1}'.format(instance.own.id, filename)
 
+	def get_binary_image_upload_to_path(instance, filename):
+		return 'user/binary_images/{0}/{1}'.format(instance.own.id, filename)
+
+
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
+
+@receiver(pre_delete, sender=UserImage)
+def clothing_delete(sender, instance, **kwargs):
+	instance.image.delete(False)
+	instance.binary_image.delete(False)
