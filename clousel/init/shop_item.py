@@ -33,14 +33,14 @@ for row in d[:100]:
 	filename = row['image_paths'][0][5:]
 	with open('/srv/app/data/images/'+filename, 'rb') as f:
 		content = File(f)
-	i.image.save(
-		filename,
-		content,
-		save=False,
-	)
-	i.binary_image.save(
-		filename[:-4],
-		ContentFile('binary image'),
-		save=False,
-	)
-	i.save()
+		i.image.save(
+			filename,
+			content,
+			save=False,
+		)
+		i.binary_image.save(
+			filename[:-4],
+			ContentFile('binary image'),
+			save=False,
+		)
+		i.save()
