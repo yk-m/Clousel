@@ -20,4 +20,3 @@ class UserImage(Clothing):
 
     def get_binary_image_upload_to_path(instance, filename):
         return 'user/binary_images/{0}/{1}'.format(instance.own.id, filename)
-
