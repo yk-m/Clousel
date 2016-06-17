@@ -18,11 +18,9 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
-# from accounts.urls import router as accounts_router
-# from shop.urls import router as shop_router
+from api.urls import router as api_router
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^api/accounts/', include(accounts_router.urls)),
-    # url(r'^api/shop/', include(shop_router.urls)),
+    url(r'^api/', include(api_router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
