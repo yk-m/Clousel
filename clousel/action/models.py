@@ -1,22 +1,24 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 from shop.models import Item
 
 
-class Like(models.Model):
-    own = models.ForeignKey(User, on_delete=models.CASCADE)
+class UserOwned(models.Model):
+    own = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     registered = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        unique_together = ("own", "item")
+        abstract = True
+
+
+class Like(UserOwned):
+    class Meta:
         verbose_name_plural = 'likes'
 
 
-class PurchaseHistory(models.Model):
-    own = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    registered = models.DateTimeField(auto_now_add=True)
-
+class PurchaseHistory(UserOwned):
     class Meta:
         verbose_name_plural = 'purchase history'

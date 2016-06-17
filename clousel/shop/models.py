@@ -32,9 +32,3 @@ class Item(Clothing):
 
     def get_binary_image_upload_to_path(instance, filename):
         return 'shop_item/binary_images/' + filename
-
-
-@receiver(pre_delete, sender=Item)
-def clothing_delete(sender, instance, **kwargs):
-    instance.image.delete(False)
-    instance.binary_image.delete(False)

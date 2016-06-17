@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'shop',
     'uploader',
     'wardrobe',
+    'rest_framework',
 ]
 
 MIDDLEWARE_CLASSES = [
