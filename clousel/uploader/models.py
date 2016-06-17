@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
@@ -7,7 +7,7 @@ from clothing.models import Clothing
 
 
 class UserImage(Clothing):
-    own = models.ForeignKey(User, on_delete=models.CASCADE)
+    own = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     has_bought = models.BooleanField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -21,8 +21,3 @@ class UserImage(Clothing):
     def get_binary_image_upload_to_path(instance, filename):
         return 'user/binary_images/{0}/{1}'.format(instance.own.id, filename)
 
-
-@receiver(pre_delete, sender=UserImage)
-def clothing_delete(sender, instance, **kwargs):
-    instance.image.delete(False)
-    instance.binary_image.delete(False)

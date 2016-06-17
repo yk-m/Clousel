@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -72,3 +71,8 @@ class Clothing(models.Model):
 
     def get_binary_image_upload_to_path(instance, filename):
         return 'binary_images/' + filename
+
+    def delete(self, *args, **kwargs):
+        self.image.delete(False)
+        self.binary_image.delete(False)
+        super(Clothing, self).delete(*args, **kwargs)
