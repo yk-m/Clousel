@@ -16,11 +16,15 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
-from django.contrib import admin
+from django.contrib import admin, auth
+from django.contrib.auth.views import login, logout
 
 from api.urls import router as api_router
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(api_router.urls)),
+    url(r'^accounts/login/$', auth.views.login,
+        {'template_name': 'login.html'}, name="login"),
+    url(r'^accounts/logout/$', auth.views.logout),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,8 @@
+/**/__pycache__/*
+
 clousel/clousel/media/*
 !.gitkeep
 clousel/init/amebafurugiya.json
 data/*
 !.gitkeep
+
