@@ -1,0 +1,46 @@
+
+=logo($header-height)
+    padding: 0 0 0 (calc_logo_width($header-height) + $horizontal-span)
+    background: url(../images/logo.svg) no-repeat
+    background-size: calc_logo_width($header-height) auto
+
+.header
+    margin: calc_height(1) auto
+
+    .logo
+        height: $header-height
+        line-height: $header-height
+        +logo($header-height)
+
+    li a
+        height: $header-height
+        line-height: $header-height
+
+.compact-header
+    margin: calc_height(1) auto
+    .logo
+        height: $compact-header-height
+        line-height: $compact-header-height
+        +logo($compact-header-height)
+
+    li a
+        height: $compact-header-height
+        line-height: $compact-header-height
+
+.logo
+    a, a:hover, a:visited
+        color: $black
+
+.global-navigation
+    ul
+        list-style-type: none
+        text-align: right
+
+    li a
+        display: inline-block
+        padding: 0 $horizontal-span
+
+        &:link, &:visited
+            color: $black
+        &:hover
+            color: $gray
