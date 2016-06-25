@@ -1,0 +1,46 @@
+.login-form
+    width: span(6 of 12)
+    margin: 0 auto
+    text-align: right
+
+    table
+        margin: 0 0 $vertical-span
+        width: 100%
+
+        vertical-align: middle
+
+        caption
+            display: none
+
+        th
+            width: span(2 of 6)
+
+        td
+            width: span(4 of 6)
+
+        th, td
+            height: calc_height(1)
+            vertical-align: middle
+            padding: $vertical-span 0
+
+    input
+        padding: $default-padding
+        background: transparent
+        border: none
+
+        &:focus
+            outline: none
+
+        &[type=text], &[type=password]
+            width: 100%
+            border-bottom: solid 1px $black
+
+            +input-placeholder
+                color: $gray
+
+        &[type=submit]
+            cursor: pointer
+            border: solid 1px $accent-color
+
+            // border-bottom: double 3px $accent-color
+            +border-radius(5px)
