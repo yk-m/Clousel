@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -7,7 +9,8 @@ from clothing.models import Clothing
 
 
 class UserImage(Clothing):
-    own = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE)
     has_bought = models.BooleanField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -16,7 +19,9 @@ class UserImage(Clothing):
         verbose_name_plural = 'user images'
 
     def get_image_upload_to_path(instance, filename):
-        return 'user/images/{0}/{1}'.format(instance.own.id, filename)
+        ext = filename.split('.')[-1]
+        return 'user/images/{0}/{1}.{2}'.format(instance.owner.id, uuid4().hex, ext)
 
     def get_binary_image_upload_to_path(instance, filename):
-        return 'user/binary_images/{0}/{1}'.format(instance.own.id, filename)
+        ext = filename.split('.')[-1]
+        return 'user/binary_images/{0}/{1}.{2}'.format(instance.owner.id, uuid4().hex, ext)
