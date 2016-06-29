@@ -9,6 +9,12 @@ class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         # Instance must have an attribute named `owner`.
+        if not request.user.is_authenticated():
+            return False
+
+        if view.action == 'create':
+            return True
+
         return obj.owner == request.user
 
 

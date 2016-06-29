@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'uploader',
     'wardrobe',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE_CLASSES = [

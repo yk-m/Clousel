@@ -1,19 +1,21 @@
-import django_filters
 from django.contrib.auth import get_user_model
-# from django.shortcuts import get_object_or_404, render
-from rest_framework import permissions, viewsets
-from rest_framework.decorators import permission_classes
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
+from action.models import Like, PurchaseHistory
 from shop.models import Item
+from uploader.models import UserImage
 
-from .permissions import IsAdminOrIsSelf, IsOwner
-from .serializer import BasicUserSerializer, FullUserSerializer, ItemSerializer
+from .permissions import IsOwner
+from .serializer import (BasicUserSerializer, FullUserSerializer,
+                         ItemSerializer, LikeSerializer,
+                         PurchaseHistorySerializer, UserImageSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
-    permission_classes = [permissions.AllowAny, ]
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -31,3 +33,57 @@ class UserViewSet(viewsets.ModelViewSet):
 class ItemViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+
+    def detail_handler(self, request, object):
+        item = self.get_object()
+
+        if request.method == 'GET':
+            l = get_object_or_404(object, owner=request.user, item=item)
+            return Response(status=204)
+
+        if request.method == 'POST':
+            l = object(
+                owner=request.user,
+                item=item,
+            )
+            l.save()
+            return Response(status=201)
+
+        get_object_or_404(object, owner=request.user, item=item).delete()
+        return Response(status=200)
+
+    def list_handler(self, request, object, serializer_class):
+        queryset = object.objects.filter(owner=request.user)
+        serializer = serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    @list_route()
+    def likes(self, request):
+        return self.list_handler(request, Like, LikeSerializer)
+
+    @list_route()
+    def purchase_history(self, request):
+        return self.list_handler(request, PurchaseHistory, PurchaseHistorySerializer)
+
+    @detail_route(methods=['get', 'post', 'delete'])
+    def like(self, request, pk=None):
+        return self.detail_handler(request, Like)
+
+    @detail_route(methods=['get', 'post', 'delete'])
+    def purchased(self, request, pk=None):
+        return self.detail_handler(request, PurchaseHistory)
+
+
+class UserImageViewSet(viewsets.ModelViewSet):
+    queryset = UserImage.objects.all()
+    serializer_class = UserImageSerializer
+    permission_classes = (IsOwner,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return UserImage.objects.all()
+        else:
+            return UserImage.objects.filter(owner=self.request.user)
