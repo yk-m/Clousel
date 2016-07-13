@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib.auth import get_user_model
 from rest_framework import routers
-from rest_framework.authtoken import views
+from rest_framework_jwt import views
 
 from .views import ItemViewSet, UserImageViewSet, UserViewSet
 
@@ -11,7 +11,7 @@ router.register(r'items', ItemViewSet)
 router.register(r'uploads', UserImageViewSet)
 
 urlpatterns = [
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api-token-auth/', views.obtain_jwt_token),
 ]
 
 urlpatterns += router.urls
