@@ -4,14 +4,17 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
+from accounts.models import Profile
 from action.models import Like, PurchaseHistory
 from shop.models import Item
 from uploader.models import UserImage
 
 from .permissions import IsOwner
-from .serializer import (BasicUserSerializer, FullUserSerializer,
-                         ItemSerializer, LikeSerializer,
-                         PurchaseHistorySerializer, UserImageSerializer)
+from .serializer import (
+    ProfileSerializer, BasicUserSerializer, FullUserSerializer,
+    ItemSerializer, UserImageSerializer,
+    LikeSerializer, PurchaseHistorySerializer,
+)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -38,8 +41,8 @@ class ItemViewSet(viewsets.ReadOnlyModelViewSet):
         item = self.get_object()
 
         if request.method == 'GET':
-            l = get_object_or_404(object, owner=request.user, item=item)
-            return Response(status=204)
+            response = {'count': object.objects.filter(item=item).count()}
+            return Response(response)
 
         if request.method == 'POST':
             l = object(
@@ -87,3 +90,16 @@ class UserImageViewSet(viewsets.ModelViewSet):
             return UserImage.objects.all()
         else:
             return UserImage.objects.filter(owner=self.request.user)
+
+    @detail_route(methods=['get', ])
+    def similar(self, request, pk=None):
+        target_image = self.get_object()
+
+        return Response("similar response")
+
+    @detail_route(methods=['get', ])
+    def suitable(self, request, pk=None):
+        target_image = self.get_object()
+
+        return Response("suitable response")
+

@@ -32,12 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
     'accounts',
     'api',
     'action',
@@ -45,8 +48,6 @@ INSTALLED_APPS = [
     'shop',
     'uploader',
     'wardrobe',
-    'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -136,3 +137,18 @@ STATIC_URL = '/assets/'
 # Media files
 MEDIA_ROOT = BASE_DIR + '/clousel/media/'
 MEDIA_URL = '/media/'
+
+
+# Setting django-registration-redux
+
+AUTH_USER_MODEL = 'accounts.EmailUser'
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+REGISTRATION_FORM = 'accounts.forms.EmailUserCreationForm'
+
+# Email settings
+# python -m smtpd -n -c DebuggingServer localhost:1025
+
+EMAIL_HOST = "localhost"
+EMAIL_PORT = "1025"
+# EMAIL_PORT = "25"

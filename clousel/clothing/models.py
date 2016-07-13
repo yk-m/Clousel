@@ -7,7 +7,7 @@ class Category(models.Model):
         'self', blank=True, null=True, related_name='child')
 
     class Meta:
-        verbose_name_plural = 'categories'
+        verbose_name_plural = 'Categories'
         ordering = ['title']
 
     def __str__(self):

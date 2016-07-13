@@ -11,7 +11,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('name', 'birthday', )
+        fields = ('name', 'date_of_birth', )
 
 
 class BasicUserSerializer(serializers.ModelSerializer):
@@ -19,13 +19,12 @@ class BasicUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('pk', 'username', 'email', 'password', 'profile', )
+        fields = ('pk', 'email', 'password', 'profile', )
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
         user = self.Meta.model(
-            username=validated_data['username'],
             email=validated_data['email'],
         )
         user.set_password(validated_data['password'])
@@ -38,10 +37,9 @@ class FullUserSerializer(BasicUserSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('pk', 'username', 'email', 'password', 'profile',
-                  'groups', 'user_permissions', 'is_staff', 'is_active', 'is_superuser',
-                  'last_login', 'date_joined', )
-        read_only_fields = ('pk', 'groups', 'user_permissions', 'is_staff', 'is_active', 'is_superuser',
+        fields = ('pk', 'email', 'password', 'profile',
+                  'is_admin', 'last_login', 'date_joined', )
+        read_only_fields = ('pk', 'is_active', 'is_admin',
                             'last_login', 'date_joined', )
         extra_kwargs = {'password': {'write_only': True}}
 

@@ -7,3 +7,4 @@ clousel/init/amebafurugiya.json
 data/*
 !.gitkeep
 
+migrations/
