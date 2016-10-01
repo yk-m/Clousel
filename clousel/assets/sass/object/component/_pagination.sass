@@ -1,0 +1,25 @@
+.c-pagination
+    text-align: center
+    list-style-type: none
+
+    li
+        display: inline-block
+        margin: $default-padding
+
+        a
+            display: inline-block
+            padding: $mini-padding
+            // border: 1px solid $black
+            +border-radius( $radius )
+            text-decoration: none
+            cursor: pointer
+            background: $light-gray
+
+    .c-pagination__child--is_active a
+        background: $accent-color
+        color: $white
+
+    .c-pagination__child--is_disabled a
+        display: none
+
+

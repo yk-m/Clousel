@@ -5,19 +5,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Clousel</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:300|Quicksand:300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+  <link href='https://fonts.googleapis.com/css?family=Lato:300|Quicksand:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/4.1.0/sanitize.min.css">
   <link rel="stylesheet" type="text/css" href="./assets/stylesheets/common.css">
 </head>
 
 <body>
-  <header class="header l-header">
+  <header class="p-header l-header">
     <div class="l-logo">
-      <h1 class="logo">
+      <h1 class="p-logo">
     <a href="index.html" title="">Clousel</a>
     </h1>
     </div>
-    <nav class="global-navigation l-nav">
+    <nav class="p-global-navigation l-nav">
       <ul class="l-nav-wrapper">
         <li class="l-nav-element"><a href="#" title="About us">About us</a></li>
         <li class="l-nav-element"><a href="login.html" title="Login">Login</a></li>
@@ -25,8 +26,8 @@
     </nav>
   </header>
   <main class="l-main">
-    <section class="carousel">
-      <div class="carousel-list">
+    <section class="p-carousel">
+      <div id="carousel-list" class="p-carousel-list">
         <div>
           <img src="http://placehold.it/350x300?text=1">
         </div>
@@ -52,7 +53,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
   <script type="text/javascript">
   $(document).on('ready', function() {
-    $(".carousel-list").slick({
+    $("#carousel-list").slick({
       dots: true,
       infinite: true,
       slidesToShow: 3,

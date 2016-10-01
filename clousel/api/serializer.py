@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from accounts.models import Profile
 from action.models import Like, PurchaseHistory
+from clothing.models import Category
 from shop.models import Item
 from uploader.models import UserImage
 
@@ -30,6 +31,7 @@ class BasicUserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         Profile.objects.create(user=user, **profile_data)
+
         return user
 
 
@@ -44,7 +46,21 @@ class FullUserSerializer(BasicUserSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    tree = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = ('tree', )
+
+    def get_tree(self, obj):
+        tree = obj._recurse_for_parents(obj)
+        tree.append(obj.title)
+        return tree
+
+
 class ItemSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
 
     class Meta:
         model = Item

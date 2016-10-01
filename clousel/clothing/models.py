@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class Category(models.Model):
@@ -38,7 +39,7 @@ class Category(models.Model):
         p_list = self._recurse_for_parents(self)
         if self.title in p_list:
             raise validators.ValidationError(
-                'You must not save a category in itself')
+                _('You must not save a category in itself'))
         super(Category, self).save()
 
     @models.permalink

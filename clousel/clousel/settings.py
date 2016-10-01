@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+from django.utils.translation import ugettext_lazy as _
+
 from api.settings import REST_FRAMEWORK
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -32,15 +34,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'registration',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
     'accounts',
     'api',
     'action',
@@ -48,9 +41,24 @@ INSTALLED_APPS = [
     'shop',
     'uploader',
     'wardrobe',
+    'pages',
+    'reactsample',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'compressor',
+    'debug_toolbar',
+    'registration',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'webpack_loader',
 ]
 
 MIDDLEWARE_CLASSES = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -116,6 +124,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
+LANGUAGES = (
+    ('ja', _('Japanese')),
+    ('en', _('English')),  # (Optional)
+)
 
 LANGUAGE_CODE = 'ja'
 
@@ -127,28 +139,43 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = BASE_DIR + '/clousel/assets/'
-STATIC_URL = '/assets/'
+LOCALE_PATHS = [BASE_DIR + '/clousel/locale/']
 
 
 # Media files
 MEDIA_ROOT = BASE_DIR + '/clousel/media/'
 MEDIA_URL = '/media/'
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = BASE_DIR + '/clousel/assets/'
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
 
-# Setting django-registration-redux
 
+# Email
+# python -m smtpd -n -c DebuggingServer localhost:1025
+EMAIL_HOST = "localhost"
+EMAIL_PORT = "1025"
+# EMAIL_PORT = "25"
+
+
+# Module Settings
+# --- Debug Toolbar
+INTERNAL_IPS = ('10.0.2.2', '127.0.0.1', '0.0.0.0')
+
+# --- Registration
 AUTH_USER_MODEL = 'accounts.EmailUser'
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 REGISTRATION_FORM = 'accounts.forms.EmailUserCreationForm'
 
-# Email settings
-# python -m smtpd -n -c DebuggingServer localhost:1025
-
-EMAIL_HOST = "localhost"
-EMAIL_PORT = "1025"
-# EMAIL_PORT = "25"
+# --- Webpack loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}

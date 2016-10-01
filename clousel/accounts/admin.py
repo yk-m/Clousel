@@ -2,8 +2,8 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
+from .forms import EmailUserChangeForm, EmailUserCreationForm, ProfileForm
 from .models import EmailUser, Profile
-from .forms import EmailUserCreationForm, EmailUserChangeForm, ProfileForm
 
 
 class ProfileInline(admin.StackedInline):
@@ -31,7 +31,7 @@ class EmailUserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2')}
-        ),
+         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
@@ -46,4 +46,3 @@ admin.site.register(EmailUser, EmailUserAdmin)
 @admin.register(Profile)
 class Profile(admin.ModelAdmin):
     pass
-

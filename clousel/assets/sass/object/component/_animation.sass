@@ -1,0 +1,33 @@
+.fade-enter
+    opacity: .01
+
+    &#{&}-active
+        opacity: 1
+        +transition(opacity .5s ease-in)
+
+.fade-leave
+    opacity: 1
+
+    &#{&}-active
+        opacity: .01
+        +transition(opacity 1s ease-in)
+
+
+
+.fademove-enter
+    opacity: .01
+    transform: translateY(50%) scale(.95,.95)
+    transition: all 1s ease-out
+
+    &#{&}-active
+        opacity: 1
+        transform: translateY(0) scale(1,1)
+
+.fademove-leave
+    opacity: 1
+    transform: translateY(0) scale(1,1)
+    transition: all .2s ease-out
+
+    &#{&}-active
+        opacity: .01
+        transform: translateY(5%) scale(.98,.98)
