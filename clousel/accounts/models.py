@@ -1,14 +1,13 @@
 from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+from django.utils.translation import ugettext_lazy as _
 
 
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError(_('Users must have an email address'))
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save(using=self._db)
@@ -26,9 +25,9 @@ class EmailUserManager(BaseUserManager):
 
 class EmailUser(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name="email address",
+        verbose_name=_("Email address"),
         max_length=255,
-        unique=True
+        unique=True,
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

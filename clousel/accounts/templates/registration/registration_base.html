@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock %}
+
+{% block content %}
+<section class="p-login-form">
+  {% block loginform %}{% endblock %}
+</section>
+{% endblock %}

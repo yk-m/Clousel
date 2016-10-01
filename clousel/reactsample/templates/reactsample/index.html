@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}List{% endblock title %}
+
+{% block extrahead %}
+  <script>
+    document.addEventListener("DOMContentLoaded",function(eve){
+      var filters = document.querySelector('#search-filters')
+        , trigger = document.querySelector('#option-trigger')
+      trigger.addEventListener("click", function(eve) {
+        filters.classList.toggle("is-open")
+      }, false);
+    }, false);
+  </script>
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock header %}
+
+{% block content %}
+    <section id="react-app"></section>
+    {% render_bundle 'index' %}
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

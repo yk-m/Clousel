@@ -1,0 +1,77 @@
+$header-height: calc_height(2)
+$compact-header-height: calc_height(1)
+
+.p-header
+    margin: calc_height(1) auto
+
+    a
+        text-decoration: none
+
+.p-header__logo
+    +span(4 of 12)
+
+.p-header__nav
+    +span(8 of 12 last)
+
+
+/// Header Logo
+$logo-height: 420px
+$logo-height-2: 629px
+$logo-width: 680px
+
+$logo-image: "../images/logo.svg"
+
+@function calc_logo_width($height)
+    @return $height / 550px * $logo-width
+
+=logo_image($header-height)
+    padding: 0 0 0 (calc_logo_width($header-height) + $horizontal-span*2)
+    background: url(../images/logo.svg) no-repeat
+    background-size: calc_logo_width($header-height) auto
+    background-position: $horizontal-span 0
+
+.p-header__logo
+    a, a:hover, a:visited
+        color: $black
+
+    +logo_image($header-height)
+    height: $header-height
+    line-height: $header-height
+    font-size: 3rem
+
+.p-header--compact__logo
+    +logo_image($compact-header-height)
+    height: $compact-header-height
+    line-height: $compact-header-height
+    font-size: 2rem
+
+
+/// Header Nav
+.p-header__nav
+    ul
+        text-align: right
+        list-style-type: none
+
+    li
+        display: inline-block
+
+        a
+            display: inline-block
+            height: $header-height
+            padding: 0 $horizontal-span
+
+            line-height: $header-height
+            font-size: 1.5rem
+
+            &:link, &:visited
+                color: $black
+            &:hover
+                color: $gray
+
+.p-header--compact__nav
+    li
+        a
+            height: $compact-header-height
+            line-height: $compact-header-height
+            font-size: 1.3rem
+

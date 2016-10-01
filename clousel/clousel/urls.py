@@ -13,23 +13,32 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+import registration
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin, auth
 from django.contrib.auth.views import login, logout
 
-import registration
-
-from api.urls import urlpatterns
-from uploader.views import image_view
+import api.urls
+import pages.views
+import reactsample.urls
+import uploader.views
 
 urlpatterns = [
+    url(r'^$', pages.views.index, name='index'),
+    url(r'^list/$', pages.views.list, name='list'),
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(urlpatterns)),
+    url(r'^api/', include(api.urls.urlpatterns)),
     # url(r'^accounts/login/$', auth.views.login,
     #     {'template_name': 'login.html'}, name="login"),
     # url(r'^accounts/logout/$', auth.views.logout),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^media/user/images/(?P<owner>[0-9]+)/((?P<filename>[0-9a-z.]+))$', image_view)
-] + static(settings.MEDIA_URL + 'shop_item/', document_root=settings.MEDIA_ROOT + 'shop_item/')
+    url(r'^reactsample/', include(reactsample.urls.urlpatterns)),
+    url(r'^media/user/images/(?P<owner>[0-9]+)/((?P<filename>[0-9a-z.]+))$',
+        uploader.views.image_view)
+]
+
+urlpatterns += static(settings.MEDIA_URL + 'shop_item/',
+                      document_root=settings.MEDIA_ROOT + 'shop_item/')
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

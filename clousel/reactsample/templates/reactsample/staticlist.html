@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}List{% endblock title %}
+
+{% block extrahead %}
+  <script>
+    document.addEventListener("DOMContentLoaded",function(eve){
+      var filters = document.querySelector('#search-filters')
+        , trigger = document.querySelector('#option-trigger')
+      trigger.addEventListener("click", function(eve) {
+        filters.classList.toggle("is-open")
+      }, false);
+    }, false);
+  </script>
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock header %}
+
+{% block content %}
+    <section class="p-result">
+      <div class="p-result__header">
+        <h2 class="p-result__title">Search Results <span id="option-trigger">[option]</span></h2>
+        <div class="p-result__sort-order">
+          <select id="sort-order" name="sort-order">
+            <option value="price-asc">price(ascending)</option>
+            <option value="price-desc">price(descending)</option>
+          </select>
+        </div>
+      </div>
+      <div class="p-result__filters" id="search-filters">
+        <table>
+          <caption>Search option</caption>
+          <tbody>
+            <tr>
+              <th>price</th>
+              <td>¥<input type="text" name="" value="" placeholder="----"> ~ ¥<input type="text" name="" value="" placeholder="----"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-result__items">
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+        <a class="p-item" href="#">
+          <div>
+            <div class="p-item__image">
+              <img src="http://placehold.it/350x300?text=1">
+            </div>
+            <div class="p-item__caption">
+              <p class="p-item__price">¥2678</p>
+              <dl>
+                <dt>category</dt>
+                <dd>ワンピース > オールインワン > なんちゃら > なんちゃら</dd>
+              </dl>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

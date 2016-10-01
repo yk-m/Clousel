@@ -1,0 +1,71 @@
+=items_container()
+    position: relative
+
+.p-items
+    +clearfix
+
+.p-items--state_loading
+    position: absolute
+    z-index: 100
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+
+    background: $white
+
+    i
+        $icon-size: 5rem
+        +spin
+
+        display: block
+        z-index: 101
+
+        height: $icon-size
+        width: $icon-size
+        margin: $horizontal-span auto 0
+
+        line-height: $icon-size
+        font-style: normal
+        font-size: $icon-size
+
+        +icon($icon_loading)
+            color: $accent-color
+
+.p-item
+    +gallery(3 of 12)
+    margin-top: $vertical-span
+    margin-bottom: $vertical-span
+    border-top: 3px double $black
+    border-bottom: 1px solid $black
+
+    text-decoration: none
+
+.p-item__image
+    position: relative
+    z-index: 1
+    width: 100%
+    height: auto
+
+    &:before
+        display: block
+        padding-top: 100%
+        content: ""
+
+    div
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        overflow: hidden
+
+        img
+            width: 100vh
+            height: auto
+
+
+.p-item__caption
+    dt
+        color: $accent-color
+

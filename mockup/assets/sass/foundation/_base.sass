@@ -8,5 +8,46 @@ body
     color: $black
 
 a
-    text-decoration: none
-    color: $gray
+    text-decoration: underline
+    color: $black
+
+img
+    max-width: 100%
+    height: auto
+    vertical-align: middle
+
+input, select
+    &:focus
+        outline: none
+
+input
+    padding: $default-padding
+    background: transparent
+    border: none
+
+    &[type=text], &[type=password], &[type=email]
+        border-bottom: solid 1px $black
+
+        +input-placeholder
+            color: $gray
+
+    &[type=submit]
+        cursor: pointer
+        border: solid 1px $accent-color
+
+        +border-radius($radius)
+
+// select
+//     -webkit-appearance: none
+//     -moz-appearance: none
+//     appearance: none
+//     cursor: pointer
+//     background: $black
+//     border: 1px solid $black
+//     color: $white
+
+//     &:after
+//         content: $arrow_carrot-2down_alt2
+//         position: relative
+//         top: 0
+//         left: 0

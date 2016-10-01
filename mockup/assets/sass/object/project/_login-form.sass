@@ -1,0 +1,33 @@
+.p-login-form
+    width: span(6 of 12)
+    margin: 0 auto
+
+    form
+        margin: 0 0 $vertical-span
+        text-align: right
+
+    table
+        margin: 0 0 $vertical-span
+        text-align: left
+        width: 100%
+
+        vertical-align: middle
+
+        caption
+            display: none
+
+        th
+            font-weight: normal
+            width: span(2 of 6)
+
+        td
+            width: span(4 of 6)
+
+        th, td
+            height: calc_height(1)
+            vertical-align: middle
+            padding: $vertical-span 0
+
+    input
+        &[type=text], &[type=password], &[type=email]
+            width: 100%

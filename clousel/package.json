@@ -1,0 +1,36 @@
+{
+  "name": "clousel",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yk-m/clousel.git"
+  },
+  "author": "Yuka Matsuo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yk-m/clousel/issues"
+  },
+  "homepage": "https://github.com/yk-m/clousel#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.16.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "react": "^15.3.2",
+    "react-addons-create-fragment": "^15.3.2",
+    "react-addons-css-transition-group": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-paginate": "^2.2.3",
+    "smooth-scroll": "github:cferdinandi/smooth-scroll",
+    "superagent": "^2.3.0",
+    "superagent-django-csrf": "^0.1.3",
+    "webpack": "^1.13.2",
+    "webpack-bundle-tracker": "0.0.93"
+  }
+}

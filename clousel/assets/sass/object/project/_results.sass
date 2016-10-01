@@ -1,0 +1,56 @@
+.p-result__header
+    +clearfix
+    margin: 0 0 $vertical-span
+
+.p-result__title
+    +span(6 of 12)
+    margin: 0
+    // height: 25px
+    // line-height: 25px
+
+    span
+        font-size: 75%
+        color: $accent-color
+        cursor: pointer
+
+.p-result__sort-order
+    +span(last 6 of 12)
+    text-align: right
+
+    select
+        width: span(2)
+        // height: 25px
+        padding: 0 $horizontal-span
+
+.p-result__filters
+    $td-height: 50px
+    +slidedown($td-height+$vertical-span*2)
+
+    background: $light-gray
+    +border-radius($radius)
+
+    overflow: hidden
+
+    table
+        width: 100%
+        margin: $vertical-span $horizontal-span
+
+    caption
+        display: none
+
+    tr
+        height: $td-height
+
+    td, th
+        vertical-align: middle
+
+    th
+        width: span(2 of 12)
+        text-align: left
+
+    td
+        width: span(10 of 12)
+
+.p-result__list
+    +items_container
+

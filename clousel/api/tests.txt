@@ -4,4 +4,7 @@ curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POS
 
 # curl -X GET http://localhost:8080/api/users/ -H 'Authorization: Token <!--token-->'
 
-curl -X GET http://localhost:8080/api/users/ -H 'Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0NjgzODczMDUsInVzZXJuYW1lIjoiYWRtaW5AY2xvdXNlbC5jb20iLCJ1c2VyX2lkIjo1LCJlbWFpbCI6ImFkbWluQGNsb3VzZWwuY29tIn0.d5QbiBaOKfb0h_L5YP7FbX8U1OLGMc2V7ZvX9_rtL3s'
+curl -X GET http://localhost:8080/api/users/ -H 'Authorization: JWT <!--token-->'
+
+
+curl -X POST http://localhost:8080/accounts/login/

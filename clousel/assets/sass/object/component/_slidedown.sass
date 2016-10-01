@@ -1,0 +1,6 @@
+=slidedown($height)
+    height: 0
+    +transition(padding,height 0.5s ease-in)
+
+    &.is-open
+        height: $height

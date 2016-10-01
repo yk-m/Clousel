@@ -10,11 +10,9 @@ from shop.models import Item
 from uploader.models import UserImage
 
 from .permissions import IsOwner
-from .serializer import (
-    ProfileSerializer, BasicUserSerializer, FullUserSerializer,
-    ItemSerializer, UserImageSerializer,
-    LikeSerializer, PurchaseHistorySerializer,
-)
+from .serializer import (BasicUserSerializer, FullUserSerializer,
+                         ItemSerializer, LikeSerializer, ProfileSerializer,
+                         PurchaseHistorySerializer, UserImageSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -42,6 +40,7 @@ class ItemViewSet(viewsets.ReadOnlyModelViewSet):
 
         if request.method == 'GET':
             response = {'count': object.objects.filter(item=item).count()}
+
             return Response(response)
 
         if request.method == 'POST':
@@ -102,4 +101,3 @@ class UserImageViewSet(viewsets.ModelViewSet):
         target_image = self.get_object()
 
         return Response("suitable response")
-

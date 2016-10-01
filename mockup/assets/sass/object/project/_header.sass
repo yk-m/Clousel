@@ -5,44 +5,57 @@
     background-size: calc_logo_width($header-height) auto
     background-position: $horizontal-span 0
 
-.header
+.p-header
     margin: calc_height(1) auto
 
-    .logo
+    a
+        text-decoration: none
+
+    .p-header__logo
+        font-size: 3rem
+        line-height: 1em
+
         height: $header-height
         line-height: $header-height
         +logo($header-height)
 
     li a
+        font-size: 1.5rem
         height: $header-height
         line-height: $header-height
 
-.compact-header
+.p-compact-header
     margin: calc_height(1) auto
 
-    .logo
+    .p-header__logo
+        font-size: 2rem
+
         height: $compact-header-height
         line-height: $compact-header-height
         +logo($compact-header-height)
 
     li a
+        font-size: 1.3rem
         height: $compact-header-height
         line-height: $compact-header-height
 
-.logo
+.p-header__logo
     a, a:hover, a:visited
         color: $black
 
-.global-navigation
+.p-header__nav
     ul
         list-style-type: none
         text-align: right
 
-    li a
+    li
         display: inline-block
-        padding: 0 $horizontal-span
 
-        &:link, &:visited
-            color: $black
-        &:hover
-            color: $gray
+        a
+            display: inline-block
+            padding: 0 $horizontal-span
+
+            &:link, &:visited
+                color: $black
+            &:hover
+                color: $gray

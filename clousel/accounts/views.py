@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
 
 
 def login_view(request):
@@ -10,10 +11,10 @@ def login_view(request):
         if user.is_active:
             login(request, user)
             # Redirect to a success page.
-            return HttpResponse("success")
+            return HttpResponse(_("success"))
         else:
             # Return a 'disabled account' error message
-            HttpResponse("disabled account")
+            HttpResponse(_("disabled account"))
     else:
         # Return an 'invalid login' error message.
-        HttpResponse("invalid login")
+        HttpResponse(_("invalid login"))
