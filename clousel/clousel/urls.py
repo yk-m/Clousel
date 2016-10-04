@@ -20,23 +20,21 @@ from django.conf.urls.static import static
 from django.contrib import admin, auth
 from django.contrib.auth.views import login, logout
 
+import accounts.urls
 import api.urls
-import pages.views
+import pages.urls
 import reactsample.urls
-import uploader.views
+import uploader.urls
+
 
 urlpatterns = [
-    url(r'^$', pages.views.index, name='index'),
-    url(r'^list/$', pages.views.list, name='list'),
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(api.urls.urlpatterns)),
-    # url(r'^accounts/login/$', auth.views.login,
-    #     {'template_name': 'login.html'}, name="login"),
-    # url(r'^accounts/logout/$', auth.views.logout),
+    url(r'^', include(pages.urls, namespace="pages")),
+    url(r'^accounts/', include('accounts.urls')),
+    url(r'^reactsample/', include(reactsample.urls, namespace="reactsample")),
+    url(r'^media/user/', include(uploader.urls, namespace="uploads")),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(api.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^reactsample/', include(reactsample.urls.urlpatterns)),
-    url(r'^media/user/images/(?P<owner>[0-9]+)/((?P<filename>[0-9a-z.]+))$',
-        uploader.views.image_view)
 ]
 
 urlpatterns += static(settings.MEDIA_URL + 'shop_item/',

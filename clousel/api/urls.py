@@ -5,13 +5,14 @@ from rest_framework_jwt import views
 
 from .views import ItemViewSet, UserImageViewSet, UserViewSet
 
+
 router = routers.SimpleRouter()
 router.register(r'users', UserViewSet)
 router.register(r'items', ItemViewSet)
 router.register(r'uploads', UserImageViewSet)
 
 urlpatterns = [
-    url(r'^api-token-auth/', views.obtain_jwt_token),
+    url(r'api-token-auth/$', views.obtain_jwt_token),
 ]
 
 urlpatterns += router.urls
