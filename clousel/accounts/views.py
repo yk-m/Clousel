@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
@@ -18,3 +19,8 @@ def login_view(request):
     else:
         # Return an 'invalid login' error message.
         HttpResponse(_("invalid login"))
+
+
+@login_required
+def dashboard_view(request):
+    return render(request, 'accounts/dashboard.html')

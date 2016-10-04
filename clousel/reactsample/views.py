@@ -1,17 +1,17 @@
 from django.shortcuts import render
 
 
-def index(request):
+def index_view(request):
     return render(request, 'reactsample/index.html')
 
 
-def staticlist(request):
+def staticlist_view(request):
     return render(request, 'reactsample/staticlist.html')
 
 
-def list(request):
+def list_view(request):
     return render(request, 'reactsample/list.html')
 
 
-def shop_item_list(request):
+def shop_item_list_view(request):
     return render(request, 'reactsample/shop_item_list.html')

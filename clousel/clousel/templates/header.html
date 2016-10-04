@@ -6,7 +6,7 @@
 {% endif %}
     <div class="l-header__logo">
       <h1 class="p-header__logo p-header--compact__logo">
-        <a href="{% url "index" %}" title="">Clousel</a>
+        <a href="{% url 'pages:index' %}" title="">Clousel</a>
       </h1>
     </div>
 {% if compact %}
@@ -16,7 +16,11 @@
 {% endif %}
       <ul>
         <li><a href="#" title="{% trans 'About us' %}">{% trans "About us" %}</a></li>
-        <li><a href="{% url "auth_login" %}" title="{% trans 'Log in' %}">{% trans "Log in" %}</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'auth_logout' %}" title="{% trans 'Log out' %}">{% trans 'Log out' %}</a></li>
+        {% else %}
+          <li><a href="{% url 'auth_login' %}" title="{% trans 'Log in' %}">{% trans 'Log in' %}</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>

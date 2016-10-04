@@ -11,6 +11,7 @@ from PIL import Image
 from .models import UserImage
 
 
+@login_required
 def image_view(request, owner, filename):
 
     def get_image_path(owner, filename):
