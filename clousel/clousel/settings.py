@@ -171,6 +171,7 @@ AUTH_USER_MODEL = 'accounts.EmailUser'
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 REGISTRATION_FORM = 'accounts.forms.EmailUserCreationForm'
+LOGIN_REDIRECT_URL = '/accounts/dashboard/'
 
 # --- Webpack loader
 WEBPACK_LOADER = {
