@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from accounts.models import Profile
 from action.models import Like, PurchaseHistory
-from clothing.models import Category
+from clothing.models import Category, Clothing
 from shop.models import Item
 from uploader.models import UserImage
 
@@ -59,23 +59,39 @@ class CategorySerializer(serializers.ModelSerializer):
         return tree
 
 
-class ItemSerializer(serializers.ModelSerializer):
+class ClothingSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
+    orientation = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Clothing
+        fields = ('pk', 'image', 'orientation', 'category', )
+        read_only_fields = ('pk', )
+
+    def get_orientation(self, obj):
+        if (obj.image.height < obj.image.width):
+            return 'landscape'
+        if (obj.image.height > obj.image.width):
+            return 'portrait'
+        return 'square'
+
+
+class ItemSerializer(ClothingSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'image', 'category', 'price', 'brand', 'exhibiter',
+        fields = ('pk', 'image', 'orientation', 'category', 'price', 'brand', 'exhibiter',
                   'delivery_days', 'delivery_service', 'delivery_source',
                   'rank', 'size', 'image_url', 'page_url', 'details',
                   'created', 'updated', )
         read_only_fields = ('pk', 'created', 'updated', )
 
 
-class UserImageSerializer(serializers.ModelSerializer):
+class UserImageSerializer(ClothingSerializer):
 
     class Meta:
         model = UserImage
-        fields = ('pk', 'owner', 'image', 'category', 'has_bought',
+        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'has_bought',
                   'created', 'updated', )
         read_only_fields = ('pk', 'owner', 'created', 'updated', )
 
