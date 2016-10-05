@@ -1,0 +1,32 @@
+=image-container()
+    &:before
+        display: block
+        padding-top: 100%
+        content: ""
+
+.p-image-box
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    overflow: hidden
+    text-align: center
+
+.p-image
+    position: relative
+    width: 100%
+    height: 100%
+    max-width: none
+
+.p-image--portrait
+    // top: 50%
+    // transform: translateY(-50%)
+    width: 100%
+    height: auto
+
+.p-image--landscape
+    left: 50%
+    transform: translateX(-50%)
+    width: auto
+    height: 100%

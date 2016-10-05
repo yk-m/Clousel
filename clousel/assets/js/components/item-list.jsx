@@ -80,7 +80,11 @@ class Items extends React.Component {
   render() {
     var itemNodes = this.props.data.map( (item) => {
       return (
-        <Item price={item.price} image={item.image} category={item.category.tree} key={item.pk}></Item>
+        <Item
+          key={item.pk}
+          image={item.image} orientation={item.orientation}
+          category={item.category.tree} price={item.price}>
+        </Item>
       )
     })
     return (
@@ -94,11 +98,17 @@ class Items extends React.Component {
 
 class Item extends React.Component {
   render() {
+    let image_class = "p-image "
+    if (this.props.orientation !== "square")
+      image_class += "p-image--" + this.props.orientation
+
     return (
       <a className="p-item" href="#">
         <div>
           <div className="p-item__image">
-            <div><img src={this.props.image} /></div>
+            <div className="p-image-box">
+              <img className={image_class} src={this.props.image} />
+            </div>
           </div>
           <div className="p-item__caption">
             <p className="p-item__price">¥{this.props.price}</p>
