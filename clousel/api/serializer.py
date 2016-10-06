@@ -46,27 +46,14 @@ class FullUserSerializer(BasicUserSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    tree = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Category
-        fields = ('tree', )
-
-    def get_tree(self, obj):
-        tree = obj._recurse_for_parents(obj)
-        tree.append(obj.title)
-        return tree
-
-
 class ClothingSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
     orientation = serializers.SerializerMethodField()
+    category_tree = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
-        fields = ('pk', 'image', 'orientation', 'category', )
-        read_only_fields = ('pk', )
+        fields = ('pk', 'image', 'orientation', 'category', 'category_tree', )
+        read_only_fields = ('pk', 'category_tree', )
 
     def get_orientation(self, obj):
         if (obj.image.height < obj.image.width):
@@ -75,25 +62,49 @@ class ClothingSerializer(serializers.ModelSerializer):
             return 'portrait'
         return 'square'
 
+    def get_category_tree(self, obj):
+        category = obj.category
+        tree = category._recurse_for_parents(category)
+        tree.append(category.title)
+        return tree
+
 
 class ItemSerializer(ClothingSerializer):
+    likes = serializers.SerializerMethodField()
+    purchases = serializers.SerializerMethodField()
+    is_liked = serializers.SerializerMethodField()
+    is_purchased = serializers.SerializerMethodField()
 
     class Meta:
         model = Item
         fields = ('pk', 'image', 'orientation', 'category', 'price', 'brand', 'exhibiter',
                   'delivery_days', 'delivery_service', 'delivery_source',
                   'rank', 'size', 'image_url', 'page_url', 'details',
-                  'created', 'updated', )
-        read_only_fields = ('pk', 'created', 'updated', )
+                  'created', 'updated',
+                  'likes', 'purchases', 'is_liked', 'is_purchased', )
+        read_only_fields = ('pk', 'created', 'updated',
+                            'likes', 'purchases', 'is_liked', 'is_purchased', )
+
+    def get_likes(self, obj):
+        return Like.objects.filter(item=obj).count()
+
+    def get_purchases(self, obj):
+        return PurchaseHistory.objects.filter(item=obj).count()
+
+    def get_is_liked(self, obj):
+        return Like.objects.filter(owner=self.context['request'].user, item=obj).exists()
+
+    def get_is_purchased(self, obj):
+        return PurchaseHistory.objects.filter(owner=self.context['request'].user, item=obj).exists()
 
 
 class UserImageSerializer(ClothingSerializer):
 
     class Meta:
         model = UserImage
-        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'has_bought',
+        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'category_tree', 'has_bought',
                   'created', 'updated', )
-        read_only_fields = ('pk', 'owner', 'created', 'updated', )
+        read_only_fields = ('pk', 'owner', 'orientation', 'category_tree', 'created', 'updated', )
 
 
 class LikeSerializer(serializers.ModelSerializer):
