@@ -83,7 +83,7 @@ class Items extends React.Component {
         <Item
           key={item.pk}
           image={item.image} orientation={item.orientation}
-          category={item.category.tree} price={item.price}>
+          category={item.category_tree} price={item.price}>
         </Item>
       )
     })
