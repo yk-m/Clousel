@@ -82,7 +82,7 @@ class ItemSerializer(ClothingSerializer):
                   'rank', 'size', 'image_url', 'page_url', 'details',
                   'created', 'updated',
                   'likes', 'purchases', 'is_liked', 'is_purchased', )
-        read_only_fields = ('pk', 'created', 'updated',
+        read_only_fields = ('pk', 'orientation', 'category_tree', 'created', 'updated',
                             'likes', 'purchases', 'is_liked', 'is_purchased', )
 
     def get_likes(self, obj):
