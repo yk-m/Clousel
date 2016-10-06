@@ -67,6 +67,10 @@ class Clothing(models.Model):
     class Meta:
         abstract = True
 
+    @property
+    def category_tree(self):
+        return self.category._recurse_for_parents.append(self)
+
     def get_image_upload_to_path(instance, filename):
         return 'images/' + filename
 
