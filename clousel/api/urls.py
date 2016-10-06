@@ -5,7 +5,6 @@ from rest_framework_jwt import views
 
 from .views import ItemViewSet, UserImageViewSet, UserViewSet
 
-
 router = routers.SimpleRouter()
 router.register(r'users', UserViewSet)
 router.register(r'items', ItemViewSet)
