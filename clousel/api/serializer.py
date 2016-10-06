@@ -77,7 +77,7 @@ class ItemSerializer(ClothingSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'image', 'orientation', 'category', 'price', 'brand', 'exhibiter',
+        fields = ('pk', 'image', 'orientation', 'category', 'category_tree', 'price', 'brand', 'exhibiter',
                   'delivery_days', 'delivery_service', 'delivery_source',
                   'rank', 'size', 'image_url', 'page_url', 'details',
                   'created', 'updated',
