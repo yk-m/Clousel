@@ -28,7 +28,7 @@ SECRET_KEY = '3+8l9*1ij$jsb@1uw93kjuo@ol&h+^8s$)g+^ua#62o+x($p2@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'wardrobe',
     'pages',
     'reactsample',
+    'recommender',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
