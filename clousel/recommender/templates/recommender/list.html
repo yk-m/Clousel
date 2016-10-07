@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}List{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock header %}
+
+{% block content %}
+    <div id="js-result"></div>
+    {% render_bundle 'list' %}
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

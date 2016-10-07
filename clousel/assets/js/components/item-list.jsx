@@ -21,7 +21,11 @@ export default class ItemList extends React.Component {
   loadItemsFromServer() {
     Request
       .get(this.props.url)
-      .query({limit: this.props.paginate.perPage, offset: this.state.offset})
+      .query({
+        limit: this.props.paginate.perPage,
+        offset: this.state.offset,
+        max_price: 10000
+      })
       .end( (err, res) => {
         if (!res.ok) {
           console.error(this.props.url, status, err.toString())

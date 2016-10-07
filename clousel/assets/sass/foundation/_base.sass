@@ -20,21 +20,22 @@ input, select
     &:focus
         outline: none
 
-input
+input, button
     padding: $default-padding
     border: none
     background: transparent
 
+*[type=submit]
+    border: solid 1px $accent-color
+    +border-radius($radius)
+    cursor: pointer
+
+input
     &[type=text], &[type=password], &[type=email]
         border-bottom: solid 1px $black
 
         +input-placeholder
             color: $gray
-
-    &[type=submit]
-        border: solid 1px $accent-color
-        +border-radius($radius)
-        cursor: pointer
 
 
 // select

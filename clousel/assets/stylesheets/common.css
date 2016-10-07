@@ -69,12 +69,22 @@ input:focus, select:focus {
 }
 
 /* line 23, ../sass/foundation/_base.sass */
-input {
+input, button {
   padding: 12px 20px;
   border: none;
   background: transparent;
 }
+
 /* line 28, ../sass/foundation/_base.sass */
+*[type=submit] {
+  border: solid 1px #C64B8F;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* line 34, ../sass/foundation/_base.sass */
 input[type=text], input[type=password], input[type=email] {
   border-bottom: solid 1px #312F33;
 }
@@ -94,14 +104,6 @@ input[type=text]:-ms-input-placeholder, input[type=password]:-ms-input-placehold
 input[type=text]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder {
   color: #89838E;
 }
-/* line 34, ../sass/foundation/_base.sass */
-input[type=submit] {
-  border: solid 1px #C64B8F;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
 /* line 1, ../sass/foundation/_typography.sass */
 html {
@@ -109,7 +111,7 @@ html {
 }
 
 /* line 4, ../sass/foundation/_typography.sass */
-body, input {
+body, input, button {
   font: normal 1.3rem/1.5em "Quicksand", sans-serif;
 }
 
@@ -165,10 +167,10 @@ th {
 /* line 4, ../sass/object/component/_animation.sass */
 .fade-enter.fade-enter-active {
   opacity: 1;
-  -moz-transition: opacity 0.5s ease-in;
-  -o-transition: opacity 0.5s ease-in;
-  -webkit-transition: opacity 0.5s ease-in;
-  transition: opacity 0.5s ease-in;
+  -moz-transition: opacity 0.2s ease-in;
+  -o-transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 
 /* line 8, ../sass/object/component/_animation.sass */
@@ -178,31 +180,31 @@ th {
 /* line 11, ../sass/object/component/_animation.sass */
 .fade-leave.fade-leave-active {
   opacity: 0.01;
-  -moz-transition: opacity 1s ease-in;
-  -o-transition: opacity 1s ease-in;
-  -webkit-transition: opacity 1s ease-in;
-  transition: opacity 1s ease-in;
+  -moz-transition: opacity 0.2s ease-in;
+  -o-transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 
-/* line 17, ../sass/object/component/_animation.sass */
+/* line 16, ../sass/object/component/_animation.sass */
 .fademove-enter {
   opacity: 0.01;
   transform: translateY(50%) scale(0.95, 0.95);
   transition: all 1s ease-out;
 }
-/* line 22, ../sass/object/component/_animation.sass */
+/* line 21, ../sass/object/component/_animation.sass */
 .fademove-enter.fademove-enter-active {
   opacity: 1;
   transform: translateY(0) scale(1, 1);
 }
 
-/* line 26, ../sass/object/component/_animation.sass */
+/* line 25, ../sass/object/component/_animation.sass */
 .fademove-leave {
   opacity: 1;
   transform: translateY(0) scale(1, 1);
   transition: all 0.2s ease-out;
 }
-/* line 31, ../sass/object/component/_animation.sass */
+/* line 30, ../sass/object/component/_animation.sass */
 .fademove-leave.fademove-leave-active {
   opacity: 0.01;
   transform: translateY(5%) scale(0.98, 0.98);
@@ -698,51 +700,84 @@ th {
   padding: 0 20px;
 }
 
-/* line 25, ../sass/object/project/_results.sass */
+/* line 24, ../sass/object/project/_results.sass */
 .p-result__filters {
-  height: 0;
-  -moz-transition: padding, height 0.5s ease-in;
-  -o-transition: padding, height 0.5s ease-in;
-  -webkit-transition: padding, height 0.5s ease-in;
-  transition: padding, height 0.5s ease-in;
-  background: #DFDCE2;
+  padding: 12px 20px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  background: #DFDCE2;
   overflow: hidden;
 }
-/* line 5, ../sass/object/component/_slidedown.sass */
-.p-result__filters.is-open {
-  height: 74px;
+/* line 2, ../sass/object/component/_slidedown.sass */
+.p-result__filters.slide-enter {
+  height: 0;
+  padding: 0 20px;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+/* line 7, ../sass/object/component/_slidedown.sass */
+.p-result__filters.slide-enter.slide-enter-active {
+  height: 174px;
+  padding: 12px 20px;
+}
+/* line 11, ../sass/object/component/_slidedown.sass */
+.p-result__filters.slide-leave {
+  height: 174px;
+  padding: 12px 20px;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+/* line 16, ../sass/object/component/_slidedown.sass */
+.p-result__filters.slide-leave.slide-leave-active {
+  height: 0;
+  padding: 0 20px;
 }
 /* line 34, ../sass/object/project/_results.sass */
 .p-result__filters table {
   width: 100%;
-  margin: 12px 20px;
 }
-/* line 38, ../sass/object/project/_results.sass */
+/* line 37, ../sass/object/project/_results.sass */
 .p-result__filters caption {
   display: none;
 }
-/* line 41, ../sass/object/project/_results.sass */
+/* line 40, ../sass/object/project/_results.sass */
 .p-result__filters tr {
   height: 50px;
 }
-/* line 44, ../sass/object/project/_results.sass */
+/* line 43, ../sass/object/project/_results.sass */
+.p-result__filters tr:last-child {
+  text-align: right;
+}
+/* line 46, ../sass/object/project/_results.sass */
 .p-result__filters td, .p-result__filters th {
   vertical-align: middle;
 }
-/* line 47, ../sass/object/project/_results.sass */
+/* line 49, ../sass/object/project/_results.sass */
 .p-result__filters th {
   width: 15.25424%;
   text-align: left;
 }
-/* line 51, ../sass/object/project/_results.sass */
+/* line 53, ../sass/object/project/_results.sass */
 .p-result__filters td {
   width: 83.05085%;
 }
+/* line 56, ../sass/object/project/_results.sass */
+.p-result__filters input {
+  padding: 6px 10px;
+}
+/* line 59, ../sass/object/project/_results.sass */
+.p-result__filters input[type=submit] {
+  padding: 12px 20px;
+  background: #C64B8F;
+  color: #F9F7F7;
+}
 
-/* line 54, ../sass/object/project/_results.sass */
+/* line 65, ../sass/object/project/_results.sass */
 .p-result__list {
   position: relative;
 }

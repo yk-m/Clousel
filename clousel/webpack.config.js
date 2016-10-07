@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     index: path.resolve('./assets/js/index'),
     shopItemList: path.resolve('./assets/js/shop-item-list'),
+    list: path.resolve('./assets/js/list'),
   }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
   output: {
