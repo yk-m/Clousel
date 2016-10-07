@@ -63,9 +63,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var resultContainer = document.getElementById('js-result');
+	var url = resultContainer.getAttribute('data-request-url');
 
 	_reactDom2.default.render(_react2.default.createElement(_result2.default, {
-	  url: '/api/items/',
+	  url: url,
 	  paginate: {
 	    perPage: 12,
 	    marginPagesDisplayed: 1,

@@ -11,7 +11,7 @@
 {% endblock header %}
 
 {% block content %}
-    <div id="js-result"></div>
+    <div id="js-result" data-request-url="{{ request_url }}"></div>
     {% render_bundle 'list' %}
 {% endblock content %}
 
