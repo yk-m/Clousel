@@ -13,6 +13,14 @@ export default class ResultFilters extends React.Component {
     }
   }
 
+  reset(e) {
+    this.setState({
+      keyword: "",
+      minPrice: "",
+      maxPrice: ""
+    })
+  }
+
   onFormSubmit(e) {
     e.preventDefault()
 
@@ -40,28 +48,30 @@ export default class ResultFilters extends React.Component {
     return (
       <div className="p-result__filters">
         <form onSubmit={(e) => this.onFormSubmit(e)}>
-          <table className="p-filter-table">
+          <table className="p-filters">
             <caption>Search option</caption>
             <tbody>
-              <tr>
+              <tr className="p-filters__filter--keyword">
                 <th>keyword</th>
                 <td>
                   <input type="text" ref="keyword" value={this.state.keyword} onChange={(e) => this.changeKeyword(e)} />
                 </td>
               </tr>
-              <tr>
+              <tr className="p-filters__filter--price">
                 <th>price</th>
                 <td>
-                  min: ¥<input type="text" ref="minPrice" value={this.state.minPrice}
-                               onChange={(e) => this.changeMinPrice(e)} placeholder="----" /> to
-                  max: ¥<input type="text" ref="maxPrice" value={this.state.maxPrice}
-                               onChange={(e) => this.changeMaxPrice(e)} placeholder="----" />
+                  <span>¥<input type="text" ref="minPrice" value={this.state.minPrice}
+                                onChange={(e) => this.changeMinPrice(e)} placeholder="----" /></span>
+                  <span className="u-inline-block">〜</span>
+                  <span>¥<input type="text" ref="maxPrice" value={this.state.maxPrice}
+                                onChange={(e) => this.changeMaxPrice(e)} placeholder="----" /></span>
                 </td>
               </tr>
-              <tr>
+              <tr className="p-filters__update">
                 <th></th>
                 <td>
-                  <input type="submit" className="p-result__update-button" value="Update" />
+                  <button onClick={(e) => this.reset(e)}>Reset</button>
+                  <button type="submit">Update</button>
                 </td>
               </tr>
             </tbody>
