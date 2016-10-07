@@ -29,7 +29,7 @@
     +border-radius($radius)
 
     background: $light-gray
-    overflow: hidden
+    overflow-y: hidden
 
     table
         width: 100%
@@ -45,21 +45,29 @@
 
     td, th
         vertical-align: middle
+        white-space: nowrap
 
     th
-        width: span(2 of 12)
+        width: span(1 of 7)
         text-align: left
 
     td
-        width: span(10 of 12)
+        width: span(6 of 7)
 
-    input
+    input, button
         padding: $half-padding
 
-        &[type=submit]
-            padding: $default-padding
-            background: $accent-color
-            color: $white
+    input
+        max-width: calc_width(3)
+
+    button
+        border: none
+
+        background: $white
+        color: $black
+
+        &:last-child
+            margin: 0 0 0 $horizontal-span
 
 
 .p-result__list

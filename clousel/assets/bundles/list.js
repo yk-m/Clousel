@@ -24147,6 +24147,15 @@
 	  }
 
 	  _createClass(ResultFilters, [{
+	    key: "reset",
+	    value: function reset(e) {
+	      this.setState({
+	        keyword: "",
+	        minPrice: "",
+	        maxPrice: ""
+	      });
+	    }
+	  }, {
 	    key: "onFormSubmit",
 	    value: function onFormSubmit(e) {
 	      e.preventDefault();
@@ -24188,7 +24197,7 @@
 	            } },
 	          _react2.default.createElement(
 	            "table",
-	            { className: "p-filter-table" },
+	            { className: "p-filters" },
 	            _react2.default.createElement(
 	              "caption",
 	              null,
@@ -24199,7 +24208,7 @@
 	              null,
 	              _react2.default.createElement(
 	                "tr",
-	                null,
+	                { className: "p-filters__filter--keyword" },
 	                _react2.default.createElement(
 	                  "th",
 	                  null,
@@ -24215,7 +24224,7 @@
 	              ),
 	              _react2.default.createElement(
 	                "tr",
-	                null,
+	                { className: "p-filters__filter--price" },
 	                _react2.default.createElement(
 	                  "th",
 	                  null,
@@ -24224,26 +24233,50 @@
 	                _react2.default.createElement(
 	                  "td",
 	                  null,
-	                  "min: \xA5",
-	                  _react2.default.createElement("input", { type: "text", ref: "minPrice", value: this.state.minPrice,
-	                    onChange: function onChange(e) {
-	                      return _this2.changeMinPrice(e);
-	                    }, placeholder: "----" }),
-	                  " to max: \xA5",
-	                  _react2.default.createElement("input", { type: "text", ref: "maxPrice", value: this.state.maxPrice,
-	                    onChange: function onChange(e) {
-	                      return _this2.changeMaxPrice(e);
-	                    }, placeholder: "----" })
+	                  _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    "\xA5",
+	                    _react2.default.createElement("input", { type: "text", ref: "minPrice", value: this.state.minPrice,
+	                      onChange: function onChange(e) {
+	                        return _this2.changeMinPrice(e);
+	                      }, placeholder: "----" })
+	                  ),
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "u-inline-block" },
+	                    "\u301C"
+	                  ),
+	                  _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    "\xA5",
+	                    _react2.default.createElement("input", { type: "text", ref: "maxPrice", value: this.state.maxPrice,
+	                      onChange: function onChange(e) {
+	                        return _this2.changeMaxPrice(e);
+	                      }, placeholder: "----" })
+	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
 	                "tr",
-	                null,
+	                { className: "p-filters__update" },
 	                _react2.default.createElement("th", null),
 	                _react2.default.createElement(
 	                  "td",
 	                  null,
-	                  _react2.default.createElement("input", { type: "submit", className: "p-result__update-button", value: "Update" })
+	                  _react2.default.createElement(
+	                    "button",
+	                    { onClick: function onClick(e) {
+	                        return _this2.reset(e);
+	                      } },
+	                    "Reset"
+	                  ),
+	                  _react2.default.createElement(
+	                    "button",
+	                    { type: "submit" },
+	                    "Update"
+	                  )
 	                )
 	              )
 	            )

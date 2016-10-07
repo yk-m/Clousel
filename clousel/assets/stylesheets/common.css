@@ -76,7 +76,7 @@ input, button {
 }
 
 /* line 28, ../sass/foundation/_base.sass */
-*[type=submit] {
+button, *[type=submit] {
   border: solid 1px #C64B8F;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -158,6 +158,12 @@ th {
   content: " ";
   display: block;
   clear: both;
+}
+
+/* line 1, ../sass/object/utility/_block.sass */
+.u-inline-block {
+  display: inline-block;
+  margin: 0 20px;
 }
 
 /* line 1, ../sass/object/component/_animation.sass */
@@ -707,7 +713,7 @@ th {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background: #DFDCE2;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 /* line 2, ../sass/object/component/_slidedown.sass */
 .p-result__filters.slide-enter {
@@ -756,28 +762,37 @@ th {
 /* line 46, ../sass/object/project/_results.sass */
 .p-result__filters td, .p-result__filters th {
   vertical-align: middle;
+  white-space: nowrap;
 }
-/* line 49, ../sass/object/project/_results.sass */
+/* line 50, ../sass/object/project/_results.sass */
 .p-result__filters th {
-  width: 15.25424%;
+  width: 11.76471%;
   text-align: left;
 }
-/* line 53, ../sass/object/project/_results.sass */
+/* line 54, ../sass/object/project/_results.sass */
 .p-result__filters td {
-  width: 83.05085%;
+  width: 85.29412%;
 }
-/* line 56, ../sass/object/project/_results.sass */
-.p-result__filters input {
+/* line 57, ../sass/object/project/_results.sass */
+.p-result__filters input, .p-result__filters button {
   padding: 6px 10px;
 }
-/* line 59, ../sass/object/project/_results.sass */
-.p-result__filters input[type=submit] {
-  padding: 12px 20px;
-  background: #C64B8F;
-  color: #F9F7F7;
+/* line 60, ../sass/object/project/_results.sass */
+.p-result__filters input {
+  max-width: 220px;
+}
+/* line 63, ../sass/object/project/_results.sass */
+.p-result__filters button {
+  border: none;
+  background: #F9F7F7;
+  color: #312F33;
+}
+/* line 69, ../sass/object/project/_results.sass */
+.p-result__filters button:last-child {
+  margin: 0 0 0 20px;
 }
 
-/* line 65, ../sass/object/project/_results.sass */
+/* line 73, ../sass/object/project/_results.sass */
 .p-result__list {
   position: relative;
 }
