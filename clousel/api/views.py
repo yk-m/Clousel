@@ -1,6 +1,7 @@
+import django_filters
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, filters, generics
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
@@ -77,6 +78,24 @@ class ItemViewSet(viewsets.ReadOnlyModelViewSet):
     @detail_route(methods=['get', 'post', 'delete'])
     def purchase(self, request, pk=None):
         return self.detail_handler(request, PurchaseHistory)
+
+
+class ItemFilter(filters.FilterSet):
+    min_price = django_filters.NumberFilter(name="price", lookup_expr='gte')
+    max_price = django_filters.NumberFilter(name="price", lookup_expr='lte')
+
+    class Meta:
+        model = Item
+        fields = ('category', 'min_price', 'max_price', )
+
+
+class ItemListView(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+    filter_backends = (filters.DjangoFilterBackend, )
+    filter_class = ItemFilter
+    search_fields = ('brand', 'exhibiter', 'rank', 'size', 'details', )
+    ordering_fields = ('price', )
 
 
 class UserImageViewSet(viewsets.ModelViewSet):
