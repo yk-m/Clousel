@@ -56,27 +56,25 @@
 
 	__webpack_require__(173);
 
-	var _itemList = __webpack_require__(179);
+	var _result = __webpack_require__(179);
 
-	var _itemList2 = _interopRequireDefault(_itemList);
-
-	var _smoothScroll = __webpack_require__(187);
-
-	var _smoothScroll2 = _interopRequireDefault(_smoothScroll);
+	var _result2 = _interopRequireDefault(_result);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var listContainer = document.getElementById('item-list');
+	var resultContainer = document.getElementById('js-result');
 
-	_reactDom2.default.render(_react2.default.createElement(_itemList2.default, { url: '/api/items/', paginate: {
+	_reactDom2.default.render(_react2.default.createElement(_result2.default, {
+	  url: '/api/items/',
+	  paginate: {
 	    perPage: 12,
 	    marginPagesDisplayed: 1,
 	    pageRangeDisplayed: 3,
 	    onClick: function onClick() {
-	      var options = { speed: 1000, easing: 'easeOutCubic' };
-	      _smoothScroll2.default.animateScroll(listContainer, null, options);
+	      window.scrollTo(0, 0);
 	    }
-	  } }), listContainer);
+	  }
+	}), resultContainer);
 
 /***/ },
 /* 1 */
@@ -23071,13 +23069,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
+
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+
 	var _superagent = __webpack_require__(174);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _reactPaginate = __webpack_require__(180);
+	var _resultFilters = __webpack_require__(187);
 
-	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
+	var _resultFilters2 = _interopRequireDefault(_resultFilters);
+
+	var _resultList = __webpack_require__(188);
+
+	var _resultList2 = _interopRequireDefault(_resultList);
+
+	var _resultOrdering = __webpack_require__(197);
+
+	var _resultOrdering2 = _interopRequireDefault(_resultOrdering);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23087,36 +23097,52 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ItemList = function (_React$Component) {
-	  _inherits(ItemList, _React$Component);
+	var Result = function (_React$Component) {
+	  _inherits(Result, _React$Component);
 
-	  function ItemList(props) {
-	    _classCallCheck(this, ItemList);
+	  function Result(props) {
+	    _classCallCheck(this, Result);
 
-	    var _this = _possibleConstructorReturn(this, (ItemList.__proto__ || Object.getPrototypeOf(ItemList)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Result.__proto__ || Object.getPrototypeOf(Result)).call(this, props));
 
 	    _this.state = {
 	      data: [],
-	      offset: 0
+	      offset: 0,
+	      pageNum: 0,
+	      loadingIsHidden: false,
+	      filtersAreHidden: true,
+	      options: {
+	        keyword: "",
+	        minPrice: "",
+	        maxPrice: ""
+	      },
+	      ordering: {
+	        key: "",
+	        by: ""
+	      }
 	    };
 	    return _this;
 	  }
 
-	  _createClass(ItemList, [{
+	  _createClass(Result, [{
 	    key: 'loadItemsFromServer',
 	    value: function loadItemsFromServer() {
 	      var _this2 = this;
 
-	      _superagent2.default.get(this.props.url).query({ limit: this.props.paginate.perPage, offset: this.state.offset }).end(function (err, res) {
-	        if (res.ok) {
-	          _this2.setState({
-	            data: res.body.results,
-	            pageNum: Math.ceil(res.body.count / _this2.props.paginate.perPage)
-	          });
-	          return;
+	      var _query = this.generateQuery();
+
+	      _superagent2.default.get(this.props.url).query(_query).end(function (err, res) {
+	        if (!res.ok) {
+	          console.error(_this2.props.url, status, err.toString());
 	        }
 
-	        console.error(_this2.props.url, status, err.toString());
+	        console.log(res.body.results);
+
+	        _this2.setState({
+	          data: res.body.results,
+	          pageNum: Math.ceil(res.body.count / _this2.props.paginate.perPage),
+	          loadingIsHidden: true
+	        });
 	      });
 	    }
 	  }, {
@@ -23125,8 +23151,40 @@
 	      this.loadItemsFromServer();
 	    }
 	  }, {
-	    key: 'handlePageClick',
-	    value: function handlePageClick(data) {
+	    key: 'generateQuery',
+	    value: function generateQuery() {
+	      var query = {
+	        limit: this.props.paginate.perPage,
+	        offset: this.state.offset
+	      };
+
+	      var ordering = this.parseOrdering(this.state.ordering);
+	      if (ordering !== null) query.ordering = ordering;
+
+	      if (this.isset(this.state.options.keyword)) query.search = this.state.options.keyword;
+	      if (this.isset(this.state.options.minPrice)) query.min_price = this.state.options.minPrice;
+	      if (this.isset(this.state.options.maxPrice)) query.max_price = this.state.options.maxPrice;
+
+	      return query;
+	    }
+	  }, {
+	    key: 'parseOrdering',
+	    value: function parseOrdering(ordering) {
+	      if (!this.isset(ordering)) return null;
+	      if (!this.isset(ordering.key)) return null;
+
+	      if (ordering.by === "desc") return "-" + ordering.key;
+	      return ordering.key;
+	    }
+	  }, {
+	    key: 'isset',
+	    value: function isset(data) {
+	      if (data === "" || data === null || data === undefined) return false;
+	      return true;
+	    }
+	  }, {
+	    key: 'handlePaginationClick',
+	    value: function handlePaginationClick(data) {
 	      var _this3 = this;
 
 	      var selected = data.selected;
@@ -23134,25 +23192,1134 @@
 
 	      this.props.paginate.onClick();
 
-	      this.setState({ offset: offset }, function () {
+	      this.setState({ offset: offset, loadingIsHidden: false }, function () {
 	        _this3.loadItemsFromServer();
 	      });
+	    }
+	  }, {
+	    key: 'handleFiltersChange',
+	    value: function handleFiltersChange(options) {
+	      var _this4 = this;
+
+	      this.setState({ options: options, offset: 0, loadingIsHidden: false }, function () {
+	        _this4.loadItemsFromServer();
+	      });
+	    }
+	  }, {
+	    key: 'handleOrderingChange',
+	    value: function handleOrderingChange(ordering) {
+	      var _this5 = this;
+
+	      this.setState({
+	        ordering: ordering,
+	        offset: 0, loadingIsHidden: false
+	      }, function () {
+	        _this5.loadItemsFromServer();
+	      });
+	    }
+	  }, {
+	    key: 'toggleFiltersBlock',
+	    value: function toggleFiltersBlock() {
+	      this.setState({ filtersAreHidden: !this.state.filtersAreHidden });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
+	        'section',
+	        { className: 'p-result' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'p-result__header' },
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'p-result__title' },
+	            'Search Results ',
+	            _react2.default.createElement(
+	              'span',
+	              { onClick: this.toggleFiltersBlock.bind(this) },
+	              '[option]'
+	            )
+	          ),
+	          _react2.default.createElement(_resultOrdering2.default, { handleOrderingChange: this.handleOrderingChange.bind(this) })
+	        ),
+	        _react2.default.createElement(
+	          _reactAddonsCssTransitionGroup2.default,
+	          {
+	            transitionName: 'slide',
+	            transitionEnterTimeout: 300,
+	            transitionLeaveTimeout: 300 },
+	          this.state.filtersAreHidden ? null : _react2.default.createElement(_resultFilters2.default, { handleFiltersChange: this.handleFiltersChange.bind(this) })
+	        ),
+	        _react2.default.createElement(_resultList2.default, {
+	          data: this.state.data,
+	          loadingIsHidden: this.state.loadingIsHidden,
+	          pageNum: this.state.pageNum,
+	          paginate: {
+	            handlePaginationClick: this.handlePaginationClick.bind(this),
+	            marginPagesDisplayed: this.props.paginate.marginPagesDisplayed,
+	            pageRangeDisplayed: this.props.paginate.pageRangeDisplayed
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return Result;
+	}(_react2.default.Component);
+
+	exports.default = Result;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(181);
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactCSSTransitionGroup
+	 */
+
+	'use strict';
+
+	var _assign = __webpack_require__(4);
+
+	var React = __webpack_require__(2);
+
+	var ReactTransitionGroup = __webpack_require__(182);
+	var ReactCSSTransitionGroupChild = __webpack_require__(184);
+
+	function createTransitionTimeoutPropValidator(transitionType) {
+	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
+	  var enabledPropName = 'transition' + transitionType;
+
+	  return function (props) {
+	    // If the transition is enabled
+	    if (props[enabledPropName]) {
+	      // If no timeout duration is provided
+	      if (props[timeoutPropName] == null) {
+	        return new Error(timeoutPropName + ' wasn\'t supplied to ReactCSSTransitionGroup: ' + 'this can cause unreliable animations and won\'t be supported in ' + 'a future version of React. See ' + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
+
+	        // If the duration isn't a number
+	      } else if (typeof props[timeoutPropName] !== 'number') {
+	          return new Error(timeoutPropName + ' must be a number (in milliseconds)');
+	        }
+	    }
+	  };
+	}
+
+	/**
+	 * An easy way to perform CSS transitions and animations when a React component
+	 * enters or leaves the DOM.
+	 * See https://facebook.github.io/react/docs/animation.html#high-level-api-reactcsstransitiongroup
+	 */
+	var ReactCSSTransitionGroup = React.createClass({
+	  displayName: 'ReactCSSTransitionGroup',
+
+	  propTypes: {
+	    transitionName: ReactCSSTransitionGroupChild.propTypes.name,
+
+	    transitionAppear: React.PropTypes.bool,
+	    transitionEnter: React.PropTypes.bool,
+	    transitionLeave: React.PropTypes.bool,
+	    transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
+	    transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
+	    transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave')
+	  },
+
+	  getDefaultProps: function () {
+	    return {
+	      transitionAppear: false,
+	      transitionEnter: true,
+	      transitionLeave: true
+	    };
+	  },
+
+	  _wrapChild: function (child) {
+	    // We need to provide this childFactory so that
+	    // ReactCSSTransitionGroupChild can receive updates to name, enter, and
+	    // leave while it is leaving.
+	    return React.createElement(ReactCSSTransitionGroupChild, {
+	      name: this.props.transitionName,
+	      appear: this.props.transitionAppear,
+	      enter: this.props.transitionEnter,
+	      leave: this.props.transitionLeave,
+	      appearTimeout: this.props.transitionAppearTimeout,
+	      enterTimeout: this.props.transitionEnterTimeout,
+	      leaveTimeout: this.props.transitionLeaveTimeout
+	    }, child);
+	  },
+
+	  render: function () {
+	    return React.createElement(ReactTransitionGroup, _assign({}, this.props, { childFactory: this._wrapChild }));
+	  }
+	});
+
+	module.exports = ReactCSSTransitionGroup;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactTransitionGroup
+	 */
+
+	'use strict';
+
+	var _assign = __webpack_require__(4);
+
+	var React = __webpack_require__(2);
+	var ReactInstanceMap = __webpack_require__(119);
+	var ReactTransitionChildMapping = __webpack_require__(183);
+
+	var emptyFunction = __webpack_require__(12);
+
+	/**
+	 * A basis for animations. When children are declaratively added or removed,
+	 * special lifecycle hooks are called.
+	 * See https://facebook.github.io/react/docs/animation.html#low-level-api-reacttransitiongroup
+	 */
+	var ReactTransitionGroup = React.createClass({
+	  displayName: 'ReactTransitionGroup',
+
+	  propTypes: {
+	    component: React.PropTypes.any,
+	    childFactory: React.PropTypes.func
+	  },
+
+	  getDefaultProps: function () {
+	    return {
+	      component: 'span',
+	      childFactory: emptyFunction.thatReturnsArgument
+	    };
+	  },
+
+	  getInitialState: function () {
+	    return {
+	      // TODO: can we get useful debug information to show at this point?
+	      children: ReactTransitionChildMapping.getChildMapping(this.props.children)
+	    };
+	  },
+
+	  componentWillMount: function () {
+	    this.currentlyTransitioningKeys = {};
+	    this.keysToEnter = [];
+	    this.keysToLeave = [];
+	  },
+
+	  componentDidMount: function () {
+	    var initialChildMapping = this.state.children;
+	    for (var key in initialChildMapping) {
+	      if (initialChildMapping[key]) {
+	        this.performAppear(key);
+	      }
+	    }
+	  },
+
+	  componentWillReceiveProps: function (nextProps) {
+	    var nextChildMapping;
+	    if (process.env.NODE_ENV !== 'production') {
+	      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children, ReactInstanceMap.get(this)._debugID);
+	    } else {
+	      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children);
+	    }
+	    var prevChildMapping = this.state.children;
+
+	    this.setState({
+	      children: ReactTransitionChildMapping.mergeChildMappings(prevChildMapping, nextChildMapping)
+	    });
+
+	    var key;
+
+	    for (key in nextChildMapping) {
+	      var hasPrev = prevChildMapping && prevChildMapping.hasOwnProperty(key);
+	      if (nextChildMapping[key] && !hasPrev && !this.currentlyTransitioningKeys[key]) {
+	        this.keysToEnter.push(key);
+	      }
+	    }
+
+	    for (key in prevChildMapping) {
+	      var hasNext = nextChildMapping && nextChildMapping.hasOwnProperty(key);
+	      if (prevChildMapping[key] && !hasNext && !this.currentlyTransitioningKeys[key]) {
+	        this.keysToLeave.push(key);
+	      }
+	    }
+
+	    // If we want to someday check for reordering, we could do it here.
+	  },
+
+	  componentDidUpdate: function () {
+	    var keysToEnter = this.keysToEnter;
+	    this.keysToEnter = [];
+	    keysToEnter.forEach(this.performEnter);
+
+	    var keysToLeave = this.keysToLeave;
+	    this.keysToLeave = [];
+	    keysToLeave.forEach(this.performLeave);
+	  },
+
+	  performAppear: function (key) {
+	    this.currentlyTransitioningKeys[key] = true;
+
+	    var component = this.refs[key];
+
+	    if (component.componentWillAppear) {
+	      component.componentWillAppear(this._handleDoneAppearing.bind(this, key));
+	    } else {
+	      this._handleDoneAppearing(key);
+	    }
+	  },
+
+	  _handleDoneAppearing: function (key) {
+	    var component = this.refs[key];
+	    if (component.componentDidAppear) {
+	      component.componentDidAppear();
+	    }
+
+	    delete this.currentlyTransitioningKeys[key];
+
+	    var currentChildMapping;
+	    if (process.env.NODE_ENV !== 'production') {
+	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children, ReactInstanceMap.get(this)._debugID);
+	    } else {
+	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children);
+	    }
+
+	    if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
+	      // This was removed before it had fully appeared. Remove it.
+	      this.performLeave(key);
+	    }
+	  },
+
+	  performEnter: function (key) {
+	    this.currentlyTransitioningKeys[key] = true;
+
+	    var component = this.refs[key];
+
+	    if (component.componentWillEnter) {
+	      component.componentWillEnter(this._handleDoneEntering.bind(this, key));
+	    } else {
+	      this._handleDoneEntering(key);
+	    }
+	  },
+
+	  _handleDoneEntering: function (key) {
+	    var component = this.refs[key];
+	    if (component.componentDidEnter) {
+	      component.componentDidEnter();
+	    }
+
+	    delete this.currentlyTransitioningKeys[key];
+
+	    var currentChildMapping;
+	    if (process.env.NODE_ENV !== 'production') {
+	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children, ReactInstanceMap.get(this)._debugID);
+	    } else {
+	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children);
+	    }
+
+	    if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
+	      // This was removed before it had fully entered. Remove it.
+	      this.performLeave(key);
+	    }
+	  },
+
+	  performLeave: function (key) {
+	    this.currentlyTransitioningKeys[key] = true;
+
+	    var component = this.refs[key];
+	    if (component.componentWillLeave) {
+	      component.componentWillLeave(this._handleDoneLeaving.bind(this, key));
+	    } else {
+	      // Note that this is somewhat dangerous b/c it calls setState()
+	      // again, effectively mutating the component before all the work
+	      // is done.
+	      this._handleDoneLeaving(key);
+	    }
+	  },
+
+	  _handleDoneLeaving: function (key) {
+	    var component = this.refs[key];
+
+	    if (component.componentDidLeave) {
+	      component.componentDidLeave();
+	    }
+
+	    delete this.currentlyTransitioningKeys[key];
+
+	    var currentChildMapping;
+	    if (process.env.NODE_ENV !== 'production') {
+	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children, ReactInstanceMap.get(this)._debugID);
+	    } else {
+	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children);
+	    }
+
+	    if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
+	      // This entered again before it fully left. Add it again.
+	      this.performEnter(key);
+	    } else {
+	      this.setState(function (state) {
+	        var newChildren = _assign({}, state.children);
+	        delete newChildren[key];
+	        return { children: newChildren };
+	      });
+	    }
+	  },
+
+	  render: function () {
+	    // TODO: we could get rid of the need for the wrapper node
+	    // by cloning a single child
+	    var childrenToRender = [];
+	    for (var key in this.state.children) {
+	      var child = this.state.children[key];
+	      if (child) {
+	        // You may need to apply reactive updates to a child as it is leaving.
+	        // The normal React way to do it won't work since the child will have
+	        // already been removed. In case you need this behavior you can provide
+	        // a childFactory function to wrap every child, even the ones that are
+	        // leaving.
+	        childrenToRender.push(React.cloneElement(this.props.childFactory(child), { ref: key, key: key }));
+	      }
+	    }
+
+	    // Do not forward ReactTransitionGroup props to primitive DOM nodes
+	    var props = _assign({}, this.props);
+	    delete props.transitionLeave;
+	    delete props.transitionName;
+	    delete props.transitionAppear;
+	    delete props.transitionEnter;
+	    delete props.childFactory;
+	    delete props.transitionLeaveTimeout;
+	    delete props.transitionEnterTimeout;
+	    delete props.transitionAppearTimeout;
+	    delete props.component;
+
+	    return React.createElement(this.props.component, props, childrenToRender);
+	  }
+	});
+
+	module.exports = ReactTransitionGroup;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactTransitionChildMapping
+	 */
+
+	'use strict';
+
+	var flattenChildren = __webpack_require__(128);
+
+	var ReactTransitionChildMapping = {
+	  /**
+	   * Given `this.props.children`, return an object mapping key to child. Just
+	   * simple syntactic sugar around flattenChildren().
+	   *
+	   * @param {*} children `this.props.children`
+	   * @param {number=} selfDebugID Optional debugID of the current internal instance.
+	   * @return {object} Mapping of key to child
+	   */
+	  getChildMapping: function (children, selfDebugID) {
+	    if (!children) {
+	      return children;
+	    }
+
+	    if (process.env.NODE_ENV !== 'production') {
+	      return flattenChildren(children, selfDebugID);
+	    }
+
+	    return flattenChildren(children);
+	  },
+
+	  /**
+	   * When you're adding or removing children some may be added or removed in the
+	   * same render pass. We want to show *both* since we want to simultaneously
+	   * animate elements in and out. This function takes a previous set of keys
+	   * and a new set of keys and merges them with its best guess of the correct
+	   * ordering. In the future we may expose some of the utilities in
+	   * ReactMultiChild to make this easy, but for now React itself does not
+	   * directly have this concept of the union of prevChildren and nextChildren
+	   * so we implement it here.
+	   *
+	   * @param {object} prev prev children as returned from
+	   * `ReactTransitionChildMapping.getChildMapping()`.
+	   * @param {object} next next children as returned from
+	   * `ReactTransitionChildMapping.getChildMapping()`.
+	   * @return {object} a key set that contains all keys in `prev` and all keys
+	   * in `next` in a reasonable order.
+	   */
+	  mergeChildMappings: function (prev, next) {
+	    prev = prev || {};
+	    next = next || {};
+
+	    function getValueForKey(key) {
+	      if (next.hasOwnProperty(key)) {
+	        return next[key];
+	      } else {
+	        return prev[key];
+	      }
+	    }
+
+	    // For each key of `next`, the list of keys to insert before that key in
+	    // the combined list
+	    var nextKeysPending = {};
+
+	    var pendingKeys = [];
+	    for (var prevKey in prev) {
+	      if (next.hasOwnProperty(prevKey)) {
+	        if (pendingKeys.length) {
+	          nextKeysPending[prevKey] = pendingKeys;
+	          pendingKeys = [];
+	        }
+	      } else {
+	        pendingKeys.push(prevKey);
+	      }
+	    }
+
+	    var i;
+	    var childMapping = {};
+	    for (var nextKey in next) {
+	      if (nextKeysPending.hasOwnProperty(nextKey)) {
+	        for (i = 0; i < nextKeysPending[nextKey].length; i++) {
+	          var pendingNextKey = nextKeysPending[nextKey][i];
+	          childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
+	        }
+	      }
+	      childMapping[nextKey] = getValueForKey(nextKey);
+	    }
+
+	    // Finally, add the keys which didn't appear before any key in `next`
+	    for (i = 0; i < pendingKeys.length; i++) {
+	      childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+	    }
+
+	    return childMapping;
+	  }
+	};
+
+	module.exports = ReactTransitionChildMapping;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactCSSTransitionGroupChild
+	 */
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var ReactDOM = __webpack_require__(35);
+
+	var CSSCore = __webpack_require__(185);
+	var ReactTransitionEvents = __webpack_require__(186);
+
+	var onlyChild = __webpack_require__(33);
+
+	var TICK = 17;
+
+	var ReactCSSTransitionGroupChild = React.createClass({
+	  displayName: 'ReactCSSTransitionGroupChild',
+
+	  propTypes: {
+	    name: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.shape({
+	      enter: React.PropTypes.string,
+	      leave: React.PropTypes.string,
+	      active: React.PropTypes.string
+	    }), React.PropTypes.shape({
+	      enter: React.PropTypes.string,
+	      enterActive: React.PropTypes.string,
+	      leave: React.PropTypes.string,
+	      leaveActive: React.PropTypes.string,
+	      appear: React.PropTypes.string,
+	      appearActive: React.PropTypes.string
+	    })]).isRequired,
+
+	    // Once we require timeouts to be specified, we can remove the
+	    // boolean flags (appear etc.) and just accept a number
+	    // or a bool for the timeout flags (appearTimeout etc.)
+	    appear: React.PropTypes.bool,
+	    enter: React.PropTypes.bool,
+	    leave: React.PropTypes.bool,
+	    appearTimeout: React.PropTypes.number,
+	    enterTimeout: React.PropTypes.number,
+	    leaveTimeout: React.PropTypes.number
+	  },
+
+	  transition: function (animationType, finishCallback, userSpecifiedDelay) {
+	    var node = ReactDOM.findDOMNode(this);
+
+	    if (!node) {
+	      if (finishCallback) {
+	        finishCallback();
+	      }
+	      return;
+	    }
+
+	    var className = this.props.name[animationType] || this.props.name + '-' + animationType;
+	    var activeClassName = this.props.name[animationType + 'Active'] || className + '-active';
+	    var timeout = null;
+
+	    var endListener = function (e) {
+	      if (e && e.target !== node) {
+	        return;
+	      }
+
+	      clearTimeout(timeout);
+
+	      CSSCore.removeClass(node, className);
+	      CSSCore.removeClass(node, activeClassName);
+
+	      ReactTransitionEvents.removeEndEventListener(node, endListener);
+
+	      // Usually this optional callback is used for informing an owner of
+	      // a leave animation and telling it to remove the child.
+	      if (finishCallback) {
+	        finishCallback();
+	      }
+	    };
+
+	    CSSCore.addClass(node, className);
+
+	    // Need to do this to actually trigger a transition.
+	    this.queueClassAndNode(activeClassName, node);
+
+	    // If the user specified a timeout delay.
+	    if (userSpecifiedDelay) {
+	      // Clean-up the animation after the specified delay
+	      timeout = setTimeout(endListener, userSpecifiedDelay);
+	      this.transitionTimeouts.push(timeout);
+	    } else {
+	      // DEPRECATED: this listener will be removed in a future version of react
+	      ReactTransitionEvents.addEndEventListener(node, endListener);
+	    }
+	  },
+
+	  queueClassAndNode: function (className, node) {
+	    this.classNameAndNodeQueue.push({
+	      className: className,
+	      node: node
+	    });
+
+	    if (!this.timeout) {
+	      this.timeout = setTimeout(this.flushClassNameAndNodeQueue, TICK);
+	    }
+	  },
+
+	  flushClassNameAndNodeQueue: function () {
+	    if (this.isMounted()) {
+	      this.classNameAndNodeQueue.forEach(function (obj) {
+	        CSSCore.addClass(obj.node, obj.className);
+	      });
+	    }
+	    this.classNameAndNodeQueue.length = 0;
+	    this.timeout = null;
+	  },
+
+	  componentWillMount: function () {
+	    this.classNameAndNodeQueue = [];
+	    this.transitionTimeouts = [];
+	  },
+
+	  componentWillUnmount: function () {
+	    if (this.timeout) {
+	      clearTimeout(this.timeout);
+	    }
+	    this.transitionTimeouts.forEach(function (timeout) {
+	      clearTimeout(timeout);
+	    });
+
+	    this.classNameAndNodeQueue.length = 0;
+	  },
+
+	  componentWillAppear: function (done) {
+	    if (this.props.appear) {
+	      this.transition('appear', done, this.props.appearTimeout);
+	    } else {
+	      done();
+	    }
+	  },
+
+	  componentWillEnter: function (done) {
+	    if (this.props.enter) {
+	      this.transition('enter', done, this.props.enterTimeout);
+	    } else {
+	      done();
+	    }
+	  },
+
+	  componentWillLeave: function (done) {
+	    if (this.props.leave) {
+	      this.transition('leave', done, this.props.leaveTimeout);
+	    } else {
+	      done();
+	    }
+	  },
+
+	  render: function () {
+	    return onlyChild(this.props.children);
+	  }
+	});
+
+	module.exports = ReactCSSTransitionGroupChild;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	var invariant = __webpack_require__(8);
+
+	/**
+	 * The CSSCore module specifies the API (and implements most of the methods)
+	 * that should be used when dealing with the display of elements (via their
+	 * CSS classes and visibility on screen. It is an API focused on mutating the
+	 * display and not reading it as no logical state should be encoded in the
+	 * display of elements.
+	 */
+
+	/* Slow implementation for browsers that don't natively support .matches() */
+	function matchesSelector_SLOW(element, selector) {
+	  var root = element;
+	  while (root.parentNode) {
+	    root = root.parentNode;
+	  }
+
+	  var all = root.querySelectorAll(selector);
+	  return Array.prototype.indexOf.call(all, element) !== -1;
+	}
+
+	var CSSCore = {
+
+	  /**
+	   * Adds the class passed in to the element if it doesn't already have it.
+	   *
+	   * @param {DOMElement} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @return {DOMElement} the element passed in
+	   */
+	  addClass: function addClass(element, className) {
+	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSSCore.addClass takes only a single class name. "%s" contains ' + 'multiple classes.', className) : invariant(false) : void 0;
+
+	    if (className) {
+	      if (element.classList) {
+	        element.classList.add(className);
+	      } else if (!CSSCore.hasClass(element, className)) {
+	        element.className = element.className + ' ' + className;
+	      }
+	    }
+	    return element;
+	  },
+
+	  /**
+	   * Removes the class passed in from the element
+	   *
+	   * @param {DOMElement} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @return {DOMElement} the element passed in
+	   */
+	  removeClass: function removeClass(element, className) {
+	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSSCore.removeClass takes only a single class name. "%s" contains ' + 'multiple classes.', className) : invariant(false) : void 0;
+
+	    if (className) {
+	      if (element.classList) {
+	        element.classList.remove(className);
+	      } else if (CSSCore.hasClass(element, className)) {
+	        element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ') // multiple spaces to one
+	        .replace(/^\s*|\s*$/g, ''); // trim the ends
+	      }
+	    }
+	    return element;
+	  },
+
+	  /**
+	   * Helper to add or remove a class from an element based on a condition.
+	   *
+	   * @param {DOMElement} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @param {*} bool condition to whether to add or remove the class
+	   * @return {DOMElement} the element passed in
+	   */
+	  conditionClass: function conditionClass(element, className, bool) {
+	    return (bool ? CSSCore.addClass : CSSCore.removeClass)(element, className);
+	  },
+
+	  /**
+	   * Tests whether the element has the class specified.
+	   *
+	   * @param {DOMNode|DOMWindow} element the element to check the class on
+	   * @param {string} className the CSS className
+	   * @return {boolean} true if the element has the class, false if not
+	   */
+	  hasClass: function hasClass(element, className) {
+	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSS.hasClass takes only a single class name.') : invariant(false) : void 0;
+	    if (element.classList) {
+	      return !!className && element.classList.contains(className);
+	    }
+	    return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
+	  },
+
+	  /**
+	   * Tests whether the element matches the selector specified
+	   *
+	   * @param {DOMNode|DOMWindow} element the element that we are querying
+	   * @param {string} selector the CSS selector
+	   * @return {boolean} true if the element matches the selector, false if not
+	   */
+	  matchesSelector: function matchesSelector(element, selector) {
+	    var matchesImpl = element.matches || element.webkitMatchesSelector || element.mozMatchesSelector || element.msMatchesSelector || function (s) {
+	      return matchesSelector_SLOW(element, s);
+	    };
+	    return matchesImpl.call(element, selector);
+	  }
+
+	};
+
+	module.exports = CSSCore;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactTransitionEvents
+	 */
+
+	'use strict';
+
+	var ExecutionEnvironment = __webpack_require__(49);
+
+	var getVendorPrefixedEventName = __webpack_require__(109);
+
+	var endEvents = [];
+
+	function detectEvents() {
+	  var animEnd = getVendorPrefixedEventName('animationend');
+	  var transEnd = getVendorPrefixedEventName('transitionend');
+
+	  if (animEnd) {
+	    endEvents.push(animEnd);
+	  }
+
+	  if (transEnd) {
+	    endEvents.push(transEnd);
+	  }
+	}
+
+	if (ExecutionEnvironment.canUseDOM) {
+	  detectEvents();
+	}
+
+	// We use the raw {add|remove}EventListener() call because EventListener
+	// does not know how to remove event listeners and we really should
+	// clean up. Also, these events are not triggered in older browsers
+	// so we should be A-OK here.
+
+	function addEventListener(node, eventName, eventListener) {
+	  node.addEventListener(eventName, eventListener, false);
+	}
+
+	function removeEventListener(node, eventName, eventListener) {
+	  node.removeEventListener(eventName, eventListener, false);
+	}
+
+	var ReactTransitionEvents = {
+	  addEndEventListener: function (node, eventListener) {
+	    if (endEvents.length === 0) {
+	      // If CSS transitions are not supported, trigger an "end animation"
+	      // event immediately.
+	      window.setTimeout(eventListener, 0);
+	      return;
+	    }
+	    endEvents.forEach(function (endEvent) {
+	      addEventListener(node, endEvent, eventListener);
+	    });
+	  },
+
+	  removeEndEventListener: function (node, eventListener) {
+	    if (endEvents.length === 0) {
+	      return;
+	    }
+	    endEvents.forEach(function (endEvent) {
+	      removeEventListener(node, endEvent, eventListener);
+	    });
+	  }
+	};
+
+	module.exports = ReactTransitionEvents;
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ResultFilters = function (_React$Component) {
+	  _inherits(ResultFilters, _React$Component);
+
+	  function ResultFilters(props) {
+	    _classCallCheck(this, ResultFilters);
+
+	    var _this = _possibleConstructorReturn(this, (ResultFilters.__proto__ || Object.getPrototypeOf(ResultFilters)).call(this, props));
+
+	    _this.state = {
+	      keyword: "",
+	      minPrice: "",
+	      maxPrice: ""
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ResultFilters, [{
+	    key: "onFormSubmit",
+	    value: function onFormSubmit(e) {
+	      e.preventDefault();
+
+	      var options = {
+	        keyword: this.state.keyword,
+	        minPrice: this.state.minPrice,
+	        maxPrice: this.state.maxPrice
+	      };
+	      this.props.handleFiltersChange(options);
+	    }
+	  }, {
+	    key: "changeKeyword",
+	    value: function changeKeyword(e) {
+	      this.setState({ keyword: e.target.value });
+	    }
+	  }, {
+	    key: "changeMinPrice",
+	    value: function changeMinPrice(e) {
+	      this.setState({ minPrice: e.target.value });
+	    }
+	  }, {
+	    key: "changeMaxPrice",
+	    value: function changeMaxPrice(e) {
+	      this.setState({ maxPrice: e.target.value });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "p-result__filters" },
+	        _react2.default.createElement(
+	          "form",
+	          { onSubmit: function onSubmit(e) {
+	              return _this2.onFormSubmit(e);
+	            } },
+	          _react2.default.createElement(
+	            "table",
+	            { className: "p-filter-table" },
+	            _react2.default.createElement(
+	              "caption",
+	              null,
+	              "Search option"
+	            ),
+	            _react2.default.createElement(
+	              "tbody",
+	              null,
+	              _react2.default.createElement(
+	                "tr",
+	                null,
+	                _react2.default.createElement(
+	                  "th",
+	                  null,
+	                  "keyword"
+	                ),
+	                _react2.default.createElement(
+	                  "td",
+	                  null,
+	                  _react2.default.createElement("input", { type: "text", ref: "keyword", value: this.state.keyword, onChange: function onChange(e) {
+	                      return _this2.changeKeyword(e);
+	                    } })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "tr",
+	                null,
+	                _react2.default.createElement(
+	                  "th",
+	                  null,
+	                  "price"
+	                ),
+	                _react2.default.createElement(
+	                  "td",
+	                  null,
+	                  "min: \xA5",
+	                  _react2.default.createElement("input", { type: "text", ref: "minPrice", value: this.state.minPrice,
+	                    onChange: function onChange(e) {
+	                      return _this2.changeMinPrice(e);
+	                    }, placeholder: "----" }),
+	                  " to max: \xA5",
+	                  _react2.default.createElement("input", { type: "text", ref: "maxPrice", value: this.state.maxPrice,
+	                    onChange: function onChange(e) {
+	                      return _this2.changeMaxPrice(e);
+	                    }, placeholder: "----" })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "tr",
+	                null,
+	                _react2.default.createElement("th", null),
+	                _react2.default.createElement(
+	                  "td",
+	                  null,
+	                  _react2.default.createElement("input", { type: "submit", className: "p-result__update-button", value: "Update" })
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ResultFilters;
+	}(_react2.default.Component);
+
+	exports.default = ResultFilters;
+
+
+	ResultFilters.propTypes = {
+	  handleFiltersChange: _react2.default.PropTypes.func.isRequired
+	};
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactPaginate = __webpack_require__(189);
+
+	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
+
+	var _loader = __webpack_require__(196);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ResultList = function (_React$Component) {
+	  _inherits(ResultList, _React$Component);
+
+	  function ResultList() {
+	    _classCallCheck(this, ResultList);
+
+	    return _possibleConstructorReturn(this, (ResultList.__proto__ || Object.getPrototypeOf(ResultList)).apply(this, arguments));
+	  }
+
+	  _createClass(ResultList, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(Items, { data: this.state.data }),
+	        { className: 'p-result__list' },
+	        this.props.loadingIsHidden ? null : _react2.default.createElement(_loader2.default, null),
+	        _react2.default.createElement(Items, { data: this.props.data }),
 	        _react2.default.createElement(_reactPaginate2.default, { previousLabel: "previous",
 	          nextLabel: "next",
 	          breakLabel: "...",
 	          breakClassName: "c-pagination__child--break-me",
-	          pageNum: this.state.pageNum,
+	          pageNum: this.props.pageNum,
 	          marginPagesDisplayed: this.props.paginate.marginPagesDisplayed,
 	          pageRangeDisplayed: this.props.paginate.pageRangeDisplayed,
-	          clickCallback: this.handlePageClick.bind(this),
+	          clickCallback: this.props.paginate.handlePaginationClick,
 	          containerClassName: "c-pagination",
 	          previousClassName: "c-pagination__child--to_prev",
 	          nextClassName: "c-pagination__child--to_next",
@@ -23164,10 +24331,22 @@
 	    }
 	  }]);
 
-	  return ItemList;
+	  return ResultList;
 	}(_react2.default.Component);
 
-	exports.default = ItemList;
+	exports.default = ResultList;
+
+
+	ResultList.propTypes = {
+	  data: _react2.default.PropTypes.array.isRequired,
+	  loadingIsHidden: _react2.default.PropTypes.bool.isRequired,
+	  pageNum: _react2.default.PropTypes.number.isRequired,
+	  paginate: _react2.default.PropTypes.shape({
+	    handlePaginationClick: _react2.default.PropTypes.func.isRequired,
+	    marginPagesDisplayed: _react2.default.PropTypes.number.isRequired,
+	    pageRangeDisplayed: _react2.default.PropTypes.number.isRequired
+	  })
+	};
 
 	var Items = function (_React$Component2) {
 	  _inherits(Items, _React$Component2);
@@ -23182,7 +24361,10 @@
 	    key: 'render',
 	    value: function render() {
 	      var itemNodes = this.props.data.map(function (item) {
-	        return _react2.default.createElement(Item, { price: item.price, image: item.image, category: item.category.tree, key: item.pk });
+	        return _react2.default.createElement(Item, {
+	          key: item.pk,
+	          image: item.image, orientation: item.orientation,
+	          category: item.category_tree, price: item.price });
 	      });
 	      return _react2.default.createElement(
 	        'div',
@@ -23207,6 +24389,9 @@
 	  _createClass(Item, [{
 	    key: 'render',
 	    value: function render() {
+	      var image_class = "p-image ";
+	      if (this.props.orientation !== "square") image_class += "p-image--" + this.props.orientation;
+
 	      return _react2.default.createElement(
 	        'a',
 	        { className: 'p-item', href: '#' },
@@ -23218,8 +24403,8 @@
 	            { className: 'p-item__image' },
 	            _react2.default.createElement(
 	              'div',
-	              null,
-	              _react2.default.createElement('img', { src: this.props.image })
+	              { className: 'p-image-box' },
+	              _react2.default.createElement('img', { className: image_class, src: this.props.image })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -23261,12 +24446,12 @@
 	};
 
 /***/ },
-/* 180 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(181);
+	var _PaginationBoxView = __webpack_require__(190);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -23276,7 +24461,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 181 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23291,19 +24476,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(182);
+	var _classnames = __webpack_require__(191);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(183);
+	var _reactAddonsCreateFragment = __webpack_require__(192);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(185);
+	var _PageView = __webpack_require__(194);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(186);
+	var _BreakView = __webpack_require__(195);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -23529,7 +24714,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 182 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -23583,13 +24768,13 @@
 
 
 /***/ },
-/* 183 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(184).create;
+	module.exports = __webpack_require__(193).create;
 
 /***/ },
-/* 184 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23664,7 +24849,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 185 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23731,7 +24916,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 186 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23785,12 +24970,145 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 187 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! smooth-scroll v10.1.0 | (c) 2016 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/smooth-scroll */
-	!(function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t(e)), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof exports?module.exports=t(e):e.smoothScroll=t(e)})("undefined"!=typeof global?global:this.window||this.global,(function(e){"use strict";var t,n,o,r,a,i,c,u={},l="querySelector"in document&&"addEventListener"in e,s={selector:"[data-scroll]",selectorHeader:null,speed:500,easing:"easeInOutCubic",offset:0,callback:function(){}},f=function(){var e={},t=!1,n=0,o=arguments.length;"[object Boolean]"===Object.prototype.toString.call(arguments[0])&&(t=arguments[0],n++);for(var r=function(n){for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(t&&"[object Object]"===Object.prototype.toString.call(n[o])?e[o]=f(!0,e[o],n[o]):e[o]=n[o])};n<o;n++){var a=arguments[n];r(a)}return e},d=function(e){return Math.max(e.scrollHeight,e.offsetHeight,e.clientHeight)},h=function(e,t){var n,o,r=t.charAt(0),a="classList"in document.documentElement;for("["===r&&(t=t.substr(1,t.length-2),n=t.split("="),n.length>1&&(o=!0,n[1]=n[1].replace(/"/g,"").replace(/'/g,"")));e&&e!==document&&1===e.nodeType;e=e.parentNode){if("."===r)if(a){if(e.classList.contains(t.substr(1)))return e}else if(new RegExp("(^|\\s)"+t.substr(1)+"(\\s|$)").test(e.className))return e;if("#"===r&&e.id===t.substr(1))return e;if("["===r&&e.hasAttribute(n[0])){if(!o)return e;if(e.getAttribute(n[0])===n[1])return e}if(e.tagName.toLowerCase()===t)return e}return null},m=function(e){"#"===e.charAt(0)&&(e=e.substr(1));for(var t,n=String(e),o=n.length,r=-1,a="",i=n.charCodeAt(0);++r<o;){if(t=n.charCodeAt(r),0===t)throw new InvalidCharacterError("Invalid character: the input contains U+0000.");a+=t>=1&&t<=31||127==t||0===r&&t>=48&&t<=57||1===r&&t>=48&&t<=57&&45===i?"\\"+t.toString(16)+" ":t>=128||45===t||95===t||t>=48&&t<=57||t>=65&&t<=90||t>=97&&t<=122?n.charAt(r):"\\"+n.charAt(r)}return"#"+a},g=function(e,t){var n;return"easeInQuad"===e&&(n=t*t),"easeOutQuad"===e&&(n=t*(2-t)),"easeInOutQuad"===e&&(n=t<.5?2*t*t:-1+(4-2*t)*t),"easeInCubic"===e&&(n=t*t*t),"easeOutCubic"===e&&(n=--t*t*t+1),"easeInOutCubic"===e&&(n=t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1),"easeInQuart"===e&&(n=t*t*t*t),"easeOutQuart"===e&&(n=1- --t*t*t*t),"easeInOutQuart"===e&&(n=t<.5?8*t*t*t*t:1-8*--t*t*t*t),"easeInQuint"===e&&(n=t*t*t*t*t),"easeOutQuint"===e&&(n=1+--t*t*t*t*t),"easeInOutQuint"===e&&(n=t<.5?16*t*t*t*t*t:1+16*--t*t*t*t*t),n||t},p=function(e,t,n){var o=0;if(e.offsetParent)do o+=e.offsetTop,e=e.offsetParent;while(e);return o=Math.max(o-t-n,0),Math.min(o,v()-b())},b=function(){return Math.max(document.documentElement.clientHeight,e.innerHeight||0)},v=function(){return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.body.clientHeight,document.documentElement.clientHeight)},y=function(e){return e&&"object"==typeof JSON&&"function"==typeof JSON.parse?JSON.parse(e):{}},O=function(e){return e?d(e)+e.offsetTop:0},H=function(t,n,o){o||(t.focus(),document.activeElement.id!==t.id&&(t.setAttribute("tabindex","-1"),t.focus(),t.style.outline="none"),e.scrollTo(0,n))};u.animateScroll=function(n,o,i){var u=y(o?o.getAttribute("data-options"):null),l=f(t||s,i||{},u),d="[object Number]"===Object.prototype.toString.call(n),h=d||!n.tagName?null:n;if(d||h){var m=e.pageYOffset;l.selectorHeader&&!r&&(r=document.querySelector(l.selectorHeader)),a||(a=O(r));var b,I,S=d?n:p(h,a,parseInt(l.offset,10)),E=S-m,A=v(),j=0,L=function(t,r,a){var i=e.pageYOffset;(t==r||i==r||e.innerHeight+i>=A)&&(clearInterval(a),H(n,r,d),l.callback(n,o))},w=function(){j+=16,b=j/parseInt(l.speed,10),b=b>1?1:b,I=m+E*g(l.easing,b),e.scrollTo(0,Math.floor(I)),L(I,S,c)},C=function(){clearInterval(c),c=setInterval(w,16)};0===e.pageYOffset&&e.scrollTo(0,0),C()}};var I=function(t){e.location.hash;n&&(n.id=n.getAttribute("data-scroll-id"),u.animateScroll(n,o),n=null,o=null)},S=function(r){if(0===r.button&&!r.metaKey&&!r.ctrlKey&&(o=h(r.target,t.selector),o&&"a"===o.tagName.toLowerCase()&&o.hostname===e.location.hostname&&o.pathname===e.location.pathname&&/#/.test(o.href))){var a=m(o.hash);if("#"===a){r.preventDefault(),n=document.body;var i=n.id?n.id:"smooth-scroll-top";return n.setAttribute("data-scroll-id",i),n.id="",void(e.location.hash.substring(1)===i?I():e.location.hash=i)}n=document.querySelector(a),n&&(n.setAttribute("data-scroll-id",n.id),n.id="",o.hash===e.location.hash&&(r.preventDefault(),I()))}},E=function(e){i||(i=setTimeout((function(){i=null,a=O(r)}),66))};return u.destroy=function(){t&&(document.removeEventListener("click",S,!1),e.removeEventListener("resize",E,!1),t=null,n=null,o=null,r=null,a=null,i=null,c=null)},u.init=function(n){l&&(u.destroy(),t=f(s,n||{}),r=t.selectorHeader?document.querySelector(t.selectorHeader):null,a=O(r),document.addEventListener("click",S,!1),e.addEventListener("hashchange",I,!1),r&&e.addEventListener("resize",E,!1))},u}));
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Loader = function (_React$Component) {
+	  _inherits(Loader, _React$Component);
+
+	  function Loader() {
+	    _classCallCheck(this, Loader);
+
+	    return _possibleConstructorReturn(this, (Loader.__proto__ || Object.getPrototypeOf(Loader)).apply(this, arguments));
+	  }
+
+	  _createClass(Loader, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "p-items--state_loading" },
+	        _react2.default.createElement("i", null)
+	      );
+	    }
+	  }]);
+
+	  return Loader;
+	}(_react2.default.Component);
+
+	exports.default = Loader;
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ResultOrdering = function (_React$Component) {
+	  _inherits(ResultOrdering, _React$Component);
+
+	  function ResultOrdering(props) {
+	    _classCallCheck(this, ResultOrdering);
+
+	    var _this = _possibleConstructorReturn(this, (ResultOrdering.__proto__ || Object.getPrototypeOf(ResultOrdering)).call(this, props));
+
+	    _this.select = [{ key: "default", value: "default" }, { key: "priceAsc", value: "price(ascending)" }, { key: "priceDesc", value: "price(descending)" }];
+
+	    _this.ordering = {
+	      "default": null,
+	      "priceAsc": { key: "price", by: "asc" },
+	      "priceDesc": { key: "price", by: "desc" }
+	    };
+
+	    _this.state = {
+	      selectedKey: "default"
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ResultOrdering, [{
+	    key: "onChangeSelectValue",
+	    value: function onChangeSelectValue(e) {
+	      var selectedKey = e.target.value;
+	      this.setState({ selectedKey: selectedKey });
+
+	      var ordering = this.ordering[selectedKey];
+	      if (ordering === null) {
+	        this.props.handleOrderingChange();
+	        return;
+	      }
+
+	      this.props.handleOrderingChange(ordering);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var options = this.select.map(function (obj) {
+	        return _react2.default.createElement(
+	          "option",
+	          { value: obj.key, key: obj.key },
+	          obj.value
+	        );
+	      });
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "p-result__sort-order" },
+	        _react2.default.createElement(
+	          "select",
+	          { value: this.state.selectedKey, onChange: this.onChangeSelectValue.bind(this) },
+	          options
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ResultOrdering;
+	}(_react2.default.Component);
+
+	exports.default = ResultOrdering;
+
+
+	ResultOrdering.propTypes = {
+	  handleOrderingChange: _react2.default.PropTypes.func.isRequired
+	};
 
 /***/ }
 /******/ ]);
