@@ -6,10 +6,11 @@ import Result from './components/result'
 
 
 let resultContainer = document.getElementById('js-result')
+let url = resultContainer.getAttribute('data-request-url')
 
 ReactDOM.render(
   <Result
-    url="/api/items/"
+    url={url}
     paginate={{
       perPage: 12,
       marginPagesDisplayed: 1,
