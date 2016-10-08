@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -5,16 +6,20 @@ from django.utils.translation import ugettext_lazy as _
 class Category(models.Model):
     title = models.CharField(max_length=255)
     parent = models.ForeignKey(
-        'self', blank=True, null=True, related_name='child')
+        'self', blank=False, null=True, related_name='children')
 
     class Meta:
         verbose_name_plural = 'Categories'
-        ordering = ['title']
+        ordering = ['title', ]
 
     def __str__(self):
         p_list = self._recurse_for_parents(self)
         p_list.append(self.title)
         return self.get_separator().join(p_list)
+
+    @property
+    def parents(self):
+        return self._recurse_for_parents(self)
 
     def _recurse_for_parents(self, cat_obj):
         p_list = []
@@ -27,20 +32,34 @@ class Category(models.Model):
             p_list.reverse()
         return p_list
 
-    def get_separator(self):
-        return ' > '
-
     def _parents_repr(self):
         p_list = self._recurse_for_parents(self)
         return self.get_separator().join(p_list)
     _parents_repr.short_description = 'Category parents'
 
-    def save(self):
+    def get_separator(self):
+        return ' > '
+
+    def get_children_tree(self, cat_obj):
+        if cat_obj is None:
+            children = Category.objects.filter(parent__isnull=True)
+        elif not cat_obj.children.exists():
+            return None
+        else:
+            children = cat_obj.children.all()
+        c_list = []
+        for child in children:
+            c_element = {}
+            c_element["title"] = child.title
+            c_element["children"] = self._recurse_for_children(child)
+            c_list.append(c_element)
+        return c_list
+
+    def clean(self):
         p_list = self._recurse_for_parents(self)
         if self.title in p_list:
-            raise validators.ValidationError(
+            raise ValidationError(
                 _('You must not save a category in itself'))
-        super(Category, self).save()
 
     @models.permalink
     def get_absolute_url(self):
@@ -67,16 +86,12 @@ class Clothing(models.Model):
     class Meta:
         abstract = True
 
-    @property
-    def category_tree(self):
-        tree = self.category._recurse_for_parents(self.category)
-        tree.append(self.category.title)
-        return tree
-
-    def get_image_upload_to_path(instance, filename):
+    @staticmethod
+    def get_image_upload_to_path(filename):
         return 'images/' + filename
 
-    def get_binary_image_upload_to_path(instance, filename):
+    @staticmethod
+    def get_binary_image_upload_to_path(filename):
         return 'binary_images/' + filename
 
     def delete(self, *args, **kwargs):

@@ -23137,8 +23137,6 @@
 	          console.error(_this2.props.url, status, err.toString());
 	        }
 
-	        console.log(res.body.results);
-
 	        _this2.setState({
 	          data: res.body.results,
 	          pageNum: Math.ceil(res.body.count / _this2.props.paginate.perPage),
@@ -24394,11 +24392,14 @@
 	  _createClass(Items, [{
 	    key: 'render',
 	    value: function render() {
+	      var item_separator = " > ";
 	      var itemNodes = this.props.data.map(function (item) {
+	        var parents = item.category.parents.join(item_separator);
+	        var category = parents + item_separator + item.category.title;
 	        return _react2.default.createElement(Item, {
 	          key: item.pk,
 	          image: item.image, orientation: item.orientation,
-	          category: item.category_tree, price: item.price });
+	          category: category, price: item.price });
 	      });
 	      return _react2.default.createElement(
 	        'div',
@@ -24461,7 +24462,7 @@
 	              _react2.default.createElement(
 	                'dd',
 	                null,
-	                this.props.category.join(" > ")
+	                this.props.category
 	              )
 	            )
 	          )
@@ -24476,7 +24477,7 @@
 	Item.propTypes = {
 	  image: _react2.default.PropTypes.string.isRequired,
 	  price: _react2.default.PropTypes.number.isRequired,
-	  category: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired
+	  category: _react2.default.PropTypes.string.isRequired
 	};
 
 /***/ },

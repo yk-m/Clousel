@@ -47,12 +47,15 @@ ResultList.propTypes = {
 class Items extends React.Component {
 
   render() {
-    var itemNodes = this.props.data.map( (item) => {
+    const item_separator = " > "
+    let itemNodes = this.props.data.map( (item) => {
+      let parents = item.category.parents.join(item_separator)
+      let category = parents + item_separator + item.category.title
       return (
         <Item
           key={item.pk}
           image={item.image} orientation={item.orientation}
-          category={item.category_tree} price={item.price}>
+          category={category} price={item.price}>
         </Item>
       )
     })
@@ -84,7 +87,7 @@ class Item extends React.Component {
             <p className="p-item__price">¥{this.props.price}</p>
             <dl>
               <dt>category</dt>
-              <dd>{this.props.category.join(" > ")}</dd>
+              <dd>{this.props.category}</dd>
             </dl>
           </div>
         </div>
@@ -96,5 +99,5 @@ class Item extends React.Component {
 Item.propTypes = {
   image: React.PropTypes.string.isRequired,
   price: React.PropTypes.number.isRequired,
-  category: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  category: React.PropTypes.string.isRequired,
 }

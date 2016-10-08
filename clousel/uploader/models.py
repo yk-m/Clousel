@@ -18,10 +18,10 @@ class UserImage(Clothing):
     class Meta:
         verbose_name_plural = 'user images'
 
-    def get_image_upload_to_path(instance, filename):
+    def get_image_upload_to_path(self, filename):
         ext = filename.split('.')[-1]
-        return 'user/images/{0}/{1}.{2}'.format(instance.owner.id, uuid4().hex, ext)
+        return 'user/images/{0}/{1}.{2}'.format(self.owner.id, uuid4().hex, ext)
 
-    def get_binary_image_upload_to_path(instance, filename):
+    def get_binary_image_upload_to_path(self, filename):
         ext = filename.split('.')[-1]
-        return 'user/binary_images/{0}/{1}.{2}'.format(instance.owner.id, uuid4().hex, ext)
+        return 'user/binary_images/{0}/{1}.{2}'.format(self.owner.id, uuid4().hex, ext)
