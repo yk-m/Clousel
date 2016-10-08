@@ -69,7 +69,9 @@ class Clothing(models.Model):
 
     @property
     def category_tree(self):
-        return self.category._recurse_for_parents.append(self)
+        tree = self.category._recurse_for_parents(self.category)
+        tree.append(self.category.title)
+        return tree
 
     def get_image_upload_to_path(instance, filename):
         return 'images/' + filename
