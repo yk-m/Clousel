@@ -163,6 +163,27 @@ EMAIL_PORT = "1025"
 # EMAIL_PORT = "25"
 
 
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'clousel/logs/django.log'),
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+
 # Module Settings
 # --- Debug Toolbar
 INTERNAL_IPS = ('10.0.2.2', '127.0.0.1', '0.0.0.0')
