@@ -66,7 +66,7 @@ export default class ItemList extends React.Component {
                        pageNum={this.state.pageNum}
                        marginPagesDisplayed={this.props.paginate.marginPagesDisplayed}
                        pageRangeDisplayed={this.props.paginate.pageRangeDisplayed}
-                       clickCallback={this.handlePageClick.bind(this)}
+                       clickCallback={(e) => this.handlePageClick(e)}
                        containerClassName={"c-pagination"}
                        previousClassName={"c-pagination__child--to_prev"}
                        nextClassName={"c-pagination__child--to_next"}

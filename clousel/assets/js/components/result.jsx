@@ -125,22 +125,22 @@ export default class Result extends React.Component {
     return (
       <section className="p-result" >
         <div className="p-result__header">
-          <h2 className="p-result__title">Search Results <span onClick={this.toggleFiltersBlock.bind(this)}>[option]</span></h2>
-          <ResultOrdering handleOrderingChange={this.handleOrderingChange.bind(this)} />
+          <h2 className="p-result__title">Search Results <span onClick={(e) => this.toggleFiltersBlock(e)}>[option]</span></h2>
+          <ResultOrdering handleOrderingChange={(e) => this.handleOrderingChange(e)} />
         </div>
         <ReactCSSTransitionGroup
           transitionName="slide"
           transitionEnterTimeout={300}
           transitionLeaveTimeout={300}>
           {this.state.filtersAreHidden?
-            null : <ResultFilters handleFiltersChange={this.handleFiltersChange.bind(this)} /> }
+            null : <ResultFilters handleFiltersChange={(e) => this.handleFiltersChange(e)} /> }
         </ReactCSSTransitionGroup>
         <ResultList
           data={this.state.data}
           loadingIsHidden={this.state.loadingIsHidden}
           pageNum={this.state.pageNum}
           paginate={{
-            handlePaginationClick: this.handlePaginationClick.bind(this),
+            handlePaginationClick: (e) => this.handlePaginationClick(e),
             marginPagesDisplayed: this.props.paginate.marginPagesDisplayed,
             pageRangeDisplayed: this.props.paginate.pageRangeDisplayed
           }}
