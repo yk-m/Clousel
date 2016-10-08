@@ -42,8 +42,6 @@ export default class Result extends React.Component {
           console.error(this.props.url, status, err.toString())
         }
 
-        console.log(res.body.results)
-
         this.setState({
           data: res.body.results,
           pageNum: Math.ceil(res.body.count / this.props.paginate.perPage),

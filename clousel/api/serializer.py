@@ -46,13 +46,21 @@ class FullUserSerializer(BasicUserSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('title', 'parents' )
+
+
 class ClothingSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
     orientation = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
-        fields = ('pk', 'image', 'orientation', 'category', 'category_tree', )
-        read_only_fields = ('pk', 'category_tree', )
+        fields = ('pk', 'image', 'orientation', 'category', )
+        read_only_fields = ('pk', 'category', )
 
     def get_orientation(self, obj):
         if (obj.image.height < obj.image.width):
@@ -70,12 +78,12 @@ class ItemSerializer(ClothingSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'image', 'orientation', 'category', 'category_tree', 'price', 'brand', 'exhibiter',
+        fields = ('pk', 'image', 'orientation', 'category', 'price', 'brand', 'exhibiter',
                   'delivery_days', 'delivery_service', 'delivery_source',
                   'rank', 'size', 'image_url', 'page_url', 'details',
                   'created', 'updated',
                   'likes', 'purchases', 'is_liked', 'is_purchased', )
-        read_only_fields = ('pk', 'orientation', 'category_tree', 'created', 'updated',
+        read_only_fields = ('pk', 'orientation', 'category', 'created', 'updated',
                             'likes', 'purchases', 'is_liked', 'is_purchased', )
 
     def get_likes(self, obj):
@@ -95,9 +103,9 @@ class UserImageSerializer(ClothingSerializer):
 
     class Meta:
         model = UserImage
-        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'category_tree', 'has_bought',
+        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'has_bought',
                   'created', 'updated', )
-        read_only_fields = ('pk', 'owner', 'orientation', 'category_tree', 'created', 'updated', )
+        read_only_fields = ('pk', 'owner', 'orientation', 'category', 'created', 'updated', )
 
 
 class LikeSerializer(serializers.ModelSerializer):

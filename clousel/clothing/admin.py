@@ -5,4 +5,5 @@ from .models import Category
 
 @admin.register(Category)
 class Category(admin.ModelAdmin):
-    pass
+    list_display = ('title', '_parents_repr')
+    search_fields = ['title']

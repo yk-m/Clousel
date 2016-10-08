@@ -27,8 +27,10 @@ class Item(Clothing):
     def __str__(self):
         return str(self.category)
 
-    def get_image_upload_to_path(instance, filename):
+    @staticmethod
+    def get_image_upload_to_path(filename):
         return 'shop_item/images/' + filename
 
-    def get_binary_image_upload_to_path(instance, filename):
+    @staticmethod
+    def get_binary_image_upload_to_path(filename):
         return 'shop_item/binary_images/' + filename
