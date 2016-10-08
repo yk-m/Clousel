@@ -2,6 +2,7 @@ __pycache__/
 .sass-cache/
 
 clousel/clousel/media/*
+clousel/clousel/logs/*
 clousel/node_modules/*
 !.gitkeep
 clousel/init/amebafurugiya.json
