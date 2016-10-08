@@ -48,7 +48,6 @@ class FullUserSerializer(BasicUserSerializer):
 
 class ClothingSerializer(serializers.ModelSerializer):
     orientation = serializers.SerializerMethodField()
-    category_tree = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
@@ -61,12 +60,6 @@ class ClothingSerializer(serializers.ModelSerializer):
         if (obj.image.height > obj.image.width):
             return 'portrait'
         return 'square'
-
-    def get_category_tree(self, obj):
-        category = obj.category
-        tree = category._recurse_for_parents(category)
-        tree.append(category.title)
-        return tree
 
 
 class ItemSerializer(ClothingSerializer):
