@@ -23224,6 +23224,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this6 = this;
+
 	      return _react2.default.createElement(
 	        'section',
 	        { className: 'p-result' },
@@ -23236,11 +23238,15 @@
 	            'Search Results ',
 	            _react2.default.createElement(
 	              'span',
-	              { onClick: this.toggleFiltersBlock.bind(this) },
+	              { onClick: function onClick(e) {
+	                  return _this6.toggleFiltersBlock(e);
+	                } },
 	              '[option]'
 	            )
 	          ),
-	          _react2.default.createElement(_resultOrdering2.default, { handleOrderingChange: this.handleOrderingChange.bind(this) })
+	          _react2.default.createElement(_resultOrdering2.default, { handleOrderingChange: function handleOrderingChange(e) {
+	              return _this6.handleOrderingChange(e);
+	            } })
 	        ),
 	        _react2.default.createElement(
 	          _reactAddonsCssTransitionGroup2.default,
@@ -23248,14 +23254,18 @@
 	            transitionName: 'slide',
 	            transitionEnterTimeout: 300,
 	            transitionLeaveTimeout: 300 },
-	          this.state.filtersAreHidden ? null : _react2.default.createElement(_resultFilters2.default, { handleFiltersChange: this.handleFiltersChange.bind(this) })
+	          this.state.filtersAreHidden ? null : _react2.default.createElement(_resultFilters2.default, { handleFiltersChange: function handleFiltersChange(e) {
+	              return _this6.handleFiltersChange(e);
+	            } })
 	        ),
 	        _react2.default.createElement(_resultList2.default, {
 	          data: this.state.data,
 	          loadingIsHidden: this.state.loadingIsHidden,
 	          pageNum: this.state.pageNum,
 	          paginate: {
-	            handlePaginationClick: this.handlePaginationClick.bind(this),
+	            handlePaginationClick: function handlePaginationClick(e) {
+	              return _this6.handlePaginationClick(e);
+	            },
 	            marginPagesDisplayed: this.props.paginate.marginPagesDisplayed,
 	            pageRangeDisplayed: this.props.paginate.pageRangeDisplayed
 	          }
@@ -25116,6 +25126,8 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this2 = this;
+
 	      var options = this.select.map(function (obj) {
 	        return _react2.default.createElement(
 	          "option",
@@ -25128,7 +25140,9 @@
 	        { className: "p-result__sort-order" },
 	        _react2.default.createElement(
 	          "select",
-	          { value: this.state.selectedKey, onChange: this.onChangeSelectValue.bind(this) },
+	          { value: this.state.selectedKey, onChange: function onChange(e) {
+	              return _this2.onChangeSelectValue(e);
+	            } },
 	          options
 	        )
 	      );

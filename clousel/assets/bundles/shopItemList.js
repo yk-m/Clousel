@@ -24566,6 +24566,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -24578,7 +24580,9 @@
 	          pageNum: this.state.pageNum,
 	          marginPagesDisplayed: this.props.paginate.marginPagesDisplayed,
 	          pageRangeDisplayed: this.props.paginate.pageRangeDisplayed,
-	          clickCallback: this.handlePageClick.bind(this),
+	          clickCallback: function clickCallback(e) {
+	            return _this4.handlePageClick(e);
+	          },
 	          containerClassName: "c-pagination",
 	          previousClassName: "c-pagination__child--to_prev",
 	          nextClassName: "c-pagination__child--to_next",
