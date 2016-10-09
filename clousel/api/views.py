@@ -5,32 +5,23 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters, generics, mixins, viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
+from mptt.forms import TreeNodeChoiceField
 
 from accounts.models import Profile
 from action.models import Like, PurchaseHistory
+from clothing.models import Category
 from shop.models import Item
 from uploader.models import UserImage
 
 from .permissions import IsOwner
 from .serializer import (BasicUserSerializer, FullUserSerializer,
-                         ItemSerializer, LikeSerializer, ProfileSerializer,
+                         ItemSerializer, CategorySerializer, LikeSerializer, ProfileSerializer,
                          PurchaseHistorySerializer, UserImageSerializer)
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = get_user_model().objects.all()
-
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            return get_user_model().objects.all()
-        else:
-            return get_user_model().objects.filter(id=self.request.user.id)
-
-    def get_serializer_class(self):
-        if self.request.user.is_superuser:
-            return FullUserSerializer
-        else:
-            return BasicUserSerializer
+class CategoryListView(generics.ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
 
 
 class ItemViewSet(mixins.RetrieveModelMixin,
@@ -79,9 +70,20 @@ class ItemViewSet(mixins.RetrieveModelMixin,
         return self.detail_handler(request, PurchaseHistory)
 
 
+class CategoryChoiceFilter(django_filters.ModelChoiceFilter):
+    field_class = TreeNodeChoiceField
+
+    def filter(self, qs, value):
+        categories = value.get_descendants(include_self=True)
+        return Item.objects.filter(category__in=categories)
+
+
 class ItemFilter(filters.FilterSet):
     min_price = django_filters.NumberFilter(name="price", lookup_expr='gte')
     max_price = django_filters.NumberFilter(name="price", lookup_expr='lte')
+    category = CategoryChoiceFilter(
+        queryset=Category.objects.all(),
+    )
 
     class Meta:
         model = Item
@@ -93,7 +95,8 @@ class SearchableItemListView(generics.ListAPIView):
     filter_backends = (filters.DjangoFilterBackend,
                        filters.OrderingFilter, filters.SearchFilter, )
     filter_class = ItemFilter
-    search_fields = ('brand', 'exhibiter', 'rank', 'size', 'details', 'category__name', )
+    search_fields = ('brand', 'exhibiter', 'rank', 'size', 'details',
+                     'category__name', 'category__parent__name', )
     ordering_fields = ('price', )
 
     def get_queryset(self):
@@ -128,6 +131,22 @@ class SuitableListView(SearchableItemListView):
             'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
         ]
         return Item.objects.filter(image__in=paths)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = get_user_model().objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return get_user_model().objects.all()
+        else:
+            return get_user_model().objects.filter(id=self.request.user.id)
+
+    def get_serializer_class(self):
+        if self.request.user.is_superuser:
+            return FullUserSerializer
+        else:
+            return BasicUserSerializer
 
 
 class UserImageViewSet(viewsets.ModelViewSet):
