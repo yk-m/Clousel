@@ -11,12 +11,12 @@ from shop.models import Item
 def get_category(categories):
     parent = None
     for category in categories:
-        parent = Category.objects.get(title=category, parent=parent)
+        parent = Category.objects.get(name=category, parent=parent)
     return parent
 
 d = json.load(open("init/amebafurugiya.json"))
 
-for row in d[:100]:
+for row in d[:200]:
     # print(str(row).encode('utf-8').decode('latin-1'))
     i = Item(
         # image='shop_items/' + row['image_paths'][0].lstrip('full/'),
@@ -39,11 +39,6 @@ for row in d[:100]:
         i.image.save(
             filename,
             content,
-            save=False,
-        )
-        i.binary_image.save(
-            filename[:-4],
-            ContentFile('binary image'),
             save=False,
         )
         i.save()

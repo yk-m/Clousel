@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'compressor',
     'debug_toolbar',
+    'mptt',
     'registration',
     'rest_framework',
     'rest_framework.authtoken',

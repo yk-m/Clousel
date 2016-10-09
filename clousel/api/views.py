@@ -93,8 +93,7 @@ class SearchableItemListView(generics.ListAPIView):
     filter_backends = (filters.DjangoFilterBackend,
                        filters.OrderingFilter, filters.SearchFilter, )
     filter_class = ItemFilter
-    search_fields = ('brand', 'exhibiter', 'rank', 'size', 'details',
-                     'category__title', 'category__parent__title', )
+    search_fields = ('brand', 'exhibiter', 'rank', 'size', 'details', 'category__name', )
     ordering_fields = ('price', )
 
     def get_queryset(self):

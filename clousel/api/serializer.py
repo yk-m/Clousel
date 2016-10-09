@@ -47,10 +47,18 @@ class FullUserSerializer(BasicUserSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    ancestors = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ('title', 'parents')
+        fields = ('name', 'ancestors')
+
+    def get_ancestors(self, category):
+        ancestors = category.get_ancestors(ascending=False, include_self=True)
+        node_list = []
+        for node in ancestors:
+            node_list.append(node.name)
+        return node_list
 
 
 class ClothingSerializer(serializers.ModelSerializer):
