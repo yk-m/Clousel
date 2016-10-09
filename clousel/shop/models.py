@@ -30,7 +30,3 @@ class Item(Clothing):
     @staticmethod
     def get_image_upload_to_path(filename):
         return 'shop_item/images/' + filename
-
-    @staticmethod
-    def get_binary_image_upload_to_path(filename):
-        return 'shop_item/binary_images/' + filename

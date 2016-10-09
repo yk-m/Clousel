@@ -21,7 +21,3 @@ class UserImage(Clothing):
     def get_image_upload_to_path(self, filename):
         ext = filename.split('.')[-1]
         return 'user/images/{0}/{1}.{2}'.format(self.owner.id, uuid4().hex, ext)
-
-    def get_binary_image_upload_to_path(self, filename):
-        ext = filename.split('.')[-1]
-        return 'user/binary_images/{0}/{1}.{2}'.format(self.owner.id, uuid4().hex, ext)
