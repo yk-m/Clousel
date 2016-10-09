@@ -24400,8 +24400,7 @@
 	    value: function render() {
 	      var item_separator = " > ";
 	      var itemNodes = this.props.data.map(function (item) {
-	        var parents = item.category.parents.join(item_separator);
-	        var category = parents + item_separator + item.category.title;
+	        var category = item.category.ancestors.join(item_separator);
 	        return _react2.default.createElement(Item, {
 	          key: item.pk,
 	          image: item.image, orientation: item.orientation,

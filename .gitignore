@@ -1,12 +1,10 @@
 __pycache__/
 .sass-cache/
 
+migrations/*
+data/*
+
 clousel/clousel/media/*
 clousel/clousel/logs/*
 clousel/node_modules/*
-!.gitkeep
 clousel/init/amebafurugiya.json
-data/*
-!.gitkeep
-
-migrations/
