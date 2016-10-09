@@ -24156,15 +24156,6 @@
 	  }
 
 	  _createClass(ResultFilters, [{
-	    key: "reset",
-	    value: function reset(e) {
-	      this.setState({
-	        keyword: "",
-	        minPrice: "",
-	        maxPrice: ""
-	      });
-	    }
-	  }, {
 	    key: "onFormSubmit",
 	    value: function onFormSubmit(e) {
 	      e.preventDefault();
@@ -24175,6 +24166,17 @@
 	        maxPrice: this.state.maxPrice
 	      };
 	      this.props.handleFiltersChange(options);
+	    }
+	  }, {
+	    key: "onFormReset",
+	    value: function onFormReset(e) {
+	      e.preventDefault();
+
+	      this.setState({
+	        keyword: "",
+	        minPrice: "",
+	        maxPrice: ""
+	      });
 	    }
 	  }, {
 	    key: "changeKeyword",
@@ -24203,6 +24205,9 @@
 	          "form",
 	          { onSubmit: function onSubmit(e) {
 	              return _this2.onFormSubmit(e);
+	            },
+	            onReset: function onReset(e) {
+	              return _this2.onFormReset(e);
 	            } },
 	          _react2.default.createElement(
 	            "table",
@@ -24226,7 +24231,8 @@
 	                _react2.default.createElement(
 	                  "td",
 	                  null,
-	                  _react2.default.createElement("input", { type: "text", ref: "keyword", value: this.state.keyword, onChange: function onChange(e) {
+	                  _react2.default.createElement("input", { type: "text", ref: "keyword", value: this.state.keyword,
+	                    onChange: function onChange(e) {
 	                      return _this2.changeKeyword(e);
 	                    } })
 	                )
@@ -24274,18 +24280,8 @@
 	                _react2.default.createElement(
 	                  "td",
 	                  null,
-	                  _react2.default.createElement(
-	                    "button",
-	                    { onClick: function onClick(e) {
-	                        return _this2.reset(e);
-	                      } },
-	                    "Reset"
-	                  ),
-	                  _react2.default.createElement(
-	                    "button",
-	                    { type: "submit" },
-	                    "Update"
-	                  )
+	                  _react2.default.createElement("input", { type: "reset", value: "Reset" }),
+	                  _react2.default.createElement("input", { type: "submit", value: "Update" })
 	                )
 	              )
 	            )

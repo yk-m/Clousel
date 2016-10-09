@@ -13,14 +13,6 @@ export default class ResultFilters extends React.Component {
     }
   }
 
-  reset(e) {
-    this.setState({
-      keyword: "",
-      minPrice: "",
-      maxPrice: ""
-    })
-  }
-
   onFormSubmit(e) {
     e.preventDefault()
 
@@ -30,6 +22,16 @@ export default class ResultFilters extends React.Component {
       maxPrice: this.state.maxPrice
     }
     this.props.handleFiltersChange(options)
+  }
+
+  onFormReset(e) {
+    e.preventDefault()
+
+    this.setState({
+      keyword: "",
+      minPrice: "",
+      maxPrice: ""
+    })
   }
 
   changeKeyword(e) {
@@ -47,14 +49,16 @@ export default class ResultFilters extends React.Component {
   render() {
     return (
       <div className="p-result__filters">
-        <form onSubmit={(e) => this.onFormSubmit(e)}>
+        <form onSubmit={(e) => this.onFormSubmit(e)}
+              onReset={(e) => this.onFormReset(e)}>
           <table className="p-filters">
             <caption>Search option</caption>
             <tbody>
               <tr className="p-filters__filter--keyword">
                 <th>keyword</th>
                 <td>
-                  <input type="text" ref="keyword" value={this.state.keyword} onChange={(e) => this.changeKeyword(e)} />
+                  <input type="text" ref="keyword" value={this.state.keyword}
+                         onChange={(e) => this.changeKeyword(e)} />
                 </td>
               </tr>
               <tr className="p-filters__filter--price">
@@ -70,8 +74,8 @@ export default class ResultFilters extends React.Component {
               <tr className="p-filters__update">
                 <th></th>
                 <td>
-                  <button onClick={(e) => this.reset(e)}>Reset</button>
-                  <button type="submit">Update</button>
+                  <input type="reset" value="Reset" />
+                  <input type="submit" value="Update" />
                 </td>
               </tr>
             </tbody>

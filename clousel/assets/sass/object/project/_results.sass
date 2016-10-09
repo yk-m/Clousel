@@ -60,14 +60,14 @@
     input
         max-width: calc_width(3)
 
-    button
-        border: none
+        &[type=submit], &[type=reset]
+            border: none
 
-        background: $white
-        color: $black
+            background: $white
+            color: $black
 
-        &:last-child
-            margin: 0 0 0 $horizontal-span
+            &:last-child
+                margin: 0 0 0 $horizontal-span
 
 
 .p-result__list

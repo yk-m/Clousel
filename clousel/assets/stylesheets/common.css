@@ -76,7 +76,7 @@ input, button {
 }
 
 /* line 28, ../sass/foundation/_base.sass */
-button, *[type=submit] {
+button, *[type=submit], *[type=reset] {
   border: solid 1px #C64B8F;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -782,13 +782,13 @@ th {
   max-width: 220px;
 }
 /* line 63, ../sass/object/project/_results.sass */
-.p-result__filters button {
+.p-result__filters input[type=submit], .p-result__filters input[type=reset] {
   border: none;
   background: #F9F7F7;
   color: #312F33;
 }
 /* line 69, ../sass/object/project/_results.sass */
-.p-result__filters button:last-child {
+.p-result__filters input[type=submit]:last-child, .p-result__filters input[type=reset]:last-child {
   margin: 0 0 0 20px;
 }
 
