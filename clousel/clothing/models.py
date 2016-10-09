@@ -40,7 +40,8 @@ class Category(models.Model):
     def get_separator(self):
         return ' > '
 
-    def get_children_tree(self, cat_obj):
+    @classmethod
+    def get_children_tree(cls, cat_obj):
         if cat_obj is None:
             children = Category.objects.filter(parent__isnull=True)
         elif not cat_obj.children.exists():
@@ -51,7 +52,7 @@ class Category(models.Model):
         for child in children:
             c_element = {}
             c_element["title"] = child.title
-            c_element["children"] = self._recurse_for_children(child)
+            c_element["children"] = cls.get_children_tree(child)
             c_list.append(c_element)
         return c_list
 
