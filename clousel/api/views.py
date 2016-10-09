@@ -59,7 +59,7 @@ class ItemViewSet(mixins.RetrieveModelMixin,
 
     def list_handler(self, request, object, serializer_class):
         queryset = object.objects.filter(owner=request.user)
-        serializer = serializer_class(queryset, many=True)
+        serializer = serializer_class(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
     @list_route()
@@ -151,20 +151,3 @@ class UserImageViewSet(viewsets.ModelViewSet):
     def get_queryset_for_search(self, paths):
         return Item.objects.filter(image__in=paths)
 
-    @detail_route(methods=['get', ])
-    def similar(self, request, pk=None):
-        target_image = self.get_object()
-        paths = [
-            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
-            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
-            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
-        ]
-        queryset = self.get_queryset_for_search(paths)
-        serializer = self.get_serializer_for_search(queryset, request)
-        return Response(serializer.data)
-
-    @detail_route(methods=['get', ])
-    def suitable(self, request, pk=None):
-        target_image = self.get_object()
-
-        return Response("suitable response")
