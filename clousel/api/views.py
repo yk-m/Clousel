@@ -2,7 +2,7 @@ import django_filters
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins, viewsets, filters, generics
+from rest_framework import filters, generics, mixins, viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
@@ -90,7 +90,8 @@ class ItemFilter(filters.FilterSet):
 
 class SearchableItemListView(generics.ListAPIView):
     serializer_class = ItemSerializer
-    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter, )
+    filter_backends = (filters.DjangoFilterBackend,
+                       filters.OrderingFilter, filters.SearchFilter, )
     filter_class = ItemFilter
     search_fields = ('brand', 'exhibiter', 'rank', 'size', 'details',
                      'category__title', 'category__parent__title', )
@@ -108,9 +109,9 @@ class SimilarListView(SearchableItemListView):
             raise PermissionDenied()
 
         paths = [
-            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg', #98
-            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg', #6
-            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg', #16
+            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
+            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
+            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
         ]
         return Item.objects.filter(image__in=paths)
 
@@ -123,9 +124,9 @@ class SuitableListView(SearchableItemListView):
             raise PermissionDenied()
 
         paths = [
-            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg', #98
-            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg', #6
-            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg', #16
+            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
+            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
+            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
         ]
         return Item.objects.filter(image__in=paths)
 
@@ -154,9 +155,9 @@ class UserImageViewSet(viewsets.ModelViewSet):
     def similar(self, request, pk=None):
         target_image = self.get_object()
         paths = [
-            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg', #98
-            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg', #6
-            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg', #16
+            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
+            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
+            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
         ]
         queryset = self.get_queryset_for_search(paths)
         serializer = self.get_serializer_for_search(queryset, request)

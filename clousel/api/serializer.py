@@ -50,7 +50,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('title', 'parents' )
+        fields = ('title', 'parents')
 
 
 class ClothingSerializer(serializers.ModelSerializer):
@@ -105,7 +105,8 @@ class UserImageSerializer(ClothingSerializer):
         model = UserImage
         fields = ('pk', 'owner', 'image', 'orientation', 'category', 'has_bought',
                   'created', 'updated', )
-        read_only_fields = ('pk', 'owner', 'orientation', 'category', 'created', 'updated', )
+        read_only_fields = ('pk', 'owner', 'orientation',
+                            'category', 'created', 'updated', )
 
 
 class LikeSerializer(serializers.ModelSerializer):
