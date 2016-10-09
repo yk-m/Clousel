@@ -47,11 +47,18 @@ class FullUserSerializer(BasicUserSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('name', 'level', )
+
+
+class ClothingCategorySerializer(serializers.ModelSerializer):
     ancestors = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ('name', 'ancestors')
+        fields = ('name', 'ancestors', 'level', )
 
     def get_ancestors(self, category):
         ancestors = category.get_ancestors(ascending=False, include_self=True)
@@ -62,7 +69,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ClothingSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
+    category = ClothingCategorySerializer()
     orientation = serializers.SerializerMethodField()
 
     class Meta:
