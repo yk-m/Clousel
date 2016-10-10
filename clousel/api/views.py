@@ -1,11 +1,13 @@
+from abc import ABCMeta, abstractmethod
+
 import django_filters
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from mptt.forms import TreeNodeChoiceField
 from rest_framework import filters, generics, mixins, viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
-from mptt.forms import TreeNodeChoiceField
 
 from accounts.models import Profile
 from action.models import Like, PurchaseHistory
@@ -14,18 +16,40 @@ from shop.models import Item
 from uploader.models import UserImage
 
 from .permissions import IsOwner
-from .serializer import (BasicUserSerializer, FullUserSerializer,
-                         ItemSerializer, CategorySerializer, LikeSerializer, ProfileSerializer,
-                         PurchaseHistorySerializer, UserImageSerializer)
+from .serializer import (BasicUserSerializer, CategorySerializer,
+                         FullUserSerializer, ItemSerializer, LikeSerializer,
+                         ProfileSerializer, PurchaseHistorySerializer,
+                         UserImageSerializer)
 
 
 class CategoryListView(generics.ListAPIView):
-    serializer_class = CategorySerializer
     queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
-class ItemViewSet(mixins.RetrieveModelMixin,
-                  viewsets.GenericViewSet):
+class LikeListView(generics.ListAPIView):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
+
+    def get_queryset(self):
+        return Like.objects.filter(owner=self.request.user)
+
+
+class PurchaseHistoryListView(generics.ListAPIView):
+    queryset = PurchaseHistory.objects.all()
+    serializer_class = PurchaseHistorySerializer
+
+    def get_queryset(self):
+        return PurchaseHistory.objects.filter(owner=self.request.user)
+
+
+class ItemListView(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
+class ItemDetailView(mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
@@ -47,19 +71,6 @@ class ItemViewSet(mixins.RetrieveModelMixin,
 
         get_object_or_404(object, owner=request.user, item=item).delete()
         return Response(status=200)
-
-    def list_handler(self, request, object, serializer_class):
-        queryset = object.objects.filter(owner=request.user)
-        serializer = serializer_class(queryset, many=True, context={'request': request})
-        return Response(serializer.data)
-
-    @list_route()
-    def likes(self, request):
-        return self.list_handler(request, Like, LikeSerializer)
-
-    @list_route()
-    def purchase_history(self, request):
-        return self.list_handler(request, PurchaseHistory, PurchaseHistorySerializer)
 
     @detail_route(methods=['get', 'post', 'delete'])
     def like(self, request, pk=None):
@@ -90,8 +101,7 @@ class ItemFilter(filters.FilterSet):
         fields = ('category', 'min_price', 'max_price', )
 
 
-class SearchableItemListView(generics.ListAPIView):
-    serializer_class = ItemSerializer
+class SearchableItemListView(ItemListView):
     filter_backends = (filters.DjangoFilterBackend,
                        filters.OrderingFilter, filters.SearchFilter, )
     filter_class = ItemFilter
@@ -102,35 +112,47 @@ class SearchableItemListView(generics.ListAPIView):
     def get_queryset(self):
         return Item.objects.all()
 
+    # def get_search_results(self, request, queryset, search_term):
+    #     logger.error(self)
+    # return super(PersonAdmin, self).get_search_results(request, queryset,
+    # search_term)
+
+
+class RecommenderListView(SearchableItemListView, metaclass=ABCMeta):
+
+    def get_queryset(self):
+        userimage = self.get_userimage_object(pk=self.kwargs['pk'])
+        return Item.objects.filter(image__in=self.get_paths())
+
+    def get_userimage_object(self, pk):
+        userimage = get_object_or_404(UserImage, pk=self.kwargs['pk'])
+        if self.request.user != userimage.owner:
+            raise PermissionDenied()
+        return userimage
+
+    @abstractmethod
+    def get_paths():
+        pass
+
 
 class SimilarListView(SearchableItemListView):
 
-    def get_queryset(self):
-        userimage = get_object_or_404(UserImage, pk=self.kwargs['pk'])
-        if str(self.request.user.id) != str(userimage.owner.id):
-            raise PermissionDenied()
-
-        paths = [
+    def get_paths(self):
+        return [
             'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
             'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
             'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
         ]
-        return Item.objects.filter(image__in=paths)
 
 
 class SuitableListView(SearchableItemListView):
 
-    def get_queryset(self):
-        userimage = get_object_or_404(UserImage, pk=self.kwargs['pk'])
-        if str(self.request.user.id) != str(userimage.owner.id):
-            raise PermissionDenied()
-
-        paths = [
+    def get_paths(self):
+        return [
             'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
             'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
             'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
         ]
-        return Item.objects.filter(image__in=paths)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -163,9 +185,8 @@ class UserImageViewSet(viewsets.ModelViewSet):
         else:
             return UserImage.objects.filter(owner=self.request.user)
 
-    def get_serializer_for_search(self, queryset, request):
-        return ItemSerializer(queryset, many=True, context={'request': request})
+    # def get_serializer_for_search(self, queryset, request):
+    # return ItemSerializer(queryset, many=True, context={'request': request})
 
-    def get_queryset_for_search(self, paths):
-        return Item.objects.filter(image__in=paths)
-
+    # def get_queryset_for_search(self, paths):
+    #     return Item.objects.filter(image__in=paths)

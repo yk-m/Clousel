@@ -41,8 +41,7 @@ class FullUserSerializer(BasicUserSerializer):
         model = get_user_model()
         fields = ('pk', 'email', 'password', 'profile',
                   'is_admin', 'last_login', 'date_joined', )
-        read_only_fields = ('pk', 'is_active', 'is_admin',
-                            'last_login', 'date_joined', )
+        read_only_fields = ('pk', 'last_login', 'date_joined', )
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -53,29 +52,13 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('name', 'level', )
 
 
-class ClothingCategorySerializer(serializers.ModelSerializer):
-    ancestors = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Category
-        fields = ('name', 'ancestors', 'level', )
-
-    def get_ancestors(self, category):
-        ancestors = category.get_ancestors(ascending=False, include_self=True)
-        node_list = []
-        for node in ancestors:
-            node_list.append(node.name)
-        return node_list
-
-
 class ClothingSerializer(serializers.ModelSerializer):
-    category = ClothingCategorySerializer()
+    category_meta = serializers.SerializerMethodField()
     orientation = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
-        fields = ('pk', 'image', 'orientation', 'category', )
-        read_only_fields = ('pk', 'category', )
+        fields = ('pk', 'image', 'orientation', 'category', 'category_meta', )
 
     def get_orientation(self, obj):
         if (obj.image.height < obj.image.width):
@@ -83,6 +66,11 @@ class ClothingSerializer(serializers.ModelSerializer):
         if (obj.image.height > obj.image.width):
             return 'portrait'
         return 'square'
+
+    def get_category_meta(self, obj):
+        ancestors = obj.category.get_ancestors(
+            ascending=False, include_self=True)
+        return [node.name for node in ancestors]
 
 
 class ItemSerializer(ClothingSerializer):
@@ -93,13 +81,13 @@ class ItemSerializer(ClothingSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'image', 'orientation', 'category', 'price', 'brand', 'exhibiter',
+        fields = ('pk', 'image', 'orientation', 'category', 'category_meta',
+                  'price', 'brand', 'exhibiter',
                   'delivery_days', 'delivery_service', 'delivery_source',
                   'rank', 'size', 'image_url', 'page_url', 'details',
                   'created', 'updated',
                   'likes', 'purchases', 'is_liked', 'is_purchased', )
-        read_only_fields = ('pk', 'orientation', 'category', 'created', 'updated',
-                            'likes', 'purchases', 'is_liked', 'is_purchased', )
+        read_only_fields = ('created', 'updated', )
 
     def get_likes(self, obj):
         return Like.objects.filter(item=obj).count()
@@ -118,10 +106,9 @@ class UserImageSerializer(ClothingSerializer):
 
     class Meta:
         model = UserImage
-        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'has_bought',
-                  'created', 'updated', )
-        read_only_fields = ('pk', 'owner', 'orientation',
-                            'category', 'created', 'updated', )
+        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'category_meta',
+                  'has_bought', 'created', 'updated', )
+        read_only_fields = ('owner', 'created', 'updated', )
 
 
 class LikeSerializer(serializers.ModelSerializer):
