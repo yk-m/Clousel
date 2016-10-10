@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'uploader',
     'wardrobe',
     'pages',
-    'reactsample',
     'recommender',
     'django.contrib.admin',
     'django.contrib.auth',
