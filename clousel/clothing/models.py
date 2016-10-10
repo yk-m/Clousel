@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from mptt.models import MPTTModel, TreeForeignKey
 
 
@@ -10,15 +9,18 @@ class Category(MPTTModel):
     parent = TreeForeignKey(
         'self', null=True, blank=True, related_name='children', db_index=True)
 
-    class MPTTMeta:
+    class Meta:
         verbose_name_plural = 'Categories'
+
+    class MPTTMeta:
         order_insertion_by = ['name']
 
     def __str__(self):
-        return self.name
+        ancestors = self.get_ancestors(include_self=True)
+        return self.get_separator().join(node.name for node in ancestors)
 
     def get_separator(self):
-        return ' > '
+        return '::'
 
 
 def get_image_upload_to_path(instance, filename):
