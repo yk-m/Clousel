@@ -49,7 +49,7 @@ class Items extends React.Component {
   render() {
     const item_separator = " > "
     let itemNodes = this.props.data.map( (item) => {
-      let category = item.category.ancestors.join(item_separator)
+      let category = item.category_meta.join(item_separator)
       return (
         <Item
           key={item.pk}
