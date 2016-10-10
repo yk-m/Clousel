@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -17,35 +18,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: clousel/settings.py:130
-msgid "Japanese"
-msgstr ""
-
-#: clousel/settings.py:131
-msgid "English"
-msgstr ""
-
-#: clousel/templates/header.html:18
-msgid "About us"
-msgstr ""
-
-#: clousel/templates/header.html:20
-msgid "Log out"
-msgstr ""
-
-#: clousel/templates/header.html:22
-#: accounts/templates/registration/login.html:4
-#: accounts/templates/registration/login.html:15
-msgid "Log in"
-msgstr ""
-
 #: accounts/forms.py:12
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 #: accounts/forms.py:14
 msgid "Password confirmation"
-msgstr ""
+msgstr "確認用パスワード"
 
 #: accounts/forms.py:26
 msgid "Passwords don't match"
@@ -57,38 +36,38 @@ msgstr ""
 
 #: accounts/models.py:28
 msgid "Email address"
-msgstr ""
+msgstr "メールアドレス"
 
 #: accounts/templates/registration/activate.html:4
 msgid "Activation Failure"
-msgstr ""
+msgstr "アクティベーションに失敗しました"
 
 #: accounts/templates/registration/activate.html:7
 msgid "Account activation failed."
-msgstr ""
+msgstr "アカウントのアクティベーションに失敗しました"
 
 #: accounts/templates/registration/activation_complete.html:4
 #: accounts/templates/registration/activation_complete_admin_pending.html:4
 msgid "Account Activated"
-msgstr ""
+msgstr "アカウントをアクティベートしました"
 
 #: accounts/templates/registration/activation_complete.html:8
 #: accounts/templates/registration/activation_complete_admin_pending.html:8
 msgid "Your account is now activated."
-msgstr ""
+msgstr "あなたのアカウントはアクティベート済みです"
 
 #: accounts/templates/registration/activation_complete.html:10
 msgid "You can log in."
-msgstr ""
+msgstr "ログインできます"
 
 #: accounts/templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
-msgstr ""
+msgstr "管理者が承認するとアクティベートが完了し，ログインできるようになります"
 
 #: accounts/templates/registration/activation_email.html:6
 #: accounts/templates/registration/admin_approve_email.html:6
 msgid "registration"
-msgstr ""
+msgstr "登録"
 
 #: accounts/templates/registration/activation_email.html:11
 #, python-format
@@ -225,6 +204,12 @@ msgstr ""
 #: accounts/templates/registration/admin_approve_email_subject.txt:1
 msgid "Account approval on"
 msgstr ""
+
+#: accounts/templates/registration/login.html:4
+#: accounts/templates/registration/login.html:15
+#: clousel/templates/header.html:22
+msgid "Log in"
+msgstr "Log in"
 
 #: accounts/templates/registration/login.html:19
 msgid "Forgot your password?"
@@ -370,7 +355,7 @@ msgstr ""
 #: accounts/templates/registration/registration_form.html:15
 #: accounts/templates/registration/resend_activation_form.html:15
 msgid "Submit"
-msgstr ""
+msgstr "Submit"
 
 #: accounts/templates/registration/resend_activation_complete.html:4
 msgid "Account Activation Resent"
@@ -399,3 +384,21 @@ msgstr ""
 #: accounts/views.py:21
 msgid "invalid login"
 msgstr ""
+
+#: clousel/settings.py:130
+msgid "Japanese"
+msgstr "日本語"
+
+#: clousel/settings.py:131
+msgid "English"
+msgstr "英語"
+
+#: clousel/templates/header.html:18
+msgid "About us"
+msgstr ""
+
+#: clousel/templates/header.html:20
+#, fuzzy
+#| msgid "Log in"
+msgid "Log out"
+msgstr "Log in"

@@ -195,6 +195,8 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 REGISTRATION_FORM = 'accounts.forms.EmailUserCreationForm'
 LOGIN_REDIRECT_URL = '/accounts/dashboard/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # --- Webpack loader
 WEBPACK_LOADER = {
