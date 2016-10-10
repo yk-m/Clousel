@@ -43,11 +43,6 @@ class PurchaseHistoryListView(generics.ListAPIView):
         return PurchaseHistory.objects.filter(owner=self.request.user)
 
 
-class ItemListView(generics.ListAPIView):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
-
-
 class ItemDetailView(mixins.RetrieveModelMixin,
                      viewsets.GenericViewSet):
     queryset = Item.objects.all()
@@ -101,6 +96,11 @@ class ItemFilter(filters.FilterSet):
         fields = ('category', 'min_price', 'max_price', )
 
 
+class ItemListView(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
 class SearchableItemListView(ItemListView):
     filter_backends = (filters.DjangoFilterBackend,
                        filters.OrderingFilter, filters.SearchFilter, )
@@ -109,49 +109,42 @@ class SearchableItemListView(ItemListView):
                      'category__name', 'category__parent__name', )
     ordering_fields = ('price', )
 
-    def get_queryset(self):
-        return Item.objects.all()
 
-    # def get_search_results(self, request, queryset, search_term):
-    #     logger.error(self)
-    # return super(PersonAdmin, self).get_search_results(request, queryset,
-    # search_term)
-
-
-class RecommenderListView(SearchableItemListView, metaclass=ABCMeta):
+class AbstractRecommenderList(SearchableItemListView, metaclass=ABCMeta):
 
     def get_queryset(self):
         userimage = self.get_userimage_object(pk=self.kwargs['pk'])
-        return Item.objects.filter(image__in=self.get_paths())
+        paths = [Item.get_image_upload_to_path(filename) for filename in self.get_filenames()]
+        return Item.objects.filter(image__in=paths)
 
     def get_userimage_object(self, pk):
-        userimage = get_object_or_404(UserImage, pk=self.kwargs['pk'])
+        userimage = get_object_or_404(UserImage, pk=pk)
         if self.request.user != userimage.owner:
             raise PermissionDenied()
         return userimage
 
     @abstractmethod
-    def get_paths():
+    def get_filenames():
         pass
 
 
-class SimilarListView(SearchableItemListView):
+class SimilarListView(AbstractRecommenderList):
 
-    def get_paths(self):
+    def get_filenames(self):
         return [
-            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
-            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
-            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
+            'b4990a379fee25115c6a10a6cfd79627c96ab4f1_sISa2DL.jpg',  # 1
+            '4a8e1fa6c819443c8e418e1a4b3fba3da791c844_EmokCFy.jpg',  # 13
+            '0f53d47bfa9550b56e38fbcb4e89f6a408b41ecf.jpg',  # 159
         ]
 
 
-class SuitableListView(SearchableItemListView):
+class SuitableListView(AbstractRecommenderList):
 
-    def get_paths(self):
+    def get_filenames(self):
         return [
-            'shop_item/images/d2040ebda6491a956be6bb1cd3ee0dbe2a8757d5_C8FWZ4N.jpg',  # 98
-            'shop_item/images/ba0d45347428fcc5c133cfb8bdb5df82e50355f5_q5mqoOF.jpg',  # 6
-            'shop_item/images/300404cfea1bf29778964e496b534555627ac58f_jKI1Nw5.jpg',  # 16
+            '5dc665ec432df2f2a8b3ee88542a71037fd009a9_WKGyGVf.jpg',  # 92
+            '6bb28b025aeaabe67753067fcd15894c914d7b37_SmtY9z7.jpg',  # 88
+            '7e0278d6b9606d7a0b3e368c66c76c08bb800fdc.jpg',  # 172
         ]
 
 
