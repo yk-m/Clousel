@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-28 23:52+0900\n"
+"POT-Creation-Date: 2016-10-10 18:57+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,56 +17,78 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: clousel/settings.py:130
+msgid "Japanese"
+msgstr ""
+
+#: clousel/settings.py:131
+msgid "English"
+msgstr ""
+
+#: clousel/templates/header.html:18
+msgid "About us"
+msgstr ""
+
+#: clousel/templates/header.html:20
+msgid "Log out"
+msgstr ""
+
+#: clousel/templates/header.html:22
+#: accounts/templates/registration/login.html:4
+#: accounts/templates/registration/login.html:15
+msgid "Log in"
+msgstr ""
+
 #: accounts/forms.py:12
 msgid "Password"
-msgstr "パスワード"
+msgstr ""
 
 #: accounts/forms.py:14
 msgid "Password confirmation"
-msgstr "確認用パスワード"
+msgstr ""
 
 #: accounts/forms.py:26
 msgid "Passwords don't match"
 msgstr ""
 
-#: accounts/models.py:12
+#: accounts/models.py:10
 msgid "Users must have an email address"
 msgstr ""
 
-#: accounts/models.py:30
+#: accounts/models.py:28
 msgid "Email address"
-msgstr "メールアドレス"
+msgstr ""
 
 #: accounts/templates/registration/activate.html:4
 msgid "Activation Failure"
-msgstr "アクティベーションに失敗しました"
+msgstr ""
 
 #: accounts/templates/registration/activate.html:7
 msgid "Account activation failed."
-msgstr "アカウントのアクティベーションに失敗しました"
+msgstr ""
 
 #: accounts/templates/registration/activation_complete.html:4
 #: accounts/templates/registration/activation_complete_admin_pending.html:4
 msgid "Account Activated"
-msgstr "アカウントをアクティベートしました"
+msgstr ""
 
 #: accounts/templates/registration/activation_complete.html:8
 #: accounts/templates/registration/activation_complete_admin_pending.html:8
 msgid "Your account is now activated."
-msgstr "あなたのアカウントはアクティベート済みです"
+msgstr ""
 
 #: accounts/templates/registration/activation_complete.html:10
 msgid "You can log in."
-msgstr "ログインできます"
+msgstr ""
 
 #: accounts/templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
-msgstr "管理者が承認するとアクティベートが完了し，ログインできるようになります"
+msgstr ""
 
 #: accounts/templates/registration/activation_email.html:6
 #: accounts/templates/registration/admin_approve_email.html:6
 msgid "registration"
-msgstr "登録"
+msgstr ""
 
 #: accounts/templates/registration/activation_email.html:11
 #, python-format
@@ -203,11 +225,6 @@ msgstr ""
 #: accounts/templates/registration/admin_approve_email_subject.txt:1
 msgid "Account approval on"
 msgstr ""
-
-#: accounts/templates/registration/login.html:4
-#: accounts/templates/registration/login.html:15 cms/templates/header.html:14
-msgid "Log in"
-msgstr "Log in"
 
 #: accounts/templates/registration/login.html:19
 msgid "Forgot your password?"
@@ -353,7 +370,7 @@ msgstr ""
 #: accounts/templates/registration/registration_form.html:15
 #: accounts/templates/registration/resend_activation_form.html:15
 msgid "Submit"
-msgstr "Submit"
+msgstr ""
 
 #: accounts/templates/registration/resend_activation_complete.html:4
 msgid "Account Activation Resent"
@@ -371,30 +388,14 @@ msgstr ""
 msgid "Resend Activation Email"
 msgstr ""
 
-#: accounts/views.py:14
+#: accounts/views.py:15
 msgid "success"
 msgstr ""
 
-#: accounts/views.py:17
+#: accounts/views.py:18
 msgid "disabled account"
 msgstr ""
 
-#: accounts/views.py:20
+#: accounts/views.py:21
 msgid "invalid login"
 msgstr ""
-
-#: clothing/models.py:42
-msgid "You must not save a category in itself"
-msgstr ""
-
-#: cms/templates/header.html:13
-msgid "About us"
-msgstr ""
-
-#: clousel/settings.py:122
-msgid "Japanese"
-msgstr "日本語"
-
-#: clousel/settings.py:123
-msgid "English"
-msgstr "英語"
