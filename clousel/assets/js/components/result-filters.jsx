@@ -1,5 +1,7 @@
 import React from 'react'
 
+import CategorySelector from './category-selector'
+
 
 export default class ResultFilters extends React.Component {
 
@@ -8,27 +10,31 @@ export default class ResultFilters extends React.Component {
 
     this.state = {
       keyword: "",
+      category: "",
       minPrice: "",
       maxPrice: ""
     }
   }
 
-  onFormSubmit(e) {
-    e.preventDefault()
+  submit(e) {
+    if (e !== undefined)
+      e.preventDefault()
 
     let options = {
       keyword: this.state.keyword,
+      category: this.state.category,
       minPrice: this.state.minPrice,
       maxPrice: this.state.maxPrice
     }
     this.props.handleFiltersChange(options)
   }
 
-  onFormReset(e) {
+  reset(e) {
     e.preventDefault()
 
     this.setState({
       keyword: "",
+      category: "",
       minPrice: "",
       maxPrice: ""
     })
@@ -36,6 +42,12 @@ export default class ResultFilters extends React.Component {
 
   changeKeyword(e) {
     this.setState({keyword: e.target.value})
+  }
+
+  changeCategory(pk) {
+    this.setState({category: pk}, () => {
+      this.submit()
+    })
   }
 
   changeMinPrice(e) {
@@ -49,8 +61,8 @@ export default class ResultFilters extends React.Component {
   render() {
     return (
       <div className="p-result__filters">
-        <form onSubmit={(e) => this.onFormSubmit(e)}
-              onReset={(e) => this.onFormReset(e)}>
+        <form onSubmit={(e) => this.submit(e)}
+              onReset={(e) => this.reset(e)}>
           <table className="p-filters">
             <caption>Search option</caption>
             <tbody>
@@ -59,6 +71,13 @@ export default class ResultFilters extends React.Component {
                 <td>
                   <input type="text" ref="keyword" value={this.state.keyword}
                          onChange={(e) => this.changeKeyword(e)} />
+                </td>
+              </tr>
+              <tr className="p-filters__filter--category">
+                <th>category</th>
+                <td>
+                  <CategorySelector categories={this.props.categories}
+                                    handleCategoryChange={(pk) => this.changeCategory(pk)} />
                 </td>
               </tr>
               <tr className="p-filters__filter--price">
@@ -88,4 +107,5 @@ export default class ResultFilters extends React.Component {
 
 ResultFilters.propTypes = {
   handleFiltersChange: React.PropTypes.func.isRequired,
+  categories: React.PropTypes.array.isRequired
 }

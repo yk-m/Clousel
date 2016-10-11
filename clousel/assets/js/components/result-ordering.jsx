@@ -38,7 +38,7 @@ export default class ResultOrdering extends React.Component {
 
   render() {
     var options = this.select.map(function(obj) {
-      return <option value={obj.key} key={obj.key}>{obj.value}</option>
+      return <option key={obj.key} value={obj.key}>{obj.value}</option>
     })
     return (
       <div className="p-result__sort-order">
