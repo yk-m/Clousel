@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CategorySelector from './category-selector'
+// import CategorySelector from './category-selector'
 
 
 export default class ResultFilters extends React.Component {
@@ -12,7 +12,7 @@ export default class ResultFilters extends React.Component {
       keyword: "",
       category: "",
       minPrice: "",
-      maxPrice: ""
+      maxPrice: "",
     }
   }
 
@@ -20,9 +20,10 @@ export default class ResultFilters extends React.Component {
     if (e !== undefined)
       e.preventDefault()
 
+    let category = (this.state.category === "null") ? null : this.state.category
     let options = {
       keyword: this.state.keyword,
-      category: this.state.category,
+      category: category,
       minPrice: this.state.minPrice,
       maxPrice: this.state.maxPrice
     }
@@ -34,9 +35,11 @@ export default class ResultFilters extends React.Component {
 
     this.setState({
       keyword: "",
-      category: "",
+      category: "null",
       minPrice: "",
       maxPrice: ""
+    }, () => {
+      this.submit()
     })
   }
 
@@ -44,8 +47,8 @@ export default class ResultFilters extends React.Component {
     this.setState({keyword: e.target.value})
   }
 
-  changeCategory(pk) {
-    this.setState({category: pk}, () => {
+  changeCategory(e) {
+    this.setState({category: e.target.value}, () => {
       this.submit()
     })
   }
@@ -76,8 +79,9 @@ export default class ResultFilters extends React.Component {
               <tr className="p-filters__filter--category">
                 <th>category</th>
                 <td>
-                  <CategorySelector categories={this.props.categories}
-                                    handleCategoryChange={(pk) => this.changeCategory(pk)} />
+                  <select value={this.state.category} onChange={(e) => this.changeCategory(e)}>
+                    {this.props.categories}
+                  </select>
                 </td>
               </tr>
               <tr className="p-filters__filter--price">
