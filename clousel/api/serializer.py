@@ -49,7 +49,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('name', 'level', )
+        fields = ('pk', 'name', 'level', )
 
 
 class ClothingSerializer(serializers.ModelSerializer):

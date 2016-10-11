@@ -19,8 +19,10 @@ export default class Result extends React.Component {
       pageNum: 0,
       loadingIsHidden: false,
       filtersAreHidden: true,
+      categories: null,
       options: {
         keyword: "",
+        category: "",
         minPrice: "",
         maxPrice: ""
       },
@@ -50,8 +52,36 @@ export default class Result extends React.Component {
       })
   }
 
+  loadCategoriesFromServer() {
+    Request
+      .get(this.props.categoryFetchUrl)
+      .end( (err, res) => {
+        if (!res.ok) {
+          console.error(this.props.categoryFetchUrl, status, err.toString())
+        }
+
+        this.setState({
+          categories: this.formatCategories(res.body)
+        })
+      })
+  }
+
+  formatCategories(categories) {
+    const indent = "- "
+
+    categories.unshift({pk: "null", name: "please select", level: 0})
+    return categories.map(function(category) {
+      return <option key={category.pk} value={category.pk}>{generateIndent(category.level)+category.name}</option>
+    })
+
+    function generateIndent(level) {
+      return Array(level+1).join(indent)
+    }
+  }
+
   componentDidMount() {
-    this.loadItemsFromServer();
+    this.loadItemsFromServer()
+    this.loadCategoriesFromServer()
   }
 
   generateQuery() {
@@ -66,6 +96,8 @@ export default class Result extends React.Component {
 
     if (this.isset(this.state.options.keyword))
       query.search = this.state.options.keyword
+    if (this.isset(this.state.options.category))
+      query.category = this.state.options.category
     if (this.isset(this.state.options.minPrice))
       query.min_price = this.state.options.minPrice
     if (this.isset(this.state.options.maxPrice))
@@ -133,7 +165,8 @@ export default class Result extends React.Component {
           transitionEnterTimeout={300}
           transitionLeaveTimeout={300}>
           {this.state.filtersAreHidden?
-            null : <ResultFilters handleFiltersChange={(e) => this.handleFiltersChange(e)} /> }
+            null : <ResultFilters handleFiltersChange={(e) => this.handleFiltersChange(e)}
+                                  categories={this.state.categories} /> }
         </ReactCSSTransitionGroup>
         <ResultList
           data={this.state.data}
