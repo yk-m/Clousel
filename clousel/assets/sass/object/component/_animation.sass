@@ -1,3 +1,23 @@
+=slide($height, $padding-tb, $padding-lr)
+    &.slide-enter
+        height: 0
+        padding: 0 $padding-lr
+        opacity: 1
+        +transition(all .5s ceaser($easeInOutQuad))
+
+    &.slide-enter.slide-enter-active
+        height: $height
+        padding: $padding-tb $padding-lr
+
+    &.slide-leave
+        height: $height
+        padding: $padding-tb $padding-lr
+        +transition(all .5s ceaser($easeInOutQuad))
+
+    &.slide-leave.slide-leave-active
+        height: 0
+        padding: 0 $padding-lr
+
 .fade-enter
     opacity: .01
 

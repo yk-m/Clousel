@@ -23,7 +23,8 @@
 
 .p-result__filters
     $td-height: 50px
-    +slide($td-height*3+$vertical-span*2, $vertical-span, $horizontal-span)
+    $row-num: 4
+    +slide($td-height*$row-num+$vertical-span*2, $vertical-span, $horizontal-span)
 
     padding: $default-padding
     +border-radius($radius)

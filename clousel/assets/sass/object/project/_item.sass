@@ -4,7 +4,8 @@
 .p-items
     +clearfix
 
-.p-items--state_loading
+.p-items--state_loading,
+.p-items--state_error
     position: absolute
     z-index: 100
     top: 0
@@ -14,15 +15,18 @@
 
     background: $white
 
-    i
-        $icon-size: 5rem
-        +spin
+.p-items--state_loading i
+    $icon-size: 5rem
+    +spin
 
-        z-index: 101
-        margin: $horizontal-span auto 0
+    z-index: 101
+    margin: $horizontal-span auto 0
 
-        +block_icon($icon_loading, $icon-size)
-            color: $accent-color
+    +block_icon($icon_loading, $icon-size)
+        color: $accent-color
+
+.p-items--state_error p
+    font-size: 2rem
 
 .p-item
     +gallery(3 of 12)

@@ -3,15 +3,24 @@ import React from 'react'
 import Paginate from 'react-paginate'
 
 import Loader from './loader'
+import ErrorReporter from './error-reporter'
 
 
 export default class ResultList extends React.Component {
 
   render() {
+    let items
+
+    if (!this.props.loadingIsHidden)
+      items = <Loader />
+    else if (this.props.hasOccurredError)
+      items =  <ErrorReporter message={this.props.errorMessage} />
+    else
+      items = <Items data={this.props.data} />
+
     return (
       <div className="p-result__list">
-        { this.props.loadingIsHidden ? null : <Loader /> }
-        <Items data={this.props.data} />
+        { items }
         <Paginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={"..."}
@@ -35,6 +44,8 @@ export default class ResultList extends React.Component {
 ResultList.propTypes = {
   data: React.PropTypes.array.isRequired,
   loadingIsHidden: React.PropTypes.bool.isRequired,
+  hasOccurredError: React.PropTypes.bool.isRequired,
+  errorMessage: React.PropTypes.string.isRequired,
   pageNum: React.PropTypes.number.isRequired,
   paginate: React.PropTypes.shape({
     handlePaginationClick: React.PropTypes.func.isRequired,

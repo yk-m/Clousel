@@ -23112,6 +23112,8 @@
 	      offset: 0,
 	      pageNum: 0,
 	      loadingIsHidden: false,
+	      hasOccurredError: false,
+	      errorMessage: "",
 	      filtersAreHidden: true,
 	      categories: null,
 	      options: {
@@ -23134,17 +23136,40 @@
 	      var _this2 = this;
 
 	      var query = this.generateQuery();
+	      this.setState({
+	        loadingIsHidden: false,
+	        hasOccurredError: false,
+	        errorMessage: ""
+	      });
 
 	      _superagent2.default.get(this.props.itemsFetchUrl).query(query).end(function (err, res) {
+	        console.log(res.status);
 	        if (!res.ok) {
-	          console.error(_this2.props.itemsFetchUrl, status, err.toString());
+	          console.error(_this2.props.itemsFetchUrl, res.status, err.toString());
 	        }
 
-	        _this2.setState({
-	          data: res.body.results,
-	          pageNum: Math.ceil(res.body.count / _this2.props.paginate.perPage),
-	          loadingIsHidden: true
+	        _this2.updateData(res.body);
+	      });
+	    }
+	  }, {
+	    key: 'updateData',
+	    value: function updateData(response) {
+	      if (!this.isset(response.results[0])) {
+	        this.setState({
+	          data: [],
+	          loadingIsHidden: true,
+	          filtersAreHidden: false,
+	          hasOccurredError: true,
+	          errorMessage: "アイテムが見つかりませんでした"
 	        });
+	        return;
+	      }
+
+	      this.setState({
+	        data: response.results,
+	        pageNum: Math.ceil(response.count / this.props.paginate.perPage),
+	        loadingIsHidden: true,
+	        filtersAreHidden: true
 	      });
 	    }
 	  }, {
@@ -23227,7 +23252,7 @@
 
 	      this.props.paginate.onClick();
 
-	      this.setState({ offset: offset, loadingIsHidden: false }, function () {
+	      this.setState({ offset: offset }, function () {
 	        _this4.loadItemsFromServer();
 	      });
 	    }
@@ -23236,7 +23261,7 @@
 	    value: function handleFiltersChange(options) {
 	      var _this5 = this;
 
-	      this.setState({ options: options, offset: 0, loadingIsHidden: false }, function () {
+	      this.setState({ options: options, offset: 0 }, function () {
 	        _this5.loadItemsFromServer();
 	      });
 	    }
@@ -23247,7 +23272,7 @@
 
 	      this.setState({
 	        ordering: ordering,
-	        offset: 0, loadingIsHidden: false
+	        offset: 0
 	      }, function () {
 	        _this6.loadItemsFromServer();
 	      });
@@ -23288,16 +23313,22 @@
 	          _reactAddonsCssTransitionGroup2.default,
 	          {
 	            transitionName: 'slide',
-	            transitionEnterTimeout: 300,
-	            transitionLeaveTimeout: 300 },
+	            transitionEnterTimeout: 500,
+	            transitionLeaveTimeout: 500 },
 	          this.state.filtersAreHidden ? null : _react2.default.createElement(_resultFilters2.default, { handleFiltersChange: function handleFiltersChange(e) {
 	              return _this7.handleFiltersChange(e);
 	            },
-	            categories: this.state.categories })
+	            category: {
+	              list: this.state.categories,
+	              pk: this.state.options.category
+	            }
+	          })
 	        ),
 	        _react2.default.createElement(_resultList2.default, {
 	          data: this.state.data,
 	          loadingIsHidden: this.state.loadingIsHidden,
+	          hasOccurredError: this.state.hasOccurredError,
+	          errorMessage: this.state.errorMessage,
 	          pageNum: this.state.pageNum,
 	          paginate: {
 	            handlePaginationClick: function handlePaginationClick(e) {
@@ -24189,7 +24220,7 @@
 
 	    _this.state = {
 	      keyword: "",
-	      category: "",
+	      category: _this.props.category.pk || "null",
 	      minPrice: "",
 	      maxPrice: ""
 	    };
@@ -24310,7 +24341,7 @@
 	                    { value: this.state.category, onChange: function onChange(e) {
 	                        return _this4.changeCategory(e);
 	                      } },
-	                    this.props.categories
+	                    this.props.category.list
 	                  )
 	                )
 	              ),
@@ -24376,7 +24407,7 @@
 
 	ResultFilters.propTypes = {
 	  handleFiltersChange: _react2.default.PropTypes.func.isRequired,
-	  categories: _react2.default.PropTypes.array.isRequired
+	  category: _react2.default.PropTypes.array.isRequired
 	};
 
 /***/ },
@@ -24403,6 +24434,10 @@
 
 	var _loader2 = _interopRequireDefault(_loader);
 
+	var _errorReporter = __webpack_require__(202);
+
+	var _errorReporter2 = _interopRequireDefault(_errorReporter);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24423,11 +24458,14 @@
 	  _createClass(ResultList, [{
 	    key: 'render',
 	    value: function render() {
+	      var items = void 0;
+
+	      if (!this.props.loadingIsHidden) items = _react2.default.createElement(_loader2.default, null);else if (this.props.hasOccurredError) items = _react2.default.createElement(_errorReporter2.default, { message: this.props.errorMessage });else items = _react2.default.createElement(Items, { data: this.props.data });
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'p-result__list' },
-	        this.props.loadingIsHidden ? null : _react2.default.createElement(_loader2.default, null),
-	        _react2.default.createElement(Items, { data: this.props.data }),
+	        items,
 	        _react2.default.createElement(_reactPaginate2.default, { previousLabel: "previous",
 	          nextLabel: "next",
 	          breakLabel: "...",
@@ -24456,6 +24494,8 @@
 	ResultList.propTypes = {
 	  data: _react2.default.PropTypes.array.isRequired,
 	  loadingIsHidden: _react2.default.PropTypes.bool.isRequired,
+	  hasOccurredError: _react2.default.PropTypes.bool.isRequired,
+	  errorMessage: _react2.default.PropTypes.string.isRequired,
 	  pageNum: _react2.default.PropTypes.number.isRequired,
 	  paginate: _react2.default.PropTypes.shape({
 	    handlePaginationClick: _react2.default.PropTypes.func.isRequired,
@@ -25230,6 +25270,68 @@
 
 	ResultOrdering.propTypes = {
 	  handleOrderingChange: _react2.default.PropTypes.func.isRequired
+	};
+
+/***/ },
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ErrorReporter = function (_React$Component) {
+	  _inherits(ErrorReporter, _React$Component);
+
+	  function ErrorReporter() {
+	    _classCallCheck(this, ErrorReporter);
+
+	    return _possibleConstructorReturn(this, (ErrorReporter.__proto__ || Object.getPrototypeOf(ErrorReporter)).apply(this, arguments));
+	  }
+
+	  _createClass(ErrorReporter, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "p-items--state_error" },
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          this.props.message
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ErrorReporter;
+	}(_react2.default.Component);
+
+	exports.default = ErrorReporter;
+
+
+	ErrorReporter.propTypes = {
+	  message: _react2.default.PropTypes.string.isRequired
 	};
 
 /***/ }
