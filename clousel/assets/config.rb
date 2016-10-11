@@ -1,5 +1,6 @@
 require 'compass/import-once/activate'
 require 'sass-globbing'
+require 'ceaser-easing'
 # Require any additional compass plugins here.
 
 # Set this to the root of your project when deployed:

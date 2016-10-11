@@ -10,7 +10,7 @@ export default class ResultFilters extends React.Component {
 
     this.state = {
       keyword: "",
-      category: "",
+      category: this.props.category.pk || "null",
       minPrice: "",
       maxPrice: "",
     }
@@ -80,7 +80,7 @@ export default class ResultFilters extends React.Component {
                 <th>category</th>
                 <td>
                   <select value={this.state.category} onChange={(e) => this.changeCategory(e)}>
-                    {this.props.categories}
+                    {this.props.category.list}
                   </select>
                 </td>
               </tr>
@@ -111,5 +111,5 @@ export default class ResultFilters extends React.Component {
 
 ResultFilters.propTypes = {
   handleFiltersChange: React.PropTypes.func.isRequired,
-  categories: React.PropTypes.array.isRequired
+  category: React.PropTypes.array.isRequired
 }

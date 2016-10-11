@@ -18,6 +18,8 @@ export default class Result extends React.Component {
       offset: 0,
       pageNum: 0,
       loadingIsHidden: false,
+      hasOccurredError: false,
+      errorMessage: "",
       filtersAreHidden: true,
       categories: null,
       options: {
@@ -35,21 +37,43 @@ export default class Result extends React.Component {
 
   loadItemsFromServer() {
     let query = this.generateQuery()
+    this.setState({
+      loadingIsHidden: false,
+      hasOccurredError: false,
+      errorMessage: "",
+    })
 
     Request
       .get(this.props.itemsFetchUrl)
       .query(query)
       .end( (err, res) => {
+        console.log(res.status)
         if (!res.ok) {
-          console.error(this.props.itemsFetchUrl, status, err.toString())
+          console.error(this.props.itemsFetchUrl, res.status, err.toString())
         }
 
-        this.setState({
-          data: res.body.results,
-          pageNum: Math.ceil(res.body.count / this.props.paginate.perPage),
-          loadingIsHidden: true,
-        })
+        this.updateData(res.body)
       })
+  }
+
+  updateData(response) {
+    if (!this.isset(response.results[0])) {
+      this.setState({
+        data: [],
+        loadingIsHidden: true,
+        filtersAreHidden: false,
+        hasOccurredError: true,
+        errorMessage: "アイテムが見つかりませんでした"
+      })
+      return
+    }
+
+    this.setState({
+      data: response.results,
+      pageNum: Math.ceil(response.count / this.props.paginate.perPage),
+      loadingIsHidden: true,
+      filtersAreHidden: true,
+    })
   }
 
   loadCategoriesFromServer() {
@@ -122,13 +146,13 @@ export default class Result extends React.Component {
 
     this.props.paginate.onClick()
 
-    this.setState({offset: offset, loadingIsHidden: false}, () => {
+    this.setState({offset: offset}, () => {
       this.loadItemsFromServer()
     })
   }
 
   handleFiltersChange(options) {
-    this.setState({options: options, offset: 0, loadingIsHidden: false}, () => {
+    this.setState({options: options, offset: 0}, () => {
       this.loadItemsFromServer()
     })
   }
@@ -136,7 +160,7 @@ export default class Result extends React.Component {
   handleOrderingChange(ordering) {
     this.setState({
       ordering: ordering,
-      offset: 0, loadingIsHidden: false
+      offset: 0
     }, () => {
       this.loadItemsFromServer()
     })
@@ -155,15 +179,21 @@ export default class Result extends React.Component {
         </div>
         <ReactCSSTransitionGroup
           transitionName="slide"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}>
           {this.state.filtersAreHidden?
             null : <ResultFilters handleFiltersChange={(e) => this.handleFiltersChange(e)}
-                                  categories={this.state.categories} /> }
+                                  category={{
+                                    list: this.state.categories,
+                                    pk: this.state.options.category
+                                  }}
+                                  /> }
         </ReactCSSTransitionGroup>
         <ResultList
           data={this.state.data}
           loadingIsHidden={this.state.loadingIsHidden}
+          hasOccurredError={this.state.hasOccurredError}
+          errorMessage={this.state.errorMessage}
           pageNum={this.state.pageNum}
           paginate={{
             handlePaginationClick: (e) => this.handlePaginationClick(e),
