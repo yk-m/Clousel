@@ -34,14 +34,14 @@ export default class Result extends React.Component {
   }
 
   loadItemsFromServer() {
-    let _query = this.generateQuery()
+    let query = this.generateQuery()
 
     Request
-      .get(this.props.url)
-      .query(_query)
+      .get(this.props.itemsFetchUrl)
+      .query(query)
       .end( (err, res) => {
         if (!res.ok) {
-          console.error(this.props.url, status, err.toString())
+          console.error(this.props.itemsFetchUrl, status, err.toString())
         }
 
         this.setState({
@@ -54,10 +54,10 @@ export default class Result extends React.Component {
 
   loadCategoriesFromServer() {
     Request
-      .get(this.props.categoryFetchUrl)
+      .get(this.props.categoriesFetchUrl)
       .end( (err, res) => {
         if (!res.ok) {
-          console.error(this.props.categoryFetchUrl, status, err.toString())
+          console.error(this.props.categoriesFetchUrl, status, err.toString())
         }
 
         this.setState({
@@ -67,9 +67,9 @@ export default class Result extends React.Component {
   }
 
   formatCategories(categories) {
-    const indent = "- "
+    const indent = "--- "
 
-    categories.unshift({pk: "null", name: "please select", level: 0})
+    categories.unshift({pk: "null", name: "選択してください", level: 0})
     return categories.map(function(category) {
       return <option key={category.pk} value={category.pk}>{generateIndent(category.level)+category.name}</option>
     })
@@ -90,18 +90,11 @@ export default class Result extends React.Component {
       offset: this.state.offset
     }
 
-    let ordering = this.parseOrdering(this.state.ordering)
-    if (ordering !== null)
-      query.ordering = ordering
-
-    if (this.isset(this.state.options.keyword))
-      query.search = this.state.options.keyword
-    if (this.isset(this.state.options.category))
-      query.category = this.state.options.category
-    if (this.isset(this.state.options.minPrice))
-      query.min_price = this.state.options.minPrice
-    if (this.isset(this.state.options.maxPrice))
-      query.max_price = this.state.options.maxPrice
+    query.ordering = this.parseOrdering(this.state.ordering)
+    query.search = this.state.options.keyword
+    query.category = this.state.options.category
+    query.min_price = this.state.options.minPrice
+    query.max_price = this.state.options.maxPrice
 
     return query
   }

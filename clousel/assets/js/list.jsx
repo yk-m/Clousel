@@ -10,8 +10,8 @@ let url = resultContainer.getAttribute('data-request-url')
 
 ReactDOM.render(
   <Result
-    url={url}
-    categoryFetchUrl="/api/categories/"
+    itemsFetchUrl={url}
+    categoriesFetchUrl="/api/categories/"
     paginate={{
       perPage: 12,
       marginPagesDisplayed: 1,
