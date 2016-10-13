@@ -1,25 +1,44 @@
+$pagination-margin: 0 12px !default
+$pagination-padding: 3px 5px !default
+$pagination-radius: 5px !default
+$pagination-font-color: #000 !default
+$pagination-bg-color: #fff !default
+$pagination-font-color--active: #fff !default
+$pagination-bg-color--active: #000 !default
+$pagination-break-me-padding: 0 !default
+$pagination-break-me-radius: $pagination-radius !default
+$pagination-break-me-font-color: #2b2b2b !default
+$pagination-break-me-bg-color: #fff !default
+
 .c-pagination
     text-align: center
     list-style-type: none
 
     li
         display: inline-block
-        margin: $default-padding
+        margin: $pagination-margin
 
         a
             display: inline-block
-            padding: $half-padding
-            // border: 1px solid $black
-            +border-radius( $radius )
+            padding: $pagination-padding
+            +border-radius($pagination-radius)
             text-decoration: none
+            background: $pagination-bg-color
+            color: $pagination-font-color
             cursor: pointer
-            background: $light-gray
 
     .c-pagination__child--is_active a
-        background: $accent-color
-        color: $white
+        background: $pagination-bg-color--active
+        color: $pagination-font-color--active
+
+    .c-pagination__child--break-me
+        padding: $pagination-break-me-padding
+        +border-radius($pagination-break-me-radius)
+        background: $pagination-break-me-bg-color
+        color: $pagination-break-me-font-color
 
     .c-pagination__child--is_disabled a
         display: none
+
 
 

@@ -56,7 +56,7 @@
 
 	__webpack_require__(173);
 
-	var _itemList = __webpack_require__(198);
+	var _itemList = __webpack_require__(199);
 
 	var _itemList2 = _interopRequireDefault(_itemList);
 
@@ -24468,7 +24468,8 @@
 
 /***/ },
 /* 197 */,
-/* 198 */
+/* 198 */,
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

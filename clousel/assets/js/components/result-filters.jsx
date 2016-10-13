@@ -79,9 +79,11 @@ export default class ResultFilters extends React.Component {
               <tr className="p-filters__filter--category">
                 <th>category</th>
                 <td>
-                  <select value={this.state.category} onChange={(e) => this.changeCategory(e)}>
-                    {this.props.category.list}
-                  </select>
+                  <label className="c-select">
+                    <select value={this.state.category} onChange={(e) => this.changeCategory(e)}>
+                      {this.props.category.list}
+                    </select>
+                  </label>
                 </td>
               </tr>
               <tr className="p-filters__filter--price">
