@@ -7,6 +7,8 @@ $white: #F9F7F7
 
 
 /// Fonts
+$font-dir-path: "../fonts"
+
 /// ----- Font Family
 $header-font-family: "Quicksand", sans-serif
 // $body-font-family: "Lato", sans-serif
@@ -15,11 +17,6 @@ $body-font-family: $header-font-family
 @import foundation/elegant-font/load
 $icon-font-family: "ElegantIcons", sans-serif
 
-$font-dir-path: "../fonts"
-
-/// ----- Font Size
-$base-font-size: 62.5%
-
 
 /// Grid
 /// ----- Grid System
@@ -27,8 +24,8 @@ $wrapper-width: 960px
 $horizontal-span: 20px
 $vertical-span: 12px
 
-$default-padding: $vertical-span $horizontal-span
-$half-padding: $vertical-span/2 $horizontal-span/2
+$default-gap: $vertical-span $horizontal-span
+$half-gap: $vertical-span/2 $horizontal-span/2
 
 $unit-width: 60px
 $unit-height: 36px
@@ -37,3 +34,36 @@ $unit-height: 36px
 /// Size
 /// ----- Border radius
 $radius: 5px
+
+
+/// Components
+/// ----- Form
+$select-height: 24px
+$select-padding-tb: 2px
+$select-padding-lr: 1em
+
+$select-border-color: $light-gray
+$select-background: $white
+$select-font-color: $black
+
+$select-arrow-right-position: 5px
+$select-arrow-font-family: $icon-font-family
+$select-arrow-font-size: 12px
+$select-arrow-color: $accent-color
+$select-arrow-content: $arrow_carrot-2down
+
+$select-radius: $radius/2
+
+/// ----- Pagination
+$pagination-margin: $default-gap
+$pagination-padding: $half-gap
+$pagination-radius: $radius
+$pagination-font-color: $black
+$pagination-bg-color: $light-gray
+$pagination-font-color--active: $white
+$pagination-bg-color--active: $accent-color
+$pagination-break-me-padding: 0
+$pagination-break-me-radius: 0
+$pagination-break-me-font-color: $black
+$pagination-break-me-bg-color: transparent
+

@@ -21,14 +21,9 @@ input, select
         outline: none
 
 input, button
-    padding: $default-padding
+    padding: $default-gap
     border: none
     background: transparent
-
-button, *[type=submit], *[type=reset]
-    border: solid 1px $accent-color
-    +border-radius($radius)
-    cursor: pointer
 
 input
     &[type=text], &[type=password], &[type=email]
@@ -37,17 +32,7 @@ input
         +input-placeholder
             color: $gray
 
-
-// select
-//     -webkit-appearance: none
-//     -moz-appearance: none
-//     appearance: none
-//     background: $white
-//     color: $black
-//     cursor: pointer
-
-//     &:after
-//         position: relative
-//         top: 0
-//         left: 0
-//         content: $arrow_carrot-2down_alt2
+button, *[type=submit], *[type=reset]
+    border: solid 1px $accent-color
+    +border-radius($radius)
+    cursor: pointer

@@ -5,8 +5,6 @@
 .p-result__title
     +span(6 of 12)
     margin: 0
-    // height: 25px
-    // line-height: 25px
 
     span
         font-size: 75%
@@ -17,16 +15,15 @@
     +span(last 6 of 12)
     text-align: right
 
-    select
+    label
         width: span(2)
-        padding: 0 $horizontal-span
 
 .p-result__filters
     $td-height: 50px
     $row-num: 4
     +slide($td-height*$row-num+$vertical-span*2, $vertical-span, $horizontal-span)
 
-    padding: $default-padding
+    padding: $default-gap
     +border-radius($radius)
 
     background: $light-gray
@@ -56,7 +53,7 @@
         width: span(6 of 7)
 
     input, button
-        padding: $half-padding
+        padding: $half-gap
 
     input
         max-width: calc_width(3)

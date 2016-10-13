@@ -1,0 +1,61 @@
+$select-height: 24px !default
+$select-padding-tb: 2px !default
+$select-padding-lr: 1em !default
+
+$select-border-color: #000 !default
+$select-background: #fff !default
+$select-font-color: #000 !default
+
+$select-arrow-right-position: 10px !default
+$select-arrow-font-family: sans-serif !default
+$select-arrow-font-size: 10px !default
+$select-arrow-color: #000 !default
+$select-arrow-content: "^" !default
+
+$select-radius: 0 !default
+
+$select-line-height: $select-height - $select-padding-tb*2
+$select-padding: $select-padding-tb $select-padding-lr
+
+.c-select
+    position: relative
+    display: inline-block
+    border: 1px solid $select-border-color
+    +border-radius($select-radius)
+    background: $select-background
+
+    &:before
+        display: block
+        z-index: 1
+        position: absolute
+        top: 50%
+        right: $select-arrow-right-position
+        width: $select-height
+        height: $select-height
+        margin: -$select-height/2 0 0 0
+        +border-radius($select-radius)
+        text-align: right
+        line-height: $select-height
+        font-size: $select-arrow-font-size
+        font-family: $select-arrow-font-family
+        color: $select-arrow-color
+        +background(linear-gradient(left, rgba($select-background, 0) 0%, $select-background 50%, $select-background 100%))
+        content: $select-arrow-content
+
+    select
+        display: block
+        +appearance(none)
+        position: relative
+        width: 100%
+        height: $select-height
+        padding: $select-padding
+        border: none
+        border-radius: $select-radius
+        line-height: $select-line-height
+        color: $select-font-color
+        background: transparent
+        cursor: pointer
+
+::-ms-expand
+    display: none
+

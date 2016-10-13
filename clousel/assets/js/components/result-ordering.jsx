@@ -42,9 +42,11 @@ export default class ResultOrdering extends React.Component {
     })
     return (
       <div className="p-result__sort-order">
-        <select value={this.state.selectedKey} onChange={(e) => this.onChangeSelectValue(e)}>
-          {options}
-        </select>
+        <label className="c-select">
+          <select value={this.state.selectedKey} onChange={(e) => this.onChangeSelectValue(e)}>
+            {options}
+          </select>
+        </label>
       </div>
     )
   }
