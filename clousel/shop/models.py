@@ -1,7 +1,10 @@
+from uuid import uuid4
+
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
+import clothing.signals
 from clothing.models import Clothing
 
 
@@ -29,4 +32,16 @@ class Item(Clothing):
 
     @staticmethod
     def get_image_upload_to_path(filename):
-        return 'shop_item/images/' + filename
+        ext = filename.split('.')[-1]
+        return 'shop_item/images/{0}.{1}'.format(uuid4().hex, ext)
+
+
+@receiver(models.signals.post_delete, sender=Item)
+def auto_delete_image_on_delete(sender, instance, **kwargs):
+    clothing.signals.auto_delete_image_on_delete(sender, instance, **kwargs)
+
+
+@receiver(models.signals.pre_save, sender=Item)
+def auto_delete_image_on_change(sender, instance, **kwargs):
+    clothing.signals.auto_delete_image_on_change(sender, instance, **kwargs)
+

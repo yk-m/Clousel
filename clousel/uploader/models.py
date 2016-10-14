@@ -2,9 +2,9 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
-from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
+import clothing.signals
 from clothing.models import Clothing
 
 
@@ -21,3 +21,13 @@ class UserImage(Clothing):
     def get_image_upload_to_path(self, filename):
         ext = filename.split('.')[-1]
         return 'user/images/{0}/{1}.{2}'.format(self.owner.id, uuid4().hex, ext)
+
+
+@receiver(models.signals.post_delete, sender=UserImage)
+def auto_delete_image_on_delete(sender, instance, **kwargs):
+    clothing.signals.auto_delete_image_on_delete(sender, instance, **kwargs)
+
+
+@receiver(models.signals.pre_save, sender=UserImage)
+def auto_delete_image_on_change(sender, instance, **kwargs):
+    clothing.signals.auto_delete_image_on_change(sender, instance, **kwargs)
