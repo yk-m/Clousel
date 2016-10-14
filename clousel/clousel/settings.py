@@ -168,15 +168,33 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'clousel/logs/django.log'),
         },
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'clousel/logs/django_debug.log'),
+        },
     },
     'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
         'django.request': {
             'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'debug': {
+            'handlers': ['debug_file'],
             'level': 'DEBUG',
             'propagate': True,
         },
