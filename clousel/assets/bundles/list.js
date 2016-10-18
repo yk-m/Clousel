@@ -23083,11 +23083,11 @@
 
 	var _resultFilters2 = _interopRequireDefault(_resultFilters);
 
-	var _resultList = __webpack_require__(188);
+	var _resultList = __webpack_require__(189);
 
 	var _resultList2 = _interopRequireDefault(_resultList);
 
-	var _resultOrdering = __webpack_require__(198);
+	var _resultOrdering = __webpack_require__(199);
 
 	var _resultOrdering2 = _interopRequireDefault(_resultOrdering);
 
@@ -23116,17 +23116,16 @@
 	      errorMessage: "",
 	      filtersAreHidden: true,
 	      categories: null,
-	      options: {
-	        keyword: "",
+	      query: {
+	        search: "",
 	        category: "",
-	        minPrice: "",
-	        maxPrice: ""
-	      },
-	      ordering: {
-	        key: "",
-	        by: ""
+	        min_price: "",
+	        max_price: "",
+	        ordering: ""
 	      }
 	    };
+
+	    _this.queryKeys = ["search", "category", "min_price", "max_price", "ordering"];
 	    return _this;
 	  }
 
@@ -23135,18 +23134,22 @@
 	    value: function loadItemsFromServer() {
 	      var _this2 = this;
 
-	      var query = this.generateQuery();
+	      var query = this.state.query;
+	      query.limit = this.props.paginate.perPage;
+	      query.offset = this.state.offset;
+
 	      this.setState({
 	        loadingIsHidden: false,
 	        hasOccurredError: false,
 	        errorMessage: ""
 	      });
+	      console.log(query);
 
-	      _superagent2.default.get(this.props.itemsFetchUrl).query(query).end(function (err, res) {
-	        console.log(res.status);
+	      _superagent2.default.get(this.props.itemsFetchUrl).query(query).set('Accept', 'application/json').end(function (err, res) {
 	        if (!res.ok) {
 	          console.error(_this2.props.itemsFetchUrl, res.status, err.toString());
 	        }
+	        console.log(res);
 
 	        _this2.updateData(res.body);
 	      });
@@ -23154,7 +23157,7 @@
 	  }, {
 	    key: 'updateData',
 	    value: function updateData(response) {
-	      if (!this.isset(response.results[0])) {
+	      if (!response.results[0]) {
 	        this.setState({
 	          data: [],
 	          loadingIsHidden: true,
@@ -23168,8 +23171,7 @@
 	      this.setState({
 	        data: response.results,
 	        pageNum: Math.ceil(response.count / this.props.paginate.perPage),
-	        loadingIsHidden: true,
-	        filtersAreHidden: true
+	        loadingIsHidden: true
 	      });
 	    }
 	  }, {
@@ -23177,7 +23179,7 @@
 	    value: function loadCategoriesFromServer() {
 	      var _this3 = this;
 
-	      _superagent2.default.get(this.props.categoriesFetchUrl).end(function (err, res) {
+	      _superagent2.default.get(this.props.categoriesFetchUrl).set('Accept', 'application/json').end(function (err, res) {
 	        if (!res.ok) {
 	          console.error(_this3.props.categoriesFetchUrl, status, err.toString());
 	        }
@@ -23192,13 +23194,12 @@
 	    value: function formatCategories(categories) {
 	      var indent = "--- ";
 
-	      categories.unshift({ pk: "null", name: "選択してください", level: 0 });
+	      categories.unshift({ pk: this.categoryUndefined, name: "選択してください", level: 0 });
 	      return categories.map(function (category) {
-	        return _react2.default.createElement(
-	          'option',
-	          { key: category.pk, value: category.pk },
-	          generateIndent(category.level) + category.name
-	        );
+	        return {
+	          id: '' + category.pk,
+	          value: generateIndent(category.level) + category.name
+	        };
 	      });
 
 	      function generateIndent(level) {
@@ -23212,40 +23213,33 @@
 	      this.loadCategoriesFromServer();
 	    }
 	  }, {
+	    key: 'handleOptionsChange',
+	    value: function handleOptionsChange(options) {
+	      var _this4 = this;
+
+	      this.setState({ query: this.generateQuery(options), offset: 0 }, function () {
+	        _this4.loadItemsFromServer();
+	      });
+	    }
+	  }, {
 	    key: 'generateQuery',
-	    value: function generateQuery() {
-	      var query = {
-	        limit: this.props.paginate.perPage,
-	        offset: this.state.offset
-	      };
-
-	      query.ordering = this.parseOrdering(this.state.ordering);
-	      query.search = this.state.options.keyword;
-	      query.category = this.state.options.category;
-	      query.min_price = this.state.options.minPrice;
-	      query.max_price = this.state.options.maxPrice;
-
+	    value: function generateQuery(updates) {
+	      var query = {};
+	      this.queryKeys.forEach(function (key) {
+	        query[key] = updates[key];
+	      });
+	      return this.formatQuery(query);
+	    }
+	  }, {
+	    key: 'formatQuery',
+	    value: function formatQuery(query) {
+	      if (query["category"] === this.categoryUndefined) query["category"] = null;
 	      return query;
-	    }
-	  }, {
-	    key: 'parseOrdering',
-	    value: function parseOrdering(ordering) {
-	      if (!this.isset(ordering)) return null;
-	      if (!this.isset(ordering.key)) return null;
-
-	      if (ordering.by === "desc") return "-" + ordering.key;
-	      return ordering.key;
-	    }
-	  }, {
-	    key: 'isset',
-	    value: function isset(data) {
-	      if (data === "" || data === null || data === undefined) return false;
-	      return true;
 	    }
 	  }, {
 	    key: 'handlePaginationClick',
 	    value: function handlePaginationClick(data) {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      var selected = data.selected;
 	      var offset = Math.ceil(selected * this.props.paginate.perPage);
@@ -23253,28 +23247,7 @@
 	      this.props.paginate.onClick();
 
 	      this.setState({ offset: offset }, function () {
-	        _this4.loadItemsFromServer();
-	      });
-	    }
-	  }, {
-	    key: 'handleFiltersChange',
-	    value: function handleFiltersChange(options) {
-	      var _this5 = this;
-
-	      this.setState({ options: options, offset: 0 }, function () {
 	        _this5.loadItemsFromServer();
-	      });
-	    }
-	  }, {
-	    key: 'handleOrderingChange',
-	    value: function handleOrderingChange(ordering) {
-	      var _this6 = this;
-
-	      this.setState({
-	        ordering: ordering,
-	        offset: 0
-	      }, function () {
-	        _this6.loadItemsFromServer();
 	      });
 	    }
 	  }, {
@@ -23285,7 +23258,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this7 = this;
+	      var _this6 = this;
 
 	      return _react2.default.createElement(
 	        'section',
@@ -23296,17 +23269,17 @@
 	          _react2.default.createElement(
 	            'h2',
 	            { className: 'p-result__title' },
-	            'Search Results ',
+	            'Search Results',
 	            _react2.default.createElement(
 	              'span',
-	              { onClick: function onClick(e) {
-	                  return _this7.toggleFiltersBlock(e);
+	              { className: 'p-result__filters-opener', onClick: function onClick(e) {
+	                  return _this6.toggleFiltersBlock(e);
 	                } },
 	              '[option]'
 	            )
 	          ),
-	          _react2.default.createElement(_resultOrdering2.default, { handleOrderingChange: function handleOrderingChange(e) {
-	              return _this7.handleOrderingChange(e);
+	          _react2.default.createElement(_resultOrdering2.default, { handleOrderingChange: function handleOrderingChange(options) {
+	              return _this6.handleOptionsChange(options);
 	            } })
 	        ),
 	        _react2.default.createElement(
@@ -23315,12 +23288,15 @@
 	            transitionName: 'slide',
 	            transitionEnterTimeout: 500,
 	            transitionLeaveTimeout: 500 },
-	          this.state.filtersAreHidden ? null : _react2.default.createElement(_resultFilters2.default, { handleFiltersChange: function handleFiltersChange(e) {
-	              return _this7.handleFiltersChange(e);
+	          this.state.filtersAreHidden ? null : _react2.default.createElement(_resultFilters2.default, { handleFiltersChange: function handleFiltersChange(options) {
+	              return _this6.handleOptionsChange(options);
 	            },
-	            category: {
-	              list: this.state.categories,
-	              pk: this.state.options.category
+	            categories: this.state.categories,
+	            defaults: {
+	              search: this.state.query.search,
+	              category: this.state.query.category,
+	              min_price: this.state.query.min_price,
+	              max_price: this.state.query.max_price
 	            }
 	          })
 	        ),
@@ -23332,13 +23308,19 @@
 	          pageNum: this.state.pageNum,
 	          paginate: {
 	            handlePaginationClick: function handlePaginationClick(e) {
-	              return _this7.handlePaginationClick(e);
+	              return _this6.handlePaginationClick(e);
 	            },
 	            marginPagesDisplayed: this.props.paginate.marginPagesDisplayed,
 	            pageRangeDisplayed: this.props.paginate.pageRangeDisplayed
 	          }
 	        })
 	      );
+	    }
+	  }, {
+	    key: 'categoryUndefined',
+	    get: function get() {
+	      var value = "0";
+	      return value;
 	    }
 	  }]);
 
@@ -24187,6 +24169,242 @@
 /* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _select = __webpack_require__(188);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ResultFilters = function (_React$Component) {
+	  _inherits(ResultFilters, _React$Component);
+
+	  function ResultFilters(props) {
+	    _classCallCheck(this, ResultFilters);
+
+	    var _this = _possibleConstructorReturn(this, (ResultFilters.__proto__ || Object.getPrototypeOf(ResultFilters)).call(this, props));
+
+	    _this.state = {
+	      search: _this.props.defaults.search,
+	      category: _this.props.defaults.category,
+	      min_price: _this.props.defaults.min_price,
+	      max_price: _this.props.defaults.max_price
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ResultFilters, [{
+	    key: 'submit',
+	    value: function submit(e) {
+	      if (e !== undefined) e.preventDefault();
+
+	      var category = this.state.category === "null" ? null : this.state.category;
+	      var options = {
+	        search: this.state.search,
+	        category: category,
+	        min_price: this.state.min_price,
+	        max_price: this.state.max_price
+	      };
+	      this.props.handleFiltersChange(options);
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset(e) {
+	      var _this2 = this;
+
+	      e.preventDefault();
+
+	      this.setState({
+	        search: "",
+	        category: "",
+	        min_price: "",
+	        max_price: ""
+	      }, function () {
+	        _this2.submit();
+	      });
+	    }
+	  }, {
+	    key: 'changeKeyword',
+	    value: function changeKeyword(e) {
+	      this.setState({ search: e.target.value });
+	    }
+	  }, {
+	    key: 'changeCategory',
+	    value: function changeCategory(id) {
+	      var _this3 = this;
+
+	      this.setState({ category: id }, function () {
+	        _this3.submit();
+	      });
+	    }
+	  }, {
+	    key: 'changeMinPrice',
+	    value: function changeMinPrice(e) {
+	      this.setState({ min_price: e.target.value });
+	    }
+	  }, {
+	    key: 'changeMaxPrice',
+	    value: function changeMaxPrice(e) {
+	      this.setState({ max_price: e.target.value });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'p-result__filter-form' },
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: function onSubmit(e) {
+	              return _this4.submit(e);
+	            },
+	            onReset: function onReset(e) {
+	              return _this4.reset(e);
+	            } },
+	          _react2.default.createElement(
+	            'table',
+	            { className: 'p-filters' },
+	            _react2.default.createElement(
+	              'caption',
+	              null,
+	              'Search option'
+	            ),
+	            _react2.default.createElement(
+	              'tbody',
+	              null,
+	              _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'keyword'
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'text', ref: 'search', value: this.state.search,
+	                    onChange: function onChange(e) {
+	                      return _this4.changeKeyword(e);
+	                    } })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'category'
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  this.props.categories ? _react2.default.createElement(_select2.default, { handleChangeEvent: function handleChangeEvent(id) {
+	                      return _this4.changeCategory(id);
+	                    },
+	                    list: this.props.categories,
+	                    selected: this.props.defaults.category
+	                  }) : null
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'price'
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    '\xA5',
+	                    _react2.default.createElement('input', { type: 'text', ref: 'min_price', value: this.state.min_price,
+	                      onChange: function onChange(e) {
+	                        return _this4.changeMinPrice(e);
+	                      }, placeholder: '----' })
+	                  ),
+	                  _react2.default.createElement(
+	                    'span',
+	                    { className: 'u-inline-block' },
+	                    '\u301C'
+	                  ),
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    '\xA5',
+	                    _react2.default.createElement('input', { type: 'text', ref: 'max_price', value: this.state.max_price,
+	                      onChange: function onChange(e) {
+	                        return _this4.changeMaxPrice(e);
+	                      }, placeholder: '----' })
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement('th', null),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'reset', value: 'Reset' }),
+	                  _react2.default.createElement('input', { type: 'submit', value: 'Update' })
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ResultFilters;
+	}(_react2.default.Component);
+
+	exports.default = ResultFilters;
+
+
+	ResultFilters.propTypes = {
+	  handleFiltersChange: _react2.default.PropTypes.func.isRequired,
+	  categories: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
+	    id: _react2.default.PropTypes.string,
+	    value: _react2.default.PropTypes.string
+	  })),
+	  defaults: _react2.default.PropTypes.shape({
+	    search: _react2.default.PropTypes.string,
+	    category: _react2.default.PropTypes.string,
+	    min_price: _react2.default.PropTypes.string,
+	    max_price: _react2.default.PropTypes.string
+	  })
+	};
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -24207,215 +24425,70 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// import CategorySelector from './category-selector'
+	var Select = function (_React$Component) {
+	  _inherits(Select, _React$Component);
 
+	  function Select(props) {
+	    _classCallCheck(this, Select);
 
-	var ResultFilters = function (_React$Component) {
-	  _inherits(ResultFilters, _React$Component);
-
-	  function ResultFilters(props) {
-	    _classCallCheck(this, ResultFilters);
-
-	    var _this = _possibleConstructorReturn(this, (ResultFilters.__proto__ || Object.getPrototypeOf(ResultFilters)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
 
 	    _this.state = {
-	      keyword: "",
-	      category: _this.props.category.pk || "null",
-	      minPrice: "",
-	      maxPrice: ""
+	      selected: _this.props.selected
 	    };
 	    return _this;
 	  }
 
-	  _createClass(ResultFilters, [{
-	    key: "submit",
-	    value: function submit(e) {
-	      if (e !== undefined) e.preventDefault();
-
-	      var category = this.state.category === "null" ? null : this.state.category;
-	      var options = {
-	        keyword: this.state.keyword,
-	        category: category,
-	        minPrice: this.state.minPrice,
-	        maxPrice: this.state.maxPrice
-	      };
-	      this.props.handleFiltersChange(options);
-	    }
-	  }, {
-	    key: "reset",
-	    value: function reset(e) {
-	      var _this2 = this;
-
-	      e.preventDefault();
-
-	      this.setState({
-	        keyword: "",
-	        category: "null",
-	        minPrice: "",
-	        maxPrice: ""
-	      }, function () {
-	        _this2.submit();
-	      });
-	    }
-	  }, {
-	    key: "changeKeyword",
-	    value: function changeKeyword(e) {
-	      this.setState({ keyword: e.target.value });
-	    }
-	  }, {
-	    key: "changeCategory",
-	    value: function changeCategory(e) {
-	      var _this3 = this;
-
-	      this.setState({ category: e.target.value }, function () {
-	        _this3.submit();
-	      });
-	    }
-	  }, {
-	    key: "changeMinPrice",
-	    value: function changeMinPrice(e) {
-	      this.setState({ minPrice: e.target.value });
-	    }
-	  }, {
-	    key: "changeMaxPrice",
-	    value: function changeMaxPrice(e) {
-	      this.setState({ maxPrice: e.target.value });
+	  _createClass(Select, [{
+	    key: "onChange",
+	    value: function onChange(e) {
+	      var selected = e.target.value;
+	      this.props.handleChangeEvent(selected);
+	      this.setState({ selected: selected });
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this4 = this;
+	      var _this2 = this;
 
+	      var options = this.props.list.map(function (element) {
+	        return _react2.default.createElement(
+	          "option",
+	          { key: element.id, value: element.id },
+	          element.value
+	        );
+	      });
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "p-result__filters" },
+	        "label",
+	        { className: "c-select" },
 	        _react2.default.createElement(
-	          "form",
-	          { onSubmit: function onSubmit(e) {
-	              return _this4.submit(e);
-	            },
-	            onReset: function onReset(e) {
-	              return _this4.reset(e);
+	          "select",
+	          { value: this.state.selected, onChange: function onChange(e) {
+	              return _this2.onChange(e);
 	            } },
-	          _react2.default.createElement(
-	            "table",
-	            { className: "p-filters" },
-	            _react2.default.createElement(
-	              "caption",
-	              null,
-	              "Search option"
-	            ),
-	            _react2.default.createElement(
-	              "tbody",
-	              null,
-	              _react2.default.createElement(
-	                "tr",
-	                { className: "p-filters__filter--keyword" },
-	                _react2.default.createElement(
-	                  "th",
-	                  null,
-	                  "keyword"
-	                ),
-	                _react2.default.createElement(
-	                  "td",
-	                  null,
-	                  _react2.default.createElement("input", { type: "text", ref: "keyword", value: this.state.keyword,
-	                    onChange: function onChange(e) {
-	                      return _this4.changeKeyword(e);
-	                    } })
-	                )
-	              ),
-	              _react2.default.createElement(
-	                "tr",
-	                { className: "p-filters__filter--category" },
-	                _react2.default.createElement(
-	                  "th",
-	                  null,
-	                  "category"
-	                ),
-	                _react2.default.createElement(
-	                  "td",
-	                  null,
-	                  _react2.default.createElement(
-	                    "label",
-	                    { className: "c-select" },
-	                    _react2.default.createElement(
-	                      "select",
-	                      { value: this.state.category, onChange: function onChange(e) {
-	                          return _this4.changeCategory(e);
-	                        } },
-	                      this.props.category.list
-	                    )
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                "tr",
-	                { className: "p-filters__filter--price" },
-	                _react2.default.createElement(
-	                  "th",
-	                  null,
-	                  "price"
-	                ),
-	                _react2.default.createElement(
-	                  "td",
-	                  null,
-	                  _react2.default.createElement(
-	                    "span",
-	                    null,
-	                    "\xA5",
-	                    _react2.default.createElement("input", { type: "text", ref: "minPrice", value: this.state.minPrice,
-	                      onChange: function onChange(e) {
-	                        return _this4.changeMinPrice(e);
-	                      }, placeholder: "----" })
-	                  ),
-	                  _react2.default.createElement(
-	                    "span",
-	                    { className: "u-inline-block" },
-	                    "\u301C"
-	                  ),
-	                  _react2.default.createElement(
-	                    "span",
-	                    null,
-	                    "\xA5",
-	                    _react2.default.createElement("input", { type: "text", ref: "maxPrice", value: this.state.maxPrice,
-	                      onChange: function onChange(e) {
-	                        return _this4.changeMaxPrice(e);
-	                      }, placeholder: "----" })
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                "tr",
-	                { className: "p-filters__update" },
-	                _react2.default.createElement("th", null),
-	                _react2.default.createElement(
-	                  "td",
-	                  null,
-	                  _react2.default.createElement("input", { type: "reset", value: "Reset" }),
-	                  _react2.default.createElement("input", { type: "submit", value: "Update" })
-	                )
-	              )
-	            )
-	          )
+	          options
 	        )
 	      );
 	    }
 	  }]);
 
-	  return ResultFilters;
+	  return Select;
 	}(_react2.default.Component);
 
-	exports.default = ResultFilters;
+	exports.default = Select;
 
 
-	ResultFilters.propTypes = {
-	  handleFiltersChange: _react2.default.PropTypes.func.isRequired,
-	  category: _react2.default.PropTypes.array.isRequired
+	Select.propTypes = {
+	  handleChangeEvent: _react2.default.PropTypes.func.isRequired,
+	  list: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
+	    id: _react2.default.PropTypes.string,
+	    value: _react2.default.PropTypes.string
+	  })),
+	  selected: _react2.default.PropTypes.string
 	};
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24430,15 +24503,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactPaginate = __webpack_require__(189);
+	var _reactPaginate = __webpack_require__(190);
 
 	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
 
-	var _loader = __webpack_require__(196);
+	var _loader = __webpack_require__(197);
 
 	var _loader2 = _interopRequireDefault(_loader);
 
-	var _errorReporter = __webpack_require__(197);
+	var _errorReporter = __webpack_require__(198);
 
 	var _errorReporter2 = _interopRequireDefault(_errorReporter);
 
@@ -24608,12 +24681,12 @@
 	};
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(190);
+	var _PaginationBoxView = __webpack_require__(191);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -24623,7 +24696,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24638,19 +24711,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(191);
+	var _classnames = __webpack_require__(192);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(192);
+	var _reactAddonsCreateFragment = __webpack_require__(193);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(194);
+	var _PageView = __webpack_require__(195);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(195);
+	var _BreakView = __webpack_require__(196);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -24876,7 +24949,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24930,13 +25003,13 @@
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193).create;
+	module.exports = __webpack_require__(194).create;
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25011,7 +25084,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25078,7 +25151,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25132,7 +25205,7 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25181,7 +25254,7 @@
 	exports.default = Loader;
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25239,10 +25312,10 @@
 	};
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -25253,6 +25326,10 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _select = __webpack_require__(188);
+
+	var _select2 = _interopRequireDefault(_select);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25270,60 +25347,52 @@
 
 	    var _this = _possibleConstructorReturn(this, (ResultOrdering.__proto__ || Object.getPrototypeOf(ResultOrdering)).call(this, props));
 
-	    _this.select = [{ key: "default", value: "default" }, { key: "priceAsc", value: "price(ascending)" }, { key: "priceDesc", value: "price(descending)" }];
+	    _this.orderSet = [{ id: "default", key: null, by: null, value: "default" }, { id: "priceAsc", key: "price", by: "asc", value: "price(ascending)" }, { id: "priceDesc", key: "price", by: "desc", value: "price(descending)" }];
 
-	    _this.ordering = {
-	      "default": null,
-	      "priceAsc": { key: "price", by: "asc" },
-	      "priceDesc": { key: "price", by: "desc" }
-	    };
+	    _this.list = _this.orderSet.map(function (element) {
+	      return { id: element.id, value: element.value };
+	    });
 
 	    _this.state = {
-	      selectedKey: "default"
+	      selected: _this.orderSet[0].id
 	    };
 	    return _this;
 	  }
 
 	  _createClass(ResultOrdering, [{
-	    key: "onChangeSelectValue",
-	    value: function onChangeSelectValue(e) {
-	      var selectedKey = e.target.value;
-	      this.setState({ selectedKey: selectedKey });
-
-	      var ordering = this.ordering[selectedKey];
-	      if (ordering === null) {
-	        this.props.handleOrderingChange();
-	        return;
-	      }
-
-	      this.props.handleOrderingChange(ordering);
+	    key: 'onChange',
+	    value: function onChange(id) {
+	      this.setState({ selected: id });
+	      var ordering = this.orderSet.find(function (element) {
+	        return element.id === id;
+	      });
+	      var options = {
+	        ordering: this.parseOrdering(ordering)
+	      };
+	      this.props.handleOrderingChange(options);
 	    }
 	  }, {
-	    key: "render",
+	    key: 'parseOrdering',
+	    value: function parseOrdering(ordering) {
+	      if (!ordering || !ordering.id) return null;
+
+	      if (ordering.by === "desc") return "-" + ordering.key;
+	      return ordering.key;
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 
-	      var options = this.select.map(function (obj) {
-	        return _react2.default.createElement(
-	          "option",
-	          { key: obj.key, value: obj.key },
-	          obj.value
-	        );
-	      });
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "p-result__sort-order" },
-	        _react2.default.createElement(
-	          "label",
-	          { className: "c-select" },
-	          _react2.default.createElement(
-	            "select",
-	            { value: this.state.selectedKey, onChange: function onChange(e) {
-	                return _this2.onChangeSelectValue(e);
-	              } },
-	            options
-	          )
-	        )
+	        'div',
+	        { className: 'p-result__sort-order' },
+	        _react2.default.createElement(_select2.default, { handleChangeEvent: function handleChangeEvent(id) {
+	            return _this2.onChange(id);
+	          },
+	          list: this.orderSet,
+	          selected: this.state.selected
+	        })
 	      );
 	    }
 	  }]);

@@ -1,6 +1,6 @@
 import React from 'react'
 
-// import CategorySelector from './category-selector'
+import Select from './select'
 
 
 export default class ResultFilters extends React.Component {
@@ -9,10 +9,10 @@ export default class ResultFilters extends React.Component {
     super(props)
 
     this.state = {
-      keyword: "",
-      category: this.props.category.pk || "null",
-      minPrice: "",
-      maxPrice: "",
+      search: this.props.defaults.search,
+      category: this.props.defaults.category,
+      min_price: this.props.defaults.min_price,
+      max_price: this.props.defaults.max_price,
     }
   }
 
@@ -22,10 +22,10 @@ export default class ResultFilters extends React.Component {
 
     let category = (this.state.category === "null") ? null : this.state.category
     let options = {
-      keyword: this.state.keyword,
+      search: this.state.search,
       category: category,
-      minPrice: this.state.minPrice,
-      maxPrice: this.state.maxPrice
+      min_price: this.state.min_price,
+      max_price: this.state.max_price
     }
     this.props.handleFiltersChange(options)
   }
@@ -34,69 +34,73 @@ export default class ResultFilters extends React.Component {
     e.preventDefault()
 
     this.setState({
-      keyword: "",
-      category: "null",
-      minPrice: "",
-      maxPrice: ""
+      search: "",
+      category: "",
+      min_price: "",
+      max_price: ""
     }, () => {
       this.submit()
     })
   }
 
   changeKeyword(e) {
-    this.setState({keyword: e.target.value})
+    this.setState({search: e.target.value})
   }
 
-  changeCategory(e) {
-    this.setState({category: e.target.value}, () => {
+  changeCategory(id) {
+    this.setState({category: id}, () => {
       this.submit()
     })
   }
 
   changeMinPrice(e) {
-    this.setState({minPrice: e.target.value})
+    this.setState({min_price: e.target.value})
   }
 
   changeMaxPrice(e) {
-    this.setState({maxPrice: e.target.value})
+    this.setState({max_price: e.target.value})
   }
 
   render() {
     return (
-      <div className="p-result__filters">
+      <div className="p-result__filter-form">
         <form onSubmit={(e) => this.submit(e)}
               onReset={(e) => this.reset(e)}>
           <table className="p-filters">
             <caption>Search option</caption>
             <tbody>
-              <tr className="p-filters__filter--keyword">
+              <tr>
                 <th>keyword</th>
                 <td>
-                  <input type="text" ref="keyword" value={this.state.keyword}
+                  <input type="text" ref="search" value={this.state.search}
                          onChange={(e) => this.changeKeyword(e)} />
                 </td>
               </tr>
-              <tr className="p-filters__filter--category">
+              <tr>
                 <th>category</th>
                 <td>
-                  <label className="c-select">
-                    <select value={this.state.category} onChange={(e) => this.changeCategory(e)}>
-                      {this.props.category.list}
-                    </select>
-                  </label>
+                  {
+                    this.props.categories ?
+                      <Select handleChangeEvent={(id) => this.changeCategory(id)}
+                              list={this.props.categories}
+                              selected={this.props.defaults.category}
+                      />
+                    :
+                      null
+                  }
                 </td>
               </tr>
-              <tr className="p-filters__filter--price">
+              <tr>
                 <th>price</th>
                 <td>
-                  <span>¥<input type="text" ref="minPrice" value={this.state.minPrice}
+                  <span>¥<input type="text" ref="min_price" value={this.state.min_price}
                                 onChange={(e) => this.changeMinPrice(e)} placeholder="----" /></span>
                   <span className="u-inline-block">〜</span>
-                  <span>¥<input type="text" ref="maxPrice" value={this.state.maxPrice}
+                  <span>¥<input type="text" ref="max_price" value={this.state.max_price}
                                 onChange={(e) => this.changeMaxPrice(e)} placeholder="----" /></span>
                 </td>
               </tr>
-              <tr className="p-filters__update">
+              <tr>
                 <th></th>
                 <td>
                   <input type="reset" value="Reset" />
@@ -113,5 +117,16 @@ export default class ResultFilters extends React.Component {
 
 ResultFilters.propTypes = {
   handleFiltersChange: React.PropTypes.func.isRequired,
-  category: React.PropTypes.array.isRequired
+  categories: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.string,
+      value: React.PropTypes.string
+    })
+  ),
+  defaults: React.PropTypes.shape({
+    search: React.PropTypes.string,
+    category: React.PropTypes.string,
+    min_price: React.PropTypes.string,
+    max_price: React.PropTypes.string
+  })
 }

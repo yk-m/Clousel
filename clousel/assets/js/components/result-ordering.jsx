@@ -1,52 +1,53 @@
 import React from 'react'
 
+import Select from './select'
+
 
 export default class ResultOrdering extends React.Component {
 
   constructor(props) {
     super(props)
 
-    this.select = [
-      {key: "default", value: "default"},
-      {key: "priceAsc", value: "price(ascending)"},
-      {key: "priceDesc", value: "price(descending)"}
+    this.orderSet = [
+      {id: "default", key: null, by: null, value: "default"},
+      {id: "priceAsc", key: "price", by: "asc", value: "price(ascending)"},
+      {id: "priceDesc", key: "price", by: "desc", value: "price(descending)"}
     ]
 
-    this.ordering = {
-      "default" : null,
-      "priceAsc": {key: "price", by: "asc"},
-      "priceDesc": {key: "price", by: "desc"}
-    }
+    this.list = this.orderSet.map((element) => {
+      return {id: element.id, value: element.value}
+    })
 
     this.state = {
-      selectedKey: "default"
+      selected: this.orderSet[0].id
     }
   }
 
-  onChangeSelectValue(e) {
-    let selectedKey = e.target.value
-    this.setState({selectedKey: selectedKey})
-
-    let ordering = this.ordering[selectedKey]
-    if (ordering === null) {
-      this.props.handleOrderingChange()
-      return
+  onChange(id) {
+    this.setState({selected: id})
+    let ordering = this.orderSet.find((element) => { return element.id === id })
+    let options = {
+      ordering: this.parseOrdering(ordering)
     }
+    this.props.handleOrderingChange(options)
+  }
 
-    this.props.handleOrderingChange(ordering)
+  parseOrdering(ordering) {
+    if (!ordering || !ordering.id)
+      return null
+
+    if (ordering.by === "desc")
+      return "-" + ordering.key
+    return ordering.key
   }
 
   render() {
-    var options = this.select.map(function(obj) {
-      return <option key={obj.key} value={obj.key}>{obj.value}</option>
-    })
     return (
       <div className="p-result__sort-order">
-        <label className="c-select">
-          <select value={this.state.selectedKey} onChange={(e) => this.onChangeSelectValue(e)}>
-            {options}
-          </select>
-        </label>
+        <Select handleChangeEvent={(id) => this.onChange(id)}
+                list={this.orderSet}
+                selected={this.state.selected}
+        />
       </div>
     )
   }
