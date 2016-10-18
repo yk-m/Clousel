@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsOwner(permissions.BasePermission):
+class IsOwner(permissions.IsAuthenticated):
     """
     Object-level permission to only allow owners of an object to edit it.
     Assumes the model instance has an `owner` attribute.
@@ -18,7 +18,7 @@ class IsOwner(permissions.BasePermission):
         return obj.owner == request.user
 
 
-class IsAdminOrIsSelf(permissions.BasePermission):
+class IsAdminOrIsSelf(permissions.IsAuthenticated):
     """
     Object-level permission to only allow owners of an object to edit it.
     Assumes the model instance has an `owner` attribute.
