@@ -56,7 +56,7 @@
 
 	__webpack_require__(173);
 
-	var _itemList = __webpack_require__(199);
+	var _itemList = __webpack_require__(200);
 
 	var _itemList2 = _interopRequireDefault(_itemList);
 
@@ -23894,12 +23894,13 @@
 /***/ },
 /* 187 */,
 /* 188 */,
-/* 189 */
+/* 189 */,
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(190);
+	var _PaginationBoxView = __webpack_require__(191);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -23909,7 +23910,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23924,19 +23925,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(191);
+	var _classnames = __webpack_require__(192);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(192);
+	var _reactAddonsCreateFragment = __webpack_require__(193);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(194);
+	var _PageView = __webpack_require__(195);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(195);
+	var _BreakView = __webpack_require__(196);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -24162,7 +24163,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24216,13 +24217,13 @@
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193).create;
+	module.exports = __webpack_require__(194).create;
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24297,7 +24298,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24364,7 +24365,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24418,7 +24419,7 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24467,9 +24468,9 @@
 	exports.default = Loader;
 
 /***/ },
-/* 197 */,
 /* 198 */,
-/* 199 */
+/* 199 */,
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24492,11 +24493,11 @@
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _reactPaginate = __webpack_require__(189);
+	var _reactPaginate = __webpack_require__(190);
 
 	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
 
-	var _loader = __webpack_require__(196);
+	var _loader = __webpack_require__(197);
 
 	var _loader2 = _interopRequireDefault(_loader);
 

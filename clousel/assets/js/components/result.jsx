@@ -22,42 +22,53 @@ export default class Result extends React.Component {
       errorMessage: "",
       filtersAreHidden: true,
       categories: null,
-      options: {
-        keyword: "",
+      query: {
+        search: "",
         category: "",
-        minPrice: "",
-        maxPrice: ""
+        min_price: "",
+        max_price: "",
+        ordering: ""
       },
-      ordering: {
-        key: "",
-        by: ""
-      }
     }
+
+    this.queryKeys = [
+      "search", "category", "min_price", "max_price", "ordering"
+    ]
+  }
+
+  get categoryUndefined() {
+    const value = "0"
+    return value
   }
 
   loadItemsFromServer() {
-    let query = this.generateQuery()
+    let query = this.state.query
+    query.limit = this.props.paginate.perPage
+    query.offset = this.state.offset
+
     this.setState({
       loadingIsHidden: false,
       hasOccurredError: false,
       errorMessage: "",
     })
+    console.log(query)
 
     Request
       .get(this.props.itemsFetchUrl)
       .query(query)
+      .set('Accept', 'application/json')
       .end( (err, res) => {
-        console.log(res.status)
         if (!res.ok) {
           console.error(this.props.itemsFetchUrl, res.status, err.toString())
         }
+        console.log(res)
 
         this.updateData(res.body)
       })
   }
 
   updateData(response) {
-    if (!this.isset(response.results[0])) {
+    if (!response.results[0]) {
       this.setState({
         data: [],
         loadingIsHidden: true,
@@ -72,13 +83,13 @@ export default class Result extends React.Component {
       data: response.results,
       pageNum: Math.ceil(response.count / this.props.paginate.perPage),
       loadingIsHidden: true,
-      filtersAreHidden: true,
     })
   }
 
   loadCategoriesFromServer() {
     Request
       .get(this.props.categoriesFetchUrl)
+      .set('Accept', 'application/json')
       .end( (err, res) => {
         if (!res.ok) {
           console.error(this.props.categoriesFetchUrl, status, err.toString())
@@ -93,9 +104,12 @@ export default class Result extends React.Component {
   formatCategories(categories) {
     const indent = "--- "
 
-    categories.unshift({pk: "null", name: "選択してください", level: 0})
+    categories.unshift({pk: this.categoryUndefined, name: "選択してください", level: 0})
     return categories.map(function(category) {
-      return <option key={category.pk} value={category.pk}>{generateIndent(category.level)+category.name}</option>
+      return {
+        id: '' + category.pk,
+        value: generateIndent(category.level) + category.name
+      }
     })
 
     function generateIndent(level) {
@@ -108,36 +122,24 @@ export default class Result extends React.Component {
     this.loadCategoriesFromServer()
   }
 
-  generateQuery() {
-    let query = {
-      limit: this.props.paginate.perPage,
-      offset: this.state.offset
-    }
+  handleOptionsChange(options) {
+    this.setState({query: this.generateQuery(options), offset: 0}, () => {
+      this.loadItemsFromServer()
+    })
+  }
 
-    query.ordering = this.parseOrdering(this.state.ordering)
-    query.search = this.state.options.keyword
-    query.category = this.state.options.category
-    query.min_price = this.state.options.minPrice
-    query.max_price = this.state.options.maxPrice
+  generateQuery(updates) {
+    let query = {}
+    this.queryKeys.forEach((key) => {
+      query[key] = updates[key]
+    })
+    return this.formatQuery(query)
+  }
 
+  formatQuery(query) {
+    if (query["category"] === this.categoryUndefined)
+      query["category"] = null
     return query
-  }
-
-  parseOrdering(ordering) {
-    if (!this.isset(ordering))
-      return null
-    if (!this.isset(ordering.key))
-      return null
-
-    if (ordering.by === "desc")
-      return "-" + ordering.key
-    return ordering.key
-  }
-
-  isset(data) {
-    if(data === "" || data === null || data === undefined)
-      return false
-    return true
   }
 
   handlePaginationClick(data) {
@@ -151,21 +153,6 @@ export default class Result extends React.Component {
     })
   }
 
-  handleFiltersChange(options) {
-    this.setState({options: options, offset: 0}, () => {
-      this.loadItemsFromServer()
-    })
-  }
-
-  handleOrderingChange(ordering) {
-    this.setState({
-      ordering: ordering,
-      offset: 0
-    }, () => {
-      this.loadItemsFromServer()
-    })
-  }
-
   toggleFiltersBlock() {
     this.setState({filtersAreHidden: !this.state.filtersAreHidden})
   }
@@ -174,18 +161,24 @@ export default class Result extends React.Component {
     return (
       <section className="p-result" >
         <div className="p-result__header">
-          <h2 className="p-result__title">Search Results <span onClick={(e) => this.toggleFiltersBlock(e)}>[option]</span></h2>
-          <ResultOrdering handleOrderingChange={(e) => this.handleOrderingChange(e)} />
+          <h2 className="p-result__title">
+            Search Results
+            <span className="p-result__filters-opener" onClick={(e) => this.toggleFiltersBlock(e)}>[option]</span>
+          </h2>
+          <ResultOrdering handleOrderingChange={(options) => this.handleOptionsChange(options)} />
         </div>
         <ReactCSSTransitionGroup
           transitionName="slide"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}>
           {this.state.filtersAreHidden?
-            null : <ResultFilters handleFiltersChange={(e) => this.handleFiltersChange(e)}
-                                  category={{
-                                    list: this.state.categories,
-                                    pk: this.state.options.category
+            null : <ResultFilters handleFiltersChange={(options) => this.handleOptionsChange(options)}
+                                  categories={this.state.categories}
+                                  defaults={{
+                                    search: this.state.query.search,
+                                    category: this.state.query.category,
+                                    min_price: this.state.query.min_price,
+                                    max_price: this.state.query.max_price,
                                   }}
                                   /> }
         </ReactCSSTransitionGroup>
