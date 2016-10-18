@@ -50,19 +50,3 @@ class Clothing(models.Model):
     @staticmethod
     def get_image_upload_to_path(filename):
         return 'images/' + filename
-
-    def delete(self, *args, **kwargs):
-        storage, path = self.image.storage, self.image.path
-        super().delete(*args, **kwargs)
-        storage.delete(path)
-
-    # def delete(self, *args, **kwargs):
-    #     self.image.delete(save=False)
-    #     super().delete(*args, **kwargs)
-
-    # def save(self, *args, **kwargs):
-    #     self.pk:
-    #         old = self.__class__.objects.get(pk=self.pk)
-    #         if old.image.name and (not self.image._committed or not self.image.name):
-    #             old.image.delete(save=False)
-    #     super().save(*args, **kwargs)
