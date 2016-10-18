@@ -1,7 +1,16 @@
 # Coding Rule
 ## Naming
-### Practice of writing
-| Target     | Practice of writing |
+* BEM
+	* 名付け方法
+	    * block
+	    	* block__element
+			* block__element--modifier
+		* block--modifier
+			* block--modifier__element
+
+
+### Rule
+| Target     | Case        |
 |:-----------|:------------|
 | id         | chain-case  |
 | class      | chain-case  |
@@ -9,14 +18,14 @@
 | function   | snake_case  |
 | variable   | chain-case  |
 
-### Prefix
-| Layer      | Prefix |
-|:-----------|:------------|
-| id         | chain-case  |
-| class      | chain-case  |
-| mixin      | chain-case  |
-| function   | snake_case  |
-| variable   | chain-case  |
+### Class Prefix
+| Layer            | Prefix |
+|:-----------------|:-------|
+| foundation       | none   |
+| layout           | l-     |
+| object/utility   | u-     |
+| object/component | c-     |
+| object/project   | p-     |
 
 ## Order
 1. variables

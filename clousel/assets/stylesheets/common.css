@@ -1,4 +1,113 @@
 @charset "UTF-8";
+/*  VARIABLES
+ *    - Color
+ *    - Grid
+ *    - Size
+ */
+/*  Color
+ *   ---------------------------------------- */
+/*  Grid
+ *   ---------------------------------------- */
+/*  Size
+ *   ---------------------------------------- */
+/* ----- Radius ----- */
+/*  MIXINS
+ */
+/*  Compass
+ *   ---------------------------------------- */
+/* ----- Tuning Vendor Prefixes ----- */
+/* ----- Clearfix ----- */
+/*  Others
+ *   ---------------------------------------- */
+/* ----- Clearfix ----- */
+/* ----- Grid ----- */
+/* sanitize.css v4.1.0 (https://jonathantneal.github.io/sanitize.css/)
+ * CC0 License
+ * CDN: https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/4.1.0/sanitize.min.css
+ */
+/*  BASE
+ *    - Basic
+ *    - Form Elements
+ */
+/*  Basic
+ *   ---------------------------------------- */
+/* line 21, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/language/susy/_box-sizing.scss */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 14, ../sass/foundation/_base.sass */
+body {
+  background: #F9F7F7;
+  color: #312F33;
+}
+
+/* line 18, ../sass/foundation/_base.sass */
+a {
+  text-decoration: underline;
+  color: #312F33;
+}
+
+/* line 22, ../sass/foundation/_base.sass */
+img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/*  Form Elements
+ * ---------------------------------------- */
+/* line 33, ../sass/foundation/_base.sass */
+input:focus, select:focus {
+  outline: none;
+}
+
+/* line 36, ../sass/foundation/_base.sass */
+input, button {
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+}
+
+/* line 42, ../sass/foundation/_base.sass */
+input[type=text], input[type=password], input[type=email] {
+  border-bottom: solid 1px #312F33;
+}
+/* line 61, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
+input[type=text]:-moz-placeholder, input[type=password]:-moz-placeholder, input[type=email]:-moz-placeholder {
+  color: #89838E;
+}
+/* line 64, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
+input[type=text]::-moz-placeholder, input[type=password]::-moz-placeholder, input[type=email]::-moz-placeholder {
+  color: #89838E;
+}
+/* line 67, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
+input[type=text]:-ms-input-placeholder, input[type=password]:-ms-input-placeholder, input[type=email]:-ms-input-placeholder {
+  color: #89838E;
+}
+/* line 56, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
+input[type=text]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder {
+  color: #89838E;
+}
+
+/* line 48, ../sass/foundation/_base.sass */
+button, *[type=submit], *[type=reset] {
+  border: solid 1px #C64B8F;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/*  TYPOGRAPHY
+ *    - Settings
+ *    - Definition
+ */
+/*  Settings
+ *   ---------------------------------------- */
+/* ----- Font Family ----- */
 /*!
  *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License) */
@@ -33,102 +142,36 @@
     transform: rotate(359deg);
   }
 }
-/* sanitize.css v4.1.0 (https://jonathantneal.github.io/sanitize.css/)
- * CC0 License
- * CDN: https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/4.1.0/sanitize.min.css
- */
-/* line 21, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/language/susy/_box-sizing.scss */
-*, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-/* line 6, ../sass/foundation/_base.sass */
-body {
-  background: #F9F7F7;
-  color: #312F33;
-}
-
-/* line 10, ../sass/foundation/_base.sass */
-a {
-  text-decoration: underline;
-  color: #312F33;
-}
-
-/* line 14, ../sass/foundation/_base.sass */
-img {
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-}
-
-/* line 20, ../sass/foundation/_base.sass */
-input:focus, select:focus {
-  outline: none;
-}
-
-/* line 23, ../sass/foundation/_base.sass */
-input, button {
-  padding: 12px 20px;
-  border: none;
-  background: transparent;
-}
-
-/* line 29, ../sass/foundation/_base.sass */
-input[type=text], input[type=password], input[type=email] {
-  border-bottom: solid 1px #312F33;
-}
-/* line 61, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
-input[type=text]:-moz-placeholder, input[type=password]:-moz-placeholder, input[type=email]:-moz-placeholder {
-  color: #89838E;
-}
-/* line 64, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
-input[type=text]::-moz-placeholder, input[type=password]::-moz-placeholder, input[type=email]::-moz-placeholder {
-  color: #89838E;
-}
-/* line 67, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
-input[type=text]:-ms-input-placeholder, input[type=password]:-ms-input-placeholder, input[type=email]:-ms-input-placeholder {
-  color: #89838E;
-}
-/* line 56, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
-input[type=text]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder {
-  color: #89838E;
-}
-
-/* line 35, ../sass/foundation/_base.sass */
-button, *[type=submit], *[type=reset] {
-  border: solid 1px #C64B8F;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* line 5, ../sass/foundation/_typography.sass */
+/* ----- Size ----- */
+/*  Definition
+ *   ---------------------------------------- */
+/* ----- Root ----- */
+/* line 33, ../sass/foundation/_typography.sass */
 html {
   font-size: 62.5%;
 }
 
-/* line 8, ../sass/foundation/_typography.sass */
+/* ----- Base ----- */
+/* line 37, ../sass/foundation/_typography.sass */
 body, input, button, select {
   font: normal 1.3rem/1.5em "Quicksand", sans-serif;
 }
 
-/* line 11, ../sass/foundation/_typography.sass */
+/* ----- Headings ----- */
+/* line 41, ../sass/foundation/_typography.sass */
 h1, h2 {
   font-family: "Quicksand", sans-serif;
   font-weight: normal;
 }
 
-/* line 15, ../sass/foundation/_typography.sass */
-header nav {
-  font-family: "Quicksand", sans-serif;
-}
-
-/* line 18, ../sass/foundation/_typography.sass */
+/* line 45, ../sass/foundation/_typography.sass */
 th {
   font-weight: normal;
+}
+
+/* line 48, ../sass/foundation/_typography.sass */
+header nav {
+  font-family: "Quicksand", sans-serif;
 }
 
 /* line 1, ../sass/layout/_header.sass */
@@ -164,6 +207,70 @@ th {
 .u-inline-block {
   display: inline-block;
   margin: 0 20px;
+}
+
+/*  PREFERENCES FOR COMPONENTS
+ */
+/*  Form
+ *   ---------------------------------------- */
+/*  Pagination
+ *   ---------------------------------------- */
+/*  ANIMATIONS FOR ReactCSSTransitionGroup
+ */
+/*  Slide up/down
+ *   ---------------------------------------- */
+/*  Fade
+ * ---------------------------------------- */
+/* line 31, ../sass/object/component/_animation.sass */
+.fade-enter {
+  opacity: 0.01;
+}
+/* line 34, ../sass/object/component/_animation.sass */
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  -moz-transition: opacity 0.2s ease-in;
+  -o-transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+}
+
+/* line 38, ../sass/object/component/_animation.sass */
+.fade-leave {
+  opacity: 1;
+}
+/* line 41, ../sass/object/component/_animation.sass */
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  -moz-transition: opacity 0.2s ease-in;
+  -o-transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+}
+
+/*  Fade and Move
+ * ---------------------------------------- */
+/* line 48, ../sass/object/component/_animation.sass */
+.fademove-enter {
+  opacity: 0.01;
+  transform: translateY(50%) scale(0.95, 0.95);
+  transition: all 1s ease-out;
+}
+/* line 53, ../sass/object/component/_animation.sass */
+.fademove-enter.fademove-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1, 1);
+}
+
+/* line 57, ../sass/object/component/_animation.sass */
+.fademove-leave {
+  opacity: 1;
+  transform: translateY(0) scale(1, 1);
+  transition: all 0.2s ease-out;
+}
+/* line 62, ../sass/object/component/_animation.sass */
+.fademove-leave.fademove-leave-active {
+  opacity: 0.01;
+  transform: translateY(5%) scale(0.98, 0.98);
 }
 
 /* line 20, ../sass/object/component/_form.sass */
@@ -221,56 +328,6 @@ th {
 /* line 59, ../sass/object/component/_form.sass */
 ::-ms-expand {
   display: none;
-}
-
-/* line 21, ../sass/object/component/_animation.sass */
-.fade-enter {
-  opacity: 0.01;
-}
-/* line 24, ../sass/object/component/_animation.sass */
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  -moz-transition: opacity 0.2s ease-in;
-  -o-transition: opacity 0.2s ease-in;
-  -webkit-transition: opacity 0.2s ease-in;
-  transition: opacity 0.2s ease-in;
-}
-
-/* line 28, ../sass/object/component/_animation.sass */
-.fade-leave {
-  opacity: 1;
-}
-/* line 31, ../sass/object/component/_animation.sass */
-.fade-leave.fade-leave-active {
-  opacity: 0.01;
-  -moz-transition: opacity 0.2s ease-in;
-  -o-transition: opacity 0.2s ease-in;
-  -webkit-transition: opacity 0.2s ease-in;
-  transition: opacity 0.2s ease-in;
-}
-
-/* line 36, ../sass/object/component/_animation.sass */
-.fademove-enter {
-  opacity: 0.01;
-  transform: translateY(50%) scale(0.95, 0.95);
-  transition: all 1s ease-out;
-}
-/* line 41, ../sass/object/component/_animation.sass */
-.fademove-enter.fademove-enter-active {
-  opacity: 1;
-  transform: translateY(0) scale(1, 1);
-}
-
-/* line 45, ../sass/object/component/_animation.sass */
-.fademove-leave {
-  opacity: 1;
-  transform: translateY(0) scale(1, 1);
-  transition: all 0.2s ease-out;
-}
-/* line 50, ../sass/object/component/_animation.sass */
-.fademove-leave.fademove-leave-active {
-  opacity: 0.01;
-  transform: translateY(5%) scale(0.98, 0.98);
 }
 
 /* line 13, ../sass/object/component/_pagination.sass */
@@ -492,45 +549,48 @@ th {
   width: 100%;
 }
 
-/* line 1, ../sass/object/project/_login-form.sass */
-.p-login-form {
+/*  REGISTRATION FORM
+ *
+ */
+/* line 6, ../sass/object/project/_registration-form.sass */
+.p-registration-form {
   width: 49.15254%;
   margin: 0 auto;
 }
-/* line 5, ../sass/object/project/_login-form.sass */
-.p-login-form form {
+/* line 10, ../sass/object/project/_registration-form.sass */
+.p-registration-form form {
   margin: 0 0 12px;
   text-align: right;
 }
-/* line 9, ../sass/object/project/_login-form.sass */
-.p-login-form table {
+/* line 15, ../sass/object/project/_registration-form.sass */
+.p-registration-form input[type=text], .p-registration-form input[type=password], .p-registration-form input[type=email] {
+  width: 100%;
+}
+/* line 18, ../sass/object/project/_registration-form.sass */
+.p-registration-form table {
   width: 100%;
   margin: 0 0 12px;
   text-align: left;
   vertical-align: middle;
 }
-/* line 15, ../sass/object/project/_login-form.sass */
-.p-login-form table caption {
+/* line 24, ../sass/object/project/_registration-form.sass */
+.p-registration-form table caption {
   display: none;
 }
-/* line 18, ../sass/object/project/_login-form.sass */
-.p-login-form table th, .p-login-form table td {
+/* line 27, ../sass/object/project/_registration-form.sass */
+.p-registration-form table th, .p-registration-form table td {
   height: 36px;
   padding: 12px 0;
   vertical-align: middle;
 }
-/* line 23, ../sass/object/project/_login-form.sass */
-.p-login-form table th {
+/* line 32, ../sass/object/project/_registration-form.sass */
+.p-registration-form table th {
   width: 31.03448%;
   font-weight: normal;
 }
-/* line 27, ../sass/object/project/_login-form.sass */
-.p-login-form table td {
+/* line 36, ../sass/object/project/_registration-form.sass */
+.p-registration-form table td {
   width: 65.51724%;
-}
-/* line 31, ../sass/object/project/_login-form.sass */
-.p-login-form input[type=text], .p-login-form input[type=password], .p-login-form input[type=email] {
-  width: 100%;
 }
 
 /* line 4, ../sass/object/project/_header.sass */
@@ -640,7 +700,7 @@ th {
   height: auto;
 }
 
-/* line 28, ../sass/object/project/_image.sass */
+/* line 26, ../sass/object/project/_image.sass */
 .p-image--landscape {
   left: 50%;
   transform: translateX(-50%);
@@ -746,41 +806,44 @@ th {
   color: #C64B8F;
 }
 
-/* line 1, ../sass/object/project/_results.sass */
+/* line 1, ../sass/object/project/_result.sass */
 .p-result__header {
   overflow: hidden;
   *zoom: 1;
   margin: 0 0 12px;
 }
 
-/* line 5, ../sass/object/project/_results.sass */
+/* line 5, ../sass/object/project/_result.sass */
 .p-result__title {
   width: 49.15254%;
   float: left;
   margin-right: 1.69492%;
   margin: 0;
 }
-/* line 9, ../sass/object/project/_results.sass */
-.p-result__title span {
-  font-size: 75%;
+
+/* line 9, ../sass/object/project/_result.sass */
+.p-result__filters-opener {
+  display: inline-block;
+  margin: 0 0 0 0.75em;
+  font-size: 0.75em;
   color: #C64B8F;
   cursor: pointer;
 }
 
-/* line 14, ../sass/object/project/_results.sass */
+/* line 16, ../sass/object/project/_result.sass */
 .p-result__sort-order {
   width: 49.15254%;
   float: right;
   margin-right: 0;
   text-align: right;
 }
-/* line 18, ../sass/object/project/_results.sass */
+/* line 20, ../sass/object/project/_result.sass */
 .p-result__sort-order label {
   width: 47.36842%;
 }
 
-/* line 21, ../sass/object/project/_results.sass */
-.p-result__filters {
+/* line 23, ../sass/object/project/_result.sass */
+.p-result__filter-form {
   padding: 12px 20px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -788,8 +851,8 @@ th {
   background: #DFDCE2;
   overflow-y: hidden;
 }
-/* line 2, ../sass/object/component/_animation.sass */
-.p-result__filters.slide-enter {
+/* line 9, ../sass/object/component/_animation.sass */
+.p-result__filter-form.slide-enter {
   height: 0;
   padding: 0 20px;
   opacity: 1;
@@ -798,13 +861,13 @@ th {
   -webkit-transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
   transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
-/* line 8, ../sass/object/component/_animation.sass */
-.p-result__filters.slide-enter.slide-enter-active {
+/* line 15, ../sass/object/component/_animation.sass */
+.p-result__filter-form.slide-enter.slide-enter-active {
   height: 224px;
   padding: 12px 20px;
 }
-/* line 12, ../sass/object/component/_animation.sass */
-.p-result__filters.slide-leave {
+/* line 19, ../sass/object/component/_animation.sass */
+.p-result__filter-form.slide-leave {
   height: 224px;
   padding: 12px 20px;
   -moz-transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
@@ -812,61 +875,61 @@ th {
   -webkit-transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
   transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
-/* line 17, ../sass/object/component/_animation.sass */
-.p-result__filters.slide-leave.slide-leave-active {
+/* line 24, ../sass/object/component/_animation.sass */
+.p-result__filter-form.slide-leave.slide-leave-active {
   height: 0;
   padding: 0 20px;
 }
-/* line 32, ../sass/object/project/_results.sass */
-.p-result__filters table {
+/* line 34, ../sass/object/project/_result.sass */
+.p-result__filter-form table {
   width: 100%;
 }
-/* line 35, ../sass/object/project/_results.sass */
-.p-result__filters caption {
+/* line 37, ../sass/object/project/_result.sass */
+.p-result__filter-form caption {
   display: none;
 }
-/* line 38, ../sass/object/project/_results.sass */
-.p-result__filters tr {
+/* line 40, ../sass/object/project/_result.sass */
+.p-result__filter-form tr {
   height: 50px;
 }
-/* line 41, ../sass/object/project/_results.sass */
-.p-result__filters tr:last-child {
+/* line 43, ../sass/object/project/_result.sass */
+.p-result__filter-form tr:last-child {
   text-align: right;
 }
-/* line 44, ../sass/object/project/_results.sass */
-.p-result__filters td, .p-result__filters th {
+/* line 46, ../sass/object/project/_result.sass */
+.p-result__filter-form td, .p-result__filter-form th {
   vertical-align: middle;
   white-space: nowrap;
 }
-/* line 48, ../sass/object/project/_results.sass */
-.p-result__filters th {
+/* line 50, ../sass/object/project/_result.sass */
+.p-result__filter-form th {
   width: 11.76471%;
   text-align: left;
 }
-/* line 52, ../sass/object/project/_results.sass */
-.p-result__filters td {
+/* line 54, ../sass/object/project/_result.sass */
+.p-result__filter-form td {
   width: 85.29412%;
 }
-/* line 55, ../sass/object/project/_results.sass */
-.p-result__filters input, .p-result__filters button {
+/* line 57, ../sass/object/project/_result.sass */
+.p-result__filter-form input, .p-result__filter-form button {
   padding: 6px 10px;
 }
-/* line 58, ../sass/object/project/_results.sass */
-.p-result__filters input {
+/* line 60, ../sass/object/project/_result.sass */
+.p-result__filter-form input {
   max-width: 220px;
 }
-/* line 61, ../sass/object/project/_results.sass */
-.p-result__filters input[type=submit], .p-result__filters input[type=reset] {
+/* line 63, ../sass/object/project/_result.sass */
+.p-result__filter-form input[type=submit], .p-result__filter-form input[type=reset] {
   border: none;
   background: #F9F7F7;
   color: #312F33;
 }
-/* line 67, ../sass/object/project/_results.sass */
-.p-result__filters input[type=submit]:last-child, .p-result__filters input[type=reset]:last-child {
+/* line 69, ../sass/object/project/_result.sass */
+.p-result__filter-form input[type=submit]:last-child, .p-result__filter-form input[type=reset]:last-child {
   margin: 0 0 0 20px;
 }
 
-/* line 71, ../sass/object/project/_results.sass */
+/* line 73, ../sass/object/project/_result.sass */
 .p-result__list {
   position: relative;
 }
