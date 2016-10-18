@@ -1,4 +1,26 @@
-@import compass/utilities/general/clearfix
+/*
+ *  MIXINS
+ */
+
+
+
+/*  Compass
+   ---------------------------------------- */
+
+/* ----- Tuning Vendor Prefixes ----- */
 @import compass/css3
 
+/* ----- Clearfix ----- */
+@import compass/utilities/general/clearfix
+
+
+
+/*  Others
+   ---------------------------------------- */
+
+/* ----- Clearfix ----- */
 @import ceaser-easing
+
+/* ----- Grid ----- */
+$susy: ( global-box-sizing: border-box, use-custom: (rem: true), container: $wrapper-width )
+@import "susy"

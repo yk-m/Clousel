@@ -1,19 +1,49 @@
+/*
+ *  TYPOGRAPHY
+ *    - Settings
+ *    - Definition
+ */
+
+
+
+/*  Settings
+   ---------------------------------------- */
+
+$font-dir-path: "../fonts"
+
+/* ----- Font Family ----- */
+$header-font-family: "Quicksand", sans-serif
+$body-font-family: $header-font-family
+// $body-font-family: "Lato", sans-serif
+
+@import foundation/elegant-font/load
+$icon-font-family: "ElegantIcons", sans-serif
+
+/* ----- Size ----- */
 $base-font-size: 62.5%
 $body-font-size: 1.3rem
 $body-line-height: 1.5em
 
+
+
+/*  Definition
+   ---------------------------------------- */
+
+/* ----- Root ----- */
 html
     font-size: $base-font-size
 
+/* ----- Base ----- */
 body, input, button, select
     font: normal #{$body-font-size}/#{$body-line-height} $body-font-family
 
+/* ----- Headings ----- */
 h1, h2
     font-family: $header-font-family
     font-weight: normal
 
-header nav
-    font-family: $header-font-family
-
 th
     font-weight: normal
+
+header nav
+    font-family: $header-font-family

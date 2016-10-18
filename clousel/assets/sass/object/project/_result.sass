@@ -6,10 +6,12 @@
     +span(6 of 12)
     margin: 0
 
-    span
-        font-size: 75%
-        color: $accent-color
-        cursor: pointer
+.p-result__filters-opener
+    display: inline-block
+    margin: 0 0 0 .75em
+    font-size: .75em
+    color: $accent-color
+    cursor: pointer
 
 .p-result__sort-order
     +span(last 6 of 12)
@@ -18,7 +20,7 @@
     label
         width: span(2)
 
-.p-result__filters
+.p-result__filter-form
     $td-height: 50px
     $row-num: 4
     +slide($td-height*$row-num+$vertical-span*2, $vertical-span, $horizontal-span)
