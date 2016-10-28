@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Select from './select'
+import Select from '../select'
 
 
-export default class ResultOrdering extends React.Component {
+export default class SearchOrdering extends React.Component {
 
   constructor(props) {
     super(props)
@@ -17,19 +17,14 @@ export default class ResultOrdering extends React.Component {
     this.list = this.orderSet.map((element) => {
       return {id: element.id, value: element.value}
     })
-
-    this.state = {
-      selected: this.orderSet[0].id
-    }
   }
 
   onChange(id) {
-    this.setState({selected: id})
-    let ordering = this.orderSet.find((element) => { return element.id === id })
-    let options = {
-      ordering: this.parseOrdering(ordering)
-    }
-    this.props.handleOrderingChange(options)
+    this.props.handleOrderingChange(
+      this.parseOrdering(
+        this.orderSet.find((element) => { return element.id === id })
+      )
+    )
   }
 
   parseOrdering(ordering) {
@@ -45,14 +40,16 @@ export default class ResultOrdering extends React.Component {
     return (
       <div className="p-result__sort-order">
         <Select handleChangeEvent={(id) => this.onChange(id)}
+                select_id="ordering"
                 list={this.orderSet}
-                selected={this.state.selected}
+                default={this.props.default}
         />
       </div>
     )
   }
 }
 
-ResultOrdering.propTypes = {
+SearchOrdering.propTypes = {
   handleOrderingChange: React.PropTypes.func.isRequired,
+  default: React.PropTypes.string.isRequired
 }

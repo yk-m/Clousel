@@ -56,16 +56,16 @@
 
 	__webpack_require__(173);
 
-	var _searchableItemList = __webpack_require__(203);
+	var _itemListBuilder = __webpack_require__(179);
 
-	var _searchableItemList2 = _interopRequireDefault(_searchableItemList);
+	var _itemListBuilder2 = _interopRequireDefault(_itemListBuilder);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var resultContainer = document.getElementById('js-result');
 	var url = resultContainer.getAttribute('data-request-url');
 
-	_reactDom2.default.render(_react2.default.createElement(_searchableItemList2.default, {
+	_reactDom2.default.render(_react2.default.createElement(_itemListBuilder2.default, {
 	  items_fetch_url: url,
 	  categories_fetch_url: '/api/categories/',
 	  paginate: {
@@ -23053,7 +23053,254 @@
 
 
 /***/ },
-/* 179 */,
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
+
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+
+	var _superagent = __webpack_require__(174);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	var _listBuilder = __webpack_require__(204);
+
+	var _listBuilder2 = _interopRequireDefault(_listBuilder);
+
+	var _itemList = __webpack_require__(187);
+
+	var _itemList2 = _interopRequireDefault(_itemList);
+
+	var _searchFilters = __webpack_require__(200);
+
+	var _searchFilters2 = _interopRequireDefault(_searchFilters);
+
+	var _searchOrdering = __webpack_require__(202);
+
+	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ItemListBuilder = function (_ListBuilder) {
+	  _inherits(ItemListBuilder, _ListBuilder);
+
+	  function ItemListBuilder(props) {
+	    _classCallCheck(this, ItemListBuilder);
+
+	    var _this = _possibleConstructorReturn(this, (ItemListBuilder.__proto__ || Object.getPrototypeOf(ItemListBuilder)).call(this, props));
+
+	    console.log(_this.state);
+
+	    _this.state = Object.assign(_this.state, {
+	      filters_are_hidden: true,
+	      categories: null,
+	      filters: _this.props.default_filters,
+	      ordering: _this.props.default_ordering
+	    });
+	    return _this;
+	  }
+
+	  _createClass(ItemListBuilder, [{
+	    key: 'fetchItems',
+	    value: function fetchItems() {
+	      var _this2 = this;
+
+	      var query = this.state.filters;
+	      query.ordering = this.state.ordering;
+	      query.limit = this.props.paginate.per_page;
+	      query.offset = this.state.offset;
+
+	      this.setStateOfLoading();
+
+	      this.fetch(this.props.items_fetch_url, query, function (res) {
+	        if (!res.body.results[0]) {
+	          _this2.setStateOfError("アイテムが見つかりませんでした．");
+	          return;
+	        }
+
+	        _this2.setState({
+	          data: res.body.results,
+	          offset: 0,
+	          page_num: Math.ceil(res.body.count / _this2.props.paginate.per_page),
+	          loading_is_hidden: true
+	        });
+	      }, function (res) {
+	        console.error(_this2.props.items_fetch_url, res.status, err.toString());
+	      });
+	    }
+	  }, {
+	    key: 'fetchCategories',
+	    value: function fetchCategories() {
+	      var _this3 = this;
+
+	      this.fetch(this.props.categories_fetch_url, {}, function (res) {
+	        _this3.setState({
+	          categories: _this3.formatCategories(res.body)
+	        });
+	      }, function (res) {
+	        console.error(_this3.props.categories_fetch_url, status, err.toString());
+	      });
+	    }
+	  }, {
+	    key: 'formatCategories',
+	    value: function formatCategories(categories) {
+	      var indent = "--- ";
+
+	      categories.unshift({ pk: "", name: "---------", level: 0 });
+	      return categories.map(function (category) {
+	        return {
+	          id: '' + category.pk,
+	          value: generateIndent(category.level) + category.name
+	        };
+	      });
+
+	      function generateIndent(level) {
+	        return Array(level + 1).join(indent);
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      _get(ItemListBuilder.prototype.__proto__ || Object.getPrototypeOf(ItemListBuilder.prototype), 'componentDidMount', this).call(this);
+	      this.fetchCategories();
+	    }
+	  }, {
+	    key: 'handleChangeFilters',
+	    value: function handleChangeFilters(filters) {
+	      var _this4 = this;
+
+	      this.setState({ filters: filters }, function () {
+	        _this4.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'handleChangeOrdering',
+	    value: function handleChangeOrdering(ordering) {
+	      var _this5 = this;
+
+	      this.setState({ ordering: ordering }, function () {
+	        _this5.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'handleFiltersToggleEvent',
+	    value: function handleFiltersToggleEvent() {
+	      this.setState({ filters_are_hidden: !this.state.filters_are_hidden });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this6 = this;
+
+	      return _react2.default.createElement(
+	        'section',
+	        { className: 'p-result' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'p-result__header' },
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'p-result__title' },
+	            'Search Searchs',
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'p-result__filters-opener', onClick: function onClick(e) {
+	                  return _this6.handleFiltersToggleEvent(e);
+	                } },
+	              '[option]'
+	            )
+	          ),
+	          _react2.default.createElement(_searchOrdering2.default, { handleOrderingChange: function handleOrderingChange(ordering) {
+	              return _this6.handleChangeOrdering(ordering);
+	            },
+	            'default': this.state.ordering })
+	        ),
+	        _react2.default.createElement(
+	          _reactAddonsCssTransitionGroup2.default,
+	          {
+	            transitionName: 'slide',
+	            transitionEnterTimeout: 500,
+	            transitionLeaveTimeout: 500 },
+	          this.state.filters_are_hidden ? null : _react2.default.createElement(_searchFilters2.default, { handleFiltersChange: function handleFiltersChange(filters) {
+	              return _this6.handleChangeFilters(filters);
+	            },
+	            categories: this.state.categories,
+	            defaults: this.state.filters
+	          })
+	        ),
+	        _react2.default.createElement(_itemList2.default, {
+	          data: this.state.data,
+	          loading_is_hidden: this.state.loading_is_hidden,
+	          has_occurred_error: this.state.has_occurred_error,
+	          error_message: this.state.error_message,
+	          page_num: this.state.page_num,
+	          handleChangeOffset: function handleChangeOffset(e) {
+	            return _this6.handleChangeOffset(e);
+	          },
+	          paginate: {
+	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
+	            page_range_displayed: this.props.paginate.page_range_displayed
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return ItemListBuilder;
+	}(_listBuilder2.default);
+
+	exports.default = ItemListBuilder;
+
+
+	ItemListBuilder.propTypes = {
+	  items_fetch_url: _react2.default.PropTypes.string.isRequired,
+	  categories_fetch_url: _react2.default.PropTypes.string.isRequired,
+	  paginate: _react2.default.PropTypes.shape({
+	    per_page: _react2.default.PropTypes.number.isRequired,
+	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
+	    page_range_displayed: _react2.default.PropTypes.number.isRequired
+	  }),
+	  default_filters: _react2.default.PropTypes.shape({
+	    search: _react2.default.PropTypes.string,
+	    category: _react2.default.PropTypes.string,
+	    min_price: _react2.default.PropTypes.string,
+	    max_price: _react2.default.PropTypes.string
+	  }),
+	  default_ordering: _react2.default.PropTypes.string
+	};
+
+	ItemListBuilder.defaultProps = {
+	  default_filters: {
+	    search: "",
+	    category: "",
+	    min_price: "",
+	    max_price: ""
+	  },
+	  default_ordering: ""
+	};
+
+/***/ },
 /* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24854,380 +25101,7 @@
 	};
 
 /***/ },
-/* 200 */,
-/* 201 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Select = function (_React$Component) {
-	  _inherits(Select, _React$Component);
-
-	  function Select() {
-	    _classCallCheck(this, Select);
-
-	    return _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).apply(this, arguments));
-	  }
-
-	  _createClass(Select, [{
-	    key: "onChange",
-	    value: function onChange(e) {
-	      this.props.handleChangeEvent(e.target.value);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this2 = this;
-
-	      var options = this.props.list.map(function (element) {
-	        return _react2.default.createElement(
-	          "option",
-	          { key: element.id, value: element.id },
-	          element.value
-	        );
-	      });
-	      return _react2.default.createElement(
-	        "label",
-	        { className: "c-select" },
-	        _react2.default.createElement(
-	          "select",
-	          { ref: this.props.select_id, defaultValue: this.props.default, onChange: function onChange(e) {
-	              return _this2.onChange(e);
-	            } },
-	          options
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Select;
-	}(_react2.default.Component);
-
-	exports.default = Select;
-
-
-	Select.propTypes = {
-	  handleChangeEvent: _react2.default.PropTypes.func.isRequired,
-	  select_id: _react2.default.PropTypes.string.isRequired,
-	  list: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
-	    id: _react2.default.PropTypes.string,
-	    value: _react2.default.PropTypes.string
-	  })),
-	  default: _react2.default.PropTypes.string.isRequired
-	};
-
-/***/ },
-/* 202 */,
-/* 203 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
-
-	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-
-	var _superagent = __webpack_require__(174);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
-	var _itemList = __webpack_require__(187);
-
-	var _itemList2 = _interopRequireDefault(_itemList);
-
-	var _searchFilters = __webpack_require__(206);
-
-	var _searchFilters2 = _interopRequireDefault(_searchFilters);
-
-	var _searchOrdering = __webpack_require__(207);
-
-	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SearchableItemList = function (_React$Component) {
-	  _inherits(SearchableItemList, _React$Component);
-
-	  function SearchableItemList(props) {
-	    _classCallCheck(this, SearchableItemList);
-
-	    var _this = _possibleConstructorReturn(this, (SearchableItemList.__proto__ || Object.getPrototypeOf(SearchableItemList)).call(this, props));
-
-	    _this.state = {
-	      data: [],
-	      offset: 0,
-	      page_num: 0,
-	      loading_is_hidden: false,
-	      has_occurred_error: false,
-	      error_message: "",
-	      filters_are_hidden: true,
-	      categories: null,
-	      filters: _this.props.default_filters,
-	      ordering: _this.props.default_ordering
-	    };
-	    return _this;
-	  }
-
-	  _createClass(SearchableItemList, [{
-	    key: 'setStateOfLoading',
-	    value: function setStateOfLoading() {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: false,
-	        has_occurred_error: false,
-	        error_message: ""
-	      });
-	    }
-	  }, {
-	    key: 'setStateOfError',
-	    value: function setStateOfError(message) {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: true,
-	        filters_are_hidden: false,
-	        has_occurred_error: true,
-	        error_message: "アイテムが見つかりませんでした"
-	      });
-	    }
-	  }, {
-	    key: 'fetch',
-	    value: function fetch(url, query, success, failure) {
-	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
-	        if (!res.ok) {
-	          failure(res);
-	          return;
-	        }
-	        success(res);
-	      });
-	    }
-	  }, {
-	    key: 'fetchItems',
-	    value: function fetchItems() {
-	      var _this2 = this;
-
-	      var query = this.state.filters;
-	      query.ordering = this.state.ordering;
-	      query.limit = this.props.paginate.per_page;
-	      query.offset = this.state.offset;
-
-	      this.setStateOfLoading();
-
-	      this.fetch(this.props.items_fetch_url, query, function (res) {
-	        if (!res.body.searchs[0]) {
-	          _this2.setStateOfError("アイテムが見つかりませんでした．");
-	          return;
-	        }
-
-	        _this2.setState({
-	          data: res.body.searchs,
-	          offset: 0,
-	          page_num: Math.ceil(res.body.count / _this2.props.paginate.per_page),
-	          loading_is_hidden: true
-	        });
-	      }, function (res) {
-	        console.error(_this2.props.items_fetch_url, res.status, err.toString());
-	      });
-	    }
-	  }, {
-	    key: 'fetchCategories',
-	    value: function fetchCategories() {
-	      var _this3 = this;
-
-	      this.fetch(this.props.categories_fetch_url, {}, function (res) {
-	        _this3.setState({
-	          categories: _this3.formatCategories(res.body)
-	        });
-	      }, function (res) {
-	        console.error(_this3.props.categories_fetch_url, status, err.toString());
-	      });
-	    }
-	  }, {
-	    key: 'formatCategories',
-	    value: function formatCategories(categories) {
-	      var indent = "--- ";
-
-	      categories.unshift({ pk: "", name: "---------", level: 0 });
-	      return categories.map(function (category) {
-	        return {
-	          id: '' + category.pk,
-	          value: generateIndent(category.level) + category.name
-	        };
-	      });
-
-	      function generateIndent(level) {
-	        return Array(level + 1).join(indent);
-	      }
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.fetchItems();
-	      this.fetchCategories();
-	    }
-	  }, {
-	    key: 'handleChangeFilters',
-	    value: function handleChangeFilters(filters) {
-	      var _this4 = this;
-
-	      this.setState({ filters: filters }, function () {
-	        _this4.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleChangeOrdering',
-	    value: function handleChangeOrdering(ordering) {
-	      var _this5 = this;
-
-	      this.setState({ ordering: ordering }, function () {
-	        _this5.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleChangeOffset',
-	    value: function handleChangeOffset(offset) {
-	      var _this6 = this;
-
-	      window.scrollTo(0, 0);
-
-	      this.setState({ offset: offset }, function () {
-	        _this6.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleFiltersToggleEvent',
-	    value: function handleFiltersToggleEvent() {
-	      this.setState({ filters_are_hidden: !this.state.filters_are_hidden });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this7 = this;
-
-	      return _react2.default.createElement(
-	        'section',
-	        { className: 'p-result' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'p-result__header' },
-	          _react2.default.createElement(
-	            'h2',
-	            { className: 'p-result__title' },
-	            'Search Searchs',
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'p-result__filters-opener', onClick: function onClick(e) {
-	                  return _this7.handleFiltersToggleEvent(e);
-	                } },
-	              '[option]'
-	            )
-	          ),
-	          _react2.default.createElement(_searchOrdering2.default, { handleOrderingChange: function handleOrderingChange(ordering) {
-	              return _this7.handleChangeOrdering(ordering);
-	            },
-	            'default': this.state.ordering })
-	        ),
-	        _react2.default.createElement(
-	          _reactAddonsCssTransitionGroup2.default,
-	          {
-	            transitionName: 'slide',
-	            transitionEnterTimeout: 500,
-	            transitionLeaveTimeout: 500 },
-	          this.state.filters_are_hidden ? null : _react2.default.createElement(_searchFilters2.default, { handleFiltersChange: function handleFiltersChange(filters) {
-	              return _this7.handleChangeFilters(filters);
-	            },
-	            categories: this.state.categories,
-	            defaults: this.state.filters
-	          })
-	        ),
-	        _react2.default.createElement(_itemList2.default, {
-	          data: this.state.data,
-	          loading_is_hidden: this.state.loading_is_hidden,
-	          has_occurred_error: this.state.has_occurred_error,
-	          error_message: this.state.error_message,
-	          page_num: this.state.page_num,
-	          handleChangeOffset: function handleChangeOffset(e) {
-	            return _this7.handleChangeOffset(e);
-	          },
-	          paginate: {
-	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-	            page_range_displayed: this.props.paginate.page_range_displayed
-	          }
-	        })
-	      );
-	    }
-	  }]);
-
-	  return SearchableItemList;
-	}(_react2.default.Component);
-
-	exports.default = SearchableItemList;
-
-
-	SearchableItemList.propTypes = {
-	  items_fetch_url: _react2.default.PropTypes.string.isRequired,
-	  categories_fetch_url: _react2.default.PropTypes.string.isRequired,
-	  paginate: _react2.default.PropTypes.shape({
-	    per_page: _react2.default.PropTypes.number.isRequired,
-	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
-	    page_range_displayed: _react2.default.PropTypes.number.isRequired
-	  }),
-	  default_filters: _react2.default.PropTypes.shape({
-	    search: _react2.default.PropTypes.string,
-	    category: _react2.default.PropTypes.string,
-	    min_price: _react2.default.PropTypes.string,
-	    max_price: _react2.default.PropTypes.string
-	  }),
-	  default_ordering: _react2.default.PropTypes.string
-	};
-
-	SearchableItemList.defaultProps = {
-	  default_filters: {
-	    search: "",
-	    category: "",
-	    min_price: "",
-	    max_price: ""
-	  },
-	  default_ordering: ""
-	};
-
-/***/ },
-/* 204 */,
-/* 205 */,
-/* 206 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25433,7 +25307,87 @@
 	};
 
 /***/ },
-/* 207 */
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Select = function (_React$Component) {
+	  _inherits(Select, _React$Component);
+
+	  function Select() {
+	    _classCallCheck(this, Select);
+
+	    return _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).apply(this, arguments));
+	  }
+
+	  _createClass(Select, [{
+	    key: "onChange",
+	    value: function onChange(e) {
+	      this.props.handleChangeEvent(e.target.value);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+
+	      var options = this.props.list.map(function (element) {
+	        return _react2.default.createElement(
+	          "option",
+	          { key: element.id, value: element.id },
+	          element.value
+	        );
+	      });
+	      return _react2.default.createElement(
+	        "label",
+	        { className: "c-select" },
+	        _react2.default.createElement(
+	          "select",
+	          { ref: this.props.select_id, defaultValue: this.props.default, onChange: function onChange(e) {
+	              return _this2.onChange(e);
+	            } },
+	          options
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Select;
+	}(_react2.default.Component);
+
+	exports.default = Select;
+
+
+	Select.propTypes = {
+	  handleChangeEvent: _react2.default.PropTypes.func.isRequired,
+	  select_id: _react2.default.PropTypes.string.isRequired,
+	  list: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
+	    id: _react2.default.PropTypes.string,
+	    value: _react2.default.PropTypes.string
+	  })),
+	  default: _react2.default.PropTypes.string.isRequired
+	};
+
+/***/ },
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25520,6 +25474,118 @@
 	  handleOrderingChange: _react2.default.PropTypes.func.isRequired,
 	  default: _react2.default.PropTypes.string.isRequired
 	};
+
+/***/ },
+/* 203 */,
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _superagent = __webpack_require__(174);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ListBuilder = function (_React$Component) {
+	  _inherits(ListBuilder, _React$Component);
+
+	  function ListBuilder(props) {
+	    _classCallCheck(this, ListBuilder);
+
+	    if (new.target === ListBuilder) {
+	      throw new TypeError("Cannot construct Abstract instances directly");
+	    }
+
+	    var _this = _possibleConstructorReturn(this, (ListBuilder.__proto__ || Object.getPrototypeOf(ListBuilder)).call(this, props));
+
+	    _this.state = {
+	      data: [],
+	      offset: 0,
+	      page_num: 0,
+	      loading_is_hidden: false,
+	      has_occurred_error: false,
+	      error_message: ""
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ListBuilder, [{
+	    key: 'setStateOfLoading',
+	    value: function setStateOfLoading() {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: false,
+	        has_occurred_error: false,
+	        error_message: ""
+	      });
+	    }
+	  }, {
+	    key: 'setStateOfError',
+	    value: function setStateOfError(message) {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: true,
+	        has_occurred_error: true,
+	        error_message: message
+	      });
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch(url, query, success, failure) {
+	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
+	        if (!res.ok) {
+	          failure(res);
+	          return;
+	        }
+	        success(res);
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetchItems();
+	    }
+	  }, {
+	    key: 'handleChangeOffset',
+	    value: function handleChangeOffset(offset) {
+	      var _this2 = this;
+
+	      window.scrollTo(0, 0);
+
+	      this.setState({ offset: offset }, function () {
+	        _this2.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'fetchItems',
+	    value: function fetchItems() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {}
+	  }]);
+
+	  return ListBuilder;
+	}(_react2.default.Component);
+
+	exports.default = ListBuilder;
 
 /***/ }
 /******/ ]);

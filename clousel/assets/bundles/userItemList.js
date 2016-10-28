@@ -56,18 +56,17 @@
 
 	__webpack_require__(173);
 
-	var _searchableItemList = __webpack_require__(203);
+	var _userItemListBuilder = __webpack_require__(203);
 
-	var _searchableItemList2 = _interopRequireDefault(_searchableItemList);
+	var _userItemListBuilder2 = _interopRequireDefault(_userItemListBuilder);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var resultContainer = document.getElementById('js-result');
 	var url = resultContainer.getAttribute('data-request-url');
 
-	_reactDom2.default.render(_react2.default.createElement(_searchableItemList2.default, {
+	_reactDom2.default.render(_react2.default.createElement(_userItemListBuilder2.default, {
 	  items_fetch_url: url,
-	  categories_fetch_url: '/api/categories/',
 	  paginate: {
 	    per_page: 12,
 	    margin_pages_displayed: 1,
@@ -23054,941 +23053,14 @@
 
 /***/ },
 /* 179 */,
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(181);
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactCSSTransitionGroup
-	 */
-
-	'use strict';
-
-	var _assign = __webpack_require__(4);
-
-	var React = __webpack_require__(2);
-
-	var ReactTransitionGroup = __webpack_require__(182);
-	var ReactCSSTransitionGroupChild = __webpack_require__(184);
-
-	function createTransitionTimeoutPropValidator(transitionType) {
-	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
-	  var enabledPropName = 'transition' + transitionType;
-
-	  return function (props) {
-	    // If the transition is enabled
-	    if (props[enabledPropName]) {
-	      // If no timeout duration is provided
-	      if (props[timeoutPropName] == null) {
-	        return new Error(timeoutPropName + ' wasn\'t supplied to ReactCSSTransitionGroup: ' + 'this can cause unreliable animations and won\'t be supported in ' + 'a future version of React. See ' + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
-
-	        // If the duration isn't a number
-	      } else if (typeof props[timeoutPropName] !== 'number') {
-	          return new Error(timeoutPropName + ' must be a number (in milliseconds)');
-	        }
-	    }
-	  };
-	}
-
-	/**
-	 * An easy way to perform CSS transitions and animations when a React component
-	 * enters or leaves the DOM.
-	 * See https://facebook.github.io/react/docs/animation.html#high-level-api-reactcsstransitiongroup
-	 */
-	var ReactCSSTransitionGroup = React.createClass({
-	  displayName: 'ReactCSSTransitionGroup',
-
-	  propTypes: {
-	    transitionName: ReactCSSTransitionGroupChild.propTypes.name,
-
-	    transitionAppear: React.PropTypes.bool,
-	    transitionEnter: React.PropTypes.bool,
-	    transitionLeave: React.PropTypes.bool,
-	    transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
-	    transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
-	    transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave')
-	  },
-
-	  getDefaultProps: function () {
-	    return {
-	      transitionAppear: false,
-	      transitionEnter: true,
-	      transitionLeave: true
-	    };
-	  },
-
-	  _wrapChild: function (child) {
-	    // We need to provide this childFactory so that
-	    // ReactCSSTransitionGroupChild can receive updates to name, enter, and
-	    // leave while it is leaving.
-	    return React.createElement(ReactCSSTransitionGroupChild, {
-	      name: this.props.transitionName,
-	      appear: this.props.transitionAppear,
-	      enter: this.props.transitionEnter,
-	      leave: this.props.transitionLeave,
-	      appearTimeout: this.props.transitionAppearTimeout,
-	      enterTimeout: this.props.transitionEnterTimeout,
-	      leaveTimeout: this.props.transitionLeaveTimeout
-	    }, child);
-	  },
-
-	  render: function () {
-	    return React.createElement(ReactTransitionGroup, _assign({}, this.props, { childFactory: this._wrapChild }));
-	  }
-	});
-
-	module.exports = ReactCSSTransitionGroup;
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactTransitionGroup
-	 */
-
-	'use strict';
-
-	var _assign = __webpack_require__(4);
-
-	var React = __webpack_require__(2);
-	var ReactInstanceMap = __webpack_require__(119);
-	var ReactTransitionChildMapping = __webpack_require__(183);
-
-	var emptyFunction = __webpack_require__(12);
-
-	/**
-	 * A basis for animations. When children are declaratively added or removed,
-	 * special lifecycle hooks are called.
-	 * See https://facebook.github.io/react/docs/animation.html#low-level-api-reacttransitiongroup
-	 */
-	var ReactTransitionGroup = React.createClass({
-	  displayName: 'ReactTransitionGroup',
-
-	  propTypes: {
-	    component: React.PropTypes.any,
-	    childFactory: React.PropTypes.func
-	  },
-
-	  getDefaultProps: function () {
-	    return {
-	      component: 'span',
-	      childFactory: emptyFunction.thatReturnsArgument
-	    };
-	  },
-
-	  getInitialState: function () {
-	    return {
-	      // TODO: can we get useful debug information to show at this point?
-	      children: ReactTransitionChildMapping.getChildMapping(this.props.children)
-	    };
-	  },
-
-	  componentWillMount: function () {
-	    this.currentlyTransitioningKeys = {};
-	    this.keysToEnter = [];
-	    this.keysToLeave = [];
-	  },
-
-	  componentDidMount: function () {
-	    var initialChildMapping = this.state.children;
-	    for (var key in initialChildMapping) {
-	      if (initialChildMapping[key]) {
-	        this.performAppear(key);
-	      }
-	    }
-	  },
-
-	  componentWillReceiveProps: function (nextProps) {
-	    var nextChildMapping;
-	    if (process.env.NODE_ENV !== 'production') {
-	      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children, ReactInstanceMap.get(this)._debugID);
-	    } else {
-	      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children);
-	    }
-	    var prevChildMapping = this.state.children;
-
-	    this.setState({
-	      children: ReactTransitionChildMapping.mergeChildMappings(prevChildMapping, nextChildMapping)
-	    });
-
-	    var key;
-
-	    for (key in nextChildMapping) {
-	      var hasPrev = prevChildMapping && prevChildMapping.hasOwnProperty(key);
-	      if (nextChildMapping[key] && !hasPrev && !this.currentlyTransitioningKeys[key]) {
-	        this.keysToEnter.push(key);
-	      }
-	    }
-
-	    for (key in prevChildMapping) {
-	      var hasNext = nextChildMapping && nextChildMapping.hasOwnProperty(key);
-	      if (prevChildMapping[key] && !hasNext && !this.currentlyTransitioningKeys[key]) {
-	        this.keysToLeave.push(key);
-	      }
-	    }
-
-	    // If we want to someday check for reordering, we could do it here.
-	  },
-
-	  componentDidUpdate: function () {
-	    var keysToEnter = this.keysToEnter;
-	    this.keysToEnter = [];
-	    keysToEnter.forEach(this.performEnter);
-
-	    var keysToLeave = this.keysToLeave;
-	    this.keysToLeave = [];
-	    keysToLeave.forEach(this.performLeave);
-	  },
-
-	  performAppear: function (key) {
-	    this.currentlyTransitioningKeys[key] = true;
-
-	    var component = this.refs[key];
-
-	    if (component.componentWillAppear) {
-	      component.componentWillAppear(this._handleDoneAppearing.bind(this, key));
-	    } else {
-	      this._handleDoneAppearing(key);
-	    }
-	  },
-
-	  _handleDoneAppearing: function (key) {
-	    var component = this.refs[key];
-	    if (component.componentDidAppear) {
-	      component.componentDidAppear();
-	    }
-
-	    delete this.currentlyTransitioningKeys[key];
-
-	    var currentChildMapping;
-	    if (process.env.NODE_ENV !== 'production') {
-	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children, ReactInstanceMap.get(this)._debugID);
-	    } else {
-	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children);
-	    }
-
-	    if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
-	      // This was removed before it had fully appeared. Remove it.
-	      this.performLeave(key);
-	    }
-	  },
-
-	  performEnter: function (key) {
-	    this.currentlyTransitioningKeys[key] = true;
-
-	    var component = this.refs[key];
-
-	    if (component.componentWillEnter) {
-	      component.componentWillEnter(this._handleDoneEntering.bind(this, key));
-	    } else {
-	      this._handleDoneEntering(key);
-	    }
-	  },
-
-	  _handleDoneEntering: function (key) {
-	    var component = this.refs[key];
-	    if (component.componentDidEnter) {
-	      component.componentDidEnter();
-	    }
-
-	    delete this.currentlyTransitioningKeys[key];
-
-	    var currentChildMapping;
-	    if (process.env.NODE_ENV !== 'production') {
-	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children, ReactInstanceMap.get(this)._debugID);
-	    } else {
-	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children);
-	    }
-
-	    if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
-	      // This was removed before it had fully entered. Remove it.
-	      this.performLeave(key);
-	    }
-	  },
-
-	  performLeave: function (key) {
-	    this.currentlyTransitioningKeys[key] = true;
-
-	    var component = this.refs[key];
-	    if (component.componentWillLeave) {
-	      component.componentWillLeave(this._handleDoneLeaving.bind(this, key));
-	    } else {
-	      // Note that this is somewhat dangerous b/c it calls setState()
-	      // again, effectively mutating the component before all the work
-	      // is done.
-	      this._handleDoneLeaving(key);
-	    }
-	  },
-
-	  _handleDoneLeaving: function (key) {
-	    var component = this.refs[key];
-
-	    if (component.componentDidLeave) {
-	      component.componentDidLeave();
-	    }
-
-	    delete this.currentlyTransitioningKeys[key];
-
-	    var currentChildMapping;
-	    if (process.env.NODE_ENV !== 'production') {
-	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children, ReactInstanceMap.get(this)._debugID);
-	    } else {
-	      currentChildMapping = ReactTransitionChildMapping.getChildMapping(this.props.children);
-	    }
-
-	    if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
-	      // This entered again before it fully left. Add it again.
-	      this.performEnter(key);
-	    } else {
-	      this.setState(function (state) {
-	        var newChildren = _assign({}, state.children);
-	        delete newChildren[key];
-	        return { children: newChildren };
-	      });
-	    }
-	  },
-
-	  render: function () {
-	    // TODO: we could get rid of the need for the wrapper node
-	    // by cloning a single child
-	    var childrenToRender = [];
-	    for (var key in this.state.children) {
-	      var child = this.state.children[key];
-	      if (child) {
-	        // You may need to apply reactive updates to a child as it is leaving.
-	        // The normal React way to do it won't work since the child will have
-	        // already been removed. In case you need this behavior you can provide
-	        // a childFactory function to wrap every child, even the ones that are
-	        // leaving.
-	        childrenToRender.push(React.cloneElement(this.props.childFactory(child), { ref: key, key: key }));
-	      }
-	    }
-
-	    // Do not forward ReactTransitionGroup props to primitive DOM nodes
-	    var props = _assign({}, this.props);
-	    delete props.transitionLeave;
-	    delete props.transitionName;
-	    delete props.transitionAppear;
-	    delete props.transitionEnter;
-	    delete props.childFactory;
-	    delete props.transitionLeaveTimeout;
-	    delete props.transitionEnterTimeout;
-	    delete props.transitionAppearTimeout;
-	    delete props.component;
-
-	    return React.createElement(this.props.component, props, childrenToRender);
-	  }
-	});
-
-	module.exports = ReactTransitionGroup;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactTransitionChildMapping
-	 */
-
-	'use strict';
-
-	var flattenChildren = __webpack_require__(128);
-
-	var ReactTransitionChildMapping = {
-	  /**
-	   * Given `this.props.children`, return an object mapping key to child. Just
-	   * simple syntactic sugar around flattenChildren().
-	   *
-	   * @param {*} children `this.props.children`
-	   * @param {number=} selfDebugID Optional debugID of the current internal instance.
-	   * @return {object} Mapping of key to child
-	   */
-	  getChildMapping: function (children, selfDebugID) {
-	    if (!children) {
-	      return children;
-	    }
-
-	    if (process.env.NODE_ENV !== 'production') {
-	      return flattenChildren(children, selfDebugID);
-	    }
-
-	    return flattenChildren(children);
-	  },
-
-	  /**
-	   * When you're adding or removing children some may be added or removed in the
-	   * same render pass. We want to show *both* since we want to simultaneously
-	   * animate elements in and out. This function takes a previous set of keys
-	   * and a new set of keys and merges them with its best guess of the correct
-	   * ordering. In the future we may expose some of the utilities in
-	   * ReactMultiChild to make this easy, but for now React itself does not
-	   * directly have this concept of the union of prevChildren and nextChildren
-	   * so we implement it here.
-	   *
-	   * @param {object} prev prev children as returned from
-	   * `ReactTransitionChildMapping.getChildMapping()`.
-	   * @param {object} next next children as returned from
-	   * `ReactTransitionChildMapping.getChildMapping()`.
-	   * @return {object} a key set that contains all keys in `prev` and all keys
-	   * in `next` in a reasonable order.
-	   */
-	  mergeChildMappings: function (prev, next) {
-	    prev = prev || {};
-	    next = next || {};
-
-	    function getValueForKey(key) {
-	      if (next.hasOwnProperty(key)) {
-	        return next[key];
-	      } else {
-	        return prev[key];
-	      }
-	    }
-
-	    // For each key of `next`, the list of keys to insert before that key in
-	    // the combined list
-	    var nextKeysPending = {};
-
-	    var pendingKeys = [];
-	    for (var prevKey in prev) {
-	      if (next.hasOwnProperty(prevKey)) {
-	        if (pendingKeys.length) {
-	          nextKeysPending[prevKey] = pendingKeys;
-	          pendingKeys = [];
-	        }
-	      } else {
-	        pendingKeys.push(prevKey);
-	      }
-	    }
-
-	    var i;
-	    var childMapping = {};
-	    for (var nextKey in next) {
-	      if (nextKeysPending.hasOwnProperty(nextKey)) {
-	        for (i = 0; i < nextKeysPending[nextKey].length; i++) {
-	          var pendingNextKey = nextKeysPending[nextKey][i];
-	          childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
-	        }
-	      }
-	      childMapping[nextKey] = getValueForKey(nextKey);
-	    }
-
-	    // Finally, add the keys which didn't appear before any key in `next`
-	    for (i = 0; i < pendingKeys.length; i++) {
-	      childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
-	    }
-
-	    return childMapping;
-	  }
-	};
-
-	module.exports = ReactTransitionChildMapping;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactCSSTransitionGroupChild
-	 */
-
-	'use strict';
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-
-	var CSSCore = __webpack_require__(185);
-	var ReactTransitionEvents = __webpack_require__(186);
-
-	var onlyChild = __webpack_require__(33);
-
-	var TICK = 17;
-
-	var ReactCSSTransitionGroupChild = React.createClass({
-	  displayName: 'ReactCSSTransitionGroupChild',
-
-	  propTypes: {
-	    name: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.shape({
-	      enter: React.PropTypes.string,
-	      leave: React.PropTypes.string,
-	      active: React.PropTypes.string
-	    }), React.PropTypes.shape({
-	      enter: React.PropTypes.string,
-	      enterActive: React.PropTypes.string,
-	      leave: React.PropTypes.string,
-	      leaveActive: React.PropTypes.string,
-	      appear: React.PropTypes.string,
-	      appearActive: React.PropTypes.string
-	    })]).isRequired,
-
-	    // Once we require timeouts to be specified, we can remove the
-	    // boolean flags (appear etc.) and just accept a number
-	    // or a bool for the timeout flags (appearTimeout etc.)
-	    appear: React.PropTypes.bool,
-	    enter: React.PropTypes.bool,
-	    leave: React.PropTypes.bool,
-	    appearTimeout: React.PropTypes.number,
-	    enterTimeout: React.PropTypes.number,
-	    leaveTimeout: React.PropTypes.number
-	  },
-
-	  transition: function (animationType, finishCallback, userSpecifiedDelay) {
-	    var node = ReactDOM.findDOMNode(this);
-
-	    if (!node) {
-	      if (finishCallback) {
-	        finishCallback();
-	      }
-	      return;
-	    }
-
-	    var className = this.props.name[animationType] || this.props.name + '-' + animationType;
-	    var activeClassName = this.props.name[animationType + 'Active'] || className + '-active';
-	    var timeout = null;
-
-	    var endListener = function (e) {
-	      if (e && e.target !== node) {
-	        return;
-	      }
-
-	      clearTimeout(timeout);
-
-	      CSSCore.removeClass(node, className);
-	      CSSCore.removeClass(node, activeClassName);
-
-	      ReactTransitionEvents.removeEndEventListener(node, endListener);
-
-	      // Usually this optional callback is used for informing an owner of
-	      // a leave animation and telling it to remove the child.
-	      if (finishCallback) {
-	        finishCallback();
-	      }
-	    };
-
-	    CSSCore.addClass(node, className);
-
-	    // Need to do this to actually trigger a transition.
-	    this.queueClassAndNode(activeClassName, node);
-
-	    // If the user specified a timeout delay.
-	    if (userSpecifiedDelay) {
-	      // Clean-up the animation after the specified delay
-	      timeout = setTimeout(endListener, userSpecifiedDelay);
-	      this.transitionTimeouts.push(timeout);
-	    } else {
-	      // DEPRECATED: this listener will be removed in a future version of react
-	      ReactTransitionEvents.addEndEventListener(node, endListener);
-	    }
-	  },
-
-	  queueClassAndNode: function (className, node) {
-	    this.classNameAndNodeQueue.push({
-	      className: className,
-	      node: node
-	    });
-
-	    if (!this.timeout) {
-	      this.timeout = setTimeout(this.flushClassNameAndNodeQueue, TICK);
-	    }
-	  },
-
-	  flushClassNameAndNodeQueue: function () {
-	    if (this.isMounted()) {
-	      this.classNameAndNodeQueue.forEach(function (obj) {
-	        CSSCore.addClass(obj.node, obj.className);
-	      });
-	    }
-	    this.classNameAndNodeQueue.length = 0;
-	    this.timeout = null;
-	  },
-
-	  componentWillMount: function () {
-	    this.classNameAndNodeQueue = [];
-	    this.transitionTimeouts = [];
-	  },
-
-	  componentWillUnmount: function () {
-	    if (this.timeout) {
-	      clearTimeout(this.timeout);
-	    }
-	    this.transitionTimeouts.forEach(function (timeout) {
-	      clearTimeout(timeout);
-	    });
-
-	    this.classNameAndNodeQueue.length = 0;
-	  },
-
-	  componentWillAppear: function (done) {
-	    if (this.props.appear) {
-	      this.transition('appear', done, this.props.appearTimeout);
-	    } else {
-	      done();
-	    }
-	  },
-
-	  componentWillEnter: function (done) {
-	    if (this.props.enter) {
-	      this.transition('enter', done, this.props.enterTimeout);
-	    } else {
-	      done();
-	    }
-	  },
-
-	  componentWillLeave: function (done) {
-	    if (this.props.leave) {
-	      this.transition('leave', done, this.props.leaveTimeout);
-	    } else {
-	      done();
-	    }
-	  },
-
-	  render: function () {
-	    return onlyChild(this.props.children);
-	  }
-	});
-
-	module.exports = ReactCSSTransitionGroupChild;
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @typechecks
-	 */
-
-	var invariant = __webpack_require__(8);
-
-	/**
-	 * The CSSCore module specifies the API (and implements most of the methods)
-	 * that should be used when dealing with the display of elements (via their
-	 * CSS classes and visibility on screen. It is an API focused on mutating the
-	 * display and not reading it as no logical state should be encoded in the
-	 * display of elements.
-	 */
-
-	/* Slow implementation for browsers that don't natively support .matches() */
-	function matchesSelector_SLOW(element, selector) {
-	  var root = element;
-	  while (root.parentNode) {
-	    root = root.parentNode;
-	  }
-
-	  var all = root.querySelectorAll(selector);
-	  return Array.prototype.indexOf.call(all, element) !== -1;
-	}
-
-	var CSSCore = {
-
-	  /**
-	   * Adds the class passed in to the element if it doesn't already have it.
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {DOMElement} the element passed in
-	   */
-	  addClass: function addClass(element, className) {
-	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSSCore.addClass takes only a single class name. "%s" contains ' + 'multiple classes.', className) : invariant(false) : void 0;
-
-	    if (className) {
-	      if (element.classList) {
-	        element.classList.add(className);
-	      } else if (!CSSCore.hasClass(element, className)) {
-	        element.className = element.className + ' ' + className;
-	      }
-	    }
-	    return element;
-	  },
-
-	  /**
-	   * Removes the class passed in from the element
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {DOMElement} the element passed in
-	   */
-	  removeClass: function removeClass(element, className) {
-	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSSCore.removeClass takes only a single class name. "%s" contains ' + 'multiple classes.', className) : invariant(false) : void 0;
-
-	    if (className) {
-	      if (element.classList) {
-	        element.classList.remove(className);
-	      } else if (CSSCore.hasClass(element, className)) {
-	        element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ') // multiple spaces to one
-	        .replace(/^\s*|\s*$/g, ''); // trim the ends
-	      }
-	    }
-	    return element;
-	  },
-
-	  /**
-	   * Helper to add or remove a class from an element based on a condition.
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @param {*} bool condition to whether to add or remove the class
-	   * @return {DOMElement} the element passed in
-	   */
-	  conditionClass: function conditionClass(element, className, bool) {
-	    return (bool ? CSSCore.addClass : CSSCore.removeClass)(element, className);
-	  },
-
-	  /**
-	   * Tests whether the element has the class specified.
-	   *
-	   * @param {DOMNode|DOMWindow} element the element to check the class on
-	   * @param {string} className the CSS className
-	   * @return {boolean} true if the element has the class, false if not
-	   */
-	  hasClass: function hasClass(element, className) {
-	    !!/\s/.test(className) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'CSS.hasClass takes only a single class name.') : invariant(false) : void 0;
-	    if (element.classList) {
-	      return !!className && element.classList.contains(className);
-	    }
-	    return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
-	  },
-
-	  /**
-	   * Tests whether the element matches the selector specified
-	   *
-	   * @param {DOMNode|DOMWindow} element the element that we are querying
-	   * @param {string} selector the CSS selector
-	   * @return {boolean} true if the element matches the selector, false if not
-	   */
-	  matchesSelector: function matchesSelector(element, selector) {
-	    var matchesImpl = element.matches || element.webkitMatchesSelector || element.mozMatchesSelector || element.msMatchesSelector || function (s) {
-	      return matchesSelector_SLOW(element, s);
-	    };
-	    return matchesImpl.call(element, selector);
-	  }
-
-	};
-
-	module.exports = CSSCore;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactTransitionEvents
-	 */
-
-	'use strict';
-
-	var ExecutionEnvironment = __webpack_require__(49);
-
-	var getVendorPrefixedEventName = __webpack_require__(109);
-
-	var endEvents = [];
-
-	function detectEvents() {
-	  var animEnd = getVendorPrefixedEventName('animationend');
-	  var transEnd = getVendorPrefixedEventName('transitionend');
-
-	  if (animEnd) {
-	    endEvents.push(animEnd);
-	  }
-
-	  if (transEnd) {
-	    endEvents.push(transEnd);
-	  }
-	}
-
-	if (ExecutionEnvironment.canUseDOM) {
-	  detectEvents();
-	}
-
-	// We use the raw {add|remove}EventListener() call because EventListener
-	// does not know how to remove event listeners and we really should
-	// clean up. Also, these events are not triggered in older browsers
-	// so we should be A-OK here.
-
-	function addEventListener(node, eventName, eventListener) {
-	  node.addEventListener(eventName, eventListener, false);
-	}
-
-	function removeEventListener(node, eventName, eventListener) {
-	  node.removeEventListener(eventName, eventListener, false);
-	}
-
-	var ReactTransitionEvents = {
-	  addEndEventListener: function (node, eventListener) {
-	    if (endEvents.length === 0) {
-	      // If CSS transitions are not supported, trigger an "end animation"
-	      // event immediately.
-	      window.setTimeout(eventListener, 0);
-	      return;
-	    }
-	    endEvents.forEach(function (endEvent) {
-	      addEventListener(node, endEvent, eventListener);
-	    });
-	  },
-
-	  removeEndEventListener: function (node, eventListener) {
-	    if (endEvents.length === 0) {
-	      return;
-	    }
-	    endEvents.forEach(function (endEvent) {
-	      removeEventListener(node, endEvent, eventListener);
-	    });
-	  }
-	};
-
-	module.exports = ReactTransitionEvents;
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _paginate = __webpack_require__(188);
-
-	var _paginate2 = _interopRequireDefault(_paginate);
-
-	var _errorReporter = __webpack_require__(196);
-
-	var _errorReporter2 = _interopRequireDefault(_errorReporter);
-
-	var _loader = __webpack_require__(197);
-
-	var _loader2 = _interopRequireDefault(_loader);
-
-	var _items = __webpack_require__(198);
-
-	var _items2 = _interopRequireDefault(_items);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ItemList = function (_React$Component) {
-	  _inherits(ItemList, _React$Component);
-
-	  function ItemList() {
-	    _classCallCheck(this, ItemList);
-
-	    return _possibleConstructorReturn(this, (ItemList.__proto__ || Object.getPrototypeOf(ItemList)).apply(this, arguments));
-	  }
-
-	  _createClass(ItemList, [{
-	    key: 'handlePaginationClick',
-	    value: function handlePaginationClick(data) {
-	      var offset = Math.ceil(data.selected * this.props.paginate.per_page);
-	      this.props.handleChangeOffset(offset);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      var items = void 0;
-
-	      if (!this.props.loading_is_hidden) items = _react2.default.createElement(_loader2.default, null);else if (this.props.has_occurred_error) items = _react2.default.createElement(_errorReporter2.default, { message: this.props.error_message });else items = _react2.default.createElement(_items2.default, { data: this.props.data });
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'p-item-list' },
-	        items,
-	        _react2.default.createElement(_paginate2.default, {
-	          page_num: this.props.page_num,
-	          margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-	          page_range_displayed: this.props.paginate.page_range_displayed,
-	          handlePaginationClick: function handlePaginationClick(data) {
-	            return _this2.props.paginate.handlePaginationClick(data);
-	          }
-	        })
-	      );
-	    }
-	  }]);
-
-	  return ItemList;
-	}(_react2.default.Component);
-
-	exports.default = ItemList;
-
-
-	ItemList.propTypes = {
-	  data: _react2.default.PropTypes.array.isRequired,
-	  loading_is_hidden: _react2.default.PropTypes.bool.isRequired,
-	  has_occurred_error: _react2.default.PropTypes.bool.isRequired,
-	  error_message: _react2.default.PropTypes.string.isRequired,
-	  page_num: _react2.default.PropTypes.number.isRequired,
-	  handleChangeOffset: _react2.default.PropTypes.func.isRequired,
-	  paginate: _react2.default.PropTypes.shape({
-	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
-	    page_range_displayed: _react2.default.PropTypes.number.isRequired
-	  })
-	};
-
-/***/ },
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24691,7 +23763,12 @@
 	exports.default = Loader;
 
 /***/ },
-/* 198 */
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24706,9 +23783,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _item = __webpack_require__(199);
+	var _superagent = __webpack_require__(174);
 
-	var _item2 = _interopRequireDefault(_item);
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	var _listBuilder = __webpack_require__(204);
+
+	var _listBuilder2 = _interopRequireDefault(_listBuilder);
+
+	var _userItemList = __webpack_require__(205);
+
+	var _userItemList2 = _interopRequireDefault(_userItemList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24718,25 +23803,342 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Items = function (_React$Component) {
-	  _inherits(Items, _React$Component);
+	var UserItemListBuilder = function (_ListBuilder) {
+	  _inherits(UserItemListBuilder, _ListBuilder);
 
-	  function Items() {
-	    _classCallCheck(this, Items);
+	  function UserItemListBuilder() {
+	    _classCallCheck(this, UserItemListBuilder);
 
-	    return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (UserItemListBuilder.__proto__ || Object.getPrototypeOf(UserItemListBuilder)).apply(this, arguments));
 	  }
 
-	  _createClass(Items, [{
+	  _createClass(UserItemListBuilder, [{
+	    key: 'fetchItems',
+	    value: function fetchItems() {
+	      var _this2 = this;
+
+	      var query = {
+	        limit: this.props.paginate.per_page,
+	        offset: this.state.offset
+	      };
+
+	      this.setStateOfLoading();
+
+	      this.fetch(this.props.items_fetch_url, query, function (res) {
+	        if (!res.body.results[0]) {
+	          _this2.setStateOfError("アイテムが見つかりませんでした．");
+	          return;
+	        }
+
+	        _this2.setState({
+	          data: res.body.results,
+	          offset: 0,
+	          page_num: Math.ceil(res.body.count / _this2.props.paginate.per_page),
+	          loading_is_hidden: true
+	        });
+	      }, function (res) {
+	        console.log(res);
+	        console.error(_this2.props.items_fetch_url, res.status, res.text);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      return _react2.default.createElement(
+	        'section',
+	        { className: 'p-result' },
+	        _react2.default.createElement(_userItemList2.default, {
+	          data: this.state.data,
+	          loading_is_hidden: this.state.loading_is_hidden,
+	          has_occurred_error: this.state.has_occurred_error,
+	          error_message: this.state.error_message,
+	          page_num: this.state.page_num,
+	          handleChangeOffset: function handleChangeOffset(e) {
+	            return _this3.handleChangeOffset(e);
+	          },
+	          paginate: {
+	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
+	            page_range_displayed: this.props.paginate.page_range_displayed
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return UserItemListBuilder;
+	}(_listBuilder2.default);
+
+	exports.default = UserItemListBuilder;
+
+
+	UserItemListBuilder.propTypes = {
+	  items_fetch_url: _react2.default.PropTypes.string.isRequired,
+	  paginate: _react2.default.PropTypes.shape({
+	    per_page: _react2.default.PropTypes.number.isRequired,
+	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
+	    page_range_displayed: _react2.default.PropTypes.number.isRequired
+	  })
+	};
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _superagent = __webpack_require__(174);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ListBuilder = function (_React$Component) {
+	  _inherits(ListBuilder, _React$Component);
+
+	  function ListBuilder(props) {
+	    _classCallCheck(this, ListBuilder);
+
+	    if (new.target === ListBuilder) {
+	      throw new TypeError("Cannot construct Abstract instances directly");
+	    }
+
+	    var _this = _possibleConstructorReturn(this, (ListBuilder.__proto__ || Object.getPrototypeOf(ListBuilder)).call(this, props));
+
+	    _this.state = {
+	      data: [],
+	      offset: 0,
+	      page_num: 0,
+	      loading_is_hidden: false,
+	      has_occurred_error: false,
+	      error_message: ""
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ListBuilder, [{
+	    key: 'setStateOfLoading',
+	    value: function setStateOfLoading() {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: false,
+	        has_occurred_error: false,
+	        error_message: ""
+	      });
+	    }
+	  }, {
+	    key: 'setStateOfError',
+	    value: function setStateOfError(message) {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: true,
+	        has_occurred_error: true,
+	        error_message: message
+	      });
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch(url, query, success, failure) {
+	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
+	        if (!res.ok) {
+	          failure(res);
+	          return;
+	        }
+	        success(res);
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetchItems();
+	    }
+	  }, {
+	    key: 'handleChangeOffset',
+	    value: function handleChangeOffset(offset) {
+	      var _this2 = this;
+
+	      window.scrollTo(0, 0);
+
+	      this.setState({ offset: offset }, function () {
+	        _this2.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'fetchItems',
+	    value: function fetchItems() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {}
+	  }]);
+
+	  return ListBuilder;
+	}(_react2.default.Component);
+
+	exports.default = ListBuilder;
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _paginate = __webpack_require__(188);
+
+	var _paginate2 = _interopRequireDefault(_paginate);
+
+	var _errorReporter = __webpack_require__(196);
+
+	var _errorReporter2 = _interopRequireDefault(_errorReporter);
+
+	var _loader = __webpack_require__(197);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	var _userItems = __webpack_require__(206);
+
+	var _userItems2 = _interopRequireDefault(_userItems);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UserItemList = function (_React$Component) {
+	  _inherits(UserItemList, _React$Component);
+
+	  function UserItemList() {
+	    _classCallCheck(this, UserItemList);
+
+	    return _possibleConstructorReturn(this, (UserItemList.__proto__ || Object.getPrototypeOf(UserItemList)).apply(this, arguments));
+	  }
+
+	  _createClass(UserItemList, [{
+	    key: 'handlePaginationClick',
+	    value: function handlePaginationClick(data) {
+	      var offset = Math.ceil(data.selected * this.props.paginate.per_page);
+	      this.props.handleChangeOffset(offset);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var items = void 0;
+
+	      if (!this.props.loading_is_hidden) items = _react2.default.createElement(_loader2.default, null);else if (this.props.has_occurred_error) items = _react2.default.createElement(_errorReporter2.default, { message: this.props.error_message });else items = _react2.default.createElement(_userItems2.default, { data: this.props.data });
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'p-item-list' },
+	        items,
+	        _react2.default.createElement(_paginate2.default, {
+	          page_num: this.props.page_num,
+	          margin_pages_displayed: this.props.paginate.margin_pages_displayed,
+	          page_range_displayed: this.props.paginate.page_range_displayed,
+	          handlePaginationClick: function handlePaginationClick(data) {
+	            return _this2.props.paginate.handlePaginationClick(data);
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return UserItemList;
+	}(_react2.default.Component);
+
+	exports.default = UserItemList;
+
+
+	UserItemList.propTypes = {
+	  data: _react2.default.PropTypes.array.isRequired,
+	  loading_is_hidden: _react2.default.PropTypes.bool.isRequired,
+	  has_occurred_error: _react2.default.PropTypes.bool.isRequired,
+	  error_message: _react2.default.PropTypes.string.isRequired,
+	  page_num: _react2.default.PropTypes.number.isRequired,
+	  handleChangeOffset: _react2.default.PropTypes.func.isRequired,
+	  paginate: _react2.default.PropTypes.shape({
+	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
+	    page_range_displayed: _react2.default.PropTypes.number.isRequired
+	  })
+	};
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _userItem = __webpack_require__(207);
+
+	var _userItem2 = _interopRequireDefault(_userItem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UserItems = function (_React$Component) {
+	  _inherits(UserItems, _React$Component);
+
+	  function UserItems() {
+	    _classCallCheck(this, UserItems);
+
+	    return _possibleConstructorReturn(this, (UserItems.__proto__ || Object.getPrototypeOf(UserItems)).apply(this, arguments));
+	  }
+
+	  _createClass(UserItems, [{
 	    key: 'render',
 	    value: function render() {
 	      var item_separator = " > ";
 	      var itemNodes = this.props.data.map(function (item) {
 	        var category = item.category_meta.join(item_separator);
-	        return _react2.default.createElement(_item2.default, {
+	        return _react2.default.createElement(_userItem2.default, {
 	          key: item.pk,
 	          image: item.image, orientation: item.orientation,
-	          category: category, price: item.price
+	          category: category
 	        });
 	      });
 	      return _react2.default.createElement(
@@ -24747,18 +24149,18 @@
 	    }
 	  }]);
 
-	  return Items;
+	  return UserItems;
 	}(_react2.default.Component);
 
-	exports.default = Items;
+	exports.default = UserItems;
 
 
-	Items.propTypes = {
+	UserItems.propTypes = {
 	  data: _react2.default.PropTypes.array.isRequired
 	};
 
 /***/ },
-/* 199 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24781,16 +24183,16 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Item = function (_React$Component) {
-	  _inherits(Item, _React$Component);
+	var UserItem = function (_React$Component) {
+	  _inherits(UserItem, _React$Component);
 
-	  function Item() {
-	    _classCallCheck(this, Item);
+	  function UserItem() {
+	    _classCallCheck(this, UserItem);
 
-	    return _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (UserItem.__proto__ || Object.getPrototypeOf(UserItem)).apply(this, arguments));
 	  }
 
-	  _createClass(Item, [{
+	  _createClass(UserItem, [{
 	    key: "render",
 	    value: function render() {
 	      var image_class = "p-image ";
@@ -24815,12 +24217,6 @@
 	            "div",
 	            { className: "p-item__caption" },
 	            _react2.default.createElement(
-	              "p",
-	              { className: "p-item__price" },
-	              "\xA5",
-	              this.props.price
-	            ),
-	            _react2.default.createElement(
 	              "dl",
 	              null,
 	              _react2.default.createElement(
@@ -24840,685 +24236,16 @@
 	    }
 	  }]);
 
-	  return Item;
+	  return UserItem;
 	}(_react2.default.Component);
 
-	exports.default = Item;
+	exports.default = UserItem;
 
 
-	Item.propTypes = {
+	UserItem.propTypes = {
 	  image: _react2.default.PropTypes.string.isRequired,
-	  price: _react2.default.PropTypes.number.isRequired,
 	  category: _react2.default.PropTypes.string.isRequired,
 	  orientation: _react2.default.PropTypes.string.isRequired
-	};
-
-/***/ },
-/* 200 */,
-/* 201 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Select = function (_React$Component) {
-	  _inherits(Select, _React$Component);
-
-	  function Select() {
-	    _classCallCheck(this, Select);
-
-	    return _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).apply(this, arguments));
-	  }
-
-	  _createClass(Select, [{
-	    key: "onChange",
-	    value: function onChange(e) {
-	      this.props.handleChangeEvent(e.target.value);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this2 = this;
-
-	      var options = this.props.list.map(function (element) {
-	        return _react2.default.createElement(
-	          "option",
-	          { key: element.id, value: element.id },
-	          element.value
-	        );
-	      });
-	      return _react2.default.createElement(
-	        "label",
-	        { className: "c-select" },
-	        _react2.default.createElement(
-	          "select",
-	          { ref: this.props.select_id, defaultValue: this.props.default, onChange: function onChange(e) {
-	              return _this2.onChange(e);
-	            } },
-	          options
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Select;
-	}(_react2.default.Component);
-
-	exports.default = Select;
-
-
-	Select.propTypes = {
-	  handleChangeEvent: _react2.default.PropTypes.func.isRequired,
-	  select_id: _react2.default.PropTypes.string.isRequired,
-	  list: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
-	    id: _react2.default.PropTypes.string,
-	    value: _react2.default.PropTypes.string
-	  })),
-	  default: _react2.default.PropTypes.string.isRequired
-	};
-
-/***/ },
-/* 202 */,
-/* 203 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
-
-	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-
-	var _superagent = __webpack_require__(174);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
-	var _itemList = __webpack_require__(187);
-
-	var _itemList2 = _interopRequireDefault(_itemList);
-
-	var _searchFilters = __webpack_require__(206);
-
-	var _searchFilters2 = _interopRequireDefault(_searchFilters);
-
-	var _searchOrdering = __webpack_require__(207);
-
-	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SearchableItemList = function (_React$Component) {
-	  _inherits(SearchableItemList, _React$Component);
-
-	  function SearchableItemList(props) {
-	    _classCallCheck(this, SearchableItemList);
-
-	    var _this = _possibleConstructorReturn(this, (SearchableItemList.__proto__ || Object.getPrototypeOf(SearchableItemList)).call(this, props));
-
-	    _this.state = {
-	      data: [],
-	      offset: 0,
-	      page_num: 0,
-	      loading_is_hidden: false,
-	      has_occurred_error: false,
-	      error_message: "",
-	      filters_are_hidden: true,
-	      categories: null,
-	      filters: _this.props.default_filters,
-	      ordering: _this.props.default_ordering
-	    };
-	    return _this;
-	  }
-
-	  _createClass(SearchableItemList, [{
-	    key: 'setStateOfLoading',
-	    value: function setStateOfLoading() {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: false,
-	        has_occurred_error: false,
-	        error_message: ""
-	      });
-	    }
-	  }, {
-	    key: 'setStateOfError',
-	    value: function setStateOfError(message) {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: true,
-	        filters_are_hidden: false,
-	        has_occurred_error: true,
-	        error_message: "アイテムが見つかりませんでした"
-	      });
-	    }
-	  }, {
-	    key: 'fetch',
-	    value: function fetch(url, query, success, failure) {
-	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
-	        if (!res.ok) {
-	          failure(res);
-	          return;
-	        }
-	        success(res);
-	      });
-	    }
-	  }, {
-	    key: 'fetchItems',
-	    value: function fetchItems() {
-	      var _this2 = this;
-
-	      var query = this.state.filters;
-	      query.ordering = this.state.ordering;
-	      query.limit = this.props.paginate.per_page;
-	      query.offset = this.state.offset;
-
-	      this.setStateOfLoading();
-
-	      this.fetch(this.props.items_fetch_url, query, function (res) {
-	        if (!res.body.searchs[0]) {
-	          _this2.setStateOfError("アイテムが見つかりませんでした．");
-	          return;
-	        }
-
-	        _this2.setState({
-	          data: res.body.searchs,
-	          offset: 0,
-	          page_num: Math.ceil(res.body.count / _this2.props.paginate.per_page),
-	          loading_is_hidden: true
-	        });
-	      }, function (res) {
-	        console.error(_this2.props.items_fetch_url, res.status, err.toString());
-	      });
-	    }
-	  }, {
-	    key: 'fetchCategories',
-	    value: function fetchCategories() {
-	      var _this3 = this;
-
-	      this.fetch(this.props.categories_fetch_url, {}, function (res) {
-	        _this3.setState({
-	          categories: _this3.formatCategories(res.body)
-	        });
-	      }, function (res) {
-	        console.error(_this3.props.categories_fetch_url, status, err.toString());
-	      });
-	    }
-	  }, {
-	    key: 'formatCategories',
-	    value: function formatCategories(categories) {
-	      var indent = "--- ";
-
-	      categories.unshift({ pk: "", name: "---------", level: 0 });
-	      return categories.map(function (category) {
-	        return {
-	          id: '' + category.pk,
-	          value: generateIndent(category.level) + category.name
-	        };
-	      });
-
-	      function generateIndent(level) {
-	        return Array(level + 1).join(indent);
-	      }
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.fetchItems();
-	      this.fetchCategories();
-	    }
-	  }, {
-	    key: 'handleChangeFilters',
-	    value: function handleChangeFilters(filters) {
-	      var _this4 = this;
-
-	      this.setState({ filters: filters }, function () {
-	        _this4.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleChangeOrdering',
-	    value: function handleChangeOrdering(ordering) {
-	      var _this5 = this;
-
-	      this.setState({ ordering: ordering }, function () {
-	        _this5.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleChangeOffset',
-	    value: function handleChangeOffset(offset) {
-	      var _this6 = this;
-
-	      window.scrollTo(0, 0);
-
-	      this.setState({ offset: offset }, function () {
-	        _this6.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleFiltersToggleEvent',
-	    value: function handleFiltersToggleEvent() {
-	      this.setState({ filters_are_hidden: !this.state.filters_are_hidden });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this7 = this;
-
-	      return _react2.default.createElement(
-	        'section',
-	        { className: 'p-result' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'p-result__header' },
-	          _react2.default.createElement(
-	            'h2',
-	            { className: 'p-result__title' },
-	            'Search Searchs',
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'p-result__filters-opener', onClick: function onClick(e) {
-	                  return _this7.handleFiltersToggleEvent(e);
-	                } },
-	              '[option]'
-	            )
-	          ),
-	          _react2.default.createElement(_searchOrdering2.default, { handleOrderingChange: function handleOrderingChange(ordering) {
-	              return _this7.handleChangeOrdering(ordering);
-	            },
-	            'default': this.state.ordering })
-	        ),
-	        _react2.default.createElement(
-	          _reactAddonsCssTransitionGroup2.default,
-	          {
-	            transitionName: 'slide',
-	            transitionEnterTimeout: 500,
-	            transitionLeaveTimeout: 500 },
-	          this.state.filters_are_hidden ? null : _react2.default.createElement(_searchFilters2.default, { handleFiltersChange: function handleFiltersChange(filters) {
-	              return _this7.handleChangeFilters(filters);
-	            },
-	            categories: this.state.categories,
-	            defaults: this.state.filters
-	          })
-	        ),
-	        _react2.default.createElement(_itemList2.default, {
-	          data: this.state.data,
-	          loading_is_hidden: this.state.loading_is_hidden,
-	          has_occurred_error: this.state.has_occurred_error,
-	          error_message: this.state.error_message,
-	          page_num: this.state.page_num,
-	          handleChangeOffset: function handleChangeOffset(e) {
-	            return _this7.handleChangeOffset(e);
-	          },
-	          paginate: {
-	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-	            page_range_displayed: this.props.paginate.page_range_displayed
-	          }
-	        })
-	      );
-	    }
-	  }]);
-
-	  return SearchableItemList;
-	}(_react2.default.Component);
-
-	exports.default = SearchableItemList;
-
-
-	SearchableItemList.propTypes = {
-	  items_fetch_url: _react2.default.PropTypes.string.isRequired,
-	  categories_fetch_url: _react2.default.PropTypes.string.isRequired,
-	  paginate: _react2.default.PropTypes.shape({
-	    per_page: _react2.default.PropTypes.number.isRequired,
-	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
-	    page_range_displayed: _react2.default.PropTypes.number.isRequired
-	  }),
-	  default_filters: _react2.default.PropTypes.shape({
-	    search: _react2.default.PropTypes.string,
-	    category: _react2.default.PropTypes.string,
-	    min_price: _react2.default.PropTypes.string,
-	    max_price: _react2.default.PropTypes.string
-	  }),
-	  default_ordering: _react2.default.PropTypes.string
-	};
-
-	SearchableItemList.defaultProps = {
-	  default_filters: {
-	    search: "",
-	    category: "",
-	    min_price: "",
-	    max_price: ""
-	  },
-	  default_ordering: ""
-	};
-
-/***/ },
-/* 204 */,
-/* 205 */,
-/* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _select = __webpack_require__(201);
-
-	var _select2 = _interopRequireDefault(_select);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SearchFilters = function (_React$Component) {
-	  _inherits(SearchFilters, _React$Component);
-
-	  function SearchFilters(props) {
-	    _classCallCheck(this, SearchFilters);
-
-	    var _this = _possibleConstructorReturn(this, (SearchFilters.__proto__ || Object.getPrototypeOf(SearchFilters)).call(this, props));
-
-	    _this.state = _this.props.defaults;
-	    return _this;
-	  }
-
-	  _createClass(SearchFilters, [{
-	    key: 'submit',
-	    value: function submit(e) {
-	      if (e !== undefined) e.preventDefault();
-
-	      this.props.handleFiltersChange(this.state);
-	    }
-	  }, {
-	    key: 'reset',
-	    value: function reset(e) {
-	      if (e !== undefined) e.preventDefault();
-
-	      this.setState(this.props.defaults);
-	    }
-	  }, {
-	    key: 'updateFilter',
-	    value: function updateFilter(filtername, e) {
-	      var filter = {};
-	      filter[filtername] = e.target.value;
-
-	      this.setState(filter);
-	    }
-	  }, {
-	    key: 'updateCategory',
-	    value: function updateCategory(id) {
-	      var _this2 = this;
-
-	      this.setState({ category: id }, function () {
-	        _this2.submit();
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'p-result__filter-form' },
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: function onSubmit(e) {
-	              return _this3.submit(e);
-	            } },
-	          _react2.default.createElement(
-	            'table',
-	            { className: 'p-filters' },
-	            _react2.default.createElement(
-	              'caption',
-	              null,
-	              'Search option'
-	            ),
-	            _react2.default.createElement(
-	              'tbody',
-	              null,
-	              _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                  'th',
-	                  null,
-	                  'keyword'
-	                ),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'text', ref: 'search', value: this.state.search,
-	                    onChange: function onChange(e) {
-	                      return _this3.updateFilter("search", e);
-	                    } })
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                  'th',
-	                  null,
-	                  'category'
-	                ),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  this.props.categories ? _react2.default.createElement(_select2.default, { handleChangeEvent: function handleChangeEvent(id) {
-	                      return _this3.updateCategory(id);
-	                    },
-	                    select_id: 'categories',
-	                    list: this.props.categories,
-	                    'default': this.state.category
-	                  }) : null
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                  'th',
-	                  null,
-	                  'price'
-	                ),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    '\xA5',
-	                    _react2.default.createElement('input', { type: 'text', ref: 'min_price', value: this.state.min_price,
-	                      placeholder: '----', onChange: function onChange(e) {
-	                        return _this3.updateFilter("min_price", e);
-	                      } })
-	                  ),
-	                  _react2.default.createElement(
-	                    'span',
-	                    { className: 'u-inline-block' },
-	                    '\u301C'
-	                  ),
-	                  _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    '\xA5',
-	                    _react2.default.createElement('input', { type: 'text', ref: 'max_price', defaultValue: this.state.max_price,
-	                      placeholder: '----', onChange: function onChange(e) {
-	                        return _this3.updateFilter("max_price", e);
-	                      } })
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement('th', null),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'reset', value: 'Reset' }),
-	                  _react2.default.createElement('input', { type: 'submit', value: 'Update' })
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return SearchFilters;
-	}(_react2.default.Component);
-
-	exports.default = SearchFilters;
-
-
-	SearchFilters.propTypes = {
-	  handleFiltersChange: _react2.default.PropTypes.func.isRequired,
-	  defaults: _react2.default.PropTypes.shape({
-	    search: _react2.default.PropTypes.string,
-	    category: _react2.default.PropTypes.string,
-	    min_price: _react2.default.PropTypes.string,
-	    max_price: _react2.default.PropTypes.string
-	  }).isRequired,
-	  categories: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
-	    id: _react2.default.PropTypes.string,
-	    value: _react2.default.PropTypes.string
-	  }))
-	};
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _select = __webpack_require__(201);
-
-	var _select2 = _interopRequireDefault(_select);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SearchOrdering = function (_React$Component) {
-	  _inherits(SearchOrdering, _React$Component);
-
-	  function SearchOrdering(props) {
-	    _classCallCheck(this, SearchOrdering);
-
-	    var _this = _possibleConstructorReturn(this, (SearchOrdering.__proto__ || Object.getPrototypeOf(SearchOrdering)).call(this, props));
-
-	    _this.orderSet = [{ id: "default", key: null, by: null, value: "default" }, { id: "priceAsc", key: "price", by: "asc", value: "price(ascending)" }, { id: "priceDesc", key: "price", by: "desc", value: "price(descending)" }];
-
-	    _this.list = _this.orderSet.map(function (element) {
-	      return { id: element.id, value: element.value };
-	    });
-	    return _this;
-	  }
-
-	  _createClass(SearchOrdering, [{
-	    key: 'onChange',
-	    value: function onChange(id) {
-	      this.props.handleOrderingChange(this.parseOrdering(this.orderSet.find(function (element) {
-	        return element.id === id;
-	      })));
-	    }
-	  }, {
-	    key: 'parseOrdering',
-	    value: function parseOrdering(ordering) {
-	      if (!ordering || !ordering.id) return null;
-
-	      if (ordering.by === "desc") return "-" + ordering.key;
-	      return ordering.key;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'p-result__sort-order' },
-	        _react2.default.createElement(_select2.default, { handleChangeEvent: function handleChangeEvent(id) {
-	            return _this2.onChange(id);
-	          },
-	          select_id: 'ordering',
-	          list: this.orderSet,
-	          'default': this.props.default
-	        })
-	      );
-	    }
-	  }]);
-
-	  return SearchOrdering;
-	}(_react2.default.Component);
-
-	exports.default = SearchOrdering;
-
-
-	SearchOrdering.propTypes = {
-	  handleOrderingChange: _react2.default.PropTypes.func.isRequired,
-	  default: _react2.default.PropTypes.string.isRequired
 	};
 
 /***/ }

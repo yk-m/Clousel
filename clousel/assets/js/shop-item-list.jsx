@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'superagent-django-csrf'
-import ItemList from './components/item-list'
+import ItemList from './components/item/item-list'
 // import SmoothScroll from 'smooth-scroll'
 
 let listContainer = document.getElementById('item-list')
