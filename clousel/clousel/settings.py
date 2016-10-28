@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'action',
     'clothing',
     'shop',
-    'uploader',
     'wardrobe',
     'pages',
     'recommender',

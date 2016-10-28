@@ -5,7 +5,7 @@ from rest_framework_jwt import views
 
 from .views import (CategoryListView, ItemDetailView, LikeListView,
                     PurchaseHistoryListView, SearchableItemListView,
-                    SimilarListView, SuitableListView, UserImageViewSet,
+                    SimilarListView, SuitableListView, UserItemViewSet,
                     UserViewSet)
 
 urlpatterns = [
@@ -21,6 +21,6 @@ urlpatterns = [
 router = routers.SimpleRouter()
 router.register(r'users', UserViewSet)
 router.register(r'items', ItemDetailView)
-router.register(r'uploads', UserImageViewSet)
+router.register(r'uploads', UserItemViewSet)
 
 urlpatterns += router.urls

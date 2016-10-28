@@ -5,7 +5,7 @@ from accounts.models import Profile
 from action.models import Like, PurchaseHistory
 from clothing.models import Category, Clothing
 from shop.models import Item
-from uploader.models import UserImage
+from wardrobe.models import UserItem
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -102,10 +102,10 @@ class ItemSerializer(ClothingSerializer):
         return PurchaseHistory.objects.filter(owner=self.context['request'].user, item=obj).exists()
 
 
-class UserImageSerializer(ClothingSerializer):
+class UserItemSerializer(ClothingSerializer):
 
     class Meta:
-        model = UserImage
+        model = UserItem
         fields = ('pk', 'owner', 'image', 'orientation', 'category', 'category_meta',
                   'has_bought', 'created', 'updated', )
         read_only_fields = ('owner', 'created', 'updated', )

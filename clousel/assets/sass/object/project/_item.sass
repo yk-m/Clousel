@@ -1,8 +1,27 @@
-=items-container()
+.p-item-list
     position: relative
 
 .p-items
     +clearfix
+
+.p-item
+    +gallery(3 of 12)
+    margin-top: $vertical-span
+    margin-bottom: $vertical-span
+    border-top: 3px double $black
+    border-bottom: 1px solid $black
+    text-decoration: none
+
+.p-item__image
+    +image-container
+    position: relative
+    z-index: 1
+    width: 100%
+    height: auto
+
+.p-item__caption
+    dt
+        color: $accent-color
 
 .p-items--state_loading,
 .p-items--state_error
@@ -27,23 +46,3 @@
 
 .p-items--state_error p
     font-size: 2rem
-
-.p-item
-    +gallery(3 of 12)
-    margin-top: $vertical-span
-    margin-bottom: $vertical-span
-    border-top: 3px double $black
-    border-bottom: 1px solid $black
-    text-decoration: none
-
-.p-item__image
-    +image-container
-    position: relative
-    z-index: 1
-    width: 100%
-    height: auto
-
-.p-item__caption
-    dt
-        color: $accent-color
-

@@ -9,6 +9,8 @@ from clothing.models import Clothing
 
 
 class Item(Clothing):
+    UPLOAD_TO_DIR = 'shop_item/images/'
+
     price = models.PositiveIntegerField()
     brand = models.CharField(max_length=255, blank=True)
     exhibiter = models.CharField(max_length=255, blank=True)
@@ -29,11 +31,6 @@ class Item(Clothing):
 
     def __str__(self):
         return str(self.category)
-
-    @staticmethod
-    def get_image_upload_to_path(filename):
-        ext = filename.split('.')[-1]
-        return 'shop_item/images/{0}.{1}'.format(uuid4().hex, ext)
 
 
 @receiver(models.signals.post_delete, sender=Item)
