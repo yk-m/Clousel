@@ -23110,8 +23110,6 @@
 
 	    var _this = _possibleConstructorReturn(this, (ItemListBuilder.__proto__ || Object.getPrototypeOf(ItemListBuilder)).call(this, props));
 
-	    console.log(_this.state);
-
 	    _this.state = Object.assign(_this.state, {
 	      filters_are_hidden: true,
 	      categories: null,
@@ -23255,8 +23253,8 @@
 	          has_occurred_error: this.state.has_occurred_error,
 	          error_message: this.state.error_message,
 	          page_num: this.state.page_num,
-	          handleChangeOffset: function handleChangeOffset(e) {
-	            return _this6.handleChangeOffset(e);
+	          handleChangeOffset: function handleChangeOffset(offset) {
+	            return _this6.handleChangeOffset(offset);
 	          },
 	          paginate: {
 	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
@@ -24209,7 +24207,7 @@
 	          margin_pages_displayed: this.props.paginate.margin_pages_displayed,
 	          page_range_displayed: this.props.paginate.page_range_displayed,
 	          handlePaginationClick: function handlePaginationClick(data) {
-	            return _this2.props.paginate.handlePaginationClick(data);
+	            return _this2.props.handleChangeOffset(data);
 	          }
 	        })
 	      );
