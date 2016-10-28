@@ -23837,7 +23837,6 @@
 	          loading_is_hidden: true
 	        });
 	      }, function (res) {
-	        console.log(res);
 	        console.error(_this2.props.items_fetch_url, res.status, res.text);
 	      });
 	    }
@@ -23858,10 +23857,7 @@
 	          handleChangeOffset: function handleChangeOffset(e) {
 	            return _this3.handleChangeOffset(e);
 	          },
-	          paginate: {
-	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-	            page_range_displayed: this.props.paginate.page_range_displayed
-	          }
+	          paginate: this.props.paginate
 	        })
 	      );
 	    }
@@ -24066,7 +24062,7 @@
 	          margin_pages_displayed: this.props.paginate.margin_pages_displayed,
 	          page_range_displayed: this.props.paginate.page_range_displayed,
 	          handlePaginationClick: function handlePaginationClick(data) {
-	            return _this2.props.handleChangeOffset(data);
+	            return _this2.handlePaginationClick(data);
 	          }
 	        })
 	      );
@@ -24087,6 +24083,7 @@
 	  page_num: _react2.default.PropTypes.number.isRequired,
 	  handleChangeOffset: _react2.default.PropTypes.func.isRequired,
 	  paginate: _react2.default.PropTypes.shape({
+	    per_page: _react2.default.PropTypes.number.isRequired,
 	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
 	    page_range_displayed: _react2.default.PropTypes.number.isRequired
 	  })

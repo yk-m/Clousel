@@ -30,7 +30,7 @@ export default class UserItemList extends React.Component {
           page_num={this.props.page_num}
           margin_pages_displayed={this.props.paginate.margin_pages_displayed}
           page_range_displayed={this.props.paginate.page_range_displayed}
-          handlePaginationClick={(data) => this.props.handleChangeOffset(data)}
+          handlePaginationClick={(data) => this.handlePaginationClick(data)}
         />
       </div>
     )
@@ -45,6 +45,7 @@ UserItemList.propTypes = {
   page_num: React.PropTypes.number.isRequired,
   handleChangeOffset: React.PropTypes.func.isRequired,
   paginate: React.PropTypes.shape({
+    per_page: React.PropTypes.number.isRequired,
     margin_pages_displayed: React.PropTypes.number.isRequired,
     page_range_displayed:React.PropTypes.number.isRequired
   })

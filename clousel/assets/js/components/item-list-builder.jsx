@@ -61,7 +61,7 @@ export default class ItemListBuilder extends ListBuilder {
         })
       },
       (res) => {
-        console.error(this.props.categories_fetch_url, status, err.toString())
+        console.error(this.props.items_fetch_url, res.status, res.text)
       }
     )
   }
@@ -131,10 +131,7 @@ export default class ItemListBuilder extends ListBuilder {
           error_message={this.state.error_message}
           page_num={this.state.page_num}
           handleChangeOffset={(offset) => this.handleChangeOffset(offset)}
-          paginate={{
-            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-            page_range_displayed: this.props.paginate.page_range_displayed
-          }}
+          paginate={this.props.paginate}
         />
       </section>
     )
