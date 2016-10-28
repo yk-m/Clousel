@@ -32,7 +32,6 @@ export default class UserItemListBuilder extends ListBuilder {
         })
       },
       (res) => {
-        console.log(res)
         console.error(this.props.items_fetch_url, res.status, res.text)
       }
     )
@@ -48,10 +47,7 @@ export default class UserItemListBuilder extends ListBuilder {
           error_message={this.state.error_message}
           page_num={this.state.page_num}
           handleChangeOffset={(e) => this.handleChangeOffset(e)}
-          paginate={{
-            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-            page_range_displayed: this.props.paginate.page_range_displayed
-          }}
+          paginate={this.props.paginate}
         />
       </section>
     )
