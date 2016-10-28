@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Upload{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock header %}
+
+{% block content %}
+    <section class="p-upload-form">
+      <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+          <caption>Upload</caption>
+          <tbody>
+            {{ form.as_table }}
+          </tbody>
+        </table>
+        <input type="submit" value="{% trans 'Upload' %}" />
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </section>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

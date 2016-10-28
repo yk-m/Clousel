@@ -13,13 +13,13 @@ from accounts.models import Profile
 from action.models import Like, PurchaseHistory
 from clothing.models import Category
 from shop.models import Item
-from uploader.models import UserImage
+from wardrobe.models import UserItem
 
 from .permissions import IsOwner
 from .serializer import (BasicUserSerializer, CategorySerializer,
                          FullUserSerializer, ItemSerializer, LikeSerializer,
                          ProfileSerializer, PurchaseHistorySerializer,
-                         UserImageSerializer)
+                         UserItemSerializer)
 
 
 class CategoryListView(generics.ListAPIView):
@@ -114,38 +114,30 @@ class AbstractRecommenderList(SearchableItemListView, metaclass=ABCMeta):
 
     def get_queryset(self):
         userimage = self.get_userimage_object(pk=self.kwargs['pk'])
-        paths = [Item.get_image_upload_to_path(filename) for filename in self.get_filenames()]
-        return Item.objects.filter(image__in=paths)
+        pks = self.get_pks()
+        return Item.objects.filter(pk__in=pks)
 
     def get_userimage_object(self, pk):
-        userimage = get_object_or_404(UserImage, pk=pk)
+        userimage = get_object_or_404(UserItem, pk=pk)
         if self.request.user != userimage.owner:
             raise PermissionDenied()
         return userimage
 
     @abstractmethod
-    def get_filenames():
+    def get_pks():
         pass
 
 
 class SimilarListView(AbstractRecommenderList):
 
-    def get_filenames(self):
-        return [
-            'b4990a379fee25115c6a10a6cfd79627c96ab4f1_sISa2DL.jpg',  # 1
-            '4a8e1fa6c819443c8e418e1a4b3fba3da791c844_EmokCFy.jpg',  # 13
-            '0f53d47bfa9550b56e38fbcb4e89f6a408b41ecf.jpg',  # 159
-        ]
+    def get_pks(self):
+        return [990, 854, 816]
 
 
 class SuitableListView(AbstractRecommenderList):
 
-    def get_filenames(self):
-        return [
-            '5dc665ec432df2f2a8b3ee88542a71037fd009a9_WKGyGVf.jpg',  # 92
-            '6bb28b025aeaabe67753067fcd15894c914d7b37_SmtY9z7.jpg',  # 88
-            '7e0278d6b9606d7a0b3e368c66c76c08bb800fdc.jpg',  # 172
-        ]
+    def get_pks(self):
+        return [990, 854, 816]
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -164,9 +156,9 @@ class UserViewSet(viewsets.ModelViewSet):
             return BasicUserSerializer
 
 
-class UserImageViewSet(viewsets.ModelViewSet):
-    queryset = UserImage.objects.all()
-    serializer_class = UserImageSerializer
+class UserItemViewSet(viewsets.ModelViewSet):
+    queryset = UserItem.objects.all()
+    serializer_class = UserItemSerializer
     permission_classes = (IsOwner, )
 
     def perform_create(self, serializer):
@@ -174,9 +166,9 @@ class UserImageViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            return UserImage.objects.all()
+            return UserItem.objects.all()
         else:
-            return UserImage.objects.filter(owner=self.request.user)
+            return UserItem.objects.filter(owner=self.request.user.id)
 
     # def get_serializer_for_search(self, queryset, request):
     # return ItemSerializer(queryset, many=True, context={'request': request})

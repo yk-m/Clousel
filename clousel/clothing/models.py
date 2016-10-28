@@ -1,4 +1,5 @@
 import logging
+from uuid import uuid4
 
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
@@ -21,6 +22,9 @@ class Category(MPTTModel):
         order_insertion_by = ['name']
 
     def __str__(self):
+        return self.name
+
+    def __repr__(self):
         ancestors = self.get_ancestors(include_self=True)
         return self.get_separator().join(node.name for node in ancestors)
 
@@ -33,6 +37,8 @@ def get_image_upload_to_path(instance, filename):
 
 
 class Clothing(models.Model):
+    UPLOAD_TO_DIR = "images/"
+
     image = models.ImageField(
         upload_to=get_image_upload_to_path,
         null=False,
@@ -47,6 +53,7 @@ class Clothing(models.Model):
     class Meta:
         abstract = True
 
-    @staticmethod
-    def get_image_upload_to_path(filename):
-        return 'images/' + filename
+    @classmethod
+    def get_image_upload_to_path(cls, filename):
+        ext = filename.split('.')[-1]
+        return cls.UPLOAD_TO_DIR + '{0}.{1}'.format(uuid4().hex, ext)
