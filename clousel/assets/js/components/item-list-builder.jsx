@@ -13,8 +13,6 @@ export default class ItemListBuilder extends ListBuilder {
   constructor(props) {
     super(props)
 
-    console.log(this.state)
-
     this.state = Object.assign(this.state, {
       filters_are_hidden: true,
       categories: null,
@@ -132,7 +130,7 @@ export default class ItemListBuilder extends ListBuilder {
           has_occurred_error={this.state.has_occurred_error}
           error_message={this.state.error_message}
           page_num={this.state.page_num}
-          handleChangeOffset={(e) => this.handleChangeOffset(e)}
+          handleChangeOffset={(offset) => this.handleChangeOffset(offset)}
           paginate={{
             margin_pages_displayed: this.props.paginate.margin_pages_displayed,
             page_range_displayed: this.props.paginate.page_range_displayed

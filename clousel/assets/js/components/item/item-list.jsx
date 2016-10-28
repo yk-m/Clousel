@@ -30,7 +30,7 @@ export default class ItemList extends React.Component {
           page_num={this.props.page_num}
           margin_pages_displayed={this.props.paginate.margin_pages_displayed}
           page_range_displayed={this.props.paginate.page_range_displayed}
-          handlePaginationClick={(data) => this.props.paginate.handlePaginationClick(data)}
+          handlePaginationClick={(data) => this.props.handleChangeOffset(data)}
         />
       </div>
     )

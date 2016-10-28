@@ -23135,7 +23135,7 @@
 	          margin_pages_displayed: this.props.paginate.margin_pages_displayed,
 	          page_range_displayed: this.props.paginate.page_range_displayed,
 	          handlePaginationClick: function handlePaginationClick(data) {
-	            return _this2.props.paginate.handlePaginationClick(data);
+	            return _this2.props.handleChangeOffset(data);
 	          }
 	        })
 	      );
