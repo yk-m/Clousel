@@ -213,9 +213,16 @@ header nav {
   margin: 0 20px;
 }
 
+/* line 1, ../sass/object/utility/_overflow.sass */
+.u-overflow-hidden {
+  overflow: hidden;
+}
+
 /*  PREFERENCES FOR COMPONENTS
  */
 /*  Form
+ *   ---------------------------------------- */
+/*  Modal
  *   ---------------------------------------- */
 /*  Pagination
  *   ---------------------------------------- */
@@ -257,7 +264,7 @@ header nav {
 .fademove-enter {
   opacity: 0.01;
   transform: translateY(50%) scale(0.95, 0.95);
-  transition: all 1s ease-out;
+  transition: all 0.5s ease-out;
 }
 /* line 53, ../sass/object/component/_animation.sass */
 .fademove-enter.fademove-enter-active {
@@ -332,6 +339,45 @@ header nav {
 /* line 59, ../sass/object/component/_form.sass */
 ::-ms-expand {
   display: none;
+}
+
+/*  MODAL WINDOW
+ */
+/* line 16, ../sass/object/component/_modal.sass */
+.c-modal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: #F9F7F7;
+}
+
+/* line 27, ../sass/object/component/_modal.sass */
+.c-modal__close {
+  display: block;
+  position: absolute;
+  top: 2.5rem;
+  right: 2.5rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* line 2, ../sass/object/component/_icon.sass */
+.c-modal__close:after {
+  font-style: normal;
+  line-height: 5rem;
+  font-size: 5rem;
+  font-family: "ElegantIcons", sans-serif;
+  content: "M";
+  color: #C64B8F;
+}
+
+/* line 39, ../sass/object/component/_modal.sass */
+.c-modal__container {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
 }
 
 /* line 13, ../sass/object/component/_pagination.sass */
@@ -553,91 +599,6 @@ header nav {
   width: 100%;
 }
 
-/*  REGISTRATION FORM
- *
- */
-/* line 6, ../sass/object/project/_registration-form.sass */
-.p-registration-form {
-  width: 49.15254%;
-  margin: 0 auto;
-}
-/* line 10, ../sass/object/project/_registration-form.sass */
-.p-registration-form form {
-  margin: 0 0 12px;
-  text-align: right;
-}
-/* line 15, ../sass/object/project/_registration-form.sass */
-.p-registration-form input[type=text], .p-registration-form input[type=password], .p-registration-form input[type=email] {
-  width: 100%;
-}
-/* line 18, ../sass/object/project/_registration-form.sass */
-.p-registration-form table {
-  width: 100%;
-  margin: 0 0 12px;
-  text-align: left;
-  vertical-align: middle;
-}
-/* line 24, ../sass/object/project/_registration-form.sass */
-.p-registration-form table caption {
-  display: none;
-}
-/* line 27, ../sass/object/project/_registration-form.sass */
-.p-registration-form table th, .p-registration-form table td {
-  height: 36px;
-  padding: 12px 0;
-  vertical-align: middle;
-}
-/* line 32, ../sass/object/project/_registration-form.sass */
-.p-registration-form table th {
-  width: 31.03448%;
-  font-weight: normal;
-}
-/* line 36, ../sass/object/project/_registration-form.sass */
-.p-registration-form table td {
-  width: 65.51724%;
-}
-
-/* line 1, ../sass/object/project/_upload-form.sass */
-.p-upload-form {
-  width: 49.15254%;
-  margin: 0 auto;
-}
-/* line 5, ../sass/object/project/_upload-form.sass */
-.p-upload-form form {
-  margin: 0 0 12px;
-  text-align: right;
-}
-/* line 10, ../sass/object/project/_upload-form.sass */
-.p-upload-form input[type=text], .p-upload-form input[type=password], .p-upload-form input[type=email] {
-  width: 100%;
-}
-/* line 13, ../sass/object/project/_upload-form.sass */
-.p-upload-form table {
-  width: 100%;
-  margin: 0 0 12px;
-  text-align: left;
-  vertical-align: middle;
-}
-/* line 19, ../sass/object/project/_upload-form.sass */
-.p-upload-form table caption {
-  display: none;
-}
-/* line 22, ../sass/object/project/_upload-form.sass */
-.p-upload-form table th, .p-upload-form table td {
-  height: 36px;
-  padding: 12px 0;
-  vertical-align: middle;
-}
-/* line 27, ../sass/object/project/_upload-form.sass */
-.p-upload-form table th {
-  width: 31.03448%;
-  font-weight: normal;
-}
-/* line 31, ../sass/object/project/_upload-form.sass */
-.p-upload-form table td {
-  width: 65.51724%;
-}
-
 /* line 4, ../sass/object/project/_header.sass */
 .p-header {
   margin: 36px auto;
@@ -753,6 +714,54 @@ header nav {
   height: 100%;
 }
 
+/* line 1, ../sass/object/project/_item-detail.sass */
+.p-item-detail {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  *zoom: 1;
+  margin-top: 9.5rem;
+  margin-bottom: 9.5rem;
+}
+/* line 12, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/output/support/_clearfix.scss */
+.p-item-detail:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+/* line 9, ../sass/object/project/_item-detail.sass */
+.p-item-detail__image {
+  width: 49.15254%;
+  float: left;
+  margin-right: 1.69492%;
+}
+
+/* line 12, ../sass/object/project/_item-detail.sass */
+.p-item-detail__text {
+  width: 49.15254%;
+  float: right;
+  margin-right: 0;
+}
+/* line 15, ../sass/object/project/_item-detail.sass */
+.p-item-detail__text caption {
+  display: none;
+}
+/* line 18, ../sass/object/project/_item-detail.sass */
+.p-item-detail__text tr {
+  border-bottom: 1px solid #DFDCE2;
+}
+/* line 21, ../sass/object/project/_item-detail.sass */
+.p-item-detail__text th, .p-item-detail__text td {
+  padding: 6px 10px;
+}
+/* line 23, ../sass/object/project/_item-detail.sass */
+.p-item-detail__text th {
+  width: 16.66667%;
+  text-align: left;
+}
+
 /* line 1, ../sass/object/project/_item.sass */
 .p-item-list {
   position: relative;
@@ -772,7 +781,6 @@ header nav {
   margin-bottom: 12px;
   border-top: 3px double #312F33;
   border-bottom: 1px solid #312F33;
-  text-decoration: none;
 }
 /* line 66, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/language/susy/_gallery.scss */
 .p-item:nth-child(4n + 1) {
@@ -799,8 +807,12 @@ header nav {
   margin-right: -100%;
   clear: none;
 }
+/* line 13, ../sass/object/project/_item.sass */
+.p-item a {
+  text-decoration: none;
+}
 
-/* line 15, ../sass/object/project/_item.sass */
+/* line 16, ../sass/object/project/_item.sass */
 .p-item__image {
   position: relative;
   z-index: 1;
@@ -814,12 +826,12 @@ header nav {
   content: "";
 }
 
-/* line 23, ../sass/object/project/_item.sass */
+/* line 24, ../sass/object/project/_item.sass */
 .p-item__caption dt {
   color: #C64B8F;
 }
 
-/* line 26, ../sass/object/project/_item.sass */
+/* line 27, ../sass/object/project/_item.sass */
 .p-items--state_loading,
 .p-items--state_error {
   position: absolute;
@@ -831,7 +843,7 @@ header nav {
   background: #F9F7F7;
 }
 
-/* line 37, ../sass/object/project/_item.sass */
+/* line 38, ../sass/object/project/_item.sass */
 .p-items--state_loading i {
   -webkit-animation: fa-spin 2s infinite cubic-bezier(0.645, 0.045, 0.355, 1.000);
   animation: fa-spin 2s infinite cubic-bezier(0.645, 0.045, 0.355, 1.000);
@@ -840,20 +852,64 @@ header nav {
   display: block;
   height: 5rem;
   width: 5rem;
+}
+/* line 2, ../sass/object/component/_icon.sass */
+.p-items--state_loading i:after {
   font-style: normal;
   line-height: 5rem;
   font-size: 5rem;
-}
-/* line 6, ../sass/object/component/_icon.sass */
-.p-items--state_loading i:after {
   font-family: "ElegantIcons", sans-serif;
   content: "";
   color: #C64B8F;
 }
 
-/* line 47, ../sass/object/project/_item.sass */
+/* line 48, ../sass/object/project/_item.sass */
 .p-items--state_error p {
   font-size: 2rem;
+}
+
+/*  REGISTRATION FORM
+ *
+ */
+/* line 6, ../sass/object/project/_registration-form.sass */
+.p-registration-form {
+  width: 49.15254%;
+  margin: 0 auto;
+}
+/* line 10, ../sass/object/project/_registration-form.sass */
+.p-registration-form form {
+  margin: 0 0 12px;
+  text-align: right;
+}
+/* line 15, ../sass/object/project/_registration-form.sass */
+.p-registration-form input[type=text], .p-registration-form input[type=password], .p-registration-form input[type=email] {
+  width: 100%;
+}
+/* line 18, ../sass/object/project/_registration-form.sass */
+.p-registration-form table {
+  width: 100%;
+  margin: 0 0 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+/* line 24, ../sass/object/project/_registration-form.sass */
+.p-registration-form table caption {
+  display: none;
+}
+/* line 27, ../sass/object/project/_registration-form.sass */
+.p-registration-form table th, .p-registration-form table td {
+  height: 36px;
+  padding: 12px 0;
+  vertical-align: middle;
+}
+/* line 32, ../sass/object/project/_registration-form.sass */
+.p-registration-form table th {
+  width: 31.03448%;
+  font-weight: normal;
+}
+/* line 36, ../sass/object/project/_registration-form.sass */
+.p-registration-form table td {
+  width: 65.51724%;
 }
 
 /* line 1, ../sass/object/project/_result.sass */
@@ -977,4 +1033,45 @@ header nav {
 /* line 69, ../sass/object/project/_result.sass */
 .p-showcase__filter-form input[type=submit]:last-child, .p-showcase__filter-form input[type=reset]:last-child {
   margin: 0 0 0 20px;
+}
+
+/* line 1, ../sass/object/project/_upload-form.sass */
+.p-upload-form {
+  width: 49.15254%;
+  margin: 0 auto;
+}
+/* line 5, ../sass/object/project/_upload-form.sass */
+.p-upload-form form {
+  margin: 0 0 12px;
+  text-align: right;
+}
+/* line 10, ../sass/object/project/_upload-form.sass */
+.p-upload-form input[type=text], .p-upload-form input[type=password], .p-upload-form input[type=email] {
+  width: 100%;
+}
+/* line 13, ../sass/object/project/_upload-form.sass */
+.p-upload-form table {
+  width: 100%;
+  margin: 0 0 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+/* line 19, ../sass/object/project/_upload-form.sass */
+.p-upload-form table caption {
+  display: none;
+}
+/* line 22, ../sass/object/project/_upload-form.sass */
+.p-upload-form table th, .p-upload-form table td {
+  height: 36px;
+  padding: 12px 0;
+  vertical-align: middle;
+}
+/* line 27, ../sass/object/project/_upload-form.sass */
+.p-upload-form table th {
+  width: 31.03448%;
+  font-weight: normal;
+}
+/* line 31, ../sass/object/project/_upload-form.sass */
+.p-upload-form table td {
+  width: 65.51724%;
 }

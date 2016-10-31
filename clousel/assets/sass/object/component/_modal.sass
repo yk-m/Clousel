@@ -1,0 +1,45 @@
+/*
+ *  MODAL WINDOW
+ */
+
+$modal-width: 100% !default
+$modal-height: 100% !default
+$modal-top: 0px !default
+$modal-left: 0px !default
+$modal-z-index: 9999 !default
+$modal-bg-color: #FFFFFF !default
+$modal-closebutton-top: 2.5rem !default
+$modal-closebutton-right: 2.5rem !default
+$modal-closebutton-size: 5rem !default
+$modal-closebutton-color: #000 !default
+
+.c-modal
+    position: fixed
+    top: $modal-top
+    left: $modal-left
+    z-index: $modal-z-index
+    width: $modal-width
+    height: $modal-height
+
+    background-color: $modal-bg-color
+
+
+.c-modal__close
+    display: block
+    position: absolute
+    top: $modal-closebutton-top
+    right: $modal-closebutton-right
+    text-decoration: none
+    cursor: pointer
+
+    +icon($icon_close, $modal-closebutton-size)
+        color: $modal-closebutton-color
+
+
+.c-modal__container
+    overflow: auto
+    width: $modal-width
+    height: $modal-height
+
+@function calc_modal_closebutton_height()
+    @return $modal-closebutton-top + $modal-closebutton-size

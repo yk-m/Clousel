@@ -23063,7 +23063,7 @@
 /* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -23075,10 +23075,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _superagent = __webpack_require__(174);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23087,92 +23083,33 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ListBuilder = function (_React$Component) {
-	  _inherits(ListBuilder, _React$Component);
+	var Loader = function (_React$Component) {
+	  _inherits(Loader, _React$Component);
 
-	  function ListBuilder(props) {
-	    _classCallCheck(this, ListBuilder);
+	  function Loader() {
+	    _classCallCheck(this, Loader);
 
-	    if (new.target === ListBuilder) {
-	      throw new TypeError("Cannot construct Abstract instances directly");
-	    }
-
-	    var _this = _possibleConstructorReturn(this, (ListBuilder.__proto__ || Object.getPrototypeOf(ListBuilder)).call(this, props));
-
-	    _this.state = {
-	      data: [],
-	      offset: 0,
-	      page_num: 0,
-	      loading_is_hidden: false,
-	      has_occurred_error: false,
-	      error_message: ""
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (Loader.__proto__ || Object.getPrototypeOf(Loader)).apply(this, arguments));
 	  }
 
-	  _createClass(ListBuilder, [{
-	    key: 'setStateOfLoading',
-	    value: function setStateOfLoading() {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: false,
-	        has_occurred_error: false,
-	        error_message: ""
-	      });
+	  _createClass(Loader, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "p-items--state_loading" },
+	        _react2.default.createElement("i", null)
+	      );
 	    }
-	  }, {
-	    key: 'setStateOfError',
-	    value: function setStateOfError(message) {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: true,
-	        has_occurred_error: true,
-	        error_message: message
-	      });
-	    }
-	  }, {
-	    key: 'fetch',
-	    value: function fetch(url, query, success, failure) {
-	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
-	        if (!res.ok) {
-	          failure(res);
-	          return;
-	        }
-	        success(res);
-	      });
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.fetchItems();
-	    }
-	  }, {
-	    key: 'handleChangeOffset',
-	    value: function handleChangeOffset(offset) {
-	      var _this2 = this;
-
-	      window.scrollTo(0, 0);
-
-	      this.setState({ offset: offset }, function () {
-	        _this2.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'fetchItems',
-	    value: function fetchItems() {}
-	  }, {
-	    key: 'render',
-	    value: function render() {}
 	  }]);
 
-	  return ListBuilder;
+	  return Loader;
 	}(_react2.default.Component);
 
-	exports.default = ListBuilder;
+	exports.default = Loader;
 
 /***/ },
-/* 188 */,
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23187,7 +23124,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactPaginate = __webpack_require__(190);
+	var _reactPaginate = __webpack_require__(189);
 
 	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
 
@@ -23243,12 +23180,12 @@
 	};
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(191);
+	var _PaginationBoxView = __webpack_require__(190);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -23258,7 +23195,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23273,19 +23210,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(192);
+	var _classnames = __webpack_require__(191);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(193);
+	var _reactAddonsCreateFragment = __webpack_require__(192);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(195);
+	var _PageView = __webpack_require__(194);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(196);
+	var _BreakView = __webpack_require__(195);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -23511,7 +23448,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -23565,13 +23502,13 @@
 
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(194).create;
+	module.exports = __webpack_require__(193).create;
 
 /***/ },
-/* 194 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23646,7 +23583,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23713,7 +23650,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23767,7 +23704,7 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23825,10 +23762,10 @@
 	};
 
 /***/ },
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -23840,6 +23777,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _superagent = __webpack_require__(174);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23848,32 +23789,91 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Loader = function (_React$Component) {
-	  _inherits(Loader, _React$Component);
+	var ListBuilder = function (_React$Component) {
+	  _inherits(ListBuilder, _React$Component);
 
-	  function Loader() {
-	    _classCallCheck(this, Loader);
+	  function ListBuilder(props) {
+	    _classCallCheck(this, ListBuilder);
 
-	    return _possibleConstructorReturn(this, (Loader.__proto__ || Object.getPrototypeOf(Loader)).apply(this, arguments));
+	    if (new.target === ListBuilder) {
+	      throw new TypeError("Cannot construct Abstract instances directly");
+	    }
+
+	    var _this = _possibleConstructorReturn(this, (ListBuilder.__proto__ || Object.getPrototypeOf(ListBuilder)).call(this, props));
+
+	    _this.state = {
+	      data: [],
+	      offset: 0,
+	      page_num: 0,
+	      loading_is_hidden: false,
+	      has_occurred_error: false,
+	      error_message: ""
+	    };
+	    return _this;
 	  }
 
-	  _createClass(Loader, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "p-items--state_loading" },
-	        _react2.default.createElement("i", null)
-	      );
+	  _createClass(ListBuilder, [{
+	    key: 'setStateOfLoading',
+	    value: function setStateOfLoading() {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: false,
+	        has_occurred_error: false,
+	        error_message: ""
+	      });
 	    }
+	  }, {
+	    key: 'setStateOfError',
+	    value: function setStateOfError(message) {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: true,
+	        has_occurred_error: true,
+	        error_message: message
+	      });
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch(url, query, success, failure) {
+	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
+	        if (!res.ok) {
+	          failure(res);
+	          return;
+	        }
+	        success(res);
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetchItems();
+	    }
+	  }, {
+	    key: 'handleChangeOffset',
+	    value: function handleChangeOffset(offset) {
+	      var _this2 = this;
+
+	      window.scrollTo(0, 0);
+
+	      this.setState({ offset: offset }, function () {
+	        _this2.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'fetchItems',
+	    value: function fetchItems() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {}
 	  }]);
 
-	  return Loader;
+	  return ListBuilder;
 	}(_react2.default.Component);
 
-	exports.default = Loader;
+	exports.default = ListBuilder;
 
 /***/ },
+/* 198 */,
 /* 199 */,
 /* 200 */,
 /* 201 */,
@@ -23898,7 +23898,7 @@
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _listBuilder = __webpack_require__(187);
+	var _listBuilder = __webpack_require__(197);
 
 	var _listBuilder2 = _interopRequireDefault(_listBuilder);
 
@@ -24005,15 +24005,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _paginate = __webpack_require__(189);
+	var _paginate = __webpack_require__(188);
 
 	var _paginate2 = _interopRequireDefault(_paginate);
 
-	var _errorReporter = __webpack_require__(197);
+	var _errorReporter = __webpack_require__(196);
 
 	var _errorReporter2 = _interopRequireDefault(_errorReporter);
 
-	var _loader = __webpack_require__(198);
+	var _loader = __webpack_require__(187);
 
 	var _loader2 = _interopRequireDefault(_loader);
 
