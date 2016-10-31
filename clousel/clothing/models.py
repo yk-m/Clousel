@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import cached_property
 from mptt.models import MPTTModel, TreeForeignKey
 
 logger = logging.getLogger('debug')
@@ -29,7 +30,7 @@ class Category(MPTTModel):
         return self.get_separator().join(node.name for node in ancestors)
 
     def get_separator(self):
-        return '::'
+        return ' > '
 
 
 def get_image_upload_to_path(instance, filename):
@@ -38,6 +39,7 @@ def get_image_upload_to_path(instance, filename):
 
 class Clothing(models.Model):
     UPLOAD_TO_DIR = "images/"
+    ORIENTATION = ('landscape', 'portrait', 'square')
 
     image = models.ImageField(
         upload_to=get_image_upload_to_path,
@@ -49,6 +51,8 @@ class Clothing(models.Model):
         on_delete=models.PROTECT,
         related_name="%(app_label)s_%(class)s_related",
     )
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
@@ -57,3 +61,25 @@ class Clothing(models.Model):
     def get_image_upload_to_path(cls, filename):
         ext = filename.split('.')[-1]
         return cls.UPLOAD_TO_DIR + '{0}.{1}'.format(uuid4().hex, ext)
+
+    @cached_property
+    def orientation(self):
+        if (self.image.height < self.image.width):
+            return Clothing.ORIENTATION[0]
+        if (self.image.height > self.image.width):
+            return Clothing.ORIENTATION[1]
+        return Clothing.ORIENTATION[2]
+
+    @cached_property
+    def is_square_image(self):
+        if (self.orientation == Clothing.ORIENTATION[2]):
+            return True
+        return False
+
+    @cached_property
+    def category_ancestors(self):
+        ancestors = obj.category.get_ancestors(
+            ascending=False,
+            include_self=True
+        )
+        return [node.name for node in ancestors]

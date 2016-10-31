@@ -1,0 +1,29 @@
+{% load item %}
+
+<div class="p-items">
+{% for item in items %}
+  <a class="p-item" href="#">
+    <div>
+      <div class="p-item__image">
+        <div class="p-image-box">
+          <img
+            class="
+              p-image
+              {% if not item.is_square_image %}
+                p-image--{{ item.orientation }}
+              {% endif %}
+            "
+            src={{ item.image.url }}
+          >
+        </div>
+      </div>
+      <div class="p-item__caption">
+        <dl>
+          <dt>category</dt>
+          <dd>{{ item.category|stringformat:'r' }}</dd>
+        </dl>
+      </div>
+    </div>
+  </a>
+{% endfor %}
+</div>

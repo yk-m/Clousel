@@ -105,11 +105,11 @@ export default class ItemListBuilder extends ListBuilder {
 
   render() {
     return (
-      <section className="p-result" >
-        <div className="p-result__header">
-          <h2 className="p-result__title">
+      <section className="p-showcase" >
+        <div className="p-showcase__header">
+          <h2 className="p-showcase__title">
             Search Searchs
-            <span className="p-result__filters-opener" onClick={(e) => this.handleFiltersToggleEvent(e)}>[option]</span>
+            <span className="p-showcase__filters-opener" onClick={(e) => this.handleFiltersToggleEvent(e)}>[option]</span>
           </h2>
           <SearchOrdering handleOrderingChange={(ordering) => this.handleChangeOrdering(ordering)}
                           default={this.state.ordering}/>

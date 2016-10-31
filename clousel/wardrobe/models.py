@@ -13,8 +13,6 @@ class UserItem(Clothing):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE)
     has_bought = models.BooleanField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'user items'

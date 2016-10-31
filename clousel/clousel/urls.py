@@ -21,14 +21,14 @@ from django.contrib import admin
 import accounts.urls
 import api.urls
 import pages.urls
-import recommender.urls
+import shop.urls
 import wardrobe.urls
 from wardrobe.views import image_view
 
 urlpatterns = [
     url(r'^', include(pages.urls, namespace="pages")),
     url(r'^accounts/', include('accounts.urls')),
-    url(r'^recommender/', include(recommender.urls, namespace="recommender")),
+    url(r'^shop/', include(shop.urls, namespace="shop")),
     url(r'^wardrobe/', include(wardrobe.urls, namespace="wardrobe")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(api.urls)),
