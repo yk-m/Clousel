@@ -23220,7 +23220,7 @@
 	          _react2.default.createElement(
 	            'h2',
 	            { className: 'p-showcase__title' },
-	            'Search Searchs',
+	            'Search',
 	            _react2.default.createElement(
 	              'span',
 	              { className: 'p-showcase__filters-opener', onClick: function onClick(e) {

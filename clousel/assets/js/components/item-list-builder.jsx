@@ -108,7 +108,7 @@ export default class ItemListBuilder extends ListBuilder {
       <section className="p-showcase" >
         <div className="p-showcase__header">
           <h2 className="p-showcase__title">
-            Search Searchs
+            Search
             <span className="p-showcase__filters-opener" onClick={(e) => this.handleFiltersToggleEvent(e)}>[option]</span>
           </h2>
           <SearchOrdering handleOrderingChange={(ordering) => this.handleChangeOrdering(ordering)}
