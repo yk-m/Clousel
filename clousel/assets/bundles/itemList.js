@@ -25452,7 +25452,12 @@
 	    value: function reset(e) {
 	      if (e !== undefined) e.preventDefault();
 
-	      this.setState(this.props.defaults);
+	      this.setState({
+	        search: "",
+	        category: "",
+	        min_price: "",
+	        max_price: ""
+	      });
 	    }
 	  }, {
 	    key: 'updateFilter',
@@ -25483,6 +25488,9 @@
 	          'form',
 	          { onSubmit: function onSubmit(e) {
 	              return _this3.submit(e);
+	            },
+	            onReset: function onReset(e) {
+	              return _this3.reset(e);
 	            } },
 	          _react2.default.createElement(
 	            'table',

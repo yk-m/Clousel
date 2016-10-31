@@ -22,7 +22,12 @@ export default class SearchFilters extends React.Component {
     if (e !== undefined)
       e.preventDefault()
 
-    this.setState(this.props.defaults)
+    this.setState({
+      search: "",
+      category: "",
+      min_price: "",
+      max_price: ""
+    })
   }
 
   updateFilter(filtername, e) {
@@ -41,7 +46,8 @@ export default class SearchFilters extends React.Component {
   render() {
     return (
       <div className="p-showcase__filter-form">
-        <form onSubmit={(e) => this.submit(e)}>
+        <form onSubmit={(e) => this.submit(e)}
+              onReset={(e) => this.reset(e)}>
           <table className="p-filters">
             <caption>Search option</caption>
             <tbody>
