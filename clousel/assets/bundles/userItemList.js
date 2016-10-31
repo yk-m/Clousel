@@ -56,7 +56,7 @@
 
 	__webpack_require__(173);
 
-	var _userItemListBuilder = __webpack_require__(203);
+	var _userItemListBuilder = __webpack_require__(204);
 
 	var _userItemListBuilder2 = _interopRequireDefault(_userItemListBuilder);
 
@@ -23060,8 +23060,7 @@
 /* 184 */,
 /* 185 */,
 /* 186 */,
-/* 187 */,
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23076,7 +23075,119 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactPaginate = __webpack_require__(189);
+	var _superagent = __webpack_require__(174);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ListBuilder = function (_React$Component) {
+	  _inherits(ListBuilder, _React$Component);
+
+	  function ListBuilder(props) {
+	    _classCallCheck(this, ListBuilder);
+
+	    if (new.target === ListBuilder) {
+	      throw new TypeError("Cannot construct Abstract instances directly");
+	    }
+
+	    var _this = _possibleConstructorReturn(this, (ListBuilder.__proto__ || Object.getPrototypeOf(ListBuilder)).call(this, props));
+
+	    _this.state = {
+	      data: [],
+	      offset: 0,
+	      page_num: 0,
+	      loading_is_hidden: false,
+	      has_occurred_error: false,
+	      error_message: ""
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ListBuilder, [{
+	    key: 'setStateOfLoading',
+	    value: function setStateOfLoading() {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: false,
+	        has_occurred_error: false,
+	        error_message: ""
+	      });
+	    }
+	  }, {
+	    key: 'setStateOfError',
+	    value: function setStateOfError(message) {
+	      this.setState({
+	        data: [],
+	        loading_is_hidden: true,
+	        has_occurred_error: true,
+	        error_message: message
+	      });
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch(url, query, success, failure) {
+	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
+	        if (!res.ok) {
+	          failure(res);
+	          return;
+	        }
+	        success(res);
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetchItems();
+	    }
+	  }, {
+	    key: 'handleChangeOffset',
+	    value: function handleChangeOffset(offset) {
+	      var _this2 = this;
+
+	      window.scrollTo(0, 0);
+
+	      this.setState({ offset: offset }, function () {
+	        _this2.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'fetchItems',
+	    value: function fetchItems() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {}
+	  }]);
+
+	  return ListBuilder;
+	}(_react2.default.Component);
+
+	exports.default = ListBuilder;
+
+/***/ },
+/* 188 */,
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactPaginate = __webpack_require__(190);
 
 	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
 
@@ -23132,12 +23243,12 @@
 	};
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(190);
+	var _PaginationBoxView = __webpack_require__(191);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -23147,7 +23258,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23162,19 +23273,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(191);
+	var _classnames = __webpack_require__(192);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(192);
+	var _reactAddonsCreateFragment = __webpack_require__(193);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(194);
+	var _PageView = __webpack_require__(195);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(195);
+	var _BreakView = __webpack_require__(196);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -23400,7 +23511,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -23454,13 +23565,13 @@
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193).create;
+	module.exports = __webpack_require__(194).create;
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23535,7 +23646,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23602,7 +23713,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23656,7 +23767,7 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23714,7 +23825,7 @@
 	};
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23763,12 +23874,12 @@
 	exports.default = Loader;
 
 /***/ },
-/* 198 */,
 /* 199 */,
 /* 200 */,
 /* 201 */,
 /* 202 */,
-/* 203 */
+/* 203 */,
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23787,7 +23898,7 @@
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _listBuilder = __webpack_require__(204);
+	var _listBuilder = __webpack_require__(187);
 
 	var _listBuilder2 = _interopRequireDefault(_listBuilder);
 
@@ -23847,7 +23958,7 @@
 
 	      return _react2.default.createElement(
 	        'section',
-	        { className: 'p-result' },
+	        { className: 'p-showcase' },
 	        _react2.default.createElement(_userItemList2.default, {
 	          data: this.state.data,
 	          loading_is_hidden: this.state.loading_is_hidden,
@@ -23879,117 +23990,6 @@
 	};
 
 /***/ },
-/* 204 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _superagent = __webpack_require__(174);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ListBuilder = function (_React$Component) {
-	  _inherits(ListBuilder, _React$Component);
-
-	  function ListBuilder(props) {
-	    _classCallCheck(this, ListBuilder);
-
-	    if (new.target === ListBuilder) {
-	      throw new TypeError("Cannot construct Abstract instances directly");
-	    }
-
-	    var _this = _possibleConstructorReturn(this, (ListBuilder.__proto__ || Object.getPrototypeOf(ListBuilder)).call(this, props));
-
-	    _this.state = {
-	      data: [],
-	      offset: 0,
-	      page_num: 0,
-	      loading_is_hidden: false,
-	      has_occurred_error: false,
-	      error_message: ""
-	    };
-	    return _this;
-	  }
-
-	  _createClass(ListBuilder, [{
-	    key: 'setStateOfLoading',
-	    value: function setStateOfLoading() {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: false,
-	        has_occurred_error: false,
-	        error_message: ""
-	      });
-	    }
-	  }, {
-	    key: 'setStateOfError',
-	    value: function setStateOfError(message) {
-	      this.setState({
-	        data: [],
-	        loading_is_hidden: true,
-	        has_occurred_error: true,
-	        error_message: message
-	      });
-	    }
-	  }, {
-	    key: 'fetch',
-	    value: function fetch(url, query, success, failure) {
-	      _superagent2.default.get(url).query(query).set('Accept', 'application/json').end(function (err, res) {
-	        if (!res.ok) {
-	          failure(res);
-	          return;
-	        }
-	        success(res);
-	      });
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.fetchItems();
-	    }
-	  }, {
-	    key: 'handleChangeOffset',
-	    value: function handleChangeOffset(offset) {
-	      var _this2 = this;
-
-	      window.scrollTo(0, 0);
-
-	      this.setState({ offset: offset }, function () {
-	        _this2.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'fetchItems',
-	    value: function fetchItems() {}
-	  }, {
-	    key: 'render',
-	    value: function render() {}
-	  }]);
-
-	  return ListBuilder;
-	}(_react2.default.Component);
-
-	exports.default = ListBuilder;
-
-/***/ },
 /* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24005,15 +24005,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _paginate = __webpack_require__(188);
+	var _paginate = __webpack_require__(189);
 
 	var _paginate2 = _interopRequireDefault(_paginate);
 
-	var _errorReporter = __webpack_require__(196);
+	var _errorReporter = __webpack_require__(197);
 
 	var _errorReporter2 = _interopRequireDefault(_errorReporter);
 
-	var _loader = __webpack_require__(197);
+	var _loader = __webpack_require__(198);
 
 	var _loader2 = _interopRequireDefault(_loader);
 

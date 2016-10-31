@@ -38,7 +38,7 @@ export default class SearchOrdering extends React.Component {
 
   render() {
     return (
-      <div className="p-result__sort-order">
+      <div className="p-showcase__sort-order">
         <Select handleChangeEvent={(id) => this.onChange(id)}
                 select_id="ordering"
                 list={this.orderSet}

@@ -857,14 +857,14 @@ header nav {
 }
 
 /* line 1, ../sass/object/project/_result.sass */
-.p-result__header {
+.p-showcase__header {
   overflow: hidden;
   *zoom: 1;
   margin: 0 0 12px;
 }
 
 /* line 5, ../sass/object/project/_result.sass */
-.p-result__title {
+.p-showcase__title {
   width: 49.15254%;
   float: left;
   margin-right: 1.69492%;
@@ -872,7 +872,7 @@ header nav {
 }
 
 /* line 9, ../sass/object/project/_result.sass */
-.p-result__filters-opener {
+.p-showcase__filters-opener {
   display: inline-block;
   margin: 0 0 0 0.75em;
   font-size: 0.75em;
@@ -881,19 +881,19 @@ header nav {
 }
 
 /* line 16, ../sass/object/project/_result.sass */
-.p-result__sort-order {
+.p-showcase__sort-order {
   width: 49.15254%;
   float: right;
   margin-right: 0;
   text-align: right;
 }
 /* line 20, ../sass/object/project/_result.sass */
-.p-result__sort-order label {
+.p-showcase__sort-order label {
   width: 47.36842%;
 }
 
 /* line 23, ../sass/object/project/_result.sass */
-.p-result__filter-form {
+.p-showcase__filter-form {
   padding: 12px 20px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -902,7 +902,7 @@ header nav {
   overflow-y: hidden;
 }
 /* line 9, ../sass/object/component/_animation.sass */
-.p-result__filter-form.slide-enter {
+.p-showcase__filter-form.slide-enter {
   height: 0;
   padding: 0 20px;
   opacity: 1;
@@ -912,12 +912,12 @@ header nav {
   transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 /* line 15, ../sass/object/component/_animation.sass */
-.p-result__filter-form.slide-enter.slide-enter-active {
+.p-showcase__filter-form.slide-enter.slide-enter-active {
   height: 224px;
   padding: 12px 20px;
 }
 /* line 19, ../sass/object/component/_animation.sass */
-.p-result__filter-form.slide-leave {
+.p-showcase__filter-form.slide-leave {
   height: 224px;
   padding: 12px 20px;
   -moz-transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
@@ -926,55 +926,55 @@ header nav {
   transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 /* line 24, ../sass/object/component/_animation.sass */
-.p-result__filter-form.slide-leave.slide-leave-active {
+.p-showcase__filter-form.slide-leave.slide-leave-active {
   height: 0;
   padding: 0 20px;
 }
 /* line 34, ../sass/object/project/_result.sass */
-.p-result__filter-form table {
+.p-showcase__filter-form table {
   width: 100%;
 }
 /* line 37, ../sass/object/project/_result.sass */
-.p-result__filter-form caption {
+.p-showcase__filter-form caption {
   display: none;
 }
 /* line 40, ../sass/object/project/_result.sass */
-.p-result__filter-form tr {
+.p-showcase__filter-form tr {
   height: 50px;
 }
 /* line 43, ../sass/object/project/_result.sass */
-.p-result__filter-form tr:last-child {
+.p-showcase__filter-form tr:last-child {
   text-align: right;
 }
 /* line 46, ../sass/object/project/_result.sass */
-.p-result__filter-form td, .p-result__filter-form th {
+.p-showcase__filter-form td, .p-showcase__filter-form th {
   vertical-align: middle;
   white-space: nowrap;
 }
 /* line 50, ../sass/object/project/_result.sass */
-.p-result__filter-form th {
+.p-showcase__filter-form th {
   width: 11.76471%;
   text-align: left;
 }
 /* line 54, ../sass/object/project/_result.sass */
-.p-result__filter-form td {
+.p-showcase__filter-form td {
   width: 85.29412%;
 }
 /* line 57, ../sass/object/project/_result.sass */
-.p-result__filter-form input, .p-result__filter-form button {
+.p-showcase__filter-form input, .p-showcase__filter-form button {
   padding: 6px 10px;
 }
 /* line 60, ../sass/object/project/_result.sass */
-.p-result__filter-form input {
+.p-showcase__filter-form input {
   max-width: 220px;
 }
 /* line 63, ../sass/object/project/_result.sass */
-.p-result__filter-form input[type=submit], .p-result__filter-form input[type=reset] {
+.p-showcase__filter-form input[type=submit], .p-showcase__filter-form input[type=reset] {
   border: none;
   background: #F9F7F7;
   color: #312F33;
 }
 /* line 69, ../sass/object/project/_result.sass */
-.p-result__filter-form input[type=submit]:last-child, .p-result__filter-form input[type=reset]:last-child {
+.p-showcase__filter-form input[type=submit]:last-child, .p-showcase__filter-form input[type=reset]:last-child {
   margin: 0 0 0 20px;
 }

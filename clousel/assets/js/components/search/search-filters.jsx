@@ -40,7 +40,7 @@ export default class SearchFilters extends React.Component {
 
   render() {
     return (
-      <div className="p-result__filter-form">
+      <div className="p-showcase__filter-form">
         <form onSubmit={(e) => this.submit(e)}>
           <table className="p-filters">
             <caption>Search option</caption>

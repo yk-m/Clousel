@@ -54,18 +54,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ClothingSerializer(serializers.ModelSerializer):
     category_meta = serializers.SerializerMethodField()
-    orientation = serializers.SerializerMethodField()
+    # orientation = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
         fields = ('pk', 'image', 'orientation', 'category', 'category_meta', )
-
-    def get_orientation(self, obj):
-        if (obj.image.height < obj.image.width):
-            return 'landscape'
-        if (obj.image.height > obj.image.width):
-            return 'portrait'
-        return 'square'
 
     def get_category_meta(self, obj):
         ancestors = obj.category.get_ancestors(

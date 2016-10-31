@@ -39,7 +39,7 @@ export default class UserItemListBuilder extends ListBuilder {
 
   render() {
     return (
-      <section className="p-result" >
+      <section className="p-showcase" >
         <UserItemList
           data={this.state.data}
           loading_is_hidden={this.state.loading_is_hidden}

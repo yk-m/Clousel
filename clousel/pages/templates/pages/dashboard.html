@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock header %}
+
+{% block content %}
+<section class="p-showcase">
+  <div class="p-showcase__header">
+    <h2 class="p-showcase__title">New arrival</h2>
+  </div>
+  <div class="p-item-list">
+    {% include "pages/includes/items.html" with items=items %}
+  </div>
+  <div class="p-showcase__footer">
+    <p class="c-showall"><a href="{% url 'shop:index' %}" title="show all">show all</a></p>
+  </div>
+</section>
+
+<section class="p-showcase">
+  <div class="p-showcase__header">
+    <h2 class="p-showcase__title">Wardrobe</h2>
+  </div>
+  <div class="p-item-list">
+    {% include "pages/includes/items.html" with items=user_items %}
+  </div>
+  <div class="p-showcase__footer">
+    <p class="c-showall"><a href="{% url 'wardrobe:index' %}" title="show all">show all</a></p>
+  </div>
+</section>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}
