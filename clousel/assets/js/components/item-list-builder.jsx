@@ -2,8 +2,11 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Request from 'superagent'
 
+import Loader from './loader'
+import Paginate from './paginate'
+import ErrorReporter from './error-reporter'
 import ListBuilder from './list-builder'
-import ItemList from './item/item-list'
+import Items from './item/items'
 import SearchFilters from './search/search-filters'
 import SearchOrdering from './search/search-ordering'
 
@@ -103,36 +106,47 @@ export default class ItemListBuilder extends ListBuilder {
     this.setState({filters_are_hidden: !this.state.filters_are_hidden})
   }
 
+  handlePaginationClick(data) {
+    let offset = Math.ceil(data.selected * this.props.paginate.per_page)
+    this.handleChangeOffset(offset)
+  }
+
   render() {
+    let items = null
+    if (!this.state.loading_is_hidden)
+      items = <Loader />
+    else if (this.state.has_occurred_error)
+      items =  <ErrorReporter message={this.state.error_message} />
+    else if (this.state.data !== null && this.state.data !== [])
+      items = <Items data={this.state.data} />
+
     return (
       <section className="p-showcase" >
         <div className="p-showcase__header">
           <h2 className="p-showcase__title">
-            Search
+            Search Results
             <span className="p-showcase__filters-opener" onClick={(e) => this.handleFiltersToggleEvent(e)}>[option]</span>
           </h2>
           <SearchOrdering handleOrderingChange={(ordering) => this.handleChangeOrdering(ordering)}
                           default={this.state.ordering}/>
         </div>
-        <ReactCSSTransitionGroup
-          transitionName="slide"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}>
-          {this.state.filters_are_hidden?
-            null : <SearchFilters handleFiltersChange={(filters) => this.handleChangeFilters(filters)}
-                                  categories={this.state.categories}
-                                  defaults={this.state.filters}
-                                  /> }
+        <ReactCSSTransitionGroup transitionName="slide"
+                                 transitionEnterTimeout={500}
+                                 transitionLeaveTimeout={500}>
+          {
+            this.state.filters_are_hidden
+            ? null : <SearchFilters handleFiltersChange={(filters) => this.handleChangeFilters(filters)}
+                                    categories={this.state.categories}
+                                    defaults={this.state.filters} />
+          }
         </ReactCSSTransitionGroup>
-        <ItemList
-          data={this.state.data}
-          loading_is_hidden={this.state.loading_is_hidden}
-          has_occurred_error={this.state.has_occurred_error}
-          error_message={this.state.error_message}
-          page_num={this.state.page_num}
-          handleChangeOffset={(offset) => this.handleChangeOffset(offset)}
-          paginate={this.props.paginate}
-        />
+        <div className="p-item-list">
+          {items}
+          <Paginate page_num={this.state.page_num}
+                    margin_pages_displayed={this.props.paginate.margin_pages_displayed}
+                    page_range_displayed={this.props.paginate.page_range_displayed}
+                    handlePaginationClick={(data) => this.handlePaginationClick(data)} />
+        </div>
       </section>
     )
   }

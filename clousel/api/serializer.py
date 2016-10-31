@@ -53,17 +53,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ClothingSerializer(serializers.ModelSerializer):
-    category_meta = serializers.SerializerMethodField()
-    # orientation = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
-        fields = ('pk', 'image', 'orientation', 'category', 'category_meta', )
+        fields = ('pk', 'image', 'orientation', 'category', )
 
-    def get_category_meta(self, obj):
-        ancestors = obj.category.get_ancestors(
-            ascending=False, include_self=True)
-        return [node.name for node in ancestors]
+    def get_category(self, obj):
+        return repr(obj.category)
 
 
 class ItemSerializer(ClothingSerializer):
@@ -74,7 +71,7 @@ class ItemSerializer(ClothingSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'image', 'orientation', 'category', 'category_meta',
+        fields = ('pk', 'image', 'orientation', 'category',
                   'price', 'brand', 'exhibiter',
                   'delivery_days', 'delivery_service', 'delivery_source',
                   'rank', 'size', 'image_url', 'page_url', 'details',
@@ -99,7 +96,7 @@ class UserItemSerializer(ClothingSerializer):
 
     class Meta:
         model = UserItem
-        fields = ('pk', 'owner', 'image', 'orientation', 'category', 'category_meta',
+        fields = ('pk', 'owner', 'image', 'orientation', 'category',
                   'has_bought', 'created', 'updated', )
         read_only_fields = ('owner', 'created', 'updated', )
 

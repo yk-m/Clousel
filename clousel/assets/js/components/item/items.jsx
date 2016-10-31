@@ -6,20 +6,14 @@ import Item from './item'
 export default class Items extends React.Component {
 
   render() {
-    const item_separator = " > "
     let itemNodes = this.props.data.map( (item) => {
-      let category = item.category_meta.join(item_separator)
       return (
-        <Item
-          key={item.pk}
-          image={item.image} orientation={item.orientation}
-          category={category} price={item.price}
-        />
+        <Item key={item.pk} item={item} />
       )
     })
     return (
       <div className="p-items">
-        {itemNodes}
+        { itemNodes }
       </div>
     )
   }

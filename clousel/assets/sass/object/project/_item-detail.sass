@@ -1,0 +1,25 @@
+.p-item-detail
+    +container
+    +clearfix
+
+    $span: calc_modal_closebutton_height() + 2rem
+    margin-top: $span
+    margin-bottom: $span
+
+.p-item-detail__image
+    +span(6 of 12)
+
+.p-item-detail__text
+    +span(6 of 12 last)
+
+    caption
+        display: none
+
+    tr
+        border-bottom: 1px solid $light-gray
+
+    th, td
+        padding: $half-gap
+    th
+        width: span(1 of 5)
+        text-align: left
