@@ -23098,11 +23098,11 @@
 
 	var _items2 = _interopRequireDefault(_items);
 
-	var _searchFilters = __webpack_require__(201);
+	var _searchFilters = __webpack_require__(202);
 
 	var _searchFilters2 = _interopRequireDefault(_searchFilters);
 
-	var _searchOrdering = __webpack_require__(203);
+	var _searchOrdering = __webpack_require__(204);
 
 	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
 
@@ -25044,7 +25044,11 @@
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _itemDetail = __webpack_require__(200);
+	var _modal = __webpack_require__(200);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	var _itemDetail = __webpack_require__(201);
 
 	var _itemDetail2 = _interopRequireDefault(_itemDetail);
 
@@ -25065,26 +25069,37 @@
 	    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
 	    _this.state = {
-	      is_hidden_details: true
+	      is_hidden_details: true,
+	      is_liked: _this.props.item.is_liked === "true",
+	      is_purchased: _this.props.item.is_purchased === "true"
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Item, [{
-	    key: 'onClickOpen',
-	    value: function onClickOpen(e) {
+	    key: 'onClickItemImage',
+	    value: function onClickItemImage(e) {
 	      e.preventDefault();
 
 	      document.body.classList.add("u-overflow-hidden");
 	      this.setState({ is_hidden_details: false });
 	    }
 	  }, {
-	    key: 'onClickClose',
-	    value: function onClickClose(e) {
-	      e.preventDefault();
-
-	      document.body.classList.remove("u-overflow-hidden");
+	    key: 'onModalClose',
+	    value: function onModalClose() {
 	      this.setState({ is_hidden_details: true });
+	    }
+	  }, {
+	    key: 'onClickLikeButton',
+	    value: function onClickLikeButton(e) {
+	      e.preventDefault();
+	      this.setState({ is_liked: !this.state.is_liked });
+	    }
+	  }, {
+	    key: 'onClickPurchaseButton',
+	    value: function onClickPurchaseButton(e) {
+	      e.preventDefault();
+	      this.setState({ is_purchased: !this.state.is_purchased });
 	    }
 	  }, {
 	    key: 'render',
@@ -25093,13 +25108,19 @@
 
 	      var image_class = "p-image ";
 	      if (this.props.item.orientation !== "square") image_class += "p-image--" + this.props.item.orientation;
+
+	      var like_class = "p-item__like ";
+	      if (this.state.is_liked) like_class += "p-item__like--is_liked";
+	      var purchase_class = "p-item__purchase ";
+	      if (this.state.is_purchased) purchase_class += "p-item__like--is_purchased";
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'p-item' },
 	        _react2.default.createElement(
 	          'a',
 	          { href: '#', onClick: function onClick(e) {
-	              return _this2.onClickOpen(e);
+	              return _this2.onClickItemImage(e);
 	            } },
 	          _react2.default.createElement(
 	            'div',
@@ -25109,51 +25130,39 @@
 	              { className: 'p-image-box' },
 	              _react2.default.createElement('img', { className: image_class, src: this.props.item.image })
 	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'p-item__caption' },
-	            _react2.default.createElement(
-	              'p',
-	              { className: 'p-item__price' },
-	              '\xA5',
-	              this.props.item.price
-	            ),
-	            _react2.default.createElement(
-	              'dl',
-	              null,
-	              _react2.default.createElement(
-	                'dt',
-	                null,
-	                'category'
-	              ),
-	              _react2.default.createElement(
-	                'dd',
-	                null,
-	                this.props.item.category
-	              )
-	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          _reactAddonsCssTransitionGroup2.default,
-	          { transitionName: 'fade',
-	            transitionEnterTimeout: 200,
-	            transitionLeaveTimeout: 200 },
-	          this.state.is_hidden_details ? null : _react2.default.createElement(
-	            'div',
-	            { className: 'c-modal' },
-	            _react2.default.createElement('a', { className: 'c-modal__close', onClick: function onClick(e) {
-	                return _this2.onClickClose(e);
-	              } }),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'c-modal__container', onClick: function onClick(e) {
-	                  return _this2.onClickClose(e);
-	                } },
-	              _react2.default.createElement(_itemDetail2.default, { item: this.props.item })
-	            )
+	          'ul',
+	          { className: 'p-item__caption' },
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'p-item__price' },
+	            '\xA5',
+	            this.props.item.price
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: like_class },
+	            _react2.default.createElement('a', { href: '#', onClick: function onClick(e) {
+	                return _this2.onClickLikeButton(e);
+	              }, title: 'like' })
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: purchase_class },
+	            _react2.default.createElement('a', { href: '#', onClick: function onClick(e) {
+	                return _this2.onClickPurchaseButton(e);
+	              }, title: 'purchase' })
 	          )
+	        ),
+	        _react2.default.createElement(
+	          _modal2.default,
+	          { is_hidden_modal: this.state.is_hidden_details,
+	            onClickCloseButton: function onClickCloseButton() {
+	              return _this2.onModalClose();
+	            } },
+	          _react2.default.createElement(_itemDetail2.default, { item: this.props.item })
 	        )
 	      );
 	    }
@@ -25171,6 +25180,90 @@
 
 /***/ },
 /* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
+
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Modal = function (_React$Component) {
+	  _inherits(Modal, _React$Component);
+
+	  function Modal() {
+	    _classCallCheck(this, Modal);
+
+	    return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).apply(this, arguments));
+	  }
+
+	  _createClass(Modal, [{
+	    key: 'onClickCloseButton',
+	    value: function onClickCloseButton(e) {
+	      e.preventDefault();
+	      this.props.onClickCloseButton();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      if (this.props.is_hidden_modal) document.body.classList.remove("u-overflow-hidden");else document.body.classList.add("u-overflow-hidden");
+
+	      return _react2.default.createElement(
+	        _reactAddonsCssTransitionGroup2.default,
+	        { transitionName: 'fade',
+	          transitionEnterTimeout: 200,
+	          transitionLeaveTimeout: 200 },
+	        this.props.is_hidden_modal ? null : _react2.default.createElement(
+	          'div',
+	          { className: 'c-modal' },
+	          _react2.default.createElement('a', { className: 'c-modal__close', onClick: function onClick(e) {
+	              return _this2.onClickCloseButton(e);
+	            } }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'c-modal__container', onClick: function onClick(e) {
+	                return _this2.onClickCloseButton(e);
+	              } },
+	            this.props.children
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Modal;
+	}(_react2.default.Component);
+
+	exports.default = Modal;
+
+
+	Modal.propTypes = {
+	  is_hidden_modal: _react2.default.PropTypes.bool.isRequired,
+	  onClickCloseButton: _react2.default.PropTypes.func
+	};
+
+/***/ },
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25205,7 +25298,8 @@
 	  _createClass(ItemDetail, [{
 	    key: "render",
 	    value: function render() {
-	      var details = [];
+	      var details = [],
+	          i = 0;
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
@@ -25216,7 +25310,7 @@
 
 	          details.push(_react2.default.createElement(
 	            "p",
-	            null,
+	            { key: ++i },
 	            line
 	          ));
 	        }
@@ -25401,7 +25495,7 @@
 	};
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25416,7 +25510,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _select = __webpack_require__(202);
+	var _select = __webpack_require__(203);
 
 	var _select2 = _interopRequireDefault(_select);
 
@@ -25615,7 +25709,7 @@
 	};
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25695,7 +25789,7 @@
 	};
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25710,7 +25804,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _select = __webpack_require__(202);
+	var _select = __webpack_require__(203);
 
 	var _select2 = _interopRequireDefault(_select);
 

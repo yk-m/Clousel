@@ -21,8 +21,55 @@
     height: auto
 
 .p-item__caption
-    dt
-        color: $accent-color
+    +clearfix
+    padding: $half-gap
+    list-style-type: none
+
+    li
+        margin-left: $horizontal-span/2
+
+    li:first-child
+        margin-left: 0
+
+.p-item__title,
+.p-item__price
+    float: left
+    width: span(2 of 4)
+    text-align: left
+
+$item-action-button-size: 2rem
+
+.p-item__like,
+.p-item__purchase,
+.p-item__search
+    float: right
+    width: $item-action-button-size
+    max-width: span(1 of 4)
+
+.p-item__like
+    a
+        +block-icon($icon-item-like, $item-action-button-size)
+
+.p-item__search
+    a
+        +block-icon($icon-item-search, $item-action-button-size)
+
+.p-item__purchase
+    a
+        +block-icon($icon-item-purchase, $item-action-button-size)
+
+.p-item__like,
+.p-item__purchase,
+.p-item__search
+    a
+        &:after
+            color: $gray
+
+.p-item__like--is_liked,
+.p-item__like--is_purchased
+    a
+        &:after
+            color: $accent-color
 
 .p-items--state_loading,
 .p-items--state_error
@@ -42,7 +89,7 @@
     z-index: 101
     margin: $horizontal-span auto 0
 
-    +block_icon($icon_loading, $icon-size)
+    +block_icon($icon-item-loading, $icon-size)
         color: $accent-color
 
 .p-items--state_error p

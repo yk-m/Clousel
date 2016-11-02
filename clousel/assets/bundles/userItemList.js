@@ -56,7 +56,7 @@
 
 	__webpack_require__(173);
 
-	var _userItemListBuilder = __webpack_require__(204);
+	var _userItemListBuilder = __webpack_require__(205);
 
 	var _userItemListBuilder2 = _interopRequireDefault(_userItemListBuilder);
 
@@ -23879,7 +23879,8 @@
 /* 201 */,
 /* 202 */,
 /* 203 */,
-/* 204 */
+/* 204 */,
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23902,7 +23903,7 @@
 
 	var _listBuilder2 = _interopRequireDefault(_listBuilder);
 
-	var _userItemList = __webpack_require__(205);
+	var _userItemList = __webpack_require__(206);
 
 	var _userItemList2 = _interopRequireDefault(_userItemList);
 
@@ -23990,7 +23991,7 @@
 	};
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24017,7 +24018,7 @@
 
 	var _loader2 = _interopRequireDefault(_loader);
 
-	var _userItems = __webpack_require__(206);
+	var _userItems = __webpack_require__(207);
 
 	var _userItems2 = _interopRequireDefault(_userItems);
 
@@ -24090,7 +24091,7 @@
 	};
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24105,7 +24106,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _userItem = __webpack_require__(207);
+	var _userItem = __webpack_require__(208);
 
 	var _userItem2 = _interopRequireDefault(_userItem);
 
@@ -24130,18 +24131,16 @@
 	    key: 'render',
 	    value: function render() {
 	      var item_separator = " > ";
-	      var itemNodes = this.props.data.map(function (item) {
-	        var category = item.category_meta.join(item_separator);
+	      var item_nodes = this.props.data.map(function (item) {
 	        return _react2.default.createElement(_userItem2.default, {
 	          key: item.pk,
-	          image: item.image, orientation: item.orientation,
-	          category: category
+	          item: item
 	        });
 	      });
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'p-items' },
-	        itemNodes
+	        item_nodes
 	      );
 	    }
 	  }]);
@@ -24157,7 +24156,7 @@
 	};
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24183,50 +24182,69 @@
 	var UserItem = function (_React$Component) {
 	  _inherits(UserItem, _React$Component);
 
-	  function UserItem() {
+	  function UserItem(props) {
 	    _classCallCheck(this, UserItem);
 
-	    return _possibleConstructorReturn(this, (UserItem.__proto__ || Object.getPrototypeOf(UserItem)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (UserItem.__proto__ || Object.getPrototypeOf(UserItem)).call(this, props));
+
+	    _this.state = {
+	      is_purchased: _this.props.item.has_bought === "true"
+	    };
+	    return _this;
 	  }
 
 	  _createClass(UserItem, [{
+	    key: "onClickPurchaseButton",
+	    value: function onClickPurchaseButton(e) {
+	      e.preventDefault();
+	      this.setState({ is_purchased: !this.state.is_purchased });
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this2 = this;
+
 	      var image_class = "p-image ";
-	      if (this.props.orientation !== "square") image_class += "p-image--" + this.props.orientation;
+	      if (this.props.orientation !== "square") image_class += "p-image--" + this.props.item.orientation;
+
+	      var purchase_class = "p-item__purchase ";
+	      if (this.state.is_purchased) purchase_class += "p-item__like--is_purchased";
 
 	      return _react2.default.createElement(
-	        "a",
-	        { className: "p-item", href: "#" },
+	        "div",
+	        { className: "p-item" },
 	        _react2.default.createElement(
-	          "div",
-	          null,
+	          "a",
+	          { href: "#" },
 	          _react2.default.createElement(
 	            "div",
 	            { className: "p-item__image" },
 	            _react2.default.createElement(
 	              "div",
 	              { className: "p-image-box" },
-	              _react2.default.createElement("img", { className: image_class, src: this.props.image })
+	              _react2.default.createElement("img", { className: image_class, src: this.props.item.image })
 	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "ul",
+	          { className: "p-item__caption" },
+	          _react2.default.createElement(
+	            "li",
+	            { className: "p-item__title" },
+	            this.props.item.title
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { className: "p-item__caption" },
-	            _react2.default.createElement(
-	              "dl",
-	              null,
-	              _react2.default.createElement(
-	                "dt",
-	                null,
-	                "category"
-	              ),
-	              _react2.default.createElement(
-	                "dd",
-	                null,
-	                this.props.category
-	              )
-	            )
+	            "li",
+	            { className: "p-item__search" },
+	            _react2.default.createElement("a", { href: "#", title: "Search" })
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: purchase_class },
+	            _react2.default.createElement("a", { href: "#", onClick: function onClick(e) {
+	                return _this2.onClickPurchaseButton(e);
+	              }, title: "purchase" })
 	          )
 	        )
 	      );
@@ -24240,9 +24258,7 @@
 
 
 	UserItem.propTypes = {
-	  image: _react2.default.PropTypes.string.isRequired,
-	  category: _react2.default.PropTypes.string.isRequired,
-	  orientation: _react2.default.PropTypes.string.isRequired
+	  item: _react2.default.PropTypes.object.isRequired
 	};
 
 /***/ }

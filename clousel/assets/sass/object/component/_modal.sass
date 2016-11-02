@@ -12,6 +12,7 @@ $modal-closebutton-top: 2.5rem !default
 $modal-closebutton-right: 2.5rem !default
 $modal-closebutton-size: 5rem !default
 $modal-closebutton-color: #000 !default
+$modal-closebutton-content: "x" !default
 
 .c-modal
     position: fixed
@@ -32,7 +33,7 @@ $modal-closebutton-color: #000 !default
     text-decoration: none
     cursor: pointer
 
-    +icon($icon_close, $modal-closebutton-size)
+    +icon($modal-closebutton-content, $modal-closebutton-size)
         color: $modal-closebutton-color
 
 
