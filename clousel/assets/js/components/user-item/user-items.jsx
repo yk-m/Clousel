@@ -7,19 +7,17 @@ export default class UserItems extends React.Component {
 
   render() {
     const item_separator = " > "
-    let itemNodes = this.props.data.map( (item) => {
-      let category = item.category_meta.join(item_separator)
+    let item_nodes = this.props.data.map( (item) => {
       return (
         <UserItem
           key={item.pk}
-          image={item.image} orientation={item.orientation}
-          category={category}
+          item={item}
         />
       )
     })
     return (
       <div className="p-items">
-        {itemNodes}
+        {item_nodes}
       </div>
     )
   }

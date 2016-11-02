@@ -112,68 +112,46 @@ button, *[type=submit], *[type=reset] {
 /*  Settings
  *   ---------------------------------------- */
 /* ----- Font Family ----- */
-/*!
- *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
- *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License) */
-/* FONT PATH
- * -------------------------- */
+/* ----- Size ----- */
+/* ----- Icons ----- */
 /* FONT PATH
  * -------------------------- */
 @font-face {
-  font-family: "ElegantIcons";
-  src: url("../fonts/ElegantIcons.eot");
-  src: url("../fonts/ElegantIcons.eot?#iefix") format("embedded-opentype"), url("../fonts/ElegantIcons.woff") format("woff"), url("../fonts/ElegantIcons.ttf") format("truetype"), url("../fonts/ElegantIcons.svg#fontawesomeregular") format("svg");
+  font-family: "Pe-icon-7-stroke";
+  src: url("../fonts/Pe-icon-7-stroke/Pe-icon-7-stroke.eot?d7yf1v");
+  src: url("../fonts/Pe-icon-7-stroke/Pe-icon-7-stroke.eot?#iefixd7yf1v") format("embedded-opentype"), url("../fonts/Pe-icon-7-stroke/Pe-icon-7-stroke.woff?d7yf1v") format("woff"), url("../fonts/Pe-icon-7-stroke/Pe-icon-7-stroke.ttf?d7yf1v") format("truetype"), url("../fonts/Pe-icon-7-stroke/Pe-icon-7-stroke.svg?d7yf1v#Pe-icon-7-stroke") format("svg");
   font-weight: normal;
   font-style: normal;
 }
-@-webkit-keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-@keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
-}
-/* ----- Size ----- */
+/*  Component  */
+/*  Project  */
 /*  Definition
  *   ---------------------------------------- */
 /* ----- Root ----- */
-/* line 33, ../sass/foundation/_typography.sass */
+/* line 45, ../sass/foundation/_typography.sass */
 html {
   font-size: 62.5%;
 }
 
 /* ----- Base ----- */
-/* line 37, ../sass/foundation/_typography.sass */
+/* line 49, ../sass/foundation/_typography.sass */
 body, input, button, select {
   font: normal 1.3rem/1.5em "Quicksand", sans-serif;
 }
 
 /* ----- Headings ----- */
-/* line 41, ../sass/foundation/_typography.sass */
+/* line 53, ../sass/foundation/_typography.sass */
 h1, h2 {
   font-family: "Quicksand", sans-serif;
   font-weight: normal;
 }
 
-/* line 45, ../sass/foundation/_typography.sass */
+/* line 57, ../sass/foundation/_typography.sass */
 th {
   font-weight: normal;
 }
 
-/* line 48, ../sass/foundation/_typography.sass */
+/* line 60, ../sass/foundation/_typography.sass */
 header nav {
   font-family: "Quicksand", sans-serif;
 }
@@ -310,14 +288,14 @@ header nav {
   text-align: right;
   line-height: 24px;
   font-size: 12px;
-  font-family: "ElegantIcons", sans-serif;
+  font-family: "Pe-icon-7-stroke", sans-serif;
   color: #C64B8F;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5ZjdmNyIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2Y5ZjdmNyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y5ZjdmNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(249, 247, 247, 0)), color-stop(50%, #f9f7f7), color-stop(100%, #f9f7f7));
   background: -moz-linear-gradient(left, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
   background: -webkit-linear-gradient(left, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
   background: linear-gradient(to right, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
-  content: "7";
+  content: "";
 }
 /* line 45, ../sass/object/component/_form.sass */
 .c-select select {
@@ -341,9 +319,29 @@ header nav {
   display: none;
 }
 
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
 /*  MODAL WINDOW
  */
-/* line 16, ../sass/object/component/_modal.sass */
+/* line 17, ../sass/object/component/_modal.sass */
 .c-modal {
   position: fixed;
   top: 0px;
@@ -354,7 +352,7 @@ header nav {
   background-color: #F9F7F7;
 }
 
-/* line 27, ../sass/object/component/_modal.sass */
+/* line 28, ../sass/object/component/_modal.sass */
 .c-modal__close {
   display: block;
   position: absolute;
@@ -368,12 +366,12 @@ header nav {
   font-style: normal;
   line-height: 5rem;
   font-size: 5rem;
-  font-family: "ElegantIcons", sans-serif;
-  content: "M";
+  font-family: "Pe-icon-7-stroke", sans-serif;
+  content: "";
   color: #C64B8F;
 }
 
-/* line 39, ../sass/object/component/_modal.sass */
+/* line 40, ../sass/object/component/_modal.sass */
 .c-modal__container {
   overflow: auto;
   width: 100%;
@@ -479,7 +477,7 @@ header nav {
 /* line 81, ../sass/object/project/slick/_theme.sass */
 .p-carousel__contents .slick-prev:before,
 .p-carousel__contents .slick-next:before {
-  font-family: "ElegantIcons", sans-serif;
+  font-family: "Pe-icon-7-stroke", sans-serif;
   font-size: 20px;
   line-height: 1;
   color: #89838E;
@@ -498,11 +496,11 @@ header nav {
 }
 /* line 97, ../sass/object/project/slick/_theme.sass */
 .p-carousel__contents .slick-prev:before {
-  content: "<";
+  content: "";
 }
 /* line 100, ../sass/object/project/slick/_theme.sass */
 [dir="rtl"] .p-carousel__contents .slick-prev:before {
-  content: "=";
+  content: "";
 }
 /* line 103, ../sass/object/project/slick/_theme.sass */
 .p-carousel__contents .slick-next {
@@ -515,11 +513,11 @@ header nav {
 }
 /* line 110, ../sass/object/project/slick/_theme.sass */
 .p-carousel__contents .slick-next:before {
-  content: "=";
+  content: "";
 }
 /* line 113, ../sass/object/project/slick/_theme.sass */
 [dir="rtl"] .p-carousel__contents .slick-next:before {
-  content: "<";
+  content: "";
 }
 /* line 118, ../sass/object/project/slick/_theme.sass */
 .p-carousel__contents .slick-dotted.slick-slider {
@@ -573,10 +571,10 @@ header nav {
   position: absolute;
   top: 0;
   left: 0;
-  content: "^";
+  content: "";
   width: 20px;
   height: 20px;
-  font-family: "ElegantIcons", sans-serif;
+  font-family: "Pe-icon-7-stroke", sans-serif;
   font-size: 20px;
   line-height: 20px;
   text-align: center;
@@ -826,12 +824,98 @@ header nav {
   content: "";
 }
 
-/* line 24, ../sass/object/project/_item.sass */
-.p-item__caption dt {
+/* line 23, ../sass/object/project/_item.sass */
+.p-item__caption {
+  overflow: hidden;
+  *zoom: 1;
+  padding: 6px 10px;
+  list-style-type: none;
+}
+/* line 28, ../sass/object/project/_item.sass */
+.p-item__caption li {
+  margin-left: 10px;
+}
+/* line 31, ../sass/object/project/_item.sass */
+.p-item__caption li:first-child {
+  margin-left: 0;
+}
+
+/* line 34, ../sass/object/project/_item.sass */
+.p-item__title,
+.p-item__price {
+  float: left;
+  width: 47.36842%;
+  text-align: left;
+}
+
+/* line 42, ../sass/object/project/_item.sass */
+.p-item__like,
+.p-item__purchase,
+.p-item__search {
+  float: right;
+  width: 2rem;
+  max-width: 21.05263%;
+}
+
+/* line 50, ../sass/object/project/_item.sass */
+.p-item__like a {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+}
+/* line 2, ../sass/object/component/_icon.sass */
+.p-item__like a:after {
+  font-style: normal;
+  line-height: 2rem;
+  font-size: 2rem;
+  font-family: "Pe-icon-7-stroke", sans-serif;
+  content: "";
+}
+
+/* line 54, ../sass/object/project/_item.sass */
+.p-item__search a {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+}
+/* line 2, ../sass/object/component/_icon.sass */
+.p-item__search a:after {
+  font-style: normal;
+  line-height: 2rem;
+  font-size: 2rem;
+  font-family: "Pe-icon-7-stroke", sans-serif;
+  content: "";
+}
+
+/* line 58, ../sass/object/project/_item.sass */
+.p-item__purchase a {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+}
+/* line 2, ../sass/object/component/_icon.sass */
+.p-item__purchase a:after {
+  font-style: normal;
+  line-height: 2rem;
+  font-size: 2rem;
+  font-family: "Pe-icon-7-stroke", sans-serif;
+  content: "";
+}
+
+/* line 65, ../sass/object/project/_item.sass */
+.p-item__like a:after,
+.p-item__purchase a:after,
+.p-item__search a:after {
+  color: #89838E;
+}
+
+/* line 71, ../sass/object/project/_item.sass */
+.p-item__like--is_liked a:after,
+.p-item__like--is_purchased a:after {
   color: #C64B8F;
 }
 
-/* line 27, ../sass/object/project/_item.sass */
+/* line 74, ../sass/object/project/_item.sass */
 .p-items--state_loading,
 .p-items--state_error {
   position: absolute;
@@ -843,10 +927,10 @@ header nav {
   background: #F9F7F7;
 }
 
-/* line 38, ../sass/object/project/_item.sass */
+/* line 85, ../sass/object/project/_item.sass */
 .p-items--state_loading i {
-  -webkit-animation: fa-spin 2s infinite cubic-bezier(0.645, 0.045, 0.355, 1.000);
-  animation: fa-spin 2s infinite cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  -webkit-animation: spin 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  animation: spin 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
   z-index: 101;
   margin: 20px auto 0;
   display: block;
@@ -858,12 +942,12 @@ header nav {
   font-style: normal;
   line-height: 5rem;
   font-size: 5rem;
-  font-family: "ElegantIcons", sans-serif;
-  content: "";
+  font-family: "Pe-icon-7-stroke", sans-serif;
+  content: "";
   color: #C64B8F;
 }
 
-/* line 48, ../sass/object/project/_item.sass */
+/* line 95, ../sass/object/project/_item.sass */
 .p-items--state_error p {
   font-size: 2rem;
 }

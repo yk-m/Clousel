@@ -4,9 +4,9 @@ import React from 'react'
 export default class ItemDetail extends React.Component {
 
   render() {
-    let details = []
+    let details = [], i = 0
     for(var line of this.props.item.details.split("\n"))
-      details.push(<p>{line}</p>)
+      details.push(<p key={++i}>{line}</p>)
 
     return (
       <div className="p-item-detail">
