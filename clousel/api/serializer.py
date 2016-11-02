@@ -96,7 +96,7 @@ class UserItemSerializer(ClothingSerializer):
 
     class Meta:
         model = UserItem
-        fields = ('pk', 'owner', 'image', 'orientation', 'category',
+        fields = ('pk', 'owner', 'title', 'image', 'orientation', 'category',
                   'has_bought', 'created', 'updated', )
         read_only_fields = ('owner', 'created', 'updated', )
 

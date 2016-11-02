@@ -1,7 +1,7 @@
-
 from django.conf import settings
 from django.db import models
 from django.dispatch.dispatcher import receiver
+from django.utils.translation import ugettext_lazy as _
 
 import clothing.signals
 from clothing.models import Clothing
@@ -12,6 +12,7 @@ class UserItem(Clothing):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, default=_("No title"))
     has_bought = models.BooleanField()
 
     class Meta:
