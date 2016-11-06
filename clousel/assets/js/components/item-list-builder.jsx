@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Router from 'react-router'
 import Request from 'superagent'
 
 import Loader from './loader'
@@ -142,11 +143,11 @@ export default class ItemListBuilder extends ListBuilder {
         </ReactCSSTransitionGroup>
         <div className="p-item-list">
           {items}
-          <Paginate page_num={this.state.page_num}
-                    margin_pages_displayed={this.props.paginate.margin_pages_displayed}
-                    page_range_displayed={this.props.paginate.page_range_displayed}
-                    handlePaginationClick={(data) => this.handlePaginationClick(data)} />
         </div>
+        <Paginate page_num={this.state.page_num}
+                  margin_pages_displayed={this.props.paginate.margin_pages_displayed}
+                  page_range_displayed={this.props.paginate.page_range_displayed}
+                  handlePaginationClick={(data) => this.handlePaginationClick(data)} />
       </section>
     )
   }

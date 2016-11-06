@@ -1,5 +1,8 @@
 import React from 'react'
 
+import Modal from '../modal'
+import UserItemDetail from './user-item-detail'
+
 
 export default class UserItem extends React.Component {
 
@@ -7,8 +10,22 @@ export default class UserItem extends React.Component {
     super(props)
 
     this.state = {
+      is_hidden_details: true,
       is_purchased: this.props.item.has_bought === "true"
     }
+  }
+
+  onClickImage(e) {
+    e.preventDefault()
+    this.openModal()
+  }
+
+  openModal() {
+    this.setState({is_hidden_details: false})
+  }
+
+  closeModal() {
+    this.setState({is_hidden_details: true})
   }
 
   onClickPurchaseButton(e) {
@@ -16,21 +33,25 @@ export default class UserItem extends React.Component {
     this.setState({is_purchased: !this.state.is_purchased})
   }
 
+  get image_class() {
+    if (this.props.orientation === "square")
+      return "p-image"
+    return "p-image--" + this.props.item.orientation
+  }
+
+  get purchase_class() {
+    if (!this.state.is_purchased)
+      return "p-item__purchase"
+    return "p-item__like--is_purchased"
+  }
+
   render() {
-    let image_class = "p-image "
-    if (this.props.orientation !== "square")
-      image_class += "p-image--" + this.props.item.orientation
-
-    let purchase_class = "p-item__purchase "
-    if (this.state.is_purchased)
-      purchase_class += "p-item__like--is_purchased"
-
     return (
       <div className="p-item">
-        <a href="#">
+        <a href="#" onClick={(e) => this.onClickImage(e)}>
           <div className="p-item__image">
             <div className="p-image-box">
-              <img className={image_class} src={this.props.item.image} />
+              <img className={this.image_class} src={this.props.item.image} />
             </div>
           </div>
         </a>
@@ -38,13 +59,14 @@ export default class UserItem extends React.Component {
           <li className="p-item__title">
             {this.props.item.title}
           </li>
-          <li className="p-item__search">
-            <a href="#" title="Search"></a>
-          </li>
-          <li className={purchase_class}>
+          <li className={this.purchase_class}>
             <a href="#" onClick={(e) => this.onClickPurchaseButton(e)} title="purchase"></a>
           </li>
         </ul>
+        <Modal is_hidden_modal={this.state.is_hidden_details}
+               onClickCloseButton={() => this.closeModal()}>
+          <UserItemDetail item={this.props.item}/>
+        </Modal>
       </div>
     )
   }

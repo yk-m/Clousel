@@ -1,20 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import 'superagent-django-csrf'
 
-import ListBuilder from './components/user-item-list-builder'
+import ItemList from './components/user-item/user-item-list'
 
 
 let resultContainer = document.getElementById('js-result')
 let url = resultContainer.getAttribute('data-request-url')
 
-ReactDOM.render(
-  <ListBuilder
-    items_fetch_url={url}
-    paginate={{
-      per_page: 12,
-      margin_pages_displayed: 1,
-      page_range_displayed: 3
-    }}
-  />, resultContainer
-)
+ReactDOM.render((
+  <Router history={hashHistory}>
+    <Route path="/" component={() => <ItemList items_fetch_url={url} />}>
+    </Route>
+  </Router>
+), resultContainer)
