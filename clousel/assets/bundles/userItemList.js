@@ -30021,9 +30021,7 @@
 	        { className: 'p-item' },
 	        _react2.default.createElement(
 	          'a',
-	          { href: '#', onClick: function onClick(e) {
-	              return _this2.onClickImage(e);
-	            } },
+	          { href: "/wardrobe/" + this.props.item.pk },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'p-item__image' },

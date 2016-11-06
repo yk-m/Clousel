@@ -48,7 +48,7 @@ export default class UserItem extends React.Component {
   render() {
     return (
       <div className="p-item">
-        <a href="#" onClick={(e) => this.onClickImage(e)}>
+        <a href={"/wardrobe/" + this.props.item.pk}>
           <div className="p-item__image">
             <div className="p-image-box">
               <img className={this.image_class} src={this.props.item.image} />

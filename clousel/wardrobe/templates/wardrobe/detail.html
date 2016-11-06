@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}List{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "header.html" with compact=True %}
+{% endblock header %}
+
+{% block content %}
+<div class="p-item-detail">
+  <div class="p-item-detail__image">
+    <img src="{{ user_item.image.url }}" />
+  </div>
+  <div class="p-item-detail__content">
+    <table class="p-item-detail__table">
+      <caption>Item Details</caption>
+      <tbody>
+        <tr>
+          <th>タイトル</th>
+          <td>{{ user_item.title }}</td>
+        </tr>
+        <tr>
+          <th>カテゴリー</th>
+          <td>{{ user_item.category|stringformat:'r' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><a href="{% url 'shop:similar' image_id=user_item.pk %}" title="この服に似ているアイテムを探す">
+        この服に似ているアイテムを探す
+      </a></li>
+      <li><a href="{% url 'shop:suitable' image_id=user_item.pk %}" title="この服に似合うアイテムを探す">
+        この服に似合うアイテムを探す
+      </a></li>
+    </ul>
+  </div>
+</div>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}
