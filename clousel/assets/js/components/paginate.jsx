@@ -12,6 +12,7 @@ export default class Paginate extends React.Component {
                        breakLabel={"..."}
                        breakClassName={"c-pagination__child--break-me"}
                        pageNum={this.props.page_num}
+                       forceSelected={this.props.current_page}
                        marginPagesDisplayed={this.props.margin_pages_displayed}
                        pageRangeDisplayed={this.props.page_range_displayed}
                        clickCallback={this.props.handlePaginationClick}
@@ -28,6 +29,7 @@ export default class Paginate extends React.Component {
 
 Paginate.propTypes = {
   page_num: React.PropTypes.number.isRequired,
+  current_page: React.PropTypes.number.isRequired,
   margin_pages_displayed: React.PropTypes.number.isRequired,
   page_range_displayed: React.PropTypes.number.isRequired,
   handlePaginationClick: React.PropTypes.func.isRequired

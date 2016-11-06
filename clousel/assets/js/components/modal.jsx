@@ -23,9 +23,13 @@ export default class Modal extends React.Component {
           this.props.is_hidden_modal
           ? null
           : <div className="c-modal">
-              <a className="c-modal__close" onClick={(e) => this.onClickCloseButton(e)}></a>
               <div className="c-modal__container" onClick={(e) => this.onClickCloseButton(e)}>
-                {this.props.children}
+                <div className="c-modal__close">
+                  <a onClick={(e) => this.onClickCloseButton(e)}></a>
+                </div>
+                <div className="c-modal__body">
+                  {this.props.children}
+                </div>
               </div>
             </div>
         }
