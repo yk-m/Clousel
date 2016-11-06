@@ -1,8 +1,6 @@
 import deepEqual from 'deep-equal'
 import React from 'react'
-// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Request from 'superagent'
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router'
 
 import fetch from '../fetch'
 import Loader from '../loader'
@@ -15,7 +13,7 @@ import Items from './items'
 class ItemList extends ListBuilder {
 
   get current_page() {
-    return this.props.location.query.page - 1
+    return (this.props.location.query.page || 1)
   }
 
   get filters() {
@@ -55,7 +53,7 @@ class ItemList extends ListBuilder {
         })
       },
       (res) => {
-        console.error(this.props.items_fetch_url, res.status, err.toString())
+        console.error(this.props.items_fetch_url, res.status, res.text)
       }
     )
   }
