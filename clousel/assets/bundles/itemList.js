@@ -54,9 +54,9 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	__webpack_require__(173);
+	__webpack_require__(228);
 
-	var _itemListBuilder = __webpack_require__(179);
+	var _itemListBuilder = __webpack_require__(270);
 
 	var _itemListBuilder2 = _interopRequireDefault(_itemListBuilder);
 
@@ -21444,12 +21444,67 @@
 
 /***/ },
 /* 172 */,
-/* 173 */
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var request = __webpack_require__(174);
+	var request = __webpack_require__(229);
 
 	// patch superagent to attach CSRF-token to all requests
 	try {
@@ -21467,7 +21522,7 @@
 
 
 /***/ },
-/* 174 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21484,9 +21539,9 @@
 	  root = this;
 	}
 
-	var Emitter = __webpack_require__(175);
-	var requestBase = __webpack_require__(176);
-	var isObject = __webpack_require__(177);
+	var Emitter = __webpack_require__(230);
+	var requestBase = __webpack_require__(231);
+	var isObject = __webpack_require__(232);
 
 	/**
 	 * Noop.
@@ -21498,7 +21553,7 @@
 	 * Expose `request`.
 	 */
 
-	var request = module.exports = __webpack_require__(178).bind(null, Request);
+	var request = module.exports = __webpack_require__(233).bind(null, Request);
 
 	/**
 	 * Determine XHR.
@@ -22449,7 +22504,7 @@
 
 
 /***/ },
-/* 175 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22618,13 +22673,13 @@
 
 
 /***/ },
-/* 176 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(177);
+	var isObject = __webpack_require__(232);
 
 	/**
 	 * Clear previous timeout.
@@ -22996,7 +23051,7 @@
 
 
 /***/ },
-/* 177 */
+/* 232 */
 /***/ function(module, exports) {
 
 	/**
@@ -23015,7 +23070,7 @@
 
 
 /***/ },
-/* 178 */
+/* 233 */
 /***/ function(module, exports) {
 
 	// The node and browser modules expose versions of this with the
@@ -23053,275 +23108,14 @@
 
 
 /***/ },
-/* 179 */
+/* 234 */,
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
-
-	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-
-	var _superagent = __webpack_require__(174);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
-	var _loader = __webpack_require__(187);
-
-	var _loader2 = _interopRequireDefault(_loader);
-
-	var _paginate = __webpack_require__(188);
-
-	var _paginate2 = _interopRequireDefault(_paginate);
-
-	var _errorReporter = __webpack_require__(196);
-
-	var _errorReporter2 = _interopRequireDefault(_errorReporter);
-
-	var _listBuilder = __webpack_require__(197);
-
-	var _listBuilder2 = _interopRequireDefault(_listBuilder);
-
-	var _items = __webpack_require__(198);
-
-	var _items2 = _interopRequireDefault(_items);
-
-	var _searchFilters = __webpack_require__(202);
-
-	var _searchFilters2 = _interopRequireDefault(_searchFilters);
-
-	var _searchOrdering = __webpack_require__(204);
-
-	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ItemListBuilder = function (_ListBuilder) {
-	  _inherits(ItemListBuilder, _ListBuilder);
-
-	  function ItemListBuilder(props) {
-	    _classCallCheck(this, ItemListBuilder);
-
-	    var _this = _possibleConstructorReturn(this, (ItemListBuilder.__proto__ || Object.getPrototypeOf(ItemListBuilder)).call(this, props));
-
-	    _this.state = Object.assign(_this.state, {
-	      filters_are_hidden: true,
-	      categories: null,
-	      filters: _this.props.default_filters,
-	      ordering: _this.props.default_ordering
-	    });
-	    return _this;
-	  }
-
-	  _createClass(ItemListBuilder, [{
-	    key: 'fetchItems',
-	    value: function fetchItems() {
-	      var _this2 = this;
-
-	      var query = this.state.filters;
-	      query.ordering = this.state.ordering;
-	      query.limit = this.props.paginate.per_page;
-	      query.offset = this.state.offset;
-
-	      this.setStateOfLoading();
-
-	      this.fetch(this.props.items_fetch_url, query, function (res) {
-	        if (!res.body.results[0]) {
-	          _this2.setStateOfError("アイテムが見つかりませんでした．");
-	          return;
-	        }
-
-	        _this2.setState({
-	          data: res.body.results,
-	          offset: 0,
-	          page_num: Math.ceil(res.body.count / _this2.props.paginate.per_page),
-	          loading_is_hidden: true
-	        });
-	      }, function (res) {
-	        console.error(_this2.props.items_fetch_url, res.status, err.toString());
-	      });
-	    }
-	  }, {
-	    key: 'fetchCategories',
-	    value: function fetchCategories() {
-	      var _this3 = this;
-
-	      this.fetch(this.props.categories_fetch_url, {}, function (res) {
-	        _this3.setState({
-	          categories: _this3.formatCategories(res.body)
-	        });
-	      }, function (res) {
-	        console.error(_this3.props.items_fetch_url, res.status, res.text);
-	      });
-	    }
-	  }, {
-	    key: 'formatCategories',
-	    value: function formatCategories(categories) {
-	      var indent = "--- ";
-
-	      categories.unshift({ pk: "", name: "---------", level: 0 });
-	      return categories.map(function (category) {
-	        return {
-	          id: '' + category.pk,
-	          value: generateIndent(category.level) + category.name
-	        };
-	      });
-
-	      function generateIndent(level) {
-	        return Array(level + 1).join(indent);
-	      }
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      _get(ItemListBuilder.prototype.__proto__ || Object.getPrototypeOf(ItemListBuilder.prototype), 'componentDidMount', this).call(this);
-	      this.fetchCategories();
-	    }
-	  }, {
-	    key: 'handleChangeFilters',
-	    value: function handleChangeFilters(filters) {
-	      var _this4 = this;
-
-	      this.setState({ filters: filters }, function () {
-	        _this4.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleChangeOrdering',
-	    value: function handleChangeOrdering(ordering) {
-	      var _this5 = this;
-
-	      this.setState({ ordering: ordering }, function () {
-	        _this5.fetchItems();
-	      });
-	    }
-	  }, {
-	    key: 'handleFiltersToggleEvent',
-	    value: function handleFiltersToggleEvent() {
-	      this.setState({ filters_are_hidden: !this.state.filters_are_hidden });
-	    }
-	  }, {
-	    key: 'handlePaginationClick',
-	    value: function handlePaginationClick(data) {
-	      var offset = Math.ceil(data.selected * this.props.paginate.per_page);
-	      this.handleChangeOffset(offset);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this6 = this;
-
-	      var items = null;
-	      if (!this.state.loading_is_hidden) items = _react2.default.createElement(_loader2.default, null);else if (this.state.has_occurred_error) items = _react2.default.createElement(_errorReporter2.default, { message: this.state.error_message });else if (this.state.data !== null && this.state.data !== []) items = _react2.default.createElement(_items2.default, { data: this.state.data });
-
-	      return _react2.default.createElement(
-	        'section',
-	        { className: 'p-showcase' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'p-showcase__header' },
-	          _react2.default.createElement(
-	            'h2',
-	            { className: 'p-showcase__title' },
-	            'Search Results',
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'p-showcase__filters-opener', onClick: function onClick(e) {
-	                  return _this6.handleFiltersToggleEvent(e);
-	                } },
-	              '[option]'
-	            )
-	          ),
-	          _react2.default.createElement(_searchOrdering2.default, { handleOrderingChange: function handleOrderingChange(ordering) {
-	              return _this6.handleChangeOrdering(ordering);
-	            },
-	            'default': this.state.ordering })
-	        ),
-	        _react2.default.createElement(
-	          _reactAddonsCssTransitionGroup2.default,
-	          { transitionName: 'slide',
-	            transitionEnterTimeout: 500,
-	            transitionLeaveTimeout: 500 },
-	          this.state.filters_are_hidden ? null : _react2.default.createElement(_searchFilters2.default, { handleFiltersChange: function handleFiltersChange(filters) {
-	              return _this6.handleChangeFilters(filters);
-	            },
-	            categories: this.state.categories,
-	            defaults: this.state.filters })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'p-item-list' },
-	          items,
-	          _react2.default.createElement(_paginate2.default, { page_num: this.state.page_num,
-	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
-	            page_range_displayed: this.props.paginate.page_range_displayed,
-	            handlePaginationClick: function handlePaginationClick(data) {
-	              return _this6.handlePaginationClick(data);
-	            } })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return ItemListBuilder;
-	}(_listBuilder2.default);
-
-	exports.default = ItemListBuilder;
-
-
-	ItemListBuilder.propTypes = {
-	  items_fetch_url: _react2.default.PropTypes.string.isRequired,
-	  categories_fetch_url: _react2.default.PropTypes.string.isRequired,
-	  paginate: _react2.default.PropTypes.shape({
-	    per_page: _react2.default.PropTypes.number.isRequired,
-	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
-	    page_range_displayed: _react2.default.PropTypes.number.isRequired
-	  }),
-	  default_filters: _react2.default.PropTypes.shape({
-	    search: _react2.default.PropTypes.string,
-	    category: _react2.default.PropTypes.string,
-	    min_price: _react2.default.PropTypes.string,
-	    max_price: _react2.default.PropTypes.string
-	  }),
-	  default_ordering: _react2.default.PropTypes.string
-	};
-
-	ItemListBuilder.defaultProps = {
-	  default_filters: {
-	    search: "",
-	    category: "",
-	    min_price: "",
-	    max_price: ""
-	  },
-	  default_ordering: ""
-	};
+	module.exports = __webpack_require__(236);
 
 /***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(181);
-
-/***/ },
-/* 181 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23341,8 +23135,8 @@
 
 	var React = __webpack_require__(2);
 
-	var ReactTransitionGroup = __webpack_require__(182);
-	var ReactCSSTransitionGroupChild = __webpack_require__(184);
+	var ReactTransitionGroup = __webpack_require__(237);
+	var ReactCSSTransitionGroupChild = __webpack_require__(239);
 
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -23413,7 +23207,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 182 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23433,7 +23227,7 @@
 
 	var React = __webpack_require__(2);
 	var ReactInstanceMap = __webpack_require__(119);
-	var ReactTransitionChildMapping = __webpack_require__(183);
+	var ReactTransitionChildMapping = __webpack_require__(238);
 
 	var emptyFunction = __webpack_require__(12);
 
@@ -23665,7 +23459,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 183 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23774,7 +23568,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 184 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23793,8 +23587,8 @@
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(35);
 
-	var CSSCore = __webpack_require__(185);
-	var ReactTransitionEvents = __webpack_require__(186);
+	var CSSCore = __webpack_require__(240);
+	var ReactTransitionEvents = __webpack_require__(241);
 
 	var onlyChild = __webpack_require__(33);
 
@@ -23946,7 +23740,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 185 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -24073,7 +23867,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 186 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24151,7 +23945,9 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 187 */
+/* 242 */,
+/* 243 */,
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24200,7 +23996,7 @@
 	exports.default = Loader;
 
 /***/ },
-/* 188 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24215,7 +24011,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactPaginate = __webpack_require__(189);
+	var _reactPaginate = __webpack_require__(246);
 
 	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
 
@@ -24271,12 +24067,12 @@
 	};
 
 /***/ },
-/* 189 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(190);
+	var _PaginationBoxView = __webpack_require__(247);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -24286,7 +24082,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 190 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24301,19 +24097,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(191);
+	var _classnames = __webpack_require__(248);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(192);
+	var _reactAddonsCreateFragment = __webpack_require__(249);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(194);
+	var _PageView = __webpack_require__(251);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(195);
+	var _BreakView = __webpack_require__(252);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -24539,7 +24335,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 191 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24593,13 +24389,13 @@
 
 
 /***/ },
-/* 192 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193).create;
+	module.exports = __webpack_require__(250).create;
 
 /***/ },
-/* 193 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24674,7 +24470,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 194 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24741,7 +24537,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 195 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24795,7 +24591,7 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 196 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24853,7 +24649,7 @@
 	};
 
 /***/ },
-/* 197 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24868,7 +24664,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _superagent = __webpack_require__(174);
+	var _superagent = __webpack_require__(229);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -24964,7 +24760,7 @@
 	exports.default = ListBuilder;
 
 /***/ },
-/* 198 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24979,7 +24775,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _item = __webpack_require__(199);
+	var _item = __webpack_require__(256);
 
 	var _item2 = _interopRequireDefault(_item);
 
@@ -25025,7 +24821,7 @@
 	};
 
 /***/ },
-/* 199 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25040,15 +24836,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(235);
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _modal = __webpack_require__(200);
+	var _modal = __webpack_require__(257);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
-	var _itemDetail = __webpack_require__(201);
+	var _itemDetail = __webpack_require__(258);
 
 	var _itemDetail2 = _interopRequireDefault(_itemDetail);
 
@@ -25179,7 +24975,7 @@
 	};
 
 /***/ },
-/* 200 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25194,7 +24990,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactAddonsCssTransitionGroup = __webpack_require__(180);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(235);
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
@@ -25263,7 +25059,7 @@
 	};
 
 /***/ },
-/* 201 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25495,7 +25291,7 @@
 	};
 
 /***/ },
-/* 202 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25510,7 +25306,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _select = __webpack_require__(203);
+	var _select = __webpack_require__(260);
 
 	var _select2 = _interopRequireDefault(_select);
 
@@ -25709,7 +25505,7 @@
 	};
 
 /***/ },
-/* 203 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25789,7 +25585,7 @@
 	};
 
 /***/ },
-/* 204 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25804,7 +25600,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _select = __webpack_require__(203);
+	var _select = __webpack_require__(260);
 
 	var _select2 = _interopRequireDefault(_select);
 
@@ -25875,6 +25671,276 @@
 	SearchOrdering.propTypes = {
 	  handleOrderingChange: _react2.default.PropTypes.func.isRequired,
 	  default: _react2.default.PropTypes.string.isRequired
+	};
+
+/***/ },
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsCssTransitionGroup = __webpack_require__(235);
+
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+
+	var _superagent = __webpack_require__(229);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	var _loader = __webpack_require__(244);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	var _paginate = __webpack_require__(245);
+
+	var _paginate2 = _interopRequireDefault(_paginate);
+
+	var _errorReporter = __webpack_require__(253);
+
+	var _errorReporter2 = _interopRequireDefault(_errorReporter);
+
+	var _listBuilder = __webpack_require__(254);
+
+	var _listBuilder2 = _interopRequireDefault(_listBuilder);
+
+	var _items = __webpack_require__(255);
+
+	var _items2 = _interopRequireDefault(_items);
+
+	var _searchFilters = __webpack_require__(259);
+
+	var _searchFilters2 = _interopRequireDefault(_searchFilters);
+
+	var _searchOrdering = __webpack_require__(261);
+
+	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ItemListBuilder = function (_ListBuilder) {
+	  _inherits(ItemListBuilder, _ListBuilder);
+
+	  function ItemListBuilder(props) {
+	    _classCallCheck(this, ItemListBuilder);
+
+	    var _this = _possibleConstructorReturn(this, (ItemListBuilder.__proto__ || Object.getPrototypeOf(ItemListBuilder)).call(this, props));
+
+	    _this.state = Object.assign(_this.state, {
+	      filters_are_hidden: true,
+	      categories: null,
+	      filters: _this.props.default_filters,
+	      ordering: _this.props.default_ordering
+	    });
+	    return _this;
+	  }
+
+	  _createClass(ItemListBuilder, [{
+	    key: 'fetchItems',
+	    value: function fetchItems() {
+	      var _this2 = this;
+
+	      var query = this.state.filters;
+	      query.ordering = this.state.ordering;
+	      query.limit = this.props.paginate.per_page;
+	      query.offset = this.state.offset;
+
+	      this.setStateOfLoading();
+
+	      this.fetch(this.props.items_fetch_url, query, function (res) {
+	        if (!res.body.results[0]) {
+	          _this2.setStateOfError("アイテムが見つかりませんでした．");
+	          return;
+	        }
+
+	        _this2.setState({
+	          data: res.body.results,
+	          offset: 0,
+	          page_num: Math.ceil(res.body.count / _this2.props.paginate.per_page),
+	          loading_is_hidden: true
+	        });
+	      }, function (res) {
+	        console.error(_this2.props.items_fetch_url, res.status, err.toString());
+	      });
+	    }
+	  }, {
+	    key: 'fetchCategories',
+	    value: function fetchCategories() {
+	      var _this3 = this;
+
+	      this.fetch(this.props.categories_fetch_url, {}, function (res) {
+	        _this3.setState({
+	          categories: _this3.formatCategories(res.body)
+	        });
+	      }, function (res) {
+	        console.error(_this3.props.items_fetch_url, res.status, res.text);
+	      });
+	    }
+	  }, {
+	    key: 'formatCategories',
+	    value: function formatCategories(categories) {
+	      var indent = "--- ";
+
+	      categories.unshift({ pk: "", name: "---------", level: 0 });
+	      return categories.map(function (category) {
+	        return {
+	          id: '' + category.pk,
+	          value: generateIndent(category.level) + category.name
+	        };
+	      });
+
+	      function generateIndent(level) {
+	        return Array(level + 1).join(indent);
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      _get(ItemListBuilder.prototype.__proto__ || Object.getPrototypeOf(ItemListBuilder.prototype), 'componentDidMount', this).call(this);
+	      this.fetchCategories();
+	    }
+	  }, {
+	    key: 'handleChangeFilters',
+	    value: function handleChangeFilters(filters) {
+	      var _this4 = this;
+
+	      this.setState({ filters: filters }, function () {
+	        _this4.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'handleChangeOrdering',
+	    value: function handleChangeOrdering(ordering) {
+	      var _this5 = this;
+
+	      this.setState({ ordering: ordering }, function () {
+	        _this5.fetchItems();
+	      });
+	    }
+	  }, {
+	    key: 'handleFiltersToggleEvent',
+	    value: function handleFiltersToggleEvent() {
+	      this.setState({ filters_are_hidden: !this.state.filters_are_hidden });
+	    }
+	  }, {
+	    key: 'handlePaginationClick',
+	    value: function handlePaginationClick(data) {
+	      var offset = Math.ceil(data.selected * this.props.paginate.per_page);
+	      this.handleChangeOffset(offset);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this6 = this;
+
+	      var items = null;
+	      if (!this.state.loading_is_hidden) items = _react2.default.createElement(_loader2.default, null);else if (this.state.has_occurred_error) items = _react2.default.createElement(_errorReporter2.default, { message: this.state.error_message });else if (this.state.data !== null && this.state.data !== []) items = _react2.default.createElement(_items2.default, { data: this.state.data });
+
+	      return _react2.default.createElement(
+	        'section',
+	        { className: 'p-showcase' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'p-showcase__header' },
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'p-showcase__title' },
+	            'Search Results',
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'p-showcase__filters-opener', onClick: function onClick(e) {
+	                  return _this6.handleFiltersToggleEvent(e);
+	                } },
+	              '[option]'
+	            )
+	          ),
+	          _react2.default.createElement(_searchOrdering2.default, { handleOrderingChange: function handleOrderingChange(ordering) {
+	              return _this6.handleChangeOrdering(ordering);
+	            },
+	            'default': this.state.ordering })
+	        ),
+	        _react2.default.createElement(
+	          _reactAddonsCssTransitionGroup2.default,
+	          { transitionName: 'slide',
+	            transitionEnterTimeout: 500,
+	            transitionLeaveTimeout: 500 },
+	          this.state.filters_are_hidden ? null : _react2.default.createElement(_searchFilters2.default, { handleFiltersChange: function handleFiltersChange(filters) {
+	              return _this6.handleChangeFilters(filters);
+	            },
+	            categories: this.state.categories,
+	            defaults: this.state.filters })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'p-item-list' },
+	          items,
+	          _react2.default.createElement(_paginate2.default, { page_num: this.state.page_num,
+	            margin_pages_displayed: this.props.paginate.margin_pages_displayed,
+	            page_range_displayed: this.props.paginate.page_range_displayed,
+	            handlePaginationClick: function handlePaginationClick(data) {
+	              return _this6.handlePaginationClick(data);
+	            } })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ItemListBuilder;
+	}(_listBuilder2.default);
+
+	exports.default = ItemListBuilder;
+
+
+	ItemListBuilder.propTypes = {
+	  items_fetch_url: _react2.default.PropTypes.string.isRequired,
+	  categories_fetch_url: _react2.default.PropTypes.string.isRequired,
+	  paginate: _react2.default.PropTypes.shape({
+	    per_page: _react2.default.PropTypes.number.isRequired,
+	    margin_pages_displayed: _react2.default.PropTypes.number.isRequired,
+	    page_range_displayed: _react2.default.PropTypes.number.isRequired
+	  }),
+	  default_filters: _react2.default.PropTypes.shape({
+	    search: _react2.default.PropTypes.string,
+	    category: _react2.default.PropTypes.string,
+	    min_price: _react2.default.PropTypes.string,
+	    max_price: _react2.default.PropTypes.string
+	  }),
+	  default_ordering: _react2.default.PropTypes.string
+	};
+
+	ItemListBuilder.defaultProps = {
+	  default_filters: {
+	    search: "",
+	    category: "",
+	    min_price: "",
+	    max_price: ""
+	  },
+	  default_ordering: ""
 	};
 
 /***/ }
