@@ -60,7 +60,7 @@ export default class Item extends React.Component {
   render() {
     return (
       <div className="p-item">
-        <a href="#" onClick={(e) => this.onClickImage(e)}>
+        <a href={"/shop/" + this.props.item.pk}>
           <div className="p-item__image">
             <div className="p-image-box">
               <img className={this.image_class} src={this.props.item.image} />

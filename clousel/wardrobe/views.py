@@ -29,6 +29,13 @@ def index_view(request):
 
 
 @login_required
+def detail_view(request, pk):
+    user_item = get_object_or_404(UserItem, owner=request.user, pk=pk)
+    return render(request, 'wardrobe/detail.html',
+                  {"user_item": user_item})
+
+
+@login_required
 def upload_view(request):
     if request.method == 'POST':
         form = UserItemForm(request.POST, request.FILES)

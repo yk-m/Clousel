@@ -29169,7 +29169,7 @@
 	  }, {
 	    key: 'current_page',
 	    get: function get() {
-	      return this.props.location.query.page || 1;
+	      return (this.props.location.query.page || 1) - 1;
 	    }
 	  }, {
 	    key: 'filters',
@@ -30145,9 +30145,7 @@
 	        { className: 'p-item' },
 	        _react2.default.createElement(
 	          'a',
-	          { href: '#', onClick: function onClick(e) {
-	              return _this2.onClickImage(e);
-	            } },
+	          { href: "/shop/" + this.props.item.pk },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'p-item__image' },
