@@ -13,7 +13,7 @@ import Items from './items'
 class ItemList extends ListBuilder {
 
   get current_page() {
-    return (this.props.location.query.page || 1)
+    return (this.props.location.query.page || 1) - 1
   }
 
   get filters() {
