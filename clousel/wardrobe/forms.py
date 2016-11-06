@@ -21,7 +21,7 @@ class UserItemForm(forms.ModelForm):
 
     class Meta:
         model = UserItem
-        fields = ('image', 'category', 'has_bought', )
+        fields = ('title', 'category', 'image', 'has_bought', )
 
     def save(self, user, commit=True, *args, **kwargs):
         # category = kwargs.pop('category','')
