@@ -202,7 +202,7 @@ LOGGING = {
 
 # Module Settings
 # --- Debug Toolbar
-INTERNAL_IPS = ('10.0.2.2', '127.0.0.1', '0.0.0.0')
+# INTERNAL_IPS = ('10.0.2.2', '127.0.0.1', '0.0.0.0')
 
 # --- Registration
 AUTH_USER_MODEL = 'accounts.EmailUser'
@@ -210,8 +210,9 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 REGISTRATION_FORM = 'accounts.forms.EmailUserCreationForm'
 LOGIN_REDIRECT_URL = '/dashboard/'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FILE_PATH = '/srv/app/clousel/clousel/logs/mail'
 
 # --- Webpack loader
 WEBPACK_LOADER = {
