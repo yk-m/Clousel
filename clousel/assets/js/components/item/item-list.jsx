@@ -1,7 +1,8 @@
 import deepEqual from 'deep-equal'
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Request from 'superagent'
+import { withRouter } from 'react-router';
 
 import fetch from '../fetch'
 import Loader from '../loader'
@@ -11,19 +12,30 @@ import ListBuilder from '../list-builder'
 import Items from './items'
 
 
-export default class ItemList extends ListBuilder {
+class ItemList extends ListBuilder {
 
-  constructor(props) {
-    super(props)
+  get current_page() {
+    return this.props.location.query.page - 1
+  }
 
-    this.state.offset = this.calcOffset(this.props.current_page, this.props.paginate.per_page)
+  get filters() {
+    return {
+      search: this.props.location.query.search,
+      category: this.props.location.query.category,
+      min_price: this.props.location.query.min_price,
+      max_price: this.props.location.query.max_price
+    }
+  }
+
+  get ordering() {
+    return this.props.location.query.ordering
   }
 
   fetchItems() {
-    let query = this.props.filters
-    query.ordering = this.props.ordering
-    query.limit = this.props.paginate.per_page
-    query.offset = this.state.offset
+    let query = this.filters
+    query.ordering = this.ordering
+    query.limit = ItemList.PAGINATE.per_page
+    query.offset = this.calcOffset(this.current_page, ItemList.PAGINATE.per_page)
 
     this.setStateOfLoading()
 
@@ -38,7 +50,7 @@ export default class ItemList extends ListBuilder {
 
         this.setState({
           data: res.body.results,
-          page_num: Math.ceil(res.body.count / this.props.paginate.per_page),
+          page_num: Math.ceil(res.body.count / ItemList.PAGINATE.per_page),
           loading_is_hidden: true,
         })
       },
@@ -49,18 +61,23 @@ export default class ItemList extends ListBuilder {
   }
 
   componentWillReceiveProps(next_props) {
-    if (!deepEqual(this.props.filters, next_props.filters)
-         || this.props.ordering !== next_props.ordering
-         || this.props.current_page !== next_props.current_page) {
-      let offset = this.calcOffset(next_props.current_page, this.props.paginate.per_page)
-      this.setState({offset: offset}, () => {
-        this.fetchItems()
-      })
-    }
+    if (deepEqual(this.props.location, next_props.location))
+      return
+
+    this.setState({}, () => {
+      this.fetchItems()
+    })
   }
 
   handlePaginationClick(data) {
-    this.props.handleChangeCurrentPage(data.selected)
+    let query = this.filters
+    query.ordering = this.ordering
+    query.page = data.selected + 1
+
+    this.props.router.push({
+      pathname: '/',
+      query: query
+    })
   }
 
   render() {
@@ -72,9 +89,9 @@ export default class ItemList extends ListBuilder {
     } else if (this.state.data !== null && this.state.data !== []) {
       items = <Items data={this.state.data} />
       paginate = <Paginate page_num={this.state.page_num}
-                           current_page={this.props.current_page}
-                           margin_pages_displayed={this.props.paginate.margin_pages_displayed}
-                           page_range_displayed={this.props.paginate.page_range_displayed}
+                           current_page={this.current_page}
+                           margin_pages_displayed={ItemList.PAGINATE.margin_pages_displayed}
+                           page_range_displayed={ItemList.PAGINATE.page_range_displayed}
                            handlePaginationClick={(data) => this.handlePaginationClick(data)} />
     }
 
@@ -88,29 +105,7 @@ export default class ItemList extends ListBuilder {
 }
 
 ItemList.propTypes = {
-  items_fetch_url: React.PropTypes.string.isRequired,
-  current_page: React.PropTypes.number.isRequired,
-  handleChangeCurrentPage: React.PropTypes.func.isRequired,
-  paginate: React.PropTypes.shape({
-    per_page: React.PropTypes.number.isRequired,
-    margin_pages_displayed: React.PropTypes.number.isRequired,
-    page_range_displayed: React.PropTypes.number.isRequired
-  }),
-  filters: React.PropTypes.shape({
-    search: React.PropTypes.string,
-    category: React.PropTypes.string,
-    min_price: React.PropTypes.string,
-    max_price: React.PropTypes.string
-  }),
-  ordering: React.PropTypes.string
+  items_fetch_url: React.PropTypes.string.isRequired
 }
 
-ItemList.defaultProps = {
-  filters: {
-    search: "",
-    category: "",
-    min_price: "",
-    max_price: ""
-  },
-  ordering: ""
-}
+export default withRouter(ItemList)
