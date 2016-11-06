@@ -22,7 +22,7 @@ export default class ItemSearch extends React.Component {
   }
 
   get current_page() {
-    return this.props.location.query.page - 1
+    return (this.props.location.query.page || 1)
   }
 
   get filters() {

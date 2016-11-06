@@ -71,18 +71,6 @@
 	var resultContainer = document.getElementById('js-result');
 	var url = resultContainer.getAttribute('data-request-url');
 
-	// ReactDOM.render(
-	//   <ItemSearch
-	//     items_fetch_url={url}
-	//     categories_fetch_url="/api/categories/"
-	//     paginate={{
-	//       per_page: 12,
-	//       margin_pages_displayed: 1,
-	//       page_range_displayed: 3
-	//     }}
-	//   />, resultContainer
-	// )
-
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
@@ -28149,7 +28137,7 @@
 	  }, {
 	    key: 'current_page',
 	    get: function get() {
-	      return this.props.location.query.page - 1;
+	      return this.props.location.query.page || 1;
 	    }
 	  }, {
 	    key: 'filters',
@@ -29056,10 +29044,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _superagent = __webpack_require__(229);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
-
 	var _reactRouter = __webpack_require__(173);
 
 	var _fetch = __webpack_require__(242);
@@ -29093,8 +29077,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-
 
 	var ItemList = function (_ListBuilder) {
 	  _inherits(ItemList, _ListBuilder);
@@ -29129,7 +29111,7 @@
 	          loading_is_hidden: true
 	        });
 	      }, function (res) {
-	        console.error(_this2.props.items_fetch_url, res.status, err.toString());
+	        console.error(_this2.props.items_fetch_url, res.status, res.text);
 	      });
 	    }
 	  }, {
@@ -29187,7 +29169,7 @@
 	  }, {
 	    key: 'current_page',
 	    get: function get() {
-	      return this.props.location.query.page - 1;
+	      return this.props.location.query.page || 1;
 	    }
 	  }, {
 	    key: 'filters',
