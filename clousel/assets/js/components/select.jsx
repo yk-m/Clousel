@@ -28,5 +28,9 @@ Select.propTypes = {
     id: React.PropTypes.string,
     value: React.PropTypes.string
   })),
-  default: React.PropTypes.string.isRequired
+  default: React.PropTypes.string
+}
+
+Select.defaultProps = {
+  default: ""
 }
