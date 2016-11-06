@@ -1,3 +1,13 @@
+/*
+ *  Pagination
+ *    - Preference
+ *    - Definition
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
 $pagination-margin: 0 12px !default
 $pagination-padding: 3px 5px !default
 $pagination-radius: 5px !default
@@ -10,6 +20,10 @@ $pagination-break-me-radius: $pagination-radius !default
 $pagination-break-me-font-color: #2b2b2b !default
 $pagination-break-me-bg-color: #fff !default
 
+
+
+/*  Definition
+   ---------------------------------------- */
 .c-pagination
     text-align: center
     list-style-type: none
@@ -27,18 +41,19 @@ $pagination-break-me-bg-color: #fff !default
             color: $pagination-font-color
             cursor: pointer
 
-    .c-pagination__child--is_active a
-        background: $pagination-bg-color--active
-        color: $pagination-font-color--active
+    .c-pagination__child--is_active
+        a
+            background: $pagination-bg-color--active
+            color: $pagination-font-color--active
+
+    .c-pagination__child--is_disabled
+        a
+            display: none
 
     .c-pagination__child--break-me
         padding: $pagination-break-me-padding
         +border-radius($pagination-break-me-radius)
         background: $pagination-break-me-bg-color
         color: $pagination-break-me-font-color
-
-    .c-pagination__child--is_disabled a
-        display: none
-
 
 

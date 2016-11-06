@@ -40,6 +40,7 @@ $logo-image: "../images/logo.svg"
     font-size: 3rem
 
 .p-header--compact__logo
+    @extend .p-header__logo
     +logo_image($compact-header-height)
     height: $compact-header-height
     line-height: $compact-header-height
@@ -69,6 +70,7 @@ $logo-image: "../images/logo.svg"
                 color: $gray
 
 .p-header--compact__nav
+    @extend .p-header__nav
     li
         a
             height: $compact-header-height

@@ -1,11 +1,23 @@
 {% load i18n %}
-  <header class="p-header {% if compact %}p-header--compact{% endif %} l-header">
+  <header class="p-header l-header">
     <div class="l-header__logo">
-      <h1 class="p-header__logo {% if compact %}p-header--compact__logo{% endif %}">
+      <h1 class="
+        {% if compact %}
+          p-header--compact__logo
+        {% else %}
+          p-header__logo
+        {% endif %}
+      ">
         <a href="{% url 'pages:index' %}" title="">Clousel</a>
       </h1>
     </div>
-    <nav class="p-header__nav {% if compact %}p-header--compact__nav{% endif %}">
+    <nav class="
+      {% if compact %}
+        p-header--compact__nav
+      {% else %}
+        p-header__nav
+      {% endif %}
+    ">
       <ul>
         <li><a href="#" title="{% trans 'About us' %}">{% trans "About us" %}</a></li>
         {% if user.is_authenticated %}

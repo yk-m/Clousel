@@ -1,0 +1,24 @@
+{% extends "registration/registration_base.html" %}
+
+{% block form_section %}
+  {% block no_form_section_header %}
+    <div class="p-formset__header">
+      {% block form_section_header %}{% endblock %}
+    </div>
+  {% endblock %}
+  <form class="p-formset__form" method="post" action="">
+    {% block form_header %}{% endblock %}
+    <table class="p-formset__table">
+      <caption>{% block form_title %}{% endblock %}</caption>
+      <tbody>
+        {{ form.as_table }}
+      </tbody>
+    </table>
+    {% block form_footer %}{% endblock %}
+  </form>
+  {% block no_form_section_footer %}
+    <div class="p-formset__footer">
+      {% block form_section_footer %}{% endblock %}
+    </div>
+  {% endblock %}
+{% endblock %}

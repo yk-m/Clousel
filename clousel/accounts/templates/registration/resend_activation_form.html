@@ -1,18 +1,19 @@
-{% extends "registration/registration_base.html" %}
+{% extends "registration/registration_base_form.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Resend Activation Email" %}{% endblock %}
 
-{% block loginform %}
-<form method="post" action="">
-  {% csrf_token %}
-  <table>
-    <caption>Login</caption>
-    <tbody>
-      {{ form.as_table }}
-    </tbody>
-  </table>
-  <input type="submit" value="{% trans 'Submit' %}" />
+
+{% block no_form_section_header %}{% endblock %}
+{% block no_form_section_footer %}{% endblock %}
+
+{% block form_title %}Login{% endblock %}
+
+{% block form_header %}
+{% csrf_token %}
+{% endblock %}
+
+{% block form_footer %}<input type="submit" value="{% trans 'Submit' %}" />
 </form>
 {% endblock %}
 

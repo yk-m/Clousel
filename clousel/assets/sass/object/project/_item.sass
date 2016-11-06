@@ -4,73 +4,6 @@
 .p-items
     +clearfix
 
-.p-item
-    +gallery(3 of 12)
-    margin-top: $vertical-span
-    margin-bottom: $vertical-span
-    border-top: 3px double $black
-    border-bottom: 1px solid $black
-    a
-        text-decoration: none
-
-.p-item__image
-    +image-container
-    position: relative
-    z-index: 1
-    width: 100%
-    height: auto
-
-.p-item__caption
-    +clearfix
-    padding: $half-gap
-    list-style-type: none
-
-    li
-        margin-left: $horizontal-span/2
-
-    li:first-child
-        margin-left: 0
-
-.p-item__title,
-.p-item__price
-    float: left
-    width: span(2 of 4)
-    text-align: left
-
-$item-action-button-size: 2rem
-
-.p-item__like,
-.p-item__purchase,
-.p-item__search
-    float: right
-    width: $item-action-button-size
-    max-width: span(1 of 4)
-
-.p-item__like
-    a
-        +block-icon($icon-item-like, $item-action-button-size)
-
-.p-item__search
-    a
-        +block-icon($icon-item-search, $item-action-button-size)
-
-.p-item__purchase
-    a
-        +block-icon($icon-item-purchase, $item-action-button-size)
-
-.p-item__like,
-.p-item__purchase,
-.p-item__search
-    a
-        &:after
-            color: $gray
-
-.p-item__like--is_liked,
-.p-item__like--is_purchased
-    a
-        &:after
-            color: $accent-color
-
 .p-items--state_loading,
 .p-items--state_error
     position: absolute
@@ -94,3 +27,90 @@ $item-action-button-size: 2rem
 
 .p-items--state_error p
     font-size: 2rem
+
+.p-item
+    +gallery(3 of 12)
+    margin-top: $vertical-span
+    margin-bottom: $vertical-span
+    border-top: 3px double $black
+    border-bottom: 1px solid $black
+
+    +susy-breakpoint(0 $screen--smartphone-max, 12)
+        +gallery(6)
+
+    a
+        text-decoration: none
+
+.p-item__image
+    +image-container
+    position: relative
+    z-index: 1
+    width: 100%
+    height: auto
+
+
+$item-caption-height: 3rem
+$item-action-button-size: 2rem
+
+.p-item__caption
+    height: $item-caption-height
+    margin: $half-gap
+    padding: 0
+    font-size: 0
+    list-style-type: none
+
+    li
+        float: left
+        margin-left: gutter(7)
+        line-height: $item-caption-height
+        font-size: $body-font-size
+
+        &:first-child
+            margin-left: 0
+
+.p-item__title
+    width: span(6 of 7)
+    text-align: left
+
+.p-item__price
+    width: span(5 of 7)
+    text-align: left
+
+%p-item__action
+    width: span(1 of 7)
+
+%p-item__action--is_active
+    a
+        &:after
+            color: $gray
+
+%p-item__action--is_inactive
+    a
+        &:after
+            color: $accent-color
+
+.p-item__like
+    @extend %p-item__action
+    @extend %p-item__action--is_active
+    a
+        +block-icon-with-height($icon-item-like, $item-action-button-size, 3rem)
+
+.p-item__search
+    @extend %p-item__action
+    @extend %p-item__action--is_active
+    a
+        +block-icon-with-height($icon-item-search, $item-action-button-size, 3rem)
+
+.p-item__purchase
+    @extend %p-item__action
+    @extend %p-item__action--is_active
+    a
+        +block-icon-with-height($icon-item-purchase, $item-action-button-size, 3rem)
+
+.p-item__like--is_liked
+    @extend .p-item__like
+    @extend %p-item__action--is_inactive
+
+.p-item__like--is_purchased
+    @extend .p-item__purchase
+    @extend %p-item__action--is_inactive

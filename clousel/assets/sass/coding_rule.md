@@ -35,7 +35,7 @@
 
 ### Order of properties
 1. ボックスモデルの種類や表示方法を示すプロパティ
-    - box-sizing, display, visibility, float
+    - box-sizing, display, visibility, overflow, float
 2. 位置情報に関するプロパティ
     - position, z-index
 3. ボックスモデルのサイズに関するプロパティ
@@ -46,3 +46,43 @@
     - color, background
 6. それ以外
     - cursor
+
+## Comment
+```css
+/*
+ *  FOO
+ *    - Foo
+ *    - Bar
+ *    - Foo
+ */
+
+
+
+/*  Foo
+   ---------------------------------------- */
+$foo: #FFF
+
+
+
+/*  Bar
+   ---------------------------------------- */
+$bar: 2px
+
+/* ----- Bar ----- */
+$bar--bar: 3px
+
+
+
+/*  Foo
+   ---------------------------------------- */
+
+/* ----- Foo bar ----- */
+$foo-bar: 4px
+
+/* ----- Bar ----- */
+/*  Foo  */
+$bar--foo: 5px
+
+/*  Bar bar  */
+$bar--bar-bar: 6px
+```

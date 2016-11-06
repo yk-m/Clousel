@@ -1,0 +1,49 @@
+/*
+ *  DROPDOWN
+ *    - Preference
+ *    - Definition
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
+$dropdown-width: 100px !default
+$dropdown-line-height: 50px !default
+$dropdown-z-index: 200 !default
+$dropdown-bg-color: #fff !default
+
+
+
+/*  Definition
+   ---------------------------------------- */
+.c-dropdown
+    position: relative
+    overflow: visible
+
+.c-dropdown__children
+    position: absolute
+    top: 0
+    z-index: $dropdown-z-index
+    width: $dropdown-width
+    margin: 0
+    padding: 0
+    background: $dropdown-bg-color
+    list-style-type: none
+
+    li
+        margin: 0
+
+        a
+            display: block
+            width: $dropdown-width
+            height: $dropdown-line-height
+            line-height: $dropdown-line-height
+
+.c-dropdown__children--align_right
+    @extend .c-dropdown__children
+    right: 0
+
+.c-dropdown__children--align_left
+    @extend .c-dropdown__children
+    left: 0

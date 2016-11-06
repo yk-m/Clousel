@@ -1,8 +1,8 @@
-{% extends "registration/registration_base.html" %}
+{% extends "registration/registration_base_message.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Logged out" %}{% endblock %}
 
-{% block loginform %}
+{% block message_section %}
 <p>{% trans "Successfully logged out" %}.</p>
 {% endblock %}

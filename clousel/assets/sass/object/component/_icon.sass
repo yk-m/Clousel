@@ -1,20 +1,46 @@
-=icon($variable, $size)
+/*
+ *  ICON
+ *    - Inline Icon
+ *    - Block Icon
+ *    - Animation
+ */
+
+
+
+/*  Inline Icon
+   ---------------------------------------- */
+=icon-with-height($variable, $size, $height)
     &:after
         font-style: normal
-        line-height: $size
+        line-height: $height
         font-size: $size
         font-family: $icon-font-family
         content: $variable
         @content
 
-
-=block-icon($variable, $size)
-    display: block
-    height: $size
-    width: $size
-    +icon($variable, $size)
+=icon($variable, $size)
+    +icon-with-height($variable, $size, $size)
         @content
 
+
+
+/*  Block Icon
+   ---------------------------------------- */
+=block-icon-with-height($variable, $size, $height)
+    display: block
+    height: $height
+    width: $size
+    +icon-with-height($variable, $size, $height)
+        @content
+
+=block-icon($variable, $size)
+    +block-icon-with-height($variable, $size, $size)
+        @content
+
+
+
+/*  Animation
+   ---------------------------------------- */
 =spin
     -webkit-animation: spin 2s infinite ceaser($easeOutCubic)
     animation: spin 2s infinite ceaser($easeOutCubic)
@@ -23,20 +49,9 @@
     -webkit-animation: spin 1s infinite steps(10)
     animation: spin 1s infinite steps(10)
 
-@-webkit-keyframes spin
++keyframes(spin)
     0%
-        -webkit-transform: rotate(0deg)
-        transform: rotate(0deg)
+        +transform(rotate(0deg))
 
     100%
-        -webkit-transform: rotate(359deg)
-        transform: rotate(359deg)
-
-@keyframes spin
-    0%
-        -webkit-transform: rotate(0deg)
-        transform: rotate(0deg)
-
-    100%
-        -webkit-transform: rotate(359deg)
-        transform: rotate(359deg)
+        +transform(rotate(359deg))
