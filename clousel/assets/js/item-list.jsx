@@ -25,7 +25,7 @@ let url = resultContainer.getAttribute('data-request-url')
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={ItemSearch}>
-      <IndexRoute component={ItemList} />
+      <IndexRoute component={() => <ItemList items_fetch_url={url} />} />
     </Route>
   </Router>
 ), resultContainer)

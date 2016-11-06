@@ -29,7 +29,8 @@ module.exports = {
         loader: 'babel-loader',
         query:
         {
-          presets:['es2015', 'react']
+          presets:['es2015', 'react'],
+          plugins: [ "transform-class-properties" ],
         },
       }, // to transform JSX into JS
     ],

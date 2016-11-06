@@ -10,21 +10,37 @@ import SearchOrdering from './search/search-ordering'
 
 export default class ItemSearch extends React.Component {
 
+  static CATEGORIES_URL = "/api/categories/"
+
   constructor(props) {
     super(props)
 
     this.state = {
       filters_are_hidden: true,
-      categories: null,
-      current_page: 0,
-      filters: this.props.default_filters,
-      ordering: this.props.default_ordering
+      categories: null
     }
+  }
+
+  get current_page() {
+    return this.props.location.query.page - 1
+  }
+
+  get filters() {
+    return {
+      search: this.props.location.query.search,
+      category: this.props.location.query.category,
+      min_price: this.props.location.query.min_price,
+      max_price: this.props.location.query.max_price
+    }
+  }
+
+  get ordering() {
+    return this.props.location.query.ordering
   }
 
   fetchCategories() {
     fetch(
-      this.props.categories_fetch_url,
+      ItemSearch.CATEGORIES_URL,
       {},
       (res) => {
         this.setState({
@@ -32,7 +48,7 @@ export default class ItemSearch extends React.Component {
         })
       },
       (res) => {
-        console.error(this.props.items_fetch_url, res.status, res.text)
+        console.error(ItemSearch.CATEGORIES_URL, res.status, res.text)
       }
     )
   }
@@ -58,15 +74,25 @@ export default class ItemSearch extends React.Component {
   }
 
   updateFilters(filters) {
-    this.setState({current_page: 0, filters: filters})
+    let query = filters
+    query.ordering = this.ordering
+    query.page = 1
+
+    this.props.router.push({
+      pathname: '/',
+      query: query
+    })
   }
 
   updateOrdering(ordering) {
-    this.setState({current_page: 0, ordering: ordering})
-  }
+    let query = this.filters
+    query.ordering = ordering
+    query.page = 1
 
-  updateCurrentPage(page) {
-    this.setState({current_page: page})
+    this.props.router.push({
+      pathname: '/',
+      query: query
+    })
   }
 
   handleFiltersToggleEvent() {
@@ -82,7 +108,7 @@ export default class ItemSearch extends React.Component {
             <span className="p-showcase__filters-opener" onClick={(e) => this.handleFiltersToggleEvent(e)}>[option]</span>
           </h2>
           <SearchOrdering handleOrderingChange={(ordering) => this.updateOrdering(ordering)}
-                          default={this.state.ordering}/>
+                          default={this.ordering}/>
         </div>
         <ReactCSSTransitionGroup transitionName="slide"
                                  transitionEnterTimeout={500}
@@ -91,44 +117,12 @@ export default class ItemSearch extends React.Component {
             this.state.filters_are_hidden
             ? null : <SearchFilters handleFiltersChange={(filters) => this.updateFilters(filters)}
                                     categories={this.state.categories}
-                                    defaults={this.state.filters} />
+                                    defaults={this.filters} />
           }
         </ReactCSSTransitionGroup>
-        <ItemList items_fetch_url={this.props.items_fetch_url}
-                  current_page={this.state.current_page}
-                  handleChangeCurrentPage={(page) => this.updateCurrentPage(page)}
-                  paginate={this.props.paginate}
-                  filters={this.state.filters}
-                  ordering={this.state.ordering}
-        />
+        {this.props.children}
       </section>
     )
   }
 }
 
-ItemSearch.propTypes = {
-  items_fetch_url: React.PropTypes.string.isRequired,
-  categories_fetch_url: React.PropTypes.string.isRequired,
-  paginate: React.PropTypes.shape({
-    per_page: React.PropTypes.number.isRequired,
-    margin_pages_displayed: React.PropTypes.number.isRequired,
-    page_range_displayed:React.PropTypes.number.isRequired
-  }),
-  default_filters: React.PropTypes.shape({
-    search: React.PropTypes.string,
-    category: React.PropTypes.string,
-    min_price: React.PropTypes.string,
-    max_price: React.PropTypes.string
-  }),
-  default_ordering: React.PropTypes.string
-}
-
-ItemSearch.defaultProps = {
-  default_filters: {
-    search: "",
-    category: "",
-    min_price: "",
-    max_price: ""
-  },
-  default_ordering: ""
-}

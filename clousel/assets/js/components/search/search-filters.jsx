@@ -104,11 +104,20 @@ SearchFilters.propTypes = {
     category: React.PropTypes.string,
     min_price: React.PropTypes.string,
     max_price: React.PropTypes.string
-  }).isRequired,
+  }),
   categories: React.PropTypes.arrayOf(
     React.PropTypes.shape({
       id: React.PropTypes.string,
       value: React.PropTypes.string
     })
   )
+}
+
+SearchFilters.defaultProps = {
+  defaults: {
+    search: "",
+    category: "",
+    min_price: "",
+    max_price: ""
+  }
 }

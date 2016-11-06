@@ -51,5 +51,9 @@ export default class SearchOrdering extends React.Component {
 
 SearchOrdering.propTypes = {
   handleOrderingChange: React.PropTypes.func.isRequired,
-  default: React.PropTypes.string.isRequired
+  default: React.PropTypes.string
+}
+
+SearchOrdering.defaultProps = {
+  default: ""
 }
