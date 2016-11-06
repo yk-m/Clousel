@@ -13,10 +13,14 @@ export default class ItemDetail extends React.Component {
         <div className="p-item-detail__image">
           <img src={this.props.item.image} />
         </div>
-        <div className="p-item-detail__text">
-          <table>
+        <div className="p-item-detail__content">
+          <table className="p-item-detail__table">
             <caption>Item Details</caption>
             <tbody>
+              <tr>
+                <th>カテゴリー</th>
+                <td>{this.props.item.category}</td>
+              </tr>
               <tr>
                 <th>ブランド</th>
                 <td>{this.props.item.brand}</td>

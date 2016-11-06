@@ -14,7 +14,6 @@ export default class ListBuilder extends React.Component {
     this.state = {
       data: [],
       offset: 0,
-      page_num: 0,
       loading_is_hidden: false,
       has_occurred_error: false,
       error_message: ""
@@ -39,22 +38,26 @@ export default class ListBuilder extends React.Component {
     })
   }
 
-  fetch(url, query, success, failure) {
-    Request
-      .get(url)
-      .query(query)
-      .set('Accept', 'application/json')
-      .end( (err, res) => {
-        if (!res.ok) {
-          failure(res)
-          return
-        }
-        success(res)
-      })
-  }
+  // fetch(url, query, success, failure) {
+  //   Request
+  //     .get(url)
+  //     .query(query)
+  //     .set('Accept', 'application/json')
+  //     .end( (err, res) => {
+  //       if (!res.ok) {
+  //         failure(res)
+  //         return
+  //       }
+  //       success(res)
+  //     })
+  // }
 
   componentDidMount() {
     this.fetchItems()
+  }
+
+  calcOffset(page_num, per_page) {
+    return Math.ceil(page_num * per_page)
   }
 
   handleChangeOffset(offset) {
