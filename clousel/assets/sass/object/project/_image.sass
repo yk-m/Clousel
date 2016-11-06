@@ -20,10 +20,12 @@
     max-width: none
 
 .p-image--portrait
+    @extend .p-image
     width: 100%
     height: auto
 
 .p-image--landscape
+    @extend .p-image
     left: 50%
     transform: translateX(-50%)
     width: auto

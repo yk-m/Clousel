@@ -10,18 +10,32 @@
  *   ---------------------------------------- */
 /*  Size
  *   ---------------------------------------- */
+/* ----- Screen ----- */
 /* ----- Radius ----- */
-/*  MIXINS
+/*  UTILITY
+ *    - Compass
+ *    - Grid
+ *    - Functions
  */
 /*  Compass
  *   ---------------------------------------- */
 /* ----- Tuning Vendor Prefixes ----- */
 /* ----- Clearfix ----- */
-/*  Others
+/* ----- Animation ----- */
+/*!
+ *  Compass Ceaser CSS Easing Transitions by Jared Hardy - https://github.com/jhardy/compass-ceaser-easing
+ *  License - MIT License (https://github.com/jhardy/compass-ceaser-easing/blob/master/LICENSE)
+ */
+/*  Grid
  *   ---------------------------------------- */
-/* ----- Clearfix ----- */
-/* ----- Grid ----- */
-/* sanitize.css v4.1.0 (https://jonathantneal.github.io/sanitize.css/)
+/*!
+ *  Susy by Miriam Eric Suzanne - http://susy.oddbird.net
+ *  License - https://github.com/oddbird/susy/blob/master/LICENSE.txt
+ */
+/*  Functions
+ *   ---------------------------------------- */
+/*!
+ * sanitize.css v4.1.0 (https://jonathantneal.github.io/sanitize.css/)
  * CC0 License
  * CDN: https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/4.1.0/sanitize.min.css
  */
@@ -106,14 +120,17 @@ button, *[type=submit], *[type=reset] {
 }
 
 /*  TYPOGRAPHY
- *    - Settings
+ *    - Preference
  *    - Definition
  */
-/*  Settings
+/*  Preference
  *   ---------------------------------------- */
 /* ----- Font Family ----- */
 /* ----- Size ----- */
-/* ----- Icons ----- */
+/* ----- Icon ----- */
+/*!
+ *  Stroke Icons Font Set 1.2.0 by Pixeden - http://www.pixeden.com
+ */
 /* FONT PATH
  * -------------------------- */
 @font-face {
@@ -128,38 +145,38 @@ button, *[type=submit], *[type=reset] {
 /*  Definition
  *   ---------------------------------------- */
 /* ----- Root ----- */
-/* line 45, ../sass/foundation/_typography.sass */
+/* line 46, ../sass/foundation/_typography.sass */
 html {
   font-size: 62.5%;
 }
 
 /* ----- Base ----- */
-/* line 49, ../sass/foundation/_typography.sass */
+/* line 50, ../sass/foundation/_typography.sass */
 body, input, button, select {
   font: normal 1.3rem/1.5em "Quicksand", sans-serif;
 }
 
 /* ----- Headings ----- */
-/* line 53, ../sass/foundation/_typography.sass */
+/* line 54, ../sass/foundation/_typography.sass */
 h1, h2 {
   font-family: "Quicksand", sans-serif;
   font-weight: normal;
 }
 
-/* line 57, ../sass/foundation/_typography.sass */
+/* line 58, ../sass/foundation/_typography.sass */
 th {
   font-weight: normal;
 }
 
-/* line 60, ../sass/foundation/_typography.sass */
+/* line 61, ../sass/foundation/_typography.sass */
 header nav {
   font-family: "Quicksand", sans-serif;
 }
 
-/* line 1, ../sass/layout/_header.sass */
+/*  HEADER SECTION LAYOUT
+ */
+/* line 5, ../sass/layout/_header.sass */
 .l-header {
-  overflow: hidden;
-  *zoom: 1;
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
@@ -171,7 +188,9 @@ header nav {
   clear: both;
 }
 
-/* line 1, ../sass/layout/_main.sass */
+/*  MAIN SECTION LAYOUT
+ */
+/* line 5, ../sass/layout/_main.sass */
 .l-main {
   max-width: 960px;
   margin-left: auto;
@@ -183,6 +202,12 @@ header nav {
   content: " ";
   display: block;
   clear: both;
+}
+
+/* line 9, ../sass/layout/_main.sass */
+.l-form {
+  max-width: 460px;
+  margin: 0 auto;
 }
 
 /* line 1, ../sass/object/utility/_block.sass */
@@ -198,71 +223,67 @@ header nav {
 
 /*  PREFERENCES FOR COMPONENTS
  */
-/*  Form
+/*  Select
  *   ---------------------------------------- */
 /*  Modal
  *   ---------------------------------------- */
 /*  Pagination
  *   ---------------------------------------- */
-/*  ANIMATIONS FOR ReactCSSTransitionGroup
+/*  DROPDOWN
+ *    - Preference
+ *    - Definition
  */
-/*  Slide up/down
+/*  Preference
  *   ---------------------------------------- */
-/*  Fade
- * ---------------------------------------- */
-/* line 31, ../sass/object/component/_animation.sass */
-.fade-enter {
-  opacity: 0.01;
-}
-/* line 34, ../sass/object/component/_animation.sass */
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  -moz-transition: opacity 0.2s ease-in;
-  -o-transition: opacity 0.2s ease-in;
-  -webkit-transition: opacity 0.2s ease-in;
-  transition: opacity 0.2s ease-in;
+/*  Definition
+ *   ---------------------------------------- */
+/* line 20, ../sass/object/component/_dropdown.sass */
+.c-dropdown {
+  position: relative;
+  overflow: visible;
 }
 
-/* line 38, ../sass/object/component/_animation.sass */
-.fade-leave {
-  opacity: 1;
+/* line 24, ../sass/object/component/_dropdown.sass */
+.c-dropdown__children, .c-dropdown__children--align_right, .c-dropdown__children--align_left {
+  position: absolute;
+  top: 0;
+  z-index: 200;
+  width: 100px;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  list-style-type: none;
 }
-/* line 41, ../sass/object/component/_animation.sass */
-.fade-leave.fade-leave-active {
-  opacity: 0.01;
-  -moz-transition: opacity 0.2s ease-in;
-  -o-transition: opacity 0.2s ease-in;
-  -webkit-transition: opacity 0.2s ease-in;
-  transition: opacity 0.2s ease-in;
+/* line 34, ../sass/object/component/_dropdown.sass */
+.c-dropdown__children li, .c-dropdown__children--align_right li, .c-dropdown__children--align_left li {
+  margin: 0;
 }
-
-/*  Fade and Move
- * ---------------------------------------- */
-/* line 48, ../sass/object/component/_animation.sass */
-.fademove-enter {
-  opacity: 0.01;
-  transform: translateY(50%) scale(0.95, 0.95);
-  transition: all 0.5s ease-out;
-}
-/* line 53, ../sass/object/component/_animation.sass */
-.fademove-enter.fademove-enter-active {
-  opacity: 1;
-  transform: translateY(0) scale(1, 1);
+/* line 37, ../sass/object/component/_dropdown.sass */
+.c-dropdown__children li a, .c-dropdown__children--align_right li a, .c-dropdown__children--align_left li a {
+  display: block;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
 }
 
-/* line 57, ../sass/object/component/_animation.sass */
-.fademove-leave {
-  opacity: 1;
-  transform: translateY(0) scale(1, 1);
-  transition: all 0.2s ease-out;
-}
-/* line 62, ../sass/object/component/_animation.sass */
-.fademove-leave.fademove-leave-active {
-  opacity: 0.01;
-  transform: translateY(5%) scale(0.98, 0.98);
+/* line 43, ../sass/object/component/_dropdown.sass */
+.c-dropdown__children--align_right {
+  right: 0;
 }
 
-/* line 20, ../sass/object/component/_form.sass */
+/* line 47, ../sass/object/component/_dropdown.sass */
+.c-dropdown__children--align_left {
+  left: 0;
+}
+
+/*  FORM
+ *    - Select
+ */
+/*  Select
+ *   ---------------------------------------- */
+/* ----- Preference ----- */
+/* ----- Definition ----- */
+/* line 32, ../sass/object/component/_form.sass */
 .c-select {
   position: relative;
   display: inline-block;
@@ -272,7 +293,7 @@ header nav {
   border-radius: 2.5px;
   background: #F9F7F7;
 }
-/* line 27, ../sass/object/component/_form.sass */
+/* line 39, ../sass/object/component/_form.sass */
 .c-select:before {
   display: block;
   z-index: 1;
@@ -297,7 +318,7 @@ header nav {
   background: linear-gradient(to right, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
   content: "";
 }
-/* line 45, ../sass/object/component/_form.sass */
+/* line 57, ../sass/object/component/_form.sass */
 .c-select select {
   display: block;
   -moz-appearance: none;
@@ -314,11 +335,32 @@ header nav {
   cursor: pointer;
 }
 
-/* line 59, ../sass/object/component/_form.sass */
+/* line 71, ../sass/object/component/_form.sass */
 ::-ms-expand {
   display: none;
 }
 
+/*  ICON
+ *    - Inline Icon
+ *    - Block Icon
+ *    - Animation
+ */
+/*  Inline Icon
+ *   ---------------------------------------- */
+/*  Block Icon
+ * ---------------------------------------- */
+/*  Animation
+ * ---------------------------------------- */
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -331,18 +373,29 @@ header nav {
 }
 @keyframes spin {
   0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
+    -moz-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg);
   }
 }
-/*  MODAL WINDOW
+/*  MODAL
+ *    - Preference
+ *    - Definition
  */
-/* line 17, ../sass/object/component/_modal.sass */
+/*  Preference
+ *   ---------------------------------------- */
+/*  Definition
+ *   ---------------------------------------- */
+/* line 31, ../sass/object/component/_modal.sass */
 .c-modal {
+  overflow: auto;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -352,43 +405,52 @@ header nav {
   background-color: #F9F7F7;
 }
 
-/* line 28, ../sass/object/component/_modal.sass */
-.c-modal__close {
-  display: block;
-  position: absolute;
-  top: 2.5rem;
-  right: 2.5rem;
-  text-decoration: none;
-  cursor: pointer;
+/* line 42, ../sass/object/component/_modal.sass */
+.c-modal__container {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
-/* line 2, ../sass/object/component/_icon.sass */
-.c-modal__close:after {
+
+/* line 47, ../sass/object/component/_modal.sass */
+.c-modal__close,
+.c-modal__body {
+  margin: 12px 20px;
+}
+
+/* line 51, ../sass/object/component/_modal.sass */
+.c-modal__close {
+  text-align: right;
+}
+/* line 13, ../sass/object/component/_icon.sass */
+.c-modal__close a:after {
   font-style: normal;
-  line-height: 5rem;
-  font-size: 5rem;
+  line-height: 50px;
+  font-size: 50px;
   font-family: "Pe-icon-7-stroke", sans-serif;
   content: "";
   color: #C64B8F;
 }
 
-/* line 40, ../sass/object/component/_modal.sass */
-.c-modal__container {
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-}
-
-/* line 13, ../sass/object/component/_pagination.sass */
+/*  Pagination
+ *    - Preference
+ *    - Definition
+ */
+/*  Preference
+ *   ---------------------------------------- */
+/*  Definition
+ *   ---------------------------------------- */
+/* line 27, ../sass/object/component/_pagination.sass */
 .c-pagination {
   text-align: center;
   list-style-type: none;
 }
-/* line 17, ../sass/object/component/_pagination.sass */
+/* line 31, ../sass/object/component/_pagination.sass */
 .c-pagination li {
   display: inline-block;
   margin: 12px 20px;
 }
-/* line 21, ../sass/object/component/_pagination.sass */
+/* line 35, ../sass/object/component/_pagination.sass */
 .c-pagination li a {
   display: inline-block;
   padding: 6px 10px;
@@ -400,12 +462,16 @@ header nav {
   color: #312F33;
   cursor: pointer;
 }
-/* line 30, ../sass/object/component/_pagination.sass */
+/* line 45, ../sass/object/component/_pagination.sass */
 .c-pagination .c-pagination__child--is_active a {
   background: #C64B8F;
   color: #F9F7F7;
 }
-/* line 34, ../sass/object/component/_pagination.sass */
+/* line 50, ../sass/object/component/_pagination.sass */
+.c-pagination .c-pagination__child--is_disabled a {
+  display: none;
+}
+/* line 53, ../sass/object/component/_pagination.sass */
 .c-pagination .c-pagination__child--break-me {
   padding: 0;
   -moz-border-radius: 0;
@@ -414,9 +480,66 @@ header nav {
   background: transparent;
   color: #312F33;
 }
-/* line 40, ../sass/object/component/_pagination.sass */
-.c-pagination .c-pagination__child--is_disabled a {
-  display: none;
+
+/*  TRANSITION FOR ReactCSSTransitionGroup
+ *    - Slide up/down (name: slide,    target: height, padding)
+ *    - Fade          (name: fade,     target: opacity)
+ *    - Fade and Move (name: fademove, target: opacity, transform:translate(), transform:scale())
+ */
+/*  Slide up/down
+ *   ---------------------------------------- */
+/*  Fade
+ * ---------------------------------------- */
+/* line 36, ../sass/object/component/_transition.sass */
+.fade-enter {
+  opacity: 0.01;
+}
+/* line 39, ../sass/object/component/_transition.sass */
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  -moz-transition: opacity 0.2s ease-in;
+  -o-transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+}
+
+/* line 43, ../sass/object/component/_transition.sass */
+.fade-leave {
+  opacity: 1;
+}
+/* line 46, ../sass/object/component/_transition.sass */
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  -moz-transition: opacity 0.2s ease-in;
+  -o-transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+}
+
+/*  Fade and Move
+ * ---------------------------------------- */
+/* line 54, ../sass/object/component/_transition.sass */
+.fademove-enter {
+  opacity: 0.01;
+  transform: translateY(50%) scale(0.95, 0.95);
+  transition: all 0.5s ease-out;
+}
+/* line 59, ../sass/object/component/_transition.sass */
+.fademove-enter.fademove-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1, 1);
+}
+
+/* line 63, ../sass/object/component/_transition.sass */
+.fademove-leave {
+  opacity: 1;
+  transform: translateY(0) scale(1, 1);
+  transition: all 0.2s ease-out;
+}
+/* line 68, ../sass/object/component/_transition.sass */
+.fademove-leave.fademove-leave-active {
+  opacity: 0.01;
+  transform: translateY(5%) scale(0.98, 0.98);
 }
 
 /* line 1, ../sass/object/project/_carousel.sass */
@@ -607,21 +730,21 @@ header nav {
 }
 
 /* line 10, ../sass/object/project/_header.sass */
-.p-header__logo {
+.p-header__logo, .p-header--compact__logo {
   width: 32.20339%;
   float: left;
   margin-right: 1.69492%;
 }
 
 /* line 13, ../sass/object/project/_header.sass */
-.p-header__nav {
+.p-header__nav, .p-header--compact__nav {
   width: 66.10169%;
   float: right;
   margin-right: 0;
 }
 
 /* line 33, ../sass/object/project/_header.sass */
-.p-header__logo {
+.p-header__logo, .p-header--compact__logo {
   padding: 0 0 0 143.85455px;
   background: url(../images/logo.svg) no-repeat;
   background-size: 103.85455px auto;
@@ -631,7 +754,7 @@ header nav {
   font-size: 3rem;
 }
 /* line 34, ../sass/object/project/_header.sass */
-.p-header__logo a, .p-header__logo a:hover, .p-header__logo a:visited {
+.p-header__logo a, .p-header--compact__logo a, .p-header__logo a:hover, .p-header--compact__logo a:hover, .p-header__logo a:visited, .p-header--compact__logo a:visited {
   color: #312F33;
 }
 
@@ -646,33 +769,33 @@ header nav {
   font-size: 2rem;
 }
 
-/* line 51, ../sass/object/project/_header.sass */
-.p-header__nav ul {
+/* line 52, ../sass/object/project/_header.sass */
+.p-header__nav ul, .p-header--compact__nav ul {
   text-align: right;
   list-style-type: none;
 }
-/* line 55, ../sass/object/project/_header.sass */
-.p-header__nav li {
+/* line 56, ../sass/object/project/_header.sass */
+.p-header__nav li, .p-header--compact__nav li {
   display: inline-block;
 }
-/* line 58, ../sass/object/project/_header.sass */
-.p-header__nav li a {
+/* line 59, ../sass/object/project/_header.sass */
+.p-header__nav li a, .p-header--compact__nav li a {
   display: inline-block;
   height: 84px;
   padding: 0 20px;
   line-height: 84px;
   font-size: 1.5rem;
 }
-/* line 66, ../sass/object/project/_header.sass */
-.p-header__nav li a:link, .p-header__nav li a:visited {
+/* line 67, ../sass/object/project/_header.sass */
+.p-header__nav li a:link, .p-header--compact__nav li a:link, .p-header__nav li a:visited, .p-header--compact__nav li a:visited {
   color: #312F33;
 }
-/* line 68, ../sass/object/project/_header.sass */
-.p-header__nav li a:hover {
+/* line 69, ../sass/object/project/_header.sass */
+.p-header__nav li a:hover, .p-header--compact__nav li a:hover {
   color: #89838E;
 }
 
-/* line 73, ../sass/object/project/_header.sass */
+/* line 75, ../sass/object/project/_header.sass */
 .p-header--compact__nav li a {
   height: 36px;
   line-height: 36px;
@@ -691,7 +814,7 @@ header nav {
 }
 
 /* line 16, ../sass/object/project/_image.sass */
-.p-image {
+.p-image, .p-image--portrait, .p-image--landscape {
   position: relative;
   width: 100%;
   height: 100%;
@@ -704,7 +827,7 @@ header nav {
   height: auto;
 }
 
-/* line 26, ../sass/object/project/_image.sass */
+/* line 27, ../sass/object/project/_image.sass */
 .p-image--landscape {
   left: 50%;
   transform: translateX(-50%);
@@ -717,10 +840,6 @@ header nav {
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
-  overflow: hidden;
-  *zoom: 1;
-  margin-top: 9.5rem;
-  margin-bottom: 9.5rem;
 }
 /* line 12, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/output/support/_clearfix.scss */
 .p-item-detail:after {
@@ -729,34 +848,63 @@ header nav {
   clear: both;
 }
 
-/* line 9, ../sass/object/project/_item-detail.sass */
+/* line 4, ../sass/object/project/_item-detail.sass */
 .p-item-detail__image {
   width: 49.15254%;
   float: left;
   margin-right: 1.69492%;
 }
+@media (min-width: 0) and (max-width: 767px) {
+  /* line 4, ../sass/object/project/_item-detail.sass */
+  .p-item-detail__image {
+    width: 100%;
+    float: right;
+    margin-right: 0;
+  }
+}
 
-/* line 12, ../sass/object/project/_item-detail.sass */
-.p-item-detail__text {
+/* line 9, ../sass/object/project/_item-detail.sass */
+.p-item-detail__content {
   width: 49.15254%;
   float: right;
   margin-right: 0;
 }
-/* line 15, ../sass/object/project/_item-detail.sass */
-.p-item-detail__text caption {
+@media (min-width: 0) and (max-width: 767px) {
+  /* line 9, ../sass/object/project/_item-detail.sass */
+  .p-item-detail__content {
+    width: 100%;
+    float: right;
+    margin-right: 0;
+  }
+}
+
+/* line 14, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table {
+  width: 100%;
+}
+/* line 17, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table caption {
   display: none;
 }
-/* line 18, ../sass/object/project/_item-detail.sass */
-.p-item-detail__text tr {
+/* line 20, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table tr {
   border-bottom: 1px solid #DFDCE2;
 }
-/* line 21, ../sass/object/project/_item-detail.sass */
-.p-item-detail__text th, .p-item-detail__text td {
+/* line 23, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table tr:first-child {
+  border-top: 3px double #312F33;
+}
+/* line 25, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table tr:last-child {
+  border-bottom: 1px solid #312F33;
+}
+/* line 28, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table th, .p-item-detail__table td {
   padding: 6px 10px;
 }
-/* line 23, ../sass/object/project/_item-detail.sass */
-.p-item-detail__text th {
-  width: 16.66667%;
+/* line 31, ../sass/object/project/_item-detail.sass */
+.p-item-detail__table th {
+  width: 100px;
   text-align: left;
 }
 
@@ -772,6 +920,43 @@ header nav {
 }
 
 /* line 7, ../sass/object/project/_item.sass */
+.p-items--state_loading,
+.p-items--state_error {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #F9F7F7;
+}
+
+/* line 18, ../sass/object/project/_item.sass */
+.p-items--state_loading i {
+  -webkit-animation: spin 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  animation: spin 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  z-index: 101;
+  margin: 20px auto 0;
+  display: block;
+  height: 5rem;
+  width: 5rem;
+}
+/* line 13, ../sass/object/component/_icon.sass */
+.p-items--state_loading i:after {
+  font-style: normal;
+  line-height: 5rem;
+  font-size: 5rem;
+  font-family: "Pe-icon-7-stroke", sans-serif;
+  content: "";
+  color: #C64B8F;
+}
+
+/* line 28, ../sass/object/project/_item.sass */
+.p-items--state_error p {
+  font-size: 2rem;
+}
+
+/* line 31, ../sass/object/project/_item.sass */
 .p-item {
   width: 23.72881%;
   float: left;
@@ -805,12 +990,32 @@ header nav {
   margin-right: -100%;
   clear: none;
 }
-/* line 13, ../sass/object/project/_item.sass */
+@media (min-width: 0) and (max-width: 767px) {
+  /* line 31, ../sass/object/project/_item.sass */
+  .p-item {
+    width: 49.15254%;
+    float: left;
+  }
+  /* line 66, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/language/susy/_gallery.scss */
+  .p-item:nth-child(2n + 1) {
+    margin-left: 0;
+    margin-right: -100%;
+    clear: both;
+    margin-left: 0;
+  }
+  /* line 66, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/language/susy/_gallery.scss */
+  .p-item:nth-child(2n + 2) {
+    margin-left: 50.84746%;
+    margin-right: -100%;
+    clear: none;
+  }
+}
+/* line 41, ../sass/object/project/_item.sass */
 .p-item a {
   text-decoration: none;
 }
 
-/* line 16, ../sass/object/project/_item.sass */
+/* line 44, ../sass/object/project/_item.sass */
 .p-item__image {
   position: relative;
   z-index: 1;
@@ -824,175 +1029,135 @@ header nav {
   content: "";
 }
 
-/* line 23, ../sass/object/project/_item.sass */
+/* line 55, ../sass/object/project/_item.sass */
 .p-item__caption {
-  overflow: hidden;
-  *zoom: 1;
-  padding: 6px 10px;
+  height: 3rem;
+  margin: 6px 10px;
+  padding: 0;
+  font-size: 0;
   list-style-type: none;
 }
-/* line 28, ../sass/object/project/_item.sass */
+/* line 62, ../sass/object/project/_item.sass */
 .p-item__caption li {
-  margin-left: 10px;
+  float: left;
+  margin-left: 2.94118%;
+  line-height: 3rem;
+  font-size: 1.3rem;
 }
-/* line 31, ../sass/object/project/_item.sass */
+/* line 68, ../sass/object/project/_item.sass */
 .p-item__caption li:first-child {
   margin-left: 0;
 }
 
-/* line 34, ../sass/object/project/_item.sass */
-.p-item__title,
-.p-item__price {
-  float: left;
-  width: 47.36842%;
+/* line 71, ../sass/object/project/_item.sass */
+.p-item__title {
+  width: 85.29412%;
   text-align: left;
 }
 
-/* line 42, ../sass/object/project/_item.sass */
-.p-item__like,
-.p-item__purchase,
-.p-item__search {
-  float: right;
-  width: 2rem;
-  max-width: 21.05263%;
+/* line 75, ../sass/object/project/_item.sass */
+.p-item__price {
+  width: 70.58824%;
+  text-align: left;
 }
 
-/* line 50, ../sass/object/project/_item.sass */
-.p-item__like a {
+/* line 79, ../sass/object/project/_item.sass */
+.p-item__like, .p-item__like--is_liked, .p-item__search, .p-item__purchase, .p-item__like--is_purchased {
+  width: 11.76471%;
+}
+
+/* line 84, ../sass/object/project/_item.sass */
+.p-item__like a:after, .p-item__like--is_liked a:after, .p-item__search a:after, .p-item__purchase a:after, .p-item__like--is_purchased a:after {
+  color: #89838E;
+}
+
+/* line 89, ../sass/object/project/_item.sass */
+.p-item__like--is_liked a:after, .p-item__like--is_purchased a:after {
+  color: #C64B8F;
+}
+
+/* line 95, ../sass/object/project/_item.sass */
+.p-item__like a, .p-item__like--is_liked a {
   display: block;
-  height: 2rem;
+  height: 3rem;
   width: 2rem;
 }
-/* line 2, ../sass/object/component/_icon.sass */
-.p-item__like a:after {
+/* line 13, ../sass/object/component/_icon.sass */
+.p-item__like a:after, .p-item__like--is_liked a:after {
   font-style: normal;
-  line-height: 2rem;
+  line-height: 3rem;
   font-size: 2rem;
   font-family: "Pe-icon-7-stroke", sans-serif;
   content: "";
 }
 
-/* line 54, ../sass/object/project/_item.sass */
+/* line 101, ../sass/object/project/_item.sass */
 .p-item__search a {
   display: block;
-  height: 2rem;
+  height: 3rem;
   width: 2rem;
 }
-/* line 2, ../sass/object/component/_icon.sass */
+/* line 13, ../sass/object/component/_icon.sass */
 .p-item__search a:after {
   font-style: normal;
-  line-height: 2rem;
+  line-height: 3rem;
   font-size: 2rem;
   font-family: "Pe-icon-7-stroke", sans-serif;
   content: "";
 }
 
-/* line 58, ../sass/object/project/_item.sass */
-.p-item__purchase a {
+/* line 107, ../sass/object/project/_item.sass */
+.p-item__purchase a, .p-item__like--is_purchased a {
   display: block;
-  height: 2rem;
+  height: 3rem;
   width: 2rem;
 }
-/* line 2, ../sass/object/component/_icon.sass */
-.p-item__purchase a:after {
+/* line 13, ../sass/object/component/_icon.sass */
+.p-item__purchase a:after, .p-item__like--is_purchased a:after {
   font-style: normal;
-  line-height: 2rem;
+  line-height: 3rem;
   font-size: 2rem;
   font-family: "Pe-icon-7-stroke", sans-serif;
-  content: "";
-}
-
-/* line 65, ../sass/object/project/_item.sass */
-.p-item__like a:after,
-.p-item__purchase a:after,
-.p-item__search a:after {
-  color: #89838E;
-}
-
-/* line 71, ../sass/object/project/_item.sass */
-.p-item__like--is_liked a:after,
-.p-item__like--is_purchased a:after {
-  color: #C64B8F;
-}
-
-/* line 74, ../sass/object/project/_item.sass */
-.p-items--state_loading,
-.p-items--state_error {
-  position: absolute;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #F9F7F7;
-}
-
-/* line 85, ../sass/object/project/_item.sass */
-.p-items--state_loading i {
-  -webkit-animation: spin 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  animation: spin 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  z-index: 101;
-  margin: 20px auto 0;
-  display: block;
-  height: 5rem;
-  width: 5rem;
-}
-/* line 2, ../sass/object/component/_icon.sass */
-.p-items--state_loading i:after {
-  font-style: normal;
-  line-height: 5rem;
-  font-size: 5rem;
-  font-family: "Pe-icon-7-stroke", sans-serif;
-  content: "";
-  color: #C64B8F;
-}
-
-/* line 95, ../sass/object/project/_item.sass */
-.p-items--state_error p {
-  font-size: 2rem;
+  content: "";
 }
 
 /*  REGISTRATION FORM
  *
  */
-/* line 6, ../sass/object/project/_registration-form.sass */
-.p-registration-form {
-  width: 49.15254%;
-  margin: 0 auto;
-}
 /* line 10, ../sass/object/project/_registration-form.sass */
-.p-registration-form form {
+.p-formset__form {
   margin: 0 0 12px;
   text-align: right;
 }
 /* line 15, ../sass/object/project/_registration-form.sass */
-.p-registration-form input[type=text], .p-registration-form input[type=password], .p-registration-form input[type=email] {
+.p-formset__form input[type=text], .p-formset__form input[type=password], .p-formset__form input[type=email] {
   width: 100%;
 }
+
 /* line 18, ../sass/object/project/_registration-form.sass */
-.p-registration-form table {
+.p-formset__table {
   width: 100%;
   margin: 0 0 12px;
   text-align: left;
   vertical-align: middle;
 }
 /* line 24, ../sass/object/project/_registration-form.sass */
-.p-registration-form table caption {
+.p-formset__table caption {
   display: none;
 }
 /* line 27, ../sass/object/project/_registration-form.sass */
-.p-registration-form table th, .p-registration-form table td {
+.p-formset__table th, .p-formset__table td {
   height: 36px;
   padding: 12px 0;
   vertical-align: middle;
 }
 /* line 32, ../sass/object/project/_registration-form.sass */
-.p-registration-form table th {
+.p-formset__table th {
   width: 31.03448%;
   font-weight: normal;
 }
 /* line 36, ../sass/object/project/_registration-form.sass */
-.p-registration-form table td {
+.p-formset__table td {
   width: 65.51724%;
 }
 
@@ -1041,7 +1206,7 @@ header nav {
   background: #DFDCE2;
   overflow-y: hidden;
 }
-/* line 9, ../sass/object/component/_animation.sass */
+/* line 13, ../sass/object/component/_transition.sass */
 .p-showcase__filter-form.slide-enter {
   height: 0;
   padding: 0 20px;
@@ -1051,12 +1216,12 @@ header nav {
   -webkit-transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
   transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
-/* line 15, ../sass/object/component/_animation.sass */
+/* line 19, ../sass/object/component/_transition.sass */
 .p-showcase__filter-form.slide-enter.slide-enter-active {
   height: 224px;
   padding: 12px 20px;
 }
-/* line 19, ../sass/object/component/_animation.sass */
+/* line 23, ../sass/object/component/_transition.sass */
 .p-showcase__filter-form.slide-leave {
   height: 224px;
   padding: 12px 20px;
@@ -1065,7 +1230,7 @@ header nav {
   -webkit-transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
   transition: all 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
-/* line 24, ../sass/object/component/_animation.sass */
+/* line 28, ../sass/object/component/_transition.sass */
 .p-showcase__filter-form.slide-leave.slide-leave-active {
   height: 0;
   padding: 0 20px;

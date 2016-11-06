@@ -1,9 +1,9 @@
-{% extends "registration/registration_base.html" %}
+{% extends "registration/registration_base_message.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Account Approved" %}{% endblock %}
 
-{% block content %}
+{% block message_section %}
 <p>
     {% trans "The user's account is now approved." %}
 </p>

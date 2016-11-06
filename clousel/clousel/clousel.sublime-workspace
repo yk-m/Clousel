@@ -1,0 +1,1322 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"deli",
+				"delivery_days\t(models.py)"
+			],
+			[
+				"get",
+				"getLogger\t(models.py)"
+			],
+			[
+				"orie",
+				"orientation_class\t(item.py)"
+			],
+			[
+				"fil",
+				"filtername"
+			],
+			[
+				"item",
+				"items.jsx"
+			],
+			[
+				"render",
+				"render_options"
+			],
+			[
+				"lab",
+				"label\t<label>"
+			],
+			[
+				"td",
+				"td\tTag"
+			],
+			[
+				"defaul",
+				"defaults"
+			],
+			[
+				"sele",
+				"select"
+			],
+			[
+				"Catego",
+				"CategorySelector"
+			],
+			[
+				"cate",
+				"category-selector.jsx"
+			],
+			[
+				"categ",
+				"category\t(serializer.py)"
+			],
+			[
+				"selecte",
+				"selectedCategory"
+			],
+			[
+				"c",
+				"css/"
+			],
+			[
+				"getor",
+				"get_object_or_404"
+			],
+			[
+				"resu",
+				"result-filters.jsx"
+			],
+			[
+				"dash",
+				"dashboard_view"
+			],
+			[
+				"SVG",
+				"SVGPolygon"
+			],
+			[
+				"sv",
+				"svg-polygon.jsx"
+			],
+			[
+				"pix",
+				"pixelColors"
+			],
+			[
+				"S",
+				"SVGPixelArt"
+			],
+			[
+				"sty",
+				"style"
+			],
+			[
+				"STA",
+				"STATIC_ROOT\t(settings.py)"
+			],
+			[
+				"prin",
+				"printResultDWT"
+			],
+			[
+				"gauss",
+				"gauss_coefficient"
+			],
+			[
+				"a_out",
+				"a_out2"
+			],
+			[
+				"gene",
+				"generateSquareWave"
+			],
+			[
+				"arra",
+				"array_dToc\t(noise_removal.c)"
+			],
+			[
+				"trans",
+				"transformed_c"
+			],
+			[
+				"noisremo",
+				"noiseRemovalWithDFT\t(noise_removal.c)"
+			],
+			[
+				"recosin",
+				"recovered_sin_dft"
+			],
+			[
+				"sq",
+				"square_wave"
+			],
+			[
+				"noise",
+				"noised_wave"
+			],
+			[
+				"cos",
+				"cos_wave"
+			],
+			[
+				"freea",
+				"freeArray_c"
+			],
+			[
+				"fre",
+				"freeArray_d"
+			],
+			[
+				"Arr",
+				"Array_d"
+			],
+			[
+				"remov",
+				"removed_c"
+			],
+			[
+				"tra",
+				"transformed_c"
+			],
+			[
+				"Ar",
+				"Array_c\t(dft.h)"
+			],
+			[
+				"Arry",
+				"Array_c\t(fft.h)"
+			],
+			[
+				"star",
+				"start_position"
+			],
+			[
+				"new",
+				"newArray_d"
+			],
+			[
+				"Arra",
+				"Array_d\t(fft.c)"
+			],
+			[
+				"input",
+				"inputt\tinput - text"
+			],
+			[
+				"p",
+				"product"
+			],
+			[
+				"au",
+				"author"
+			],
+			[
+				"eige",
+				"eigen.h"
+			],
+			[
+				"catego",
+				"category"
+			],
+			[
+				"priam",
+				"printMatrixToFile\t(matrix.c)"
+			],
+			[
+				"rgb",
+				"convertColorSpaceIntoRGB"
+			],
+			[
+				"printI",
+				"printBMPInfoHeader"
+			],
+			[
+				"compressed",
+				"compressed.bmp"
+			],
+			[
+				"BMP",
+				"BMPFileHeader"
+			],
+			[
+				"printImage",
+				"printImage\t(image.h)"
+			],
+			[
+				"newIma",
+				"newImage\t(image.h)"
+			],
+			[
+				"loadFI",
+				"loadFileAsMatrix\t(matrix.c)"
+			],
+			[
+				"print",
+				"printMatrix"
+			],
+			[
+				"inpu",
+				"input.txt"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"ffte",
+				"ffted1"
+			],
+			[
+				"origi",
+				"original_dim"
+			],
+			[
+				"origina",
+				"original_vector"
+			],
+			[
+				"ifft",
+				"iffted"
+			],
+			[
+				"Arrd",
+				"array_cTod"
+			],
+			[
+				"array",
+				"array_dToc"
+			],
+			[
+				"fft",
+				"ffted"
+			],
+			[
+				"tras",
+				"transformed"
+			],
+			[
+				"musi",
+				"music_id"
+			],
+			[
+				"respo",
+				"response_with_error\t(Responser.php)"
+			],
+			[
+				"da",
+				"data"
+			],
+			[
+				"arti",
+				"artist_id"
+			],
+			[
+				"prefe",
+				"prefecture"
+			],
+			[
+				"genera",
+				"generateDatesClass"
+			],
+			[
+				"thr",
+				"throw\t(date.format.js)"
+			],
+			[
+				"grap",
+				"graph_data"
+			],
+			[
+				"wei",
+				"weight"
+			],
+			[
+				"weig",
+				"weight_chart"
+			],
+			[
+				"Date",
+				"DateTime\t(index.php)"
+			],
+			[
+				"err",
+				"error_code"
+			],
+			[
+				"now",
+				"now_day"
+			],
+			[
+				"invali",
+				"invalid_id\t(AuthController.php)"
+			],
+			[
+				"invalid",
+				"invalid_pass\t(Exceptions.php)"
+			],
+			[
+				"message",
+				"message"
+			],
+			[
+				"D",
+				"DashboardController\t(Application.php)"
+			],
+			[
+				"thi",
+				"this〔keyword〕"
+			],
+			[
+				"in",
+				"include"
+			],
+			[
+				"draw",
+				"drawer.js"
+			],
+			[
+				"a",
+				"a\t<a>"
+			],
+			[
+				"inputs",
+				"inputs\tinput - submit"
+			],
+			[
+				"inputt",
+				"inputt\tinput - text"
+			],
+			[
+				"html",
+				"html5\tSimple HTML5 Boilerplate"
+			],
+			[
+				"pri",
+				"printf\tprintf …"
+			],
+			[
+				"oupu",
+				"output_signal"
+			],
+			[
+				"arg",
+				"argv"
+			],
+			[
+				"ifo",
+				"iof.h"
+			],
+			[
+				"pha",
+				"phase_s"
+			],
+			[
+				"Array",
+				"Array_d"
+			],
+			[
+				"tople",
+				"topLeft_"
+			],
+			[
+				"bottom",
+				"bottomRight_"
+			],
+			[
+				"to",
+				"toXPositionOnApplet"
+			],
+			[
+				"y",
+				"yScale_"
+			],
+			[
+				"cu",
+				"current"
+			],
+			[
+				"htlm",
+				"html\thtml"
+			],
+			[
+				"ope",
+				"openFile"
+			],
+			[
+				"e",
+				"example/"
+			],
+			[
+				"do",
+				"double"
+			],
+			[
+				"appe",
+				"appendResult"
+			],
+			[
+				"outpu",
+				"output_container\t(FileHandler.js)"
+			],
+			[
+				"matc",
+				"matchFileNum"
+			],
+			[
+				"tar",
+				"target_num"
+			],
+			[
+				"out",
+				"output"
+			],
+			[
+				"targe",
+				"target"
+			],
+			[
+				"ei",
+				"eigens"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"prepare",
+				"prepare_section\t(04.html)"
+			],
+			[
+				"doc",
+				"document"
+			],
+			[
+				"sol",
+				"_solveByGauss"
+			],
+			[
+				"_sele",
+				"_selectPivotFromColumn"
+			],
+			[
+				"max",
+				"maxRow"
+			],
+			[
+				"prif",
+				"printf\tprintf …"
+			],
+			[
+				"count",
+				"countDataNum"
+			],
+			[
+				"xn",
+				"xn_sorted"
+			],
+			[
+				"divi",
+				"divideComplex"
+			],
+			[
+				"comple",
+				"complex_t"
+			],
+			[
+				"num",
+				"num_of_file"
+			],
+			[
+				"co",
+				"cos"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 349.0,
+		"last_filter": "projec",
+		"selected_items":
+		[
+			[
+				"projec",
+				"Project Manager: Add Project"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"mark",
+				"OmniMarkupPreviewer: Preview Current Markup in Browser"
+			],
+			[
+				"color",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"listpa",
+				"Package Control: List Packages"
+			],
+			[
+				"sass",
+				"SassBeautify"
+			],
+			[
+				"sassb",
+				"SassBeautify: Convert from SASS to current type"
+			],
+			[
+				"sassbe",
+				"SassBeautify"
+			],
+			[
+				"sass b",
+				"SassBeautify"
+			],
+			[
+				"lis",
+				"Set Syntax: Lisp"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"ali",
+				"Abacus: align selection"
+			],
+			[
+				"uns",
+				"Build: New Build System"
+			],
+			[
+				"al",
+				"Abacus: align selection"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"cdn",
+				"Cdnjs: Import Script"
+			],
+			[
+				":wq",
+				"BracketHighlighter: Swap Quotes"
+			],
+			[
+				"colo",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"colorsub",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"cdnj",
+				"Cdnjs: Search"
+			],
+			[
+				"package l",
+				"Package Control: List Packages"
+			],
+			[
+				"snippet",
+				"Snippet: @if"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"choose lint",
+				"SublimeLinter: Choose Lint Mode"
+			],
+			[
+				"sas",
+				"Set Syntax: Sass"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"sass ",
+				"Set Syntax: Sass"
+			],
+			[
+				"syntax",
+				"Set Syntax: Sass"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"packins",
+				"Package Control: Install Package"
+			],
+			[
+				"packageremo",
+				"Package Control: Remove Package"
+			],
+			[
+				"snipe htm",
+				"Snippet: html"
+			],
+			[
+				"html5",
+				"Set Syntax: HTML5"
+			],
+			[
+				"Snippet: ",
+				"Snippet: html"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"user",
+				"Preferences: Settings - User"
+			],
+			[
+				"cssco",
+				"Run CSScomb"
+			],
+			[
+				"au",
+				"Autoprefix CSS"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"syn",
+				"Set Syntax: PHP"
+			],
+			[
+				"synta",
+				"Set Syntax: PHP"
+			],
+			[
+				"",
+				"Bookmarks: Clear All"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel"
+	],
+	"file_history":
+	[
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/clousel/settings.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/activation_email_subject.txt",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/activation_email.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/activation_email.txt",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/admin_approve_complete_email_subject.txt",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/admin_approve_complete_email.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/password_reset_email.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/admin_approve_email.txt",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/admin_approve_email.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/admin_approve_email_subject.txt",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/admin_approve_complete_email.txt",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_registration-form.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/layout/_main.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/registration_base_message.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/resend_activation_form.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/registration_form.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/registration_complete.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/registration_closed.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/models.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/auth_urls.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/common.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_load.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_typography.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_utility.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_carousel.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_header.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_image.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_item-detail.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_item.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_result.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/project/_upload-form.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/wardrobe/templates/wardrobe/upload.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/templates/registration/registration_base.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/views.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/tests/default_backend.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/tests/models.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/forms.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/signals.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/management/commands/cleanupregistration.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/tests/urls.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/tests/simple_backend.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/tests/admin_actions.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/lib/django-registration-master/registration/tests/admin_approval_backend.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/views.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_dropdown.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_preferences.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_modal.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_pagination.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_icon.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_form.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_transition.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/component/_animation.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/item-list-builder.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/layout/_header.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_variable.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_function.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_mixin.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_base.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_icon.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/_normalize.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/user-item/user-item.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/pe-icon-7-stroke/_load.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/elegant-icons/_load.sass",
+		"/Users/yuka/Downloads/elegant_font/HTML CSS/style.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/pe-icon-7-stroke/css/helper.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/pe-icon-7-stroke/css/pe-icon-7-stroke.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/assets/refs/style.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/assets/libs/css/bootstrap-select.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/assets/libs/css/bootstrap.min.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/assets/libs/css/prism.css",
+		"/Users/yuka/Downloads/Icon-font-7-stroke-PIXEDEN-v-1.2.0/assets/docs/style.css",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/stylesheets/common.css",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/item/item.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/user-item/user-item-detail.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/item/item-detail.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/modal.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/clousel/templates/header.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/item/items.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/loader.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_screen-reader.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_mixins.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_variables.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_stacked.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/wardrobe/forms.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/user-item/user-items.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/api/serializer.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/wardrobe/models.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/models.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/shop/models.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/wardrobe/views.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/user-item-list-builder.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/pe-icon-7-stroke/_variables.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/pe-icon-7-stroke/_path.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/elegant-icons/_path.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/elegant-icons/_variables.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_animated.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/elegant-icons/_animated.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_path.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_variables.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_font-awesome.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/font-awesome/_path.scss",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/foundation/elegant-font/_variables.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/search/search-filters.jsx",
+		"/Users/yuka/Downloads/animatedModal.js-master/demo/css/animate.min.css",
+		"/Users/yuka/Downloads/animatedModal.js-master/animatedModal.js",
+		"/Users/yuka/Downloads/animatedModal.js-master/demo/demos.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/webpack.config.js",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/utility/_overflow.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/sass/object/utility/_block.sass",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/item-list.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/shop-item-list.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/item/item-list.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/list-builder.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/wardrobe/urls.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/shop/views.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/shop/urls.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/clousel/urls.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/shop/templates/shop/index.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/pages/views.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/clothing/models.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/pages/templates/pages/includes/items.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/pages/templatetags/item.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/recommender/views.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/pages/templates/pages/dashboard.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/pages/templatetags/image.py",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/pages/templates/pages/items.html",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/assets/js/components/search/search-ordering.jsx",
+		"/Users/yuka/GoogleDrive/School/Subjects/Graduation_Research/Workspace/app/clousel/accounts/urls.py"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"detail",
+			".p-item",
+			"p-image",
+			"\n.",
+			"¥n.",
+			"before \n    content:",
+			";",
+			"}",
+			"{",
+			";",
+			"double",
+			"cycle",
+			"icon",
+			"close",
+			"className",
+			"p-result",
+			"item",
+			"props",
+			"Searching",
+			"items",
+			"user_item",
+			"user_",
+			"user_item",
+			"UserImage",
+			"uploader",
+			"p-search",
+			"Result",
+			"result",
+			"category_key",
+			"pageRangeDisplayed",
+			"marginPagesDisplayed",
+			"pageNum",
+			"this.load",
+			"load",
+			"categoriesFetchUrl",
+			"loadCategoriesFromServer",
+			"load_items",
+			"failure_callback",
+			"success_callback",
+			"itemsFetchUrl",
+			"perPage",
+			"loadItemsFromServer",
+			"failureCallback",
+			"failure_callback",
+			"successCallback",
+			"filtersAreHidden",
+			"errorMessage",
+			"hasOccurredError",
+			"loadingIsHidden",
+			"props",
+			"id",
+			"maxPrice",
+			"minPrice",
+			"keyword",
+			",",
+			"user",
+			"pass",
+			"path",
+			"queries",
+			"=",
+			"slide",
+			"icontains",
+			"SerializerMethodField",
+			"title",
+			"bind",
+			"slidedown",
+			"get_object",
+			"get_object_or_",
+			"get_object_\nget_object_\nget_object_or_404",
+			"ordering",
+			"Order",
+			"order",
+			"Ordering",
+			"Pro",
+			"serializers.ReadOnlyField",
+			"loader",
+			"})\n",
+			"1",
+			"comment",
+			"comments",
+			"price",
+			"image",
+			"com",
+			"comment",
+			"comments",
+			"url",
+			".",
+			"password_reset_form",
+			"email",
+			"mail",
+			"submit",
+			"提出",
+			"submit",
+			"</li>\n      <li",
+			"<br />",
+			"email address",
+			"email adress",
+			"email",
+			"locale",
+			"%s\\n\\n",
+			"長さ",
+			"M_M_PI",
+			"PI",
+			"gain",
+			"calcAngle",
+			"calcAng",
+			"resolution_level",
+			"B8A5AE",
+			"UserPro",
+			"EmailUser",
+			"UserP",
+			" ",
+			"sin",
+			"clone",
+			"font-path",
+			"THRESHOLD",
+			"width",
+			"height",
+			"printMa",
+			"* ",
+			"222628",
+			"#1",
+			"background",
+			"!\n",
+			"REST_FRAMEWORK",
+			"User",
+			"user",
+			"make"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"$",
+			"",
+			"class",
+			"p-showcase",
+			"UserItem",
+			"wardrobe",
+			"p-result",
+			"Search",
+			"search",
+			"category_id",
+			"page_range_displayed",
+			"margin_pages_displayed",
+			"page_num",
+			"this.fetch",
+			"categories_fetch_url",
+			"fetchCategories",
+			"fetchItems",
+			"failure",
+			"success",
+			"items_fetch_url",
+			"per_page",
+			"load_items",
+			"failure_callback",
+			"success_callback",
+			"filters_are_hidden",
+			"error_message",
+			"has_occurred_error",
+			"loading_is_hidden",
+			"max_price",
+			"min_price",
+			"search",
+			"\\t",
+			"query",
+			"Ordering",
+			"ordering",
+			".p-",
+			"</li>\n      <li><a href=\"../index.html\" title=\"\">index</a></li>\n      <li",
+			"<br>",
+			"%s\\n",
+			"M_PI",
+			"dwt_level",
+			"\t",
+			"font-dir-path",
+			"column",
+			"row",
+			"\t",
+			"\\t",
+			"#### Response",
+			"#### Request body",
+			"#### リクエストボディ",
+			"ワードローブ",
+			"possessions",
+			"| Status code | Status | contents |\n|:------------|:-------|:---------|",
+			"| Status | Status code | contents |\n|:-------|:------------|:---------|",
+			"\n| Status | Status code | contents |\n|:-------|:------------|:---------|",
+			"\t",
+			"Array_c",
+			"date_statuses",
+			"",
+			"font-path",
+			"\\n$",
+			"\\n",
+			"",
+			"*",
+			" ",
+			"index",
+			"generateAppendOutput",
+			"appendOutput",
+			"generateAppendOutputSection",
+			"Array_d",
+			"\\t",
+			"generateCosWave",
+			"FSK",
+			"generateCosWave",
+			"Array_i",
+			"Array_d",
+			"．",
+			"，",
+			"",
+			"\"",
+			" ",
+			"",
+			"/Users/yuka/GoogleDrive/School/Subjects/Communication_Engineering_II/2nd/Assignments/sample.txt",
+			"countArrayLength",
+			"newArray",
+			"->a",
+			"Array",
+			"position.j",
+			"position.i",
+			"\t",
+			"drop-zone",
+			"j",
+			"i",
+			"\\ ",
+			"/ ",
+			"\\",
+			"/",
+			"\\",
+			"/",
+			"/Users/yuka/Music/iTunes/iTunes Media/Music",
+			"",
+			"/Users/yuka/Music/iTunes/iTunes Media/Music",
+			"/",
+			"fmt_chunk",
+			"results",
+			"answers",
+			"4x3",
+			"$gridsystem",
+			"$tile-",
+			"gridsystem__",
+			"main__tile",
+			"IsOnTheLine",
+			"HasTurnedTo",
+			"CrossesWhitespace",
+			"crossesWhitespace",
+			"straight_num",
+			"setDutyCycle_right",
+			"setDutyCycle_left",
+			"setDutyCycle_Left",
+			"setDutyCycle_Right",
+			"setDutyCycleOfRight",
+			"setDutyCycleOfLeft",
+			"vector",
+			"\t",
+			"vector",
+			"DIM",
+			" ",
+			"DIM"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 405.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 106.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 106.0
+	},
+	"pinned_build_system": "Packages/C++/C++ Single File.sublime-build",
+	"project": "clousel.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/GoogleDrive/School/Subjects/Communication_Engineering_II/2nd/Assignments/example/1-5/ex1-5.gnuplot"
+			],
+			[
+				"gnup",
+				"~/GoogleDrive/School/Subjects/Communication_Engineering_II/2nd/Assignments/example/1-5/ex1-5.gnuplot"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

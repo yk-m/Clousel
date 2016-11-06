@@ -1,0 +1,47 @@
+/*
+ *  UTILITY
+ *    - Compass
+ *    - Grid
+ *    - Functions
+ */
+
+
+
+/*  Compass
+   ---------------------------------------- */
+
+/* ----- Tuning Vendor Prefixes ----- */
+@import compass/css3
+
+/* ----- Clearfix ----- */
+@import compass/utilities/general/clearfix
+
+/* ----- Animation ----- */
+@import compass/css3/animation
+/*!
+ *  Compass Ceaser CSS Easing Transitions by Jared Hardy - https://github.com/jhardy/compass-ceaser-easing
+ *  License - MIT License (https://github.com/jhardy/compass-ceaser-easing/blob/master/LICENSE)
+ */
+@import ceaser-easing
+
+
+
+/*  Grid
+   ---------------------------------------- */
+
+/*!
+ *  Susy by Miriam Eric Suzanne - http://susy.oddbird.net
+ *  License - https://github.com/oddbird/susy/blob/master/LICENSE.txt
+ */
+$susy: ( global-box-sizing: border-box, use-custom: (rem: true), container: $wrapper-width )
+@import "susy"
+
+
+
+/*  Functions
+   ---------------------------------------- */
+@function calc_width($column-num)
+    @return ($unit-width + $horizontal-span) * $column-num - $horizontal-span
+
+@function calc_height($row-num)
+    @return ($unit-height + $vertical-span) * $row-num - $vertical-span

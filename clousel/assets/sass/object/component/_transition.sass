@@ -1,6 +1,10 @@
 /*
- *  ANIMATIONS FOR ReactCSSTransitionGroup
+ *  TRANSITION FOR ReactCSSTransitionGroup
+ *    - Slide up/down (name: slide,    target: height, padding)
+ *    - Fade          (name: fade,     target: opacity)
+ *    - Fade and Move (name: fademove, target: opacity, transform:translate(), transform:scale())
  */
+
 
 
 /*  Slide up/down
@@ -26,6 +30,7 @@
         padding: 0 $padding-lr
 
 
+
 /*  Fade
    ---------------------------------------- */
 .fade-enter
@@ -41,6 +46,7 @@
     &#{&}-active
         opacity: .01
         +transition(opacity .2s ease-in)
+
 
 
 /*  Fade and Move

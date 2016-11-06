@@ -1,12 +1,12 @@
 /*
  *  TYPOGRAPHY
- *    - Settings
+ *    - Preference
  *    - Definition
  */
 
 
 
-/*  Settings
+/*  Preference
    ---------------------------------------- */
 
 /* ----- Font Family ----- */
@@ -15,11 +15,11 @@ $body-font-family: $header-font-family
 // $body-font-family: "Lato", sans-serif
 
 /* ----- Size ----- */
-$base-font-size: 62.5%
+$root-font-size: 62.5%
 $body-font-size: 1.3rem
 $body-line-height: 1.5em
 
-/* ----- Icons ----- */
+/* ----- Icon ----- */
 $font-dir-path: "../fonts/Pe-icon-7-stroke"
 @import foundation/pe-icon-7-stroke/load
 $icon-font-family: "Pe-icon-7-stroke", sans-serif
@@ -33,9 +33,10 @@ $icon-carousel-prev: $pe-7s-angle-left-circle
 $icon-carousel-next: $pe-7s-angle-right-circle
 $icon-carousel-dot: $pe-7s-more
 $icon-item-like: $pe-7s-like2
-$icon-item-purchase: $pe-7s-shopbag
+$icon-item-purchase: $pe-7s-portfolio
 $icon-item-search: $pe-7s-search
 $icon-item-loading: $pe-7s-science
+
 
 
 /*  Definition
@@ -43,7 +44,7 @@ $icon-item-loading: $pe-7s-science
 
 /* ----- Root ----- */
 html
-    font-size: $base-font-size
+    font-size: $root-font-size
 
 /* ----- Base ----- */
 body, input, button, select

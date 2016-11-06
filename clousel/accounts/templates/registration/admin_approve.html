@@ -1,9 +1,9 @@
-{% extends "registration/registration_base.html" %}
+{% extends "registration/registration_base_message.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Approval Failure" %}{% endblock %}
 
-{% block content %}
+{% block message_section %}
 <p>{% trans "Account Approval failed." %}</p>
 {% endblock %}
 

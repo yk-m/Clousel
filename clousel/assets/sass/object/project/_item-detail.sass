@@ -1,16 +1,18 @@
 .p-item-detail
     +container
-    +clearfix
-
-    $span: calc_modal_closebutton_height() + 2rem
-    margin-top: $span
-    margin-bottom: $span
 
 .p-item-detail__image
     +span(6 of 12)
+    +susy-breakpoint(0 $screen--smartphone-max, 12)
+        +span(12 last)
 
-.p-item-detail__text
+.p-item-detail__content
     +span(6 of 12 last)
+    +susy-breakpoint(0 $screen--smartphone-max, 12)
+        +span(12 last)
+
+.p-item-detail__table
+    width: 100%
 
     caption
         display: none
@@ -18,8 +20,14 @@
     tr
         border-bottom: 1px solid $light-gray
 
+        &:first-child
+            border-top: 3px double $black
+        &:last-child
+            border-bottom: 1px solid $black
+
     th, td
         padding: $half-gap
+
     th
-        width: span(1 of 5)
+        width: 100px
         text-align: left
