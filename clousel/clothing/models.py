@@ -4,8 +4,8 @@ from uuid import uuid4
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
+from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
 logger = logging.getLogger('debug')

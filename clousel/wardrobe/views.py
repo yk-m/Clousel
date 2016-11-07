@@ -6,12 +6,11 @@ from django.core.exceptions import SuspiciousFileOperation
 from django.db import InternalError
 from django.forms import ModelChoiceField
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-
+from django.shortcuts import get_object_or_404, render
 from PIL import Image
 
-from .models import UserItem
 from .forms import UserItemForm
+from .models import UserItem
 
 
 @login_required
@@ -46,5 +45,3 @@ def upload_view(request):
         form = UserItemForm()
 
     return render(request, 'wardrobe/upload.html', {'form': form})
-
-

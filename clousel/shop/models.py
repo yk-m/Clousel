@@ -39,4 +39,3 @@ def auto_delete_image_on_delete(sender, instance, **kwargs):
 @receiver(models.signals.pre_save, sender=Item)
 def auto_delete_image_on_change(sender, instance, **kwargs):
     clothing.signals.auto_delete_image_on_change(sender, instance, **kwargs)
-
