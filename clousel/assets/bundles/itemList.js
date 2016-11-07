@@ -27997,13 +27997,15 @@
 
 	var _itemList2 = _interopRequireDefault(_itemList);
 
-	var _searchFilters = __webpack_require__(259);
+	var _searchFilters = __webpack_require__(262);
 
 	var _searchFilters2 = _interopRequireDefault(_searchFilters);
 
-	var _searchOrdering = __webpack_require__(261);
+	var _searchOrdering = __webpack_require__(264);
 
 	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
+
+	var _mixins = __webpack_require__(269);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28013,8 +28015,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ItemSearch = function (_React$Component) {
-	  _inherits(ItemSearch, _React$Component);
+	var ItemSearch = function (_searchable) {
+	  _inherits(ItemSearch, _searchable);
 
 	  function ItemSearch(props) {
 	    _classCallCheck(this, ItemSearch);
@@ -28134,30 +28136,10 @@
 	        this.props.children
 	      );
 	    }
-	  }, {
-	    key: 'current_page',
-	    get: function get() {
-	      return this.props.location.query.page || 1;
-	    }
-	  }, {
-	    key: 'filters',
-	    get: function get() {
-	      return {
-	        search: this.props.location.query.search,
-	        category: this.props.location.query.category,
-	        min_price: this.props.location.query.min_price,
-	        max_price: this.props.location.query.max_price
-	      };
-	    }
-	  }, {
-	    key: 'ordering',
-	    get: function get() {
-	      return this.props.location.query.ordering;
-	    }
 	  }]);
 
 	  return ItemSearch;
-	}(_react2.default.Component);
+	}((0, _mixins.searchable)((0, _mixins.flippable)(_react2.default.Component)));
 
 	ItemSearch.CATEGORIES_URL = "/api/categories/";
 	exports.default = ItemSearch;
@@ -29036,7 +29018,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _deepEqual = __webpack_require__(267);
+	var _deepEqual = __webpack_require__(244);
 
 	var _deepEqual2 = _interopRequireDefault(_deepEqual);
 
@@ -29050,25 +29032,27 @@
 
 	var _fetch2 = _interopRequireDefault(_fetch);
 
-	var _loader = __webpack_require__(244);
+	var _loader = __webpack_require__(247);
 
 	var _loader2 = _interopRequireDefault(_loader);
 
-	var _paginate = __webpack_require__(245);
+	var _paginate = __webpack_require__(248);
 
 	var _paginate2 = _interopRequireDefault(_paginate);
 
-	var _errorReporter = __webpack_require__(253);
+	var _errorReporter = __webpack_require__(256);
 
 	var _errorReporter2 = _interopRequireDefault(_errorReporter);
 
-	var _listBuilder = __webpack_require__(254);
+	var _listBuilder = __webpack_require__(257);
 
 	var _listBuilder2 = _interopRequireDefault(_listBuilder);
 
-	var _items = __webpack_require__(255);
+	var _items = __webpack_require__(258);
 
 	var _items2 = _interopRequireDefault(_items);
+
+	var _mixins = __webpack_require__(269);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29078,8 +29062,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ItemList = function (_ListBuilder) {
-	  _inherits(ItemList, _ListBuilder);
+	var ItemList = function (_searchable) {
+	  _inherits(ItemList, _searchable);
 
 	  function ItemList() {
 	    _classCallCheck(this, ItemList);
@@ -29166,30 +29150,10 @@
 	        paginate
 	      );
 	    }
-	  }, {
-	    key: 'current_page',
-	    get: function get() {
-	      return (this.props.location.query.page || 1) - 1;
-	    }
-	  }, {
-	    key: 'filters',
-	    get: function get() {
-	      return {
-	        search: this.props.location.query.search,
-	        category: this.props.location.query.category,
-	        min_price: this.props.location.query.min_price,
-	        max_price: this.props.location.query.max_price
-	      };
-	    }
-	  }, {
-	    key: 'ordering',
-	    get: function get() {
-	      return this.props.location.query.ordering;
-	    }
 	  }]);
 
 	  return ItemList;
-	}(_listBuilder2.default);
+	}((0, _mixins.searchable)(_listBuilder2.default));
 
 	ItemList.propTypes = {
 	  items_fetch_url: _react2.default.PropTypes.string.isRequired
@@ -29199,6 +29163,147 @@
 
 /***/ },
 /* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var pSlice = Array.prototype.slice;
+	var objectKeys = __webpack_require__(245);
+	var isArguments = __webpack_require__(246);
+
+	var deepEqual = module.exports = function (actual, expected, opts) {
+	  if (!opts) opts = {};
+	  // 7.1. All identical values are equivalent, as determined by ===.
+	  if (actual === expected) {
+	    return true;
+
+	  } else if (actual instanceof Date && expected instanceof Date) {
+	    return actual.getTime() === expected.getTime();
+
+	  // 7.3. Other pairs that do not both pass typeof value == 'object',
+	  // equivalence is determined by ==.
+	  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
+	    return opts.strict ? actual === expected : actual == expected;
+
+	  // 7.4. For all other Object pairs, including Array objects, equivalence is
+	  // determined by having the same number of owned properties (as verified
+	  // with Object.prototype.hasOwnProperty.call), the same set of keys
+	  // (although not necessarily the same order), equivalent values for every
+	  // corresponding key, and an identical 'prototype' property. Note: this
+	  // accounts for both named and indexed properties on Arrays.
+	  } else {
+	    return objEquiv(actual, expected, opts);
+	  }
+	}
+
+	function isUndefinedOrNull(value) {
+	  return value === null || value === undefined;
+	}
+
+	function isBuffer (x) {
+	  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
+	  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
+	    return false;
+	  }
+	  if (x.length > 0 && typeof x[0] !== 'number') return false;
+	  return true;
+	}
+
+	function objEquiv(a, b, opts) {
+	  var i, key;
+	  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
+	    return false;
+	  // an identical 'prototype' property.
+	  if (a.prototype !== b.prototype) return false;
+	  //~~~I've managed to break Object.keys through screwy arguments passing.
+	  //   Converting to array solves the problem.
+	  if (isArguments(a)) {
+	    if (!isArguments(b)) {
+	      return false;
+	    }
+	    a = pSlice.call(a);
+	    b = pSlice.call(b);
+	    return deepEqual(a, b, opts);
+	  }
+	  if (isBuffer(a)) {
+	    if (!isBuffer(b)) {
+	      return false;
+	    }
+	    if (a.length !== b.length) return false;
+	    for (i = 0; i < a.length; i++) {
+	      if (a[i] !== b[i]) return false;
+	    }
+	    return true;
+	  }
+	  try {
+	    var ka = objectKeys(a),
+	        kb = objectKeys(b);
+	  } catch (e) {//happens when one is a string literal and the other isn't
+	    return false;
+	  }
+	  // having the same number of owned properties (keys incorporates
+	  // hasOwnProperty)
+	  if (ka.length != kb.length)
+	    return false;
+	  //the same set of keys (although not necessarily the same order),
+	  ka.sort();
+	  kb.sort();
+	  //~~~cheap key test
+	  for (i = ka.length - 1; i >= 0; i--) {
+	    if (ka[i] != kb[i])
+	      return false;
+	  }
+	  //equivalent values for every corresponding key, and
+	  //~~~possibly expensive deep test
+	  for (i = ka.length - 1; i >= 0; i--) {
+	    key = ka[i];
+	    if (!deepEqual(a[key], b[key], opts)) return false;
+	  }
+	  return typeof a === typeof b;
+	}
+
+
+/***/ },
+/* 245 */
+/***/ function(module, exports) {
+
+	exports = module.exports = typeof Object.keys === 'function'
+	  ? Object.keys : shim;
+
+	exports.shim = shim;
+	function shim (obj) {
+	  var keys = [];
+	  for (var key in obj) keys.push(key);
+	  return keys;
+	}
+
+
+/***/ },
+/* 246 */
+/***/ function(module, exports) {
+
+	var supportsArgumentsClass = (function(){
+	  return Object.prototype.toString.call(arguments)
+	})() == '[object Arguments]';
+
+	exports = module.exports = supportsArgumentsClass ? supported : unsupported;
+
+	exports.supported = supported;
+	function supported(object) {
+	  return Object.prototype.toString.call(object) == '[object Arguments]';
+	};
+
+	exports.unsupported = unsupported;
+	function unsupported(object){
+	  return object &&
+	    typeof object == 'object' &&
+	    typeof object.length == 'number' &&
+	    Object.prototype.hasOwnProperty.call(object, 'callee') &&
+	    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
+	    false;
+	};
+
+
+/***/ },
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29247,7 +29352,7 @@
 	exports.default = Loader;
 
 /***/ },
-/* 245 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29262,7 +29367,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactPaginate = __webpack_require__(246);
+	var _reactPaginate = __webpack_require__(249);
 
 	var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
 
@@ -29320,12 +29425,12 @@
 	};
 
 /***/ },
-/* 246 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PaginationBoxView = __webpack_require__(247);
+	var _PaginationBoxView = __webpack_require__(250);
 
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 
@@ -29335,7 +29440,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 247 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29350,19 +29455,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(248);
+	var _classnames = __webpack_require__(251);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactAddonsCreateFragment = __webpack_require__(249);
+	var _reactAddonsCreateFragment = __webpack_require__(252);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
-	var _PageView = __webpack_require__(251);
+	var _PageView = __webpack_require__(254);
 
 	var _PageView2 = _interopRequireDefault(_PageView);
 
-	var _BreakView = __webpack_require__(252);
+	var _BreakView = __webpack_require__(255);
 
 	var _BreakView2 = _interopRequireDefault(_BreakView);
 
@@ -29588,7 +29693,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 248 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -29642,13 +29747,13 @@
 
 
 /***/ },
-/* 249 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(250).create;
+	module.exports = __webpack_require__(253).create;
 
 /***/ },
-/* 250 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -29723,7 +29828,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 251 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29790,7 +29895,7 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 252 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29844,7 +29949,7 @@
 	//# sourceMappingURL=BreakView.js.map
 
 /***/ },
-/* 253 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29902,7 +30007,7 @@
 	};
 
 /***/ },
-/* 254 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29921,6 +30026,8 @@
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
+	var _mixins = __webpack_require__(269);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29929,8 +30036,10 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ListBuilder = function (_React$Component) {
-	  _inherits(ListBuilder, _React$Component);
+	console.log(_mixins.flippable);
+
+	var ListBuilder = function (_flippable) {
+	  _inherits(ListBuilder, _flippable);
 
 	  function ListBuilder(props) {
 	    _classCallCheck(this, ListBuilder);
@@ -29989,17 +30098,12 @@
 	  }]);
 
 	  return ListBuilder;
-	}(_react2.default.Component);
+	}((0, _mixins.flippable)(_react2.default.Component));
 
-	ListBuilder.PAGINATE = {
-	  per_page: 12,
-	  margin_pages_displayed: 1,
-	  page_range_displayed: 3
-	};
 	exports.default = ListBuilder;
 
 /***/ },
-/* 255 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30014,7 +30118,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _item = __webpack_require__(256);
+	var _item = __webpack_require__(259);
 
 	var _item2 = _interopRequireDefault(_item);
 
@@ -30060,7 +30164,7 @@
 	};
 
 /***/ },
-/* 256 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30075,11 +30179,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _modal = __webpack_require__(257);
+	var _modal = __webpack_require__(260);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
-	var _itemDetail = __webpack_require__(258);
+	var _itemDetail = __webpack_require__(261);
 
 	var _itemDetail2 = _interopRequireDefault(_itemDetail);
 
@@ -30221,7 +30325,7 @@
 	};
 
 /***/ },
-/* 257 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30313,7 +30417,7 @@
 	};
 
 /***/ },
-/* 258 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30559,7 +30663,7 @@
 	};
 
 /***/ },
-/* 259 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30574,7 +30678,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _select = __webpack_require__(260);
+	var _select = __webpack_require__(263);
 
 	var _select2 = _interopRequireDefault(_select);
 
@@ -30782,7 +30886,7 @@
 	};
 
 /***/ },
-/* 260 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30808,16 +30912,28 @@
 	var Select = function (_React$Component) {
 	  _inherits(Select, _React$Component);
 
-	  function Select() {
+	  function Select(props) {
 	    _classCallCheck(this, Select);
 
-	    return _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
+
+	    _this.state = {
+	      value: _this.props.default
+	    };
+	    return _this;
 	  }
 
 	  _createClass(Select, [{
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(next_props) {
+	      this.setState({ value: next_props.default });
+	    }
+	  }, {
 	    key: "onChange",
 	    value: function onChange(e) {
-	      this.props.handleChangeEvent(e.target.value);
+	      var value = e.target.value;
+	      this.setState({ value: value });
+	      this.props.handleChangeEvent(value);
 	    }
 	  }, {
 	    key: "render",
@@ -30836,7 +30952,7 @@
 	        { className: "c-select" },
 	        _react2.default.createElement(
 	          "select",
-	          { ref: this.props.select_id, defaultValue: this.props.default, onChange: function onChange(e) {
+	          { value: this.state.value, onChange: function onChange(e) {
 	              return _this2.onChange(e);
 	            } },
 	          options
@@ -30853,7 +30969,6 @@
 
 	Select.propTypes = {
 	  handleChangeEvent: _react2.default.PropTypes.func.isRequired,
-	  select_id: _react2.default.PropTypes.string.isRequired,
 	  list: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
 	    id: _react2.default.PropTypes.string,
 	    value: _react2.default.PropTypes.string
@@ -30866,7 +30981,7 @@
 	};
 
 /***/ },
-/* 261 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30881,7 +30996,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _select = __webpack_require__(260);
+	var _select = __webpack_require__(263);
 
 	var _select2 = _interopRequireDefault(_select);
 
@@ -30901,9 +31016,9 @@
 
 	    var _this = _possibleConstructorReturn(this, (SearchOrdering.__proto__ || Object.getPrototypeOf(SearchOrdering)).call(this, props));
 
-	    _this.orderSet = [{ id: "default", key: null, by: null, value: "default" }, { id: "priceAsc", key: "price", by: "asc", value: "price(ascending)" }, { id: "priceDesc", key: "price", by: "desc", value: "price(descending)" }];
+	    _this.order_set = [{ id: "default", key: null, by: null, value: "default" }, { id: "priceAsc", key: "price", by: "asc", value: "price(ascending)" }, { id: "priceDesc", key: "price", by: "desc", value: "price(descending)" }];
 
-	    _this.list = _this.orderSet.map(function (element) {
+	    _this.list = _this.order_set.map(function (element) {
 	      return { id: element.id, value: element.value };
 	    });
 	    return _this;
@@ -30912,17 +31027,36 @@
 	  _createClass(SearchOrdering, [{
 	    key: 'onChange',
 	    value: function onChange(id) {
-	      this.props.handleOrderingChange(this.parseOrdering(this.orderSet.find(function (element) {
+	      this.props.handleOrderingChange(this.generateOrdering(this.order_set.find(function (element) {
 	        return element.id === id;
 	      })));
 	    }
 	  }, {
-	    key: 'parseOrdering',
-	    value: function parseOrdering(ordering) {
+	    key: 'generateOrdering',
+	    value: function generateOrdering(ordering) {
 	      if (!ordering || !ordering.id) return null;
 
 	      if (ordering.by === "desc") return "-" + ordering.key;
 	      return ordering.key;
+	    }
+	  }, {
+	    key: 'parseOrdering',
+	    value: function parseOrdering(ordering) {
+	      if (!ordering || ordering === "") return "default";
+
+	      if (ordering[0] === "-") {
+	        return this.findOrdering(ordering.substr(1), "desc");
+	      }
+
+	      return this.findOrdering(ordering, "asc");
+	    }
+	  }, {
+	    key: 'findOrdering',
+	    value: function findOrdering(key, by) {
+	      return this.order_set.find(function (ordering) {
+	        if (ordering.key !== key) return false;
+	        return ordering.by === by;
+	      }).id;
 	    }
 	  }, {
 	    key: 'render',
@@ -30936,8 +31070,8 @@
 	            return _this2.onChange(id);
 	          },
 	          select_id: 'ordering',
-	          list: this.orderSet,
-	          'default': this.props.default
+	          list: this.order_set,
+	          'default': this.parseOrdering(this.props.default)
 	        })
 	      );
 	    }
@@ -30959,150 +31093,102 @@
 	};
 
 /***/ },
-/* 262 */,
-/* 263 */,
-/* 264 */,
 /* 265 */,
 /* 266 */,
-/* 267 */
+/* 267 */,
+/* 268 */,
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(268);
-	var isArguments = __webpack_require__(269);
+	'use strict';
 
-	var deepEqual = module.exports = function (actual, expected, opts) {
-	  if (!opts) opts = {};
-	  // 7.1. All identical values are equivalent, as determined by ===.
-	  if (actual === expected) {
-	    return true;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
-	  } else if (actual instanceof Date && expected instanceof Date) {
-	    return actual.getTime() === expected.getTime();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	  // 7.3. Other pairs that do not both pass typeof value == 'object',
-	  // equivalence is determined by ==.
-	  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
-	    return opts.strict ? actual === expected : actual == expected;
+	exports.flippable = flippable;
+	exports.searchable = searchable;
 
-	  // 7.4. For all other Object pairs, including Array objects, equivalence is
-	  // determined by having the same number of owned properties (as verified
-	  // with Object.prototype.hasOwnProperty.call), the same set of keys
-	  // (although not necessarily the same order), equivalent values for every
-	  // corresponding key, and an identical 'prototype' property. Note: this
-	  // accounts for both named and indexed properties on Arrays.
-	  } else {
-	    return objEquiv(actual, expected, opts);
-	  }
-	}
+	var _react = __webpack_require__(1);
 
-	function isUndefinedOrNull(value) {
-	  return value === null || value === undefined;
-	}
+	var _react2 = _interopRequireDefault(_react);
 
-	function isBuffer (x) {
-	  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
-	  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
-	    return false;
-	  }
-	  if (x.length > 0 && typeof x[0] !== 'number') return false;
-	  return true;
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function objEquiv(a, b, opts) {
-	  var i, key;
-	  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
-	    return false;
-	  // an identical 'prototype' property.
-	  if (a.prototype !== b.prototype) return false;
-	  //~~~I've managed to break Object.keys through screwy arguments passing.
-	  //   Converting to array solves the problem.
-	  if (isArguments(a)) {
-	    if (!isArguments(b)) {
-	      return false;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function flippable() {
+	  var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+	  var Flippable = function (_base) {
+	    _inherits(Flippable, _base);
+
+	    function Flippable() {
+	      _classCallCheck(this, Flippable);
+
+	      return _possibleConstructorReturn(this, (Flippable.__proto__ || Object.getPrototypeOf(Flippable)).apply(this, arguments));
 	    }
-	    a = pSlice.call(a);
-	    b = pSlice.call(b);
-	    return deepEqual(a, b, opts);
-	  }
-	  if (isBuffer(a)) {
-	    if (!isBuffer(b)) {
-	      return false;
-	    }
-	    if (a.length !== b.length) return false;
-	    for (i = 0; i < a.length; i++) {
-	      if (a[i] !== b[i]) return false;
-	    }
-	    return true;
-	  }
-	  try {
-	    var ka = objectKeys(a),
-	        kb = objectKeys(b);
-	  } catch (e) {//happens when one is a string literal and the other isn't
-	    return false;
-	  }
-	  // having the same number of owned properties (keys incorporates
-	  // hasOwnProperty)
-	  if (ka.length != kb.length)
-	    return false;
-	  //the same set of keys (although not necessarily the same order),
-	  ka.sort();
-	  kb.sort();
-	  //~~~cheap key test
-	  for (i = ka.length - 1; i >= 0; i--) {
-	    if (ka[i] != kb[i])
-	      return false;
-	  }
-	  //equivalent values for every corresponding key, and
-	  //~~~possibly expensive deep test
-	  for (i = ka.length - 1; i >= 0; i--) {
-	    key = ka[i];
-	    if (!deepEqual(a[key], b[key], opts)) return false;
-	  }
-	  return typeof a === typeof b;
+
+	    _createClass(Flippable, [{
+	      key: 'current_page',
+	      get: function get() {
+	        return (this.props.location.query.page || 1) - 1;
+	      }
+	    }]);
+
+	    return Flippable;
+	  }(base);
+
+	  Flippable.PAGINATE = {
+	    per_page: 12,
+	    margin_pages_displayed: 1,
+	    page_range_displayed: 3
+	  };
+
+
+	  return Flippable;
 	}
 
+	function searchable() {
+	  var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-/***/ },
-/* 268 */
-/***/ function(module, exports) {
+	  var Searchable = function (_base2) {
+	    _inherits(Searchable, _base2);
 
-	exports = module.exports = typeof Object.keys === 'function'
-	  ? Object.keys : shim;
+	    function Searchable() {
+	      _classCallCheck(this, Searchable);
 
-	exports.shim = shim;
-	function shim (obj) {
-	  var keys = [];
-	  for (var key in obj) keys.push(key);
-	  return keys;
+	      return _possibleConstructorReturn(this, (Searchable.__proto__ || Object.getPrototypeOf(Searchable)).apply(this, arguments));
+	    }
+
+	    _createClass(Searchable, [{
+	      key: 'filters',
+	      get: function get() {
+	        return {
+	          search: this.props.location.query.search,
+	          category: this.props.location.query.category,
+	          min_price: this.props.location.query.min_price,
+	          max_price: this.props.location.query.max_price
+	        };
+	      }
+	    }, {
+	      key: 'ordering',
+	      get: function get() {
+	        return this.props.location.query.ordering;
+	      }
+	    }]);
+
+	    return Searchable;
+	  }(base);
+
+	  return Searchable;
 	}
-
-
-/***/ },
-/* 269 */
-/***/ function(module, exports) {
-
-	var supportsArgumentsClass = (function(){
-	  return Object.prototype.toString.call(arguments)
-	})() == '[object Arguments]';
-
-	exports = module.exports = supportsArgumentsClass ? supported : unsupported;
-
-	exports.supported = supported;
-	function supported(object) {
-	  return Object.prototype.toString.call(object) == '[object Arguments]';
-	};
-
-	exports.unsupported = unsupported;
-	function unsupported(object){
-	  return object &&
-	    typeof object == 'object' &&
-	    typeof object.length == 'number' &&
-	    Object.prototype.hasOwnProperty.call(object, 'callee') &&
-	    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
-	    false;
-	};
-
 
 /***/ }
 /******/ ]);

@@ -8,13 +8,10 @@ import ErrorReporter from '../error-reporter'
 import Loader from '../loader'
 import ListBuilder from '../list-builder'
 import UserItems from './user-items'
+import { searchable } from '../mixins'
 
 
-class UserItemList extends ListBuilder {
-
-  get current_page() {
-    return (this.props.location.query.page || 1) - 1
-  }
+class UserItemList extends searchable(ListBuilder) {
 
   fetchItems() {
     let query = {
@@ -68,7 +65,7 @@ class UserItemList extends ListBuilder {
       items = <Loader />
     } else if (this.state.has_occurred_error) {
       items =  <ErrorReporter message={this.state.error_message} />
-    } else {
+    } else if (this.state.data !== null && this.state.data !== []) {
       items = <UserItems data={this.state.data} />
       paginate = <Paginate page_num={this.state.page_num}
                            current_page={this.current_page}

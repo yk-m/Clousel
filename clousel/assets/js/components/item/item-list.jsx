@@ -8,26 +8,10 @@ import Paginate from '../paginate'
 import ErrorReporter from '../error-reporter'
 import ListBuilder from '../list-builder'
 import Items from './items'
+import { searchable } from '../mixins'
 
 
-class ItemList extends ListBuilder {
-
-  get current_page() {
-    return (this.props.location.query.page || 1) - 1
-  }
-
-  get filters() {
-    return {
-      search: this.props.location.query.search,
-      category: this.props.location.query.category,
-      min_price: this.props.location.query.min_price,
-      max_price: this.props.location.query.max_price
-    }
-  }
-
-  get ordering() {
-    return this.props.location.query.ordering
-  }
+class ItemList extends searchable(ListBuilder) {
 
   fetchItems() {
     let query = this.filters

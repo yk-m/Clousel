@@ -6,9 +6,10 @@ import fetch from './fetch'
 import ItemList from './item/item-list'
 import SearchFilters from './search/search-filters'
 import SearchOrdering from './search/search-ordering'
+import { flippable, searchable } from './mixins'
 
 
-export default class ItemSearch extends React.Component {
+export default class ItemSearch extends searchable(flippable(React.Component)) {
 
   static CATEGORIES_URL = "/api/categories/"
 
@@ -19,23 +20,6 @@ export default class ItemSearch extends React.Component {
       filters_are_hidden: true,
       categories: null
     }
-  }
-
-  get current_page() {
-    return (this.props.location.query.page || 1)
-  }
-
-  get filters() {
-    return {
-      search: this.props.location.query.search,
-      category: this.props.location.query.category,
-      min_price: this.props.location.query.min_price,
-      max_price: this.props.location.query.max_price
-    }
-  }
-
-  get ordering() {
-    return this.props.location.query.ordering
   }
 
   fetchCategories() {

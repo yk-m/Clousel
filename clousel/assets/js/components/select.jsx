@@ -3,8 +3,22 @@ import React from 'react'
 
 export default class Select extends React.Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      value: this.props.default
+    }
+  }
+
+  componentWillReceiveProps(next_props) {
+    this.setState({value: next_props.default})
+  }
+
   onChange(e) {
-    this.props.handleChangeEvent(e.target.value)
+    let value = e.target.value
+    this.setState({value: value})
+    this.props.handleChangeEvent(value)
   }
 
   render() {
@@ -13,7 +27,7 @@ export default class Select extends React.Component {
     })
     return (
       <label className="c-select">
-        <select ref={this.props.select_id} defaultValue={this.props.default} onChange={(e) => this.onChange(e)}>
+        <select value={this.state.value} onChange={(e) => this.onChange(e)}>
           {options}
         </select>
       </label>
@@ -23,7 +37,6 @@ export default class Select extends React.Component {
 
 Select.propTypes = {
   handleChangeEvent: React.PropTypes.func.isRequired,
-  select_id: React.PropTypes.string.isRequired,
   list: React.PropTypes.arrayOf(React.PropTypes.shape({
     id: React.PropTypes.string,
     value: React.PropTypes.string
