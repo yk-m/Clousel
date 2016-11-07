@@ -1,14 +1,12 @@
 import React from 'react'
 import Request from 'superagent'
 
+import { flippable } from './mixins'
 
-export default class ListBuilder extends React.Component {
+console.log(flippable)
 
-  static PAGINATE = {
-    per_page: 12,
-    margin_pages_displayed: 1,
-    page_range_displayed: 3
-  }
+
+export default class ListBuilder extends flippable(React.Component) {
 
   constructor(props) {
     if (new.target === ListBuilder) {
