@@ -1,7 +1,7 @@
 import logging
 
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 from shop.models import Item
 from wardrobe.models import UserItem

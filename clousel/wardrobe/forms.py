@@ -1,9 +1,10 @@
 from django import forms
 from django.forms.widgets import Select
 from django.utils.translation import ugettext_lazy as _
-
 from mptt.forms import TreeNodeChoiceField
+
 from clothing.models import Category
+
 from .models import UserItem
 
 
@@ -15,7 +16,7 @@ class WrappedSelect(Select):
 
 class UserItemForm(forms.ModelForm):
     category = TreeNodeChoiceField(
-        widget = WrappedSelect(attrs={'class': 'c-select'}),
+        widget=WrappedSelect(attrs={'class': 'c-select'}),
         queryset=Category.objects.all()
     )
 
