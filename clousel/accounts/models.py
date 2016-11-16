@@ -5,25 +5,46 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class EmailUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+
+    def _create_user(self, email, password, **extra_fields):
+        """
+        Creates and saves a User with the given email and password.
+        """
         if not email:
-            raise ValueError(_('Users must have an email address'))
-        user = self.model(email=self.normalize_email(email))
+            raise ValueError(_('The given email must be set'))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
-        user = self.create_user(
-            email,
-            password=password
-        )
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_admin', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_admin', True)
+
+        if extra_fields.get('is_admin') is not True:
+            raise ValueError('Superuser must have is_admin=True.')
+
+        return self._create_user(email, password, **extra_fields)
 
 
 class EmailUser(AbstractBaseUser):
+    """
+    ``settings.AUTH_USER_MODEL`` に設定してあるモデルです．
+
+    Djangoのデフォルトは **Username + Password** による認証ですが，
+    **Email + Password** による認証を行いたかったため追加しました．
+
+    .. note::
+        モジュールの再利用の観点から，Userモデルとして直接参照することはおすすめしません．
+
+        Userモデルを取得したい際には， ``settings.AUTH_USER_MODEL``
+        または ``django.contrib.auth.get_user_model()`` を利用してください．
+    """
+
     email = models.EmailField(
         verbose_name=_("Email address"),
         max_length=255,
@@ -40,7 +61,7 @@ class EmailUser(AbstractBaseUser):
 
     class Meta:
         verbose_name = 'Email User'
-        verbose_name_plural = 'Email Users'
+        verbose_name_plural = 'email users'
 
     def get_full_name(self):
         return self.email
@@ -72,7 +93,23 @@ class EmailUser(AbstractBaseUser):
 
 
 class Profile(models.Model):
+    '''
+    ユーザに関する付加的な情報を保持するためのモデルです．
+
+    将来的にユーザの生年月日や性別を加味した推薦を行う可能性を考慮し作成してあります．
+
+    .. note::
+        今のところはどこにも使われていません．
+    '''
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
+    name = models.CharField(max_length=255, blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Profile'
+        verbose_name_plural = 'profiles'
+
+    def __str__(self):
+        return self.user.email
