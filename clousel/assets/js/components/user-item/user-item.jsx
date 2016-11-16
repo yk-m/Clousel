@@ -1,7 +1,6 @@
 import React from 'react'
 
-import Modal from '../modal'
-import UserItemDetail from './user-item-detail'
+import { patch } from '../ajax'
 
 
 export default class UserItem extends React.Component {
@@ -10,27 +9,29 @@ export default class UserItem extends React.Component {
     super(props)
 
     this.state = {
-      is_hidden_details: true,
-      is_purchased: this.props.item.has_bought === "true"
+      is_purchased: this.props.item.has_bought
     }
   }
 
-  onClickImage(e) {
-    e.preventDefault()
-    this.openModal()
+  get purchase_url() {
+    return "/api/uploads/" + this.props.item.pk + "/"
   }
 
-  openModal() {
-    this.setState({is_hidden_details: false})
-  }
-
-  closeModal() {
-    this.setState({is_hidden_details: true})
+  patch_purchase() {
+    patch(
+      this.purchase_url,
+      {
+        has_bought: !this.state.is_purchased
+      },
+      (res) => {
+        this.setState({is_purchased: !this.state.is_purchased})
+      }
+    )
   }
 
   onClickPurchaseButton(e) {
     e.preventDefault()
-    this.setState({is_purchased: !this.state.is_purchased})
+    this.patch_purchase()
   }
 
   get image_class() {
@@ -63,10 +64,6 @@ export default class UserItem extends React.Component {
             <a href="#" onClick={(e) => this.onClickPurchaseButton(e)} title="purchase"></a>
           </li>
         </ul>
-        <Modal is_hidden_modal={this.state.is_hidden_details}
-               onClickCloseButton={() => this.closeModal()}>
-          <UserItemDetail item={this.props.item}/>
-        </Modal>
       </div>
     )
   }

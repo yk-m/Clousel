@@ -53,11 +53,10 @@ $item-caption-height: 3rem
 $item-action-button-size: 2rem
 
 .p-item__caption
+    @extend %u-ul-reset
     height: $item-caption-height
     margin: $half-gap
-    padding: 0
     font-size: 0
-    list-style-type: none
 
     li
         float: left

@@ -1,4 +1,4 @@
-var path = require("path")
+// var path = require("path")
 var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
 
@@ -6,14 +6,12 @@ module.exports = {
   context: __dirname,
 
   entry: {
-    index: path.resolve('./assets/js/index'),
-    // shopItemList: path.resolve('./assets/js/shop-item-list'),
-    itemList: path.resolve('./assets/js/item-list'),
-    userItemList: path.resolve('./assets/js/user-item-list'),
+    itemList:  __dirname + '/assets/js/item-list',
+    userItemList:  __dirname + '/assets/js/user-item-list',
   }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
   output: {
-    path: path.resolve('./assets/bundles/'),
+    path:  __dirname + '/assets/bundles',
     filename: "[name].js",
   },
 
@@ -37,6 +35,7 @@ module.exports = {
   },
 
   resolve: {
+    root: __dirname,
     modulesDirectories: ['node_modules', 'bower_components'],
     extensions: ['', '.js', '.jsx']
   },
