@@ -19,8 +19,8 @@ urlpatterns = [
 ]
 
 router = routers.SimpleRouter()
-router.register(r'users', UserViewSet)
-router.register(r'items', ItemDetailView)
-router.register(r'uploads', UserItemViewSet)
+router.register(r'users', UserViewSet, base_name="user")
+router.register(r'items', ItemDetailView, base_name="item")
+router.register(r'uploads', UserItemViewSet, base_name="uploads")
 
 urlpatterns += router.urls

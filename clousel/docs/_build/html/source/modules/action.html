@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>action package &mdash; Clousel 16.11.07 ドキュメント</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../../genindex.html"/>
+        <link rel="search" title="検索" href="../../search.html"/>
+    <link rel="top" title="Clousel 16.11.07 ドキュメント" href="../../index.html"/>
+        <link rel="next" title="api package" href="api.html"/>
+        <link rel="prev" title="accounts package" href="accounts.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Clousel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                16.11.07
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="accounts.html">accounts package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">action package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-action.admin">action.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-action.apps">action.apps module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-action.models">action.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-action.tests">action.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#action-views-module">action.views module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clothing.html">clothing package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clousel.html">clousel package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages.html">pages package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shop.html">shop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wardrobe.html">wardrobe package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Clousel</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>action package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/source/modules/action.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-action">
+<span id="action-package"></span><h1>action package<a class="headerlink" href="#module-action" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="module-action.admin">
+<span id="action-admin-module"></span><h2>action.admin module<a class="headerlink" href="#module-action.admin" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="action.admin.Like">
+<em class="property">class </em><code class="descclassname">action.admin.</code><code class="descname">Like</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#action.admin.Like" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="action.admin.Like.media">
+<code class="descname">media</code><a class="headerlink" href="#action.admin.Like.media" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="action.admin.PurchaseHistory">
+<em class="property">class </em><code class="descclassname">action.admin.</code><code class="descname">PurchaseHistory</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#action.admin.PurchaseHistory" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="action.admin.PurchaseHistory.media">
+<code class="descname">media</code><a class="headerlink" href="#action.admin.PurchaseHistory.media" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-action.apps">
+<span id="action-apps-module"></span><h2>action.apps module<a class="headerlink" href="#module-action.apps" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="action.apps.ActionConfig">
+<em class="property">class </em><code class="descclassname">action.apps.</code><code class="descname">ActionConfig</code><span class="sig-paren">(</span><em>app_name</em>, <em>app_module</em><span class="sig-paren">)</span><a class="headerlink" href="#action.apps.ActionConfig" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="attribute">
+<dt id="action.apps.ActionConfig.name">
+<code class="descname">name</code><em class="property"> = 'action'</em><a class="headerlink" href="#action.apps.ActionConfig.name" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-action.models">
+<span id="action-models-module"></span><h2>action.models module<a class="headerlink" href="#module-action.models" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="action.models.Like">
+<em class="property">class </em><code class="descclassname">action.models.</code><code class="descname">Like</code><span class="sig-paren">(</span><em>id</em>, <em>owner</em>, <em>item</em>, <em>registered</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.Like" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#action.models.UserOwned" title="action.models.UserOwned"><code class="xref py py-class docutils literal"><span class="pre">action.models.UserOwned</span></code></a></p>
+<dl class="exception">
+<dt id="action.models.Like.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#action.models.Like.DoesNotExist" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="action.models.Like.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Like.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#action.models.Like.MultipleObjectsReturned" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="action.models.Like.get_next_by_registered">
+<code class="descclassname">Like.</code><code class="descname">get_next_by_registered</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.Like.get_next_by_registered" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="action.models.Like.get_previous_by_registered">
+<code class="descclassname">Like.</code><code class="descname">get_previous_by_registered</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.Like.get_previous_by_registered" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.Like.item">
+<code class="descclassname">Like.</code><code class="descname">item</code><a class="headerlink" href="#action.models.Like.item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.Like.objects">
+<code class="descclassname">Like.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#action.models.Like.objects" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.Like.owner">
+<code class="descclassname">Like.</code><code class="descname">owner</code><a class="headerlink" href="#action.models.Like.owner" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="action.models.PurchaseHistory">
+<em class="property">class </em><code class="descclassname">action.models.</code><code class="descname">PurchaseHistory</code><span class="sig-paren">(</span><em>id</em>, <em>owner</em>, <em>item</em>, <em>registered</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.PurchaseHistory" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#action.models.UserOwned" title="action.models.UserOwned"><code class="xref py py-class docutils literal"><span class="pre">action.models.UserOwned</span></code></a></p>
+<dl class="exception">
+<dt id="action.models.PurchaseHistory.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#action.models.PurchaseHistory.DoesNotExist" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="action.models.PurchaseHistory.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">PurchaseHistory.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#action.models.PurchaseHistory.MultipleObjectsReturned" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="action.models.PurchaseHistory.get_next_by_registered">
+<code class="descclassname">PurchaseHistory.</code><code class="descname">get_next_by_registered</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.PurchaseHistory.get_next_by_registered" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="action.models.PurchaseHistory.get_previous_by_registered">
+<code class="descclassname">PurchaseHistory.</code><code class="descname">get_previous_by_registered</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.PurchaseHistory.get_previous_by_registered" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.PurchaseHistory.item">
+<code class="descclassname">PurchaseHistory.</code><code class="descname">item</code><a class="headerlink" href="#action.models.PurchaseHistory.item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.PurchaseHistory.objects">
+<code class="descclassname">PurchaseHistory.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#action.models.PurchaseHistory.objects" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.PurchaseHistory.owner">
+<code class="descclassname">PurchaseHistory.</code><code class="descname">owner</code><a class="headerlink" href="#action.models.PurchaseHistory.owner" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="action.models.UserOwned">
+<em class="property">class </em><code class="descclassname">action.models.</code><code class="descname">UserOwned</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.UserOwned" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>ユーザの <code class="docutils literal"><span class="pre">shop.models.Item</span></code> に関する情報を保持できるようにする抽象クラスです．</p>
+<p>例えば，継承して <code class="docutils literal"><span class="pre">comment</span></code> フィールドを追加すれば，
+<code class="docutils literal"><span class="pre">shop.models.Item</span></code> のあるアイテムに対するユーザのコメントを保持するモデルができます．</p>
+<dl class="class">
+<dt id="action.models.UserOwned.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#action.models.UserOwned.Meta" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="action.models.UserOwned.Meta.abstract">
+<code class="descname">abstract</code><em class="property"> = False</em><a class="headerlink" href="#action.models.UserOwned.Meta.abstract" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.UserOwned.Meta.unique_together">
+<code class="descname">unique_together</code><em class="property"> = ('own', 'item')</em><a class="headerlink" href="#action.models.UserOwned.Meta.unique_together" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="action.models.UserOwned.get_next_by_registered">
+<code class="descclassname">UserOwned.</code><code class="descname">get_next_by_registered</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.UserOwned.get_next_by_registered" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="action.models.UserOwned.get_previous_by_registered">
+<code class="descclassname">UserOwned.</code><code class="descname">get_previous_by_registered</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.UserOwned.get_previous_by_registered" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.UserOwned.item">
+<code class="descclassname">UserOwned.</code><code class="descname">item</code><a class="headerlink" href="#action.models.UserOwned.item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="action.models.UserOwned.owner">
+<code class="descclassname">UserOwned.</code><code class="descname">owner</code><a class="headerlink" href="#action.models.UserOwned.owner" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="action.models.UserOwned.save">
+<code class="descclassname">UserOwned.</code><code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#action.models.UserOwned.save" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-action.tests">
+<span id="action-tests-module"></span><h2>action.tests module<a class="headerlink" href="#module-action.tests" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="action-views-module">
+<h2>action.views module<a class="headerlink" href="#action-views-module" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="api package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="accounts.html" class="btn btn-neutral" title="accounts package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Matsuo, Y..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'16.11.07',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

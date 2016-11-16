@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
-import clothing.signals
+import clothing.models
 from clothing.models import Clothing
 
 

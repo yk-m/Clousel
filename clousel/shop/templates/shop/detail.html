@@ -20,7 +20,7 @@
       <caption>Item Details</caption>
       <tbody>
         <tr>
-          <th>カテゴリー</th>
+          <th>カテゴリ</th>
           <td>{{ item.category|stringformat:'r' }}</td>
         </tr>
         <tr>
@@ -32,32 +32,31 @@
           <td>{{ item.size }}</td>
         </tr>
         <tr>
-          <th>ランク</th>
-          <td>{{ item.rank }}</td>
-        </tr>
-        <tr>
           <th>価格</th>
           <td>{{ item.price }}</td>
         </tr>
         <tr>
-          <th>詳細</th>
-          <td>{{ item.details|linebreaksbr }}</td>
-        </tr>
-        <tr>
-          <th>出品者</th>
-          <td>{{ this.props.item.exhibiter }}</td>
-        </tr>
-        <tr>
-          <th>配送日</th>
-          <td>{{ this.props.item.delivery_days }}</td>
-        </tr>
-        <tr>
-          <th>配送業者</th>
-          <td>{{ this.props.item.delivery_service }}</td>
+          <th>商品ランク</th>
+          <td>{{ item.rank }}</td>
         </tr>
         <tr>
           <th>発送元</th>
-          <td>{{ this.props.item.delivery_source }}</td>
+          <td>{{ item.delivery_source }}</td>
+        </tr>
+        <tr>
+          <th>配送方法</th>
+          <td>{{ item.delivery_service }}</td>
+        </tr>
+        <tr>
+          <th>発送までの日数</th>
+          <td>{{ item.delivery_days }}</td>
+        </tr>
+        <tr>
+          <th>販売元</th>
+          <td>{{ item.exhibiter }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">{{ item.details|linebreaksbr }}</td>
         </tr>
       </tbody>
     </table>

@@ -63,6 +63,15 @@ class ClothingSerializer(serializers.ModelSerializer):
         return repr(obj.category)
 
 
+class UserItemSerializer(ClothingSerializer):
+
+    class Meta:
+        model = UserItem
+        fields = ('pk', 'owner', 'title', 'image', 'orientation', 'category',
+                  'has_bought', 'created', 'updated', )
+        read_only_fields = ('owner', 'created', 'updated', )
+
+
 class ItemSerializer(ClothingSerializer):
     likes = serializers.SerializerMethodField()
     purchases = serializers.SerializerMethodField()
@@ -80,25 +89,40 @@ class ItemSerializer(ClothingSerializer):
         read_only_fields = ('created', 'updated', )
 
     def get_likes(self, obj):
+        """
+        何人のユーザが指定されたアイテムをLikeしているかカウントします．
+
+        :param obj: ``shop.models.Item`` のインスタンス
+        :return: 指定されたアイテムをLikeしているユーザの数
+        """
         return Like.objects.filter(item=obj).count()
 
     def get_purchases(self, obj):
+        """
+        何人のユーザが指定されたアイテムを購入済みかカウントします．
+
+        :param obj: ``shop.models.Item`` のインスタンス
+        :return: 指定されたアイテムを購入済みのユーザの数
+        """
         return PurchaseHistory.objects.filter(item=obj).count()
 
     def get_is_liked(self, obj):
+        """
+        ユーザ自身が引数で指定されたアイテムをLikeしているか判定します．
+
+        :param obj: ``shop.models.Item`` のインスタンス
+        :return: Boolean
+        """
         return Like.objects.filter(owner=self.context['request'].user, item=obj).exists()
 
     def get_is_purchased(self, obj):
+        """
+        ユーザ自身が引数で指定されたアイテムを購入済みか判定します．
+
+        :param obj: ``shop.models.Item`` のインスタンス
+        :return: Boolean
+        """
         return PurchaseHistory.objects.filter(owner=self.context['request'].user, item=obj).exists()
-
-
-class UserItemSerializer(ClothingSerializer):
-
-    class Meta:
-        model = UserItem
-        fields = ('pk', 'owner', 'title', 'image', 'orientation', 'category',
-                  'has_bought', 'created', 'updated', )
-        read_only_fields = ('owner', 'created', 'updated', )
 
 
 class LikeSerializer(serializers.ModelSerializer):

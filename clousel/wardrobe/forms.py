@@ -9,6 +9,7 @@ from .models import UserItem
 
 
 class WrappedSelect(Select):
+    """SelectをLabelでラッピングするためのウィジェットです．"""
 
     def render(self, name, value, attrs=None):
         return '<label class="c-select">%s</label>' % super().render(name, value, attrs=None)
@@ -25,9 +26,8 @@ class UserItemForm(forms.ModelForm):
         fields = ('title', 'category', 'image', 'has_bought', )
 
     def save(self, user, commit=True, *args, **kwargs):
-        # category = kwargs.pop('category','')
-        user_image = super().save(commit=False, *args, **kwargs)
-        user_image.owner = user
+        user_item = super().save(commit=False, *args, **kwargs)
+        user_item.owner = user
         if commit:
-            user_image.save()
-        return user_image
+            user_item.save()
+        return user_item
