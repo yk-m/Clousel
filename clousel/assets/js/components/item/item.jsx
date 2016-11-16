@@ -1,7 +1,6 @@
 import React from 'react'
 
-import Modal from '../modal'
-import ItemDetail from './item-detail'
+import { post, del } from '../ajax'
 
 
 export default class Item extends React.Component {
@@ -10,33 +9,69 @@ export default class Item extends React.Component {
     super(props)
 
     this.state = {
-      is_hidden_details: true,
-      is_liked: this.props.item.is_liked === "true",
-      is_purchased: this.props.item.is_purchased === "true"
+      is_liked: this.props.item.is_liked,
+      is_purchased: this.props.item.is_purchased
     }
   }
 
-  onClickImage(e) {
-    e.preventDefault()
-    this.openModal()
+  get like_url() {
+    return "/api/items/" + this.props.item.pk + "/like/"
   }
 
-  openModal() {
-    this.setState({is_hidden_details: false})
+  get purchase_url() {
+    return "/api/items/" + this.props.item.pk + "/purchase/"
   }
 
-  closeModal() {
-    this.setState({is_hidden_details: true})
+  post_like() {
+    post(
+      this.like_url, {},
+      (res) => {
+        this.setState({is_liked: true})
+      }
+    )
+  }
+
+  delete_like() {
+    del(
+      this.like_url,
+      (res) => {
+        this.setState({is_liked: false})
+      }
+    )
+  }
+
+  post_purchase() {
+    post(
+      this.purchase_url, {},
+      (res) => {
+        this.setState({is_purchased: true})
+      }
+    )
+  }
+
+  delete_purchase() {
+    del(
+      this.purchase_url,
+      (res) => {
+        this.setState({is_purchased: false})
+      }
+    )
   }
 
   onClickLikeButton(e) {
     e.preventDefault()
-    this.setState({is_liked: !this.state.is_liked})
+    if (this.state.is_liked)
+      this.delete_like()
+    else
+      this.post_like()
   }
 
   onClickPurchaseButton(e) {
     e.preventDefault()
-    this.setState({is_purchased: !this.state.is_purchased})
+    if (this.state.is_purchased)
+      this.delete_purchase()
+    else
+      this.post_purchase()
   }
 
   get image_class() {
@@ -78,10 +113,6 @@ export default class Item extends React.Component {
             <a href="#" onClick={(e) => this.onClickPurchaseButton(e)} title="purchase"></a>
           </li>
         </ul>
-        <Modal is_hidden_modal={this.state.is_hidden_details}
-               onClickCloseButton={() => this.closeModal()}>
-          <ItemDetail item={this.props.item}/>
-        </Modal>
       </div>
     )
   }

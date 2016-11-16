@@ -3,8 +3,6 @@ import Request from 'superagent'
 
 import { flippable } from './mixins'
 
-console.log(flippable)
-
 
 export default class ListBuilder extends flippable(React.Component) {
 

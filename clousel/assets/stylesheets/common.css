@@ -216,6 +216,13 @@ header nav {
   margin: 0 20px;
 }
 
+/* line 1, ../sass/object/utility/_list.sass */
+.p-item-detail__actions, .p-item__caption {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 /* line 1, ../sass/object/utility/_overflow.sass */
 .u-overflow-hidden {
   overflow: hidden;
@@ -1033,50 +1040,48 @@ header nav {
 .p-item__caption {
   height: 3rem;
   margin: 6px 10px;
-  padding: 0;
   font-size: 0;
-  list-style-type: none;
 }
-/* line 62, ../sass/object/project/_item.sass */
+/* line 61, ../sass/object/project/_item.sass */
 .p-item__caption li {
   float: left;
   margin-left: 2.94118%;
   line-height: 3rem;
   font-size: 1.3rem;
 }
-/* line 68, ../sass/object/project/_item.sass */
+/* line 67, ../sass/object/project/_item.sass */
 .p-item__caption li:first-child {
   margin-left: 0;
 }
 
-/* line 71, ../sass/object/project/_item.sass */
+/* line 70, ../sass/object/project/_item.sass */
 .p-item__title {
   width: 85.29412%;
   text-align: left;
 }
 
-/* line 75, ../sass/object/project/_item.sass */
+/* line 74, ../sass/object/project/_item.sass */
 .p-item__price {
   width: 70.58824%;
   text-align: left;
 }
 
-/* line 79, ../sass/object/project/_item.sass */
+/* line 78, ../sass/object/project/_item.sass */
 .p-item__like, .p-item__like--is_liked, .p-item__search, .p-item__purchase, .p-item__like--is_purchased {
   width: 11.76471%;
 }
 
-/* line 84, ../sass/object/project/_item.sass */
+/* line 83, ../sass/object/project/_item.sass */
 .p-item__like a:after, .p-item__like--is_liked a:after, .p-item__search a:after, .p-item__purchase a:after, .p-item__like--is_purchased a:after {
   color: #89838E;
 }
 
-/* line 89, ../sass/object/project/_item.sass */
+/* line 88, ../sass/object/project/_item.sass */
 .p-item__like--is_liked a:after, .p-item__like--is_purchased a:after {
   color: #C64B8F;
 }
 
-/* line 95, ../sass/object/project/_item.sass */
+/* line 94, ../sass/object/project/_item.sass */
 .p-item__like a, .p-item__like--is_liked a {
   display: block;
   height: 3rem;
@@ -1091,7 +1096,7 @@ header nav {
   content: "";
 }
 
-/* line 101, ../sass/object/project/_item.sass */
+/* line 100, ../sass/object/project/_item.sass */
 .p-item__search a {
   display: block;
   height: 3rem;
@@ -1106,7 +1111,7 @@ header nav {
   content: "";
 }
 
-/* line 107, ../sass/object/project/_item.sass */
+/* line 106, ../sass/object/project/_item.sass */
 .p-item__purchase a, .p-item__like--is_purchased a {
   display: block;
   height: 3rem;

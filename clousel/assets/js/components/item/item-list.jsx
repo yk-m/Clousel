@@ -2,7 +2,7 @@ import deepEqual from 'deep-equal'
 import React from 'react'
 import { withRouter } from 'react-router'
 
-import fetch from '../fetch'
+import { fetch } from '../ajax'
 import Loader from '../loader'
 import Paginate from '../paginate'
 import ErrorReporter from '../error-reporter'

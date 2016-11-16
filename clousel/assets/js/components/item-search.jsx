@@ -2,7 +2,7 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Request from 'superagent'
 
-import fetch from './fetch'
+import { fetch } from './ajax'
 import ItemList from './item/item-list'
 import SearchFilters from './search/search-filters'
 import SearchOrdering from './search/search-ordering'
