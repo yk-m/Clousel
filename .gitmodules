@@ -1,3 +1,0 @@
-[submodule "recommender"]
-	path = recommender
-	url = https://github.com/IshitaTakeshi/ClothingRecommender.git

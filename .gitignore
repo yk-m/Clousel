@@ -4,7 +4,12 @@ __pycache__/
 migrations/*
 data/*
 
-clousel/clousel/media/*
-clousel/clousel/logs/*
-clousel/node_modules/*
-clousel/init/amebafurugiya.json
+/clousel/media/*
+/clousel/logs/*
+node_modules/*
+/init/amebafurugiya.json
+
+# Sphinx
+/docs/*.rst
+/docs/_build
+
