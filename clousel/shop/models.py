@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
-import clothing.models
+from clothing import models as clothing_model
 from clothing.models import Clothing
 
 
@@ -33,9 +33,9 @@ class Item(Clothing):
 
 @receiver(models.signals.post_delete, sender=Item)
 def auto_delete_image_on_delete(sender, instance, **kwargs):
-    clothing.signals.auto_delete_image_on_delete(sender, instance, **kwargs)
+    clothing_model.auto_delete_image_on_delete(sender, instance, **kwargs)
 
 
 @receiver(models.signals.pre_save, sender=Item)
 def auto_delete_image_on_change(sender, instance, **kwargs):
-    clothing.signals.auto_delete_image_on_change(sender, instance, **kwargs)
+    clothing_model.auto_delete_image_on_change(sender, instance, **kwargs)
