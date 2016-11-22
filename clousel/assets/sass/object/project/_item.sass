@@ -1,5 +1,6 @@
 .p-item-list
     position: relative
+    min-height: calc_height(2)
 
 .p-items
     +clearfix
@@ -77,11 +78,12 @@ $item-action-button-size: 2rem
 
 %p-item__action
     width: span(1 of 7)
+    text-align: center
 
 %p-item__action--is_active
     a
         &:after
-            color: $gray
+            color: $black
 
 %p-item__action--is_inactive
     a

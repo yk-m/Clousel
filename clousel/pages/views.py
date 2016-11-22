@@ -19,4 +19,8 @@ def dashboard_view(request):
         'items': Item.objects.order_by('-updated', '-created')[:4],
         'user_items': UserItem.objects.order_by('-updated', '-created')[:4],
     }
-    return render(request, 'pages/dashboard.html', context)
+    return render(request, 'pages/dashboard.html',
+                  {
+                    "item_request_url": "/api/items/",
+                    "user_item_request_url": "/api/uploads/",
+                  })

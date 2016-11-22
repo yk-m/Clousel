@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { post, del } from '../ajax'
+import { post, del } from '../../ajax'
 
 
 export default class Item extends React.Component {
