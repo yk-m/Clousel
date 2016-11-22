@@ -1,0 +1,57 @@
+/*
+ *  SHOW ALL
+ *    - Preference
+ *    - Definition
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
+$showall-align: right !default
+$showall-line-height: 25px !default
+$showall-icon-font-size: 13px !default
+$showall-icon-margin: 0 !default
+$showall-icon-content: ">" !default
+$showall-icon-left-content: $showall-icon-content !default
+$showall-icon-right-content: $showall-icon-content !default
+
+
+
+/*  Definition
+   ---------------------------------------- */
+.c-showall
+    display: block
+    margin: 0
+    line-height: $showall-line-height
+    text-align: $showall-align
+
+.c-showall__link
+    display: inline-block
+    height: $showall-line-height
+    line-height: $showall-line-height
+    vertical-align: middle
+    text-decoration: none
+
+.c-showall__icon
+    +icon($showall-icon-content, $showall-icon-font-size)
+        display: inline-block
+        height: $showall-line-height
+        line-height: $showall-line-height
+        vertical-align: middle
+
+.c-showall__icon--left
+    +icon($showall-icon-left-content, $showall-icon-font-size)
+        display: inline-block
+        height: $showall-line-height
+        line-height: $showall-line-height
+        vertical-align: middle
+        margin: 0 $showall-icon-margin 0 0
+
+.c-showall__icon--right
+    +icon($showall-icon-right-content, $showall-icon-font-size)
+        display: inline-block
+        height: $showall-line-height
+        line-height: $showall-line-height
+        vertical-align: middle
+        margin: 0 0 0 $showall-icon-margin

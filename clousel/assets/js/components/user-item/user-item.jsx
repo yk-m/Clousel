@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { patch } from '../ajax'
+import { patch } from '../../ajax'
 
 
 export default class UserItem extends React.Component {

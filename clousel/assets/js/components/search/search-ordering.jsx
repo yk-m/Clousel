@@ -11,7 +11,9 @@ export default class SearchOrdering extends React.Component {
     this.order_set = [
       {id: "default", key: null, by: null, value: "default"},
       {id: "priceAsc", key: "price", by: "asc", value: "price(ascending)"},
-      {id: "priceDesc", key: "price", by: "desc", value: "price(descending)"}
+      {id: "priceDesc", key: "price", by: "desc", value: "price(descending)"},
+      {id: "updatedAsc", key: "updated", by: "asc", value: "oldest"},
+      {id: "updatedDesc", key: "updated", by: "desc", value: "latest"}
     ]
 
     this.list = this.order_set.map((element) => {
