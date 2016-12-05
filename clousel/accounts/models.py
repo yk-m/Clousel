@@ -87,9 +87,8 @@ class EmailUser(AbstractBaseUser):
         return self.is_admin
 
     def validate_unique(self, exclude=None):
-        """Validate the field uniqueness"""
         EmailUser.objects.filter(email=self.email, is_active=False).delete()
-        super(EmailUser, self).validate_unique(exclude)
+        return super(EmailUser, self).validate_unique(exclude=exclude)
 
 
 class Profile(models.Model):

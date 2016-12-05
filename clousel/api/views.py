@@ -15,7 +15,7 @@ from clothing.models import Category
 from shop.models import Item
 from wardrobe.models import UserItem
 
-from .permissions import IsOwner
+from .permissions import IsOwner, IsOwnerOrCreateOnly
 from .serializer import (BasicUserSerializer, CategorySerializer,
                          FullUserSerializer, ItemSerializer, LikeSerializer,
                          ProfileSerializer, PurchaseHistorySerializer,
@@ -24,6 +24,7 @@ from .serializer import (BasicUserSerializer, CategorySerializer,
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
+    permission_classes = (IsOwnerOrCreateOnly, )
 
     def get_queryset(self):
         """一覧を取得する際に，管理者権限をもつユーザはすべてのユーザの情報を，
