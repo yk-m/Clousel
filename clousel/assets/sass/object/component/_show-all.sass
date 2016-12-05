@@ -11,6 +11,7 @@
 $showall-align: right !default
 $showall-line-height: 25px !default
 $showall-icon-font-size: 13px !default
+$showall-icon-color: red !default
 $showall-icon-margin: 0 !default
 $showall-icon-content: ">" !default
 $showall-icon-left-content: $showall-icon-content !default
@@ -34,6 +35,7 @@ $showall-icon-right-content: $showall-icon-content !default
     text-decoration: none
 
 .c-showall__icon
+    color: $showall-icon-color
     +icon($showall-icon-content, $showall-icon-font-size)
         display: inline-block
         height: $showall-line-height
@@ -41,6 +43,7 @@ $showall-icon-right-content: $showall-icon-content !default
         vertical-align: middle
 
 .c-showall__icon--left
+    color: $showall-icon-color
     +icon($showall-icon-left-content, $showall-icon-font-size)
         display: inline-block
         height: $showall-line-height
@@ -49,6 +52,7 @@ $showall-icon-right-content: $showall-icon-content !default
         margin: 0 $showall-icon-margin 0 0
 
 .c-showall__icon--right
+    color: $showall-icon-color
     +icon($showall-icon-right-content, $showall-icon-font-size)
         display: inline-block
         height: $showall-line-height
