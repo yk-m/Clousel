@@ -6,6 +6,9 @@
  */
 /*  Color
  *   ---------------------------------------- */
+/* ----- First ----- */
+/* ----- Kale ----- */
+/* ----- Pink Yarrow ----- */
 /*  Grid
  *   ---------------------------------------- */
 /*  Size
@@ -54,14 +57,14 @@
 
 /* line 14, ../sass/foundation/_base.sass */
 body {
-  background: #F9F7F7;
-  color: #312F33;
+  background: #FFF;
+  color: #2D2D2D;
 }
 
 /* line 18, ../sass/foundation/_base.sass */
 a {
   text-decoration: underline;
-  color: #312F33;
+  color: #2D2D2D;
 }
 
 /* line 22, ../sass/foundation/_base.sass */
@@ -87,23 +90,23 @@ input, button {
 
 /* line 42, ../sass/foundation/_base.sass */
 input[type=text], input[type=password], input[type=email] {
-  border-bottom: solid 1px #312F33;
+  border-bottom: solid 1px #2D2D2D;
 }
 /* line 61, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder, input[type=password]:-moz-placeholder, input[type=email]:-moz-placeholder {
-  color: #89838E;
+  color: #757273;
 }
 /* line 64, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder, input[type=password]::-moz-placeholder, input[type=email]::-moz-placeholder {
-  color: #89838E;
+  color: #757273;
 }
 /* line 67, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder, input[type=password]:-ms-input-placeholder, input[type=email]:-ms-input-placeholder {
-  color: #89838E;
+  color: #757273;
 }
 /* line 56, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder {
-  color: #89838E;
+  color: #757273;
 }
 /* line 48, ../sass/foundation/_base.sass */
 input[type=file] {
@@ -112,10 +115,10 @@ input[type=file] {
 
 /* line 51, ../sass/foundation/_base.sass */
 button, *[type=submit], *[type=reset] {
-  border: solid 1px #C64B8F;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  border: solid 1px #ce3175;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   cursor: pointer;
 }
 
@@ -341,11 +344,11 @@ header nav {
 .c-select {
   position: relative;
   display: inline-block;
-  border: 1px solid #DFDCE2;
-  -moz-border-radius: 2.5px;
-  -webkit-border-radius: 2.5px;
-  border-radius: 2.5px;
-  background: #F9F7F7;
+  border: 1px solid #F7F2F4;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background: #FFF;
 }
 /* line 39, ../sass/object/component/_form.sass */
 .c-select:before {
@@ -357,19 +360,19 @@ header nav {
   width: 24px;
   height: 24px;
   margin: -12px 0 0 0;
-  -moz-border-radius: 2.5px;
-  -webkit-border-radius: 2.5px;
-  border-radius: 2.5px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   text-align: right;
   line-height: 24px;
   font-size: 12px;
   font-family: "Pe-icon-7-stroke", sans-serif;
-  color: #C64B8F;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5ZjdmNyIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2Y5ZjdmNyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y5ZjdmNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
-  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(249, 247, 247, 0)), color-stop(50%, #f9f7f7), color-stop(100%, #f9f7f7));
-  background: -moz-linear-gradient(left, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
-  background: -webkit-linear-gradient(left, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
-  background: linear-gradient(to right, rgba(249, 247, 247, 0) 0%, #f9f7f7 50%, #f9f7f7 100%);
+  color: #ce3175;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(50%, #ffffff), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, #ffffff 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, #ffffff 50%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ffffff 50%, #ffffff 100%);
   content: "";
 }
 /* line 57, ../sass/object/component/_form.sass */
@@ -382,9 +385,9 @@ header nav {
   height: 24px;
   padding: 2px 1em;
   border: none;
-  border-radius: 2.5px;
+  border-radius: 0;
   line-height: 20px;
-  color: #312F33;
+  color: #2D2D2D;
   background: transparent;
   cursor: pointer;
 }
@@ -411,7 +414,7 @@ header nav {
   z-index: 9999;
   width: 100%;
   height: 100%;
-  background-color: #F9F7F7;
+  background-color: #FFF;
 }
 
 /* line 42, ../sass/object/component/_modal.sass */
@@ -438,7 +441,7 @@ header nav {
   font-size: 50px;
   font-family: "Pe-icon-7-stroke", sans-serif;
   content: "";
-  color: #C64B8F;
+  color: #ce3175;
 }
 
 /*  Pagination
@@ -463,18 +466,18 @@ header nav {
 .c-pagination li a {
   display: inline-block;
   padding: 6px 10px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   text-decoration: none;
-  background: #DFDCE2;
-  color: #312F33;
+  background: #F7F2F4;
+  color: #2D2D2D;
   cursor: pointer;
 }
 /* line 45, ../sass/object/component/_pagination.sass */
 .c-pagination .c-pagination__child--is_active a {
-  background: #C64B8F;
-  color: #F9F7F7;
+  background: #ce3175;
+  color: #FFF;
 }
 /* line 50, ../sass/object/component/_pagination.sass */
 .c-pagination .c-pagination__child--is_disabled a {
@@ -487,7 +490,7 @@ header nav {
   -webkit-border-radius: 0;
   border-radius: 0;
   background: transparent;
-  color: #312F33;
+  color: #2D2D2D;
 }
 
 /*  SHOW ALL
@@ -498,7 +501,7 @@ header nav {
  *   ---------------------------------------- */
 /*  Definition
  *   ---------------------------------------- */
-/* line 23, ../sass/object/component/_show-all.sass */
+/* line 24, ../sass/object/component/_show-all.sass */
 .c-showall {
   display: block;
   margin: 0;
@@ -506,7 +509,7 @@ header nav {
   text-align: right;
 }
 
-/* line 29, ../sass/object/component/_show-all.sass */
+/* line 30, ../sass/object/component/_show-all.sass */
 .c-showall__link {
   display: inline-block;
   height: 25px;
@@ -515,45 +518,57 @@ header nav {
   text-decoration: none;
 }
 
+/* line 37, ../sass/object/component/_show-all.sass */
+.c-showall__icon {
+  color: #ce3175;
+}
 /* line 13, ../sass/object/component/_icon.sass */
 .c-showall__icon:after {
   font-style: normal;
   line-height: 20px;
   font-size: 20px;
   font-family: "Pe-icon-7-stroke", sans-serif;
-  content: "";
+  content: ">";
   display: inline-block;
   height: 25px;
   line-height: 25px;
   vertical-align: middle;
 }
 
+/* line 45, ../sass/object/component/_show-all.sass */
+.c-showall__icon--left {
+  color: #ce3175;
+}
 /* line 13, ../sass/object/component/_icon.sass */
 .c-showall__icon--left:after {
   font-style: normal;
   line-height: 20px;
   font-size: 20px;
   font-family: "Pe-icon-7-stroke", sans-serif;
-  content: "";
+  content: "";
   display: inline-block;
   height: 25px;
   line-height: 25px;
   vertical-align: middle;
-  margin: 0 10px 0 0;
+  margin: 0 5px 0 0;
 }
 
+/* line 54, ../sass/object/component/_show-all.sass */
+.c-showall__icon--right {
+  color: #ce3175;
+}
 /* line 13, ../sass/object/component/_icon.sass */
 .c-showall__icon--right:after {
   font-style: normal;
   line-height: 20px;
   font-size: 20px;
   font-family: "Pe-icon-7-stroke", sans-serif;
-  content: "";
+  content: "";
   display: inline-block;
   height: 25px;
   line-height: 25px;
   vertical-align: middle;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 5px;
 }
 
 /*  TRANSITION FOR ReactCSSTransitionGroup
@@ -678,7 +693,7 @@ header nav {
   font-family: "Pe-icon-7-stroke", sans-serif;
   font-size: 20px;
   line-height: 1;
-  color: #89838E;
+  color: #757273;
   opacity: 0.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -776,14 +791,14 @@ header nav {
   font-size: 20px;
   line-height: 20px;
   text-align: center;
-  color: #89838E;
+  color: #757273;
   opacity: 0.25;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 /* line 175, ../sass/object/project/slick/_theme.sass */
 .p-carousel__contents .slick-dots li.slick-active button:before {
-  color: #C64B8F;
+  color: #ce3175;
   opacity: 0.75;
 }
 /* line 16, ../sass/object/project/_carousel.sass */
@@ -830,7 +845,7 @@ header nav {
 }
 /* line 34, ../sass/object/project/_header.sass */
 .p-header__logo a, .p-header--compact__logo a, .p-header__logo a:hover, .p-header--compact__logo a:hover, .p-header__logo a:visited, .p-header--compact__logo a:visited {
-  color: #312F33;
+  color: #2D2D2D;
 }
 
 /* line 42, ../sass/object/project/_header.sass */
@@ -863,11 +878,11 @@ header nav {
 }
 /* line 67, ../sass/object/project/_header.sass */
 .p-header__nav li a:link, .p-header--compact__nav li a:link, .p-header__nav li a:visited, .p-header--compact__nav li a:visited {
-  color: #312F33;
+  color: #2D2D2D;
 }
 /* line 69, ../sass/object/project/_header.sass */
 .p-header__nav li a:hover, .p-header--compact__nav li a:hover {
-  color: #89838E;
+  color: #757273;
 }
 
 /* line 75, ../sass/object/project/_header.sass */
@@ -963,15 +978,15 @@ header nav {
 }
 /* line 20, ../sass/object/project/_item-detail.sass */
 .p-item-detail__table tr {
-  border-bottom: 1px solid #DFDCE2;
+  border-bottom: 1px solid #F7F2F4;
 }
 /* line 23, ../sass/object/project/_item-detail.sass */
 .p-item-detail__table tr:first-child {
-  border-top: 3px double #312F33;
+  border-top: 3px double #2D2D2D;
 }
 /* line 25, ../sass/object/project/_item-detail.sass */
 .p-item-detail__table tr:last-child {
-  border-bottom: 1px solid #312F33;
+  border-bottom: 1px solid #2D2D2D;
 }
 /* line 28, ../sass/object/project/_item-detail.sass */
 .p-item-detail__table th, .p-item-detail__table td {
@@ -1004,7 +1019,7 @@ header nav {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #F9F7F7;
+  background: #FFF;
 }
 
 /* line 19, ../sass/object/project/_item.sass */
@@ -1024,7 +1039,7 @@ header nav {
   font-size: 5rem;
   font-family: "Pe-icon-7-stroke", sans-serif;
   content: "";
-  color: #C64B8F;
+  color: #ce3175;
 }
 
 /* line 29, ../sass/object/project/_item.sass */
@@ -1038,8 +1053,8 @@ header nav {
   float: left;
   margin-top: 12px;
   margin-bottom: 12px;
-  border-top: 3px double #312F33;
-  border-bottom: 1px solid #312F33;
+  border-top: 3px double #2D2D2D;
+  border-bottom: 1px solid #2D2D2D;
 }
 /* line 66, ../../../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/susy-2.2.12/sass/susy/language/susy/_gallery.scss */
 .p-item:nth-child(4n + 1) {
@@ -1143,12 +1158,12 @@ header nav {
 
 /* line 85, ../sass/object/project/_item.sass */
 .p-item__like a:after, .p-item__like--is_liked a:after, .p-item__search a:after, .p-item__purchase a:after, .p-item__like--is_purchased a:after {
-  color: #312F33;
+  color: #757273;
 }
 
 /* line 90, ../sass/object/project/_item.sass */
 .p-item__like--is_liked a:after, .p-item__like--is_purchased a:after {
-  color: #C64B8F;
+  color: #ce3175;
 }
 
 /* line 96, ../sass/object/project/_item.sass */
@@ -1261,7 +1276,7 @@ header nav {
   display: inline-block;
   margin: 0 0 0 0.75em;
   font-size: 0.75em;
-  color: #C64B8F;
+  color: #ce3175;
   cursor: pointer;
 }
 
@@ -1280,10 +1295,10 @@ header nav {
 /* line 26, ../sass/object/project/_showcase.sass */
 .p-showcase__filter-form {
   padding: 12px 20px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  background: #DFDCE2;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background: #F7F2F4;
   overflow-y: hidden;
 }
 /* line 13, ../sass/object/component/_transition.sass */
@@ -1356,8 +1371,8 @@ header nav {
 /* line 66, ../sass/object/project/_showcase.sass */
 .p-showcase__filter-form input[type=submit], .p-showcase__filter-form input[type=reset] {
   border: none;
-  background: #F9F7F7;
-  color: #312F33;
+  background: #FFF;
+  color: #2D2D2D;
 }
 /* line 72, ../sass/object/project/_showcase.sass */
 .p-showcase__filter-form input[type=submit]:last-child, .p-showcase__filter-form input[type=reset]:last-child {
