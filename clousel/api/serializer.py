@@ -1,4 +1,5 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
+from django.core import exceptions
 from rest_framework import serializers
 
 from accounts.models import Profile
@@ -23,13 +24,31 @@ class BasicUserSerializer(serializers.ModelSerializer):
         fields = ('pk', 'email', 'password', 'profile', )
         extra_kwargs = {'password': {'write_only': True}}
 
+    def validate(self, data):
+        user_data = data.copy()
+        user_data.pop('profile')
+        user_data.pop('password')
+        user = self.Meta.model(**user_data)
+        try:
+            user.validate_unique()
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError(e.messages)
+
+        password = data.get('password')
+        errors = dict()
+        try:
+            password_validation.validate_password(password=password, user=user)
+        except exceptions.ValidationError as e:
+            errors['password'] = list(e.messages)
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return super(BasicUserSerializer, self).validate(data)
+
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
-        user = self.Meta.model(
-            email=validated_data['email'],
-        )
-        user.set_password(validated_data['password'])
-        user.save()
+        user = self.Meta.model.objects.create_user(**validated_data)
         Profile.objects.create(user=user, **profile_data)
 
         return user

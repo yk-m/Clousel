@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from django.contrib.auth import get_user_model
@@ -9,7 +10,7 @@ from rest_framework_jwt import utils
 logger = logging.getLogger("debug")
 
 
-class UserTests(APITestCase):
+class UserAPITest(APITestCase):
 
     TEST_USER_NUM = 10
 
@@ -18,16 +19,32 @@ class UserTests(APITestCase):
         """
         setUp for testing
         """
-        User = get_user_model()
-        cls.superuser = User.objects.create_superuser(
+        cls.User = get_user_model()
+        cls.superuser = cls.User.objects.create_superuser(
             email='admin@example.com', password='')
-        cls.user = User.objects.create_user(
+        cls.user = cls.User.objects.create_user(
             email='user@example.com', password='')
-        for i in range(0, UserTests.TEST_USER_NUM - 2):
-            User.objects.create_user(
+        for i in range(0, UserAPITest.TEST_USER_NUM - 2):
+            cls.User.objects.create_user(
                 email="user{}@example.com".format(i), password='')
 
-    def test_user_list_normal(self):
+    def test_create_valid_data(self):
+        user_data = {
+            'email': "miffy@example.com",
+            'password': "dickbruna",
+            'profile': {
+                'name': "Miffy",
+                'date_of_birth': datetime.date(1955, 1, 1)
+            }
+        }
+
+        response = self.client.post(reverse('user-list'), user_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        user = self.User.objects.get(email=user_data.get('email'))
+        self.assertEqual(user.profile.name, user_data['profile']['name'])
+
+    def test_list_normal(self):
         """
         user-list: 一般ユーザ
         """
@@ -45,7 +62,7 @@ class UserTests(APITestCase):
             self.assertTrue("last_login" not in user)
             self.assertTrue("date_joined" not in user)
 
-    def test_user_list_super(self):
+    def test_list_super(self):
         """
         user-list: 管理者権限をもつユーザ
         """
@@ -53,7 +70,7 @@ class UserTests(APITestCase):
         response = self.client.get(reverse('user-list'), None, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), UserTests.TEST_USER_NUM)
+        self.assertEqual(len(response.data), UserAPITest.TEST_USER_NUM)
         for user in response.data:
             self.assertTrue("pk" in user)
             self.assertTrue("email" in user)

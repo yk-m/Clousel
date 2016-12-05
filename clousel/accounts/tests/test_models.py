@@ -62,9 +62,9 @@ class EmailUserTest(TestCase):
         """
         EmailUserは．Emailが重複することを禁止しています．
         ゆえに，同じEmailを持つUserがすでにいる場合には，
-        validate_unique()でValidationErrorが発生します．
+        :func:`accounts.models.EmailUser.validate_unique()` でValidationErrorが発生します．
         ただし，同じEmailを持つUserのis_activeがFalseの場合，
-        validate_unique()でis_activeがFalseのUserが削除されるため，
+        :func:`accounts.models.EmailUserManager._create_user()` でis_activeがFalseのUserが削除されるため，
         正常に登録することができます．
 
         このテストでは，上記の通りに動作しているか検証しています．
