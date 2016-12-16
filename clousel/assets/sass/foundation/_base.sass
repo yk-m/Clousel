@@ -33,6 +33,15 @@ input, select
     &:focus
         outline: none
 
+@-moz-document url-prefix()
+    select,
+    select:-moz-focusring,
+    select::-moz-focus-inner
+        color: transparent !important
+        text-shadow: 0 0 0 #000 !important
+        background-image: none !important
+        border: 0
+
 input, button
     padding: $default-gap
     border: none

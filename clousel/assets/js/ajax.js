@@ -1,4 +1,5 @@
 import Request from 'superagent'
+import 'superagent-django-csrf'
 
 
 export function fetch(url, query, success, failure){

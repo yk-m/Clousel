@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<header class="p-header l-header">
+  <div class="l-header__logo">
+    <h1 class="
+      {% if compact %}
+        p-header--compact__logo
+      {% else %}
+        p-header__logo
+      {% endif %}
+    ">
+      <a href="{% url 'pages:index' %}" title="">{{ site.name }}</a>
+    </h1>
+  </div>
+  <nav class="
+    {% if compact %}
+      p-header--compact__nav
+    {% else %}
+      p-header__nav
+    {% endif %}
+  ">
+    <ul>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'wardrobe:index' %}" title="{% trans 'Wardrobe' %}">{% trans 'Wardrobe' %}</a></li>
+        <li><a href="{% url 'shop:index' %}" title="{% trans 'Shop' %}">{% trans 'Shop' %}</a></li>
+        <li><a href="{% url 'auth_logout' %}" title="{% trans 'Log out' %}">{% trans 'Log out' %}</a></li>
+      {% else %}
+        <li><a href="{% url 'auth_login' %}" title="{% trans 'Log in' %}">{% trans 'Log in' %}</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</header>

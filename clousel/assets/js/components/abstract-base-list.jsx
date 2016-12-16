@@ -25,6 +25,12 @@ export default class AbstractBaseList extends React.Component {
     }
   }
 
+  getChildContext() {
+    return {
+      item_refresh: () => this.fetchItems()
+    }
+  }
+
   getListComponent(data) {}
 
   buildQueryForFetching() {
@@ -110,4 +116,8 @@ AbstractBaseList.propTypes = {
 
 AbstractBaseList.defaultProps = {
   limit: AbstractBaseList.LIMIT
+}
+
+AbstractBaseList.childContextTypes = {
+  item_refresh: React.PropTypes.func
 }

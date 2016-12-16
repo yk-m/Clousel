@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'superagent-django-csrf'
 
 import ItemHeadline from './components/item/item-headline'
 import UserItemHeadline from './components/user-item/user-item-headline'

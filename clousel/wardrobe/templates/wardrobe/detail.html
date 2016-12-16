@@ -1,44 +1,54 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load render_bundle from webpack_loader %}
 
-{% block title %}List{% endblock title %}
+{% block title %}{{ user_item.title }} | {{ site.name }}{% endblock title %}
 
 {% block extrahead %}
+  <script type="text/javascript">
+    function onDeleteClick() {
+      var result = confirm("{% trans 'このアイテムを削除しますか？' %}")
+      if (result === true) {
+        location.href = "{% url 'wardrobe:delete' pk=user_item.pk %}"
+      }
+
+      return true
+    }
+  </script>
 {% endblock extrahead %}
 
 {% block header %}
-  {% include "header.html" with compact=True %}
+  {% include "includes/header.html" with compact=True %}
 {% endblock header %}
 
+{% block breadcrumbs %}
+  {% include "wardrobe/includes/breadcrumbs-detail.html" %}
+{% endblock %}
+
 {% block content %}
-<div class="p-item-detail">
-  <div class="p-item-detail__image">
-    <img src="{{ user_item.image.url }}" />
+  <div class="p-page-header">
+    <h2 class="p-page-header__title">
+      {{ user_item.title }}
+      <span class="p-page-header__span">[{{ user_item.category|stringformat:'r' }}]</span>
+    </h2>
   </div>
-  <div class="p-item-detail__content">
-    <table class="p-item-detail__table">
-      <caption>Item Details</caption>
-      <tbody>
-        <tr>
-          <th>タイトル</th>
-          <td>{{ user_item.title }}</td>
-        </tr>
-        <tr>
-          <th>カテゴリー</th>
-          <td>{{ user_item.category|stringformat:'r' }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <ul class="p-item-detail__actions">
-      <li><a href="{% url 'shop:similar' image_id=user_item.pk %}" title="この服に似ているアイテムを探す">
-        この服に似ているアイテムを探す
-      </a></li>
-      <li><a href="{% url 'shop:suitable' image_id=user_item.pk %}" title="この服に似合うアイテムを探す">
-        この服に似合うアイテムを探す
-      </a></li>
-    </ul>
+  <div class="p-user-item-detail">
+    <div class="p-user-item-detail__image">
+      <img src="{{ user_item.image.url }}" />
+    </div>
+    <div class="p-user-item-detail__content">
+      <ul class="p-user-item-detail__actions">
+        <li><a href="{% url 'wardrobe:similar' pk=user_item.pk %}" title="{% trans '似ているアイテムを探す' %}">
+          {% trans '似ているアイテムを探す' %}
+        </a></li>
+        <li><a href="{% url 'wardrobe:suitable' pk=user_item.pk %}" title="{% trans '似合うアイテムを探す' %}">
+          {% trans '似合うアイテムを探す' %}
+        </a></li>
+        <li class="p-user-item-detail__action--weak"><a href="{% url 'wardrobe:edit' pk=user_item.pk %}" title="{% trans 'このアイテムを編集する' %}">{% trans '編集' %}</a></li>
+        <li class="p-user-item-detail__action--weak"><a href="#" onclick="return onDeleteClick()" title="{% trans 'このアイテムを削除する' %}">{% trans '削除' %}</a></li>
+      </ul>
+    </div>
   </div>
-</div>
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

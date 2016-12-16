@@ -1,0 +1,6 @@
+{% extends "wardrobe/includes/breadcrumbs-detail.html" %}
+{% load i18n %}
+{% block children_of_wardrobe_detail %}
+  <li><a href="{% url 'wardrobe:similar' pk=user_item.pk %}" title="{% trans 'Similar items' %}">{% trans 'Similar items' %}</a></li>
+  {% block children_of_wardrobe_similar %}{% endblock children_of_wardrobe_similar %}
+{% endblock children_of_wardrobe_detail %}

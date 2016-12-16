@@ -1,0 +1,96 @@
+/*
+ *  FORMSET
+ *    - Base
+ *    - Upload
+ *    - Edit
+ */
+
+
+
+/*  Base
+   ---------------------------------------- */
+.p-formset
+    max-width: calc_width(6)
+    margin: 0 auto
+
+.p-formset__form
+    margin: 0 0 $vertical-span
+    text-align: right
+
+    input
+        &[type=text], &[type=password], &[type=email]
+            width: 100%
+    label
+        width: 100%
+
+.p-formset__table
+    width: 100%
+    margin: 0 0 $vertical-span
+    text-align: left
+    vertical-align: middle
+    table-layout: fixed
+
+    caption
+        display: none
+
+    th, td
+        height: calc_height(1)
+        padding: $vertical-span 0
+        vertical-align: middle
+
+    th
+        width: span(2 of 6)
+        font-weight: normal
+
+    td
+        width: span(4 of 6)
+
+.p-formset--checkbox
+
+    label
+        cursor: pointer
+
+// .p-formset__header
+// .p-formset__footer
+// .p-formset__message
+
+
+
+/*  Upload
+   ---------------------------------------- */
+.p-formset--upload
+    @extend .p-formset
+
+.p-formset--upload__form
+    @extend .p-formset__form
+
+.p-formset--upload__table
+    @extend .p-formset__table
+
+
+
+/*  Edit
+   ---------------------------------------- */
+.p-formset--edit
+    +container
+
+.p-formset--edit__image
+    +span(1 of 2)
+    +susy-breakpoint(0 $screen--smartphone-max, 2)
+        +span(2 last)
+    margin: 0 0 $vertical-span 0
+
+.p-formset--edit__form
+    @extend .p-formset__form
+    +span(1 of 2 last)
+    +susy-breakpoint(0 $screen--smartphone-max, 2)
+        +span(2 last)
+
+.p-formset--edit__table
+    @extend .p-formset__table
+
+    th
+        width: span(1 of 3)
+
+    td
+        width: span(2 of 3)

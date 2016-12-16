@@ -1,0 +1,5 @@
+{% extends "wardrobe/includes/breadcrumbs-index.html" %}
+{% block children_of_wardrobe_index %}
+  <li><a href="{% url 'wardrobe:detail' pk=user_item.pk %}" title="{{ user_item.title }}">{{ user_item.title }}</a></li>
+  {% block children_of_wardrobe_detail %}{% endblock children_of_wardrobe_detail %}
+{% endblock children_of_wardrobe_index %}

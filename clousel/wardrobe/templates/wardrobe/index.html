@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}Wardrobe | {{ site.name }}{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "includes/header.html" with compact=True %}
+{% endblock header %}
+
+{% block breadcrumbs %}
+  {% include "wardrobe/includes/breadcrumbs-index.html" %}
+{% endblock %}
+
+{% block content %}
+  <section class="p-showcase" >
+    <div class="p-showcase__header">
+      <h2 class="p-showcase__title">Wardrobe</h2>
+      <div class="p-showcase__upload">
+        <a href="{% url 'wardrobe:upload' %}" title="{% trans 'Upload your item' %}"><i class="p-showcase__upload-icon"></i>{% trans 'Upload your item' %}</a>
+      </div>
+    </div>
+    <div id="js-result" data-request-url="{{ request_url }}"></div>
+    {% render_bundle 'userItemList' %}
+  </section>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

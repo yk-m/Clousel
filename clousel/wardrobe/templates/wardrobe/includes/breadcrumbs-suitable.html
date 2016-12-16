@@ -1,0 +1,6 @@
+{% extends "wardrobe/includes/breadcrumbs-detail.html" %}
+{% load i18n %}
+{% block children_of_wardrobe_detail %}
+  <li><a href="{% url 'wardrobe:suitable' pk=user_item.pk %}" title="{% trans 'Suitable items' %}">{% trans 'Suitable items' %}</a></li>
+  {% block children_of_wardrobe_suitable %}{% endblock children_of_wardrobe_suitable %}
+{% endblock children_of_wardrobe_detail %}

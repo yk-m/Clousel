@@ -1,0 +1,46 @@
+/*
+ *  BREADCRUMBS
+ *    - Preference
+ *    - Definition
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
+$breadcrumbs-margin-bottom: 10px !default
+$breadcrumbs-separator-color: blue !default
+$breadcrumbs-separator-font-family: sans-serif !default
+$breadcrumbs-separator-content: '\00bb' !default
+$breadcrumbs-current-color: red !default
+
+
+
+/*  Definition
+   ---------------------------------------- */
+.c-breadcrumbs
+    @extend %u-ul-reset
+    margin: 0 0 $breadcrumbs-margin-bottom 0
+
+.c-breadcrumbs
+    li
+        display: inline-block
+
+        &:after
+            display: inline-block
+            margin: 0 .6em
+            color: $breadcrumbs-separator-color
+            font-family: $breadcrumbs-separator-font-family
+            vertical-align: middle
+            content: $breadcrumbs-separator-content
+
+        a
+            vertical-align: middle
+            text-decoration: none
+
+    li:last-child
+        &:after
+            display: none
+        a
+            color: $breadcrumbs-current-color
+            cursor: default

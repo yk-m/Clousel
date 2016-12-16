@@ -54,8 +54,6 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	__webpack_require__(172);
-
 	var _itemHeadline = __webpack_require__(178);
 
 	var _itemHeadline2 = _interopRequireDefault(_itemHeadline);
@@ -23177,6 +23175,17 @@
 	  }
 
 	  _createClass(AbstractBaseList, [{
+	    key: 'getChildContext',
+	    value: function getChildContext() {
+	      var _this2 = this;
+
+	      return {
+	        item_refresh: function item_refresh() {
+	          return _this2.fetchItems();
+	        }
+	      };
+	    }
+	  }, {
 	    key: 'getListComponent',
 	    value: function getListComponent(data) {}
 	  }, {
@@ -23189,23 +23198,23 @@
 	  }, {
 	    key: 'fetchItems',
 	    value: function fetchItems() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      this.setStateOfLoading();
 
 	      (0, _ajax.fetch)(this.props.items_fetch_url, this.buildQueryForFetching(), function (res) {
 	        if (!res.body.results[0]) {
-	          _this2.setStateOfError("アイテムが見つかりませんでした．");
+	          _this3.setStateOfError("アイテムが見つかりませんでした．");
 	          return;
 	        }
 
-	        _this2.setState({
+	        _this3.setState({
 	          data: res.body.results,
-	          page_num: Math.ceil(res.body.count / _this2.props.limit),
+	          page_num: Math.ceil(res.body.count / _this3.props.limit),
 	          loading_is_hidden: true
 	        });
 	      }, function (res) {
-	        console.error(_this2.props.items_fetch_url, res.status, res.text);
+	        console.error(_this3.props.items_fetch_url, res.status, res.text);
 	      });
 	    }
 	  }, {
@@ -23236,10 +23245,10 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(next_props) {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      this.setState({}, function () {
-	        _this3.fetchItems();
+	        _this4.fetchItems();
 	      });
 	    }
 	  }, {
@@ -23279,6 +23288,10 @@
 	  limit: AbstractBaseList.LIMIT
 	};
 
+	AbstractBaseList.childContextTypes = {
+	  item_refresh: _react2.default.PropTypes.func
+	};
+
 /***/ },
 /* 180 */
 /***/ function(module, exports, __webpack_require__) {
@@ -23296,6 +23309,8 @@
 	var _superagent = __webpack_require__(173);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
+
+	__webpack_require__(172);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23352,8 +23367,6 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	exports.flippable = flippable;
-	exports.sortable = sortable;
-	exports.searchable = searchable;
 
 	var _react = __webpack_require__(1);
 
@@ -23402,61 +23415,6 @@
 
 
 	  return Flippable;
-	}
-
-	function sortable() {
-	  var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-	  var Sortable = function (_base2) {
-	    _inherits(Sortable, _base2);
-
-	    function Sortable() {
-	      _classCallCheck(this, Sortable);
-
-	      return _possibleConstructorReturn(this, (Sortable.__proto__ || Object.getPrototypeOf(Sortable)).apply(this, arguments));
-	    }
-
-	    _createClass(Sortable, [{
-	      key: 'ordering',
-	      get: function get() {
-	        return this.props.location.query.ordering;
-	      }
-	    }]);
-
-	    return Sortable;
-	  }(base);
-
-	  return Sortable;
-	}
-
-	function searchable() {
-	  var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-	  var Searchable = function (_base3) {
-	    _inherits(Searchable, _base3);
-
-	    function Searchable() {
-	      _classCallCheck(this, Searchable);
-
-	      return _possibleConstructorReturn(this, (Searchable.__proto__ || Object.getPrototypeOf(Searchable)).apply(this, arguments));
-	    }
-
-	    _createClass(Searchable, [{
-	      key: 'filters',
-	      get: function get() {
-	        return {
-	          search: this.props.location.query.search,
-	          category: this.props.location.query.category,
-	          min_price: this.props.location.query.min_price,
-	          max_price: this.props.location.query.max_price
-	        };
-	      }
-	    }]);
-
-	    return Searchable;
-	  }(base);
-
-	  return Searchable;
 	}
 
 /***/ },
@@ -28887,10 +28845,23 @@
 	    value: function patch_purchase() {
 	      var _this2 = this;
 
-	      (0, _ajax.patch)(this.purchase_url, {
+	      (0, _ajax.patch)(this.item_url, {
 	        has_bought: !this.state.is_purchased
 	      }, function (res) {
 	        _this2.setState({ is_purchased: !_this2.state.is_purchased });
+	      }, function (res) {
+	        console.error(_this2.props.items_fetch_url, res.status, res.text);
+	      });
+	    }
+	  }, {
+	    key: 'delete_item',
+	    value: function delete_item() {
+	      var _this3 = this;
+
+	      (0, _ajax.del)(this.item_url, function (res) {
+	        _this3.context.item_refresh();
+	      }, function (res) {
+	        console.error(_this3.props.items_fetch_url, res.status, res.text);
 	      });
 	    }
 	  }, {
@@ -28900,9 +28871,17 @@
 	      this.patch_purchase();
 	    }
 	  }, {
+	    key: 'onClickDeleteButton',
+	    value: function onClickDeleteButton(e) {
+	      e.preventDefault();
+
+	      var result = confirm("このアイテムを削除しますか？");
+	      if (result) this.delete_item();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      return _react2.default.createElement(
 	        'div',
@@ -28932,16 +28911,23 @@
 	            'li',
 	            { className: this.purchase_class },
 	            _react2.default.createElement('a', { href: '#', onClick: function onClick(e) {
-	                return _this3.onClickPurchaseButton(e);
+	                return _this4.onClickPurchaseButton(e);
 	              }, title: 'purchase' })
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'p-item__delete' },
+	            _react2.default.createElement('a', { href: '#', onClick: function onClick(e) {
+	                return _this4.onClickDeleteButton(e);
+	              }, title: 'delete' })
 	          )
 	        )
 	      );
 	    }
 	  }, {
-	    key: 'purchase_url',
+	    key: 'item_url',
 	    get: function get() {
-	      return "/api/uploads/" + this.props.item.pk + "/";
+	      return "/api/wardrobe/" + this.props.item.pk + "/";
 	    }
 	  }, {
 	    key: 'image_class',
@@ -28965,6 +28951,10 @@
 
 	UserItem.propTypes = {
 	  item: _react2.default.PropTypes.object.isRequired
+	};
+
+	UserItem.contextTypes = {
+	  item_refresh: _react2.default.PropTypes.func
 	};
 
 /***/ }

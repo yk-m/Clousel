@@ -14,13 +14,13 @@ urlpatterns = [
     url(r'likes/$', LikeListView.as_view()),
     url(r'purchases/$', PurchaseHistoryListView.as_view()),
     url(r'items/$', SearchableItemListView.as_view()),
-    url(r'uploads/(?P<pk>[0-9]+)/similar/$', SimilarListView.as_view()),
-    url(r'uploads/(?P<pk>[0-9]+)/suitable/$', SuitableListView.as_view()),
+    url(r'wardrobe/(?P<pk>[0-9]+)/similar/$', SimilarListView.as_view()),
+    url(r'wardrobe/(?P<pk>[0-9]+)/suitable/$', SuitableListView.as_view()),
 ]
 
 router = routers.SimpleRouter()
 router.register(r'users', UserViewSet, base_name="user")
 router.register(r'items', ItemDetailView, base_name="item")
-router.register(r'uploads', UserItemViewSet, base_name="uploads")
+router.register(r'wardrobe', UserItemViewSet, base_name="wardrobe")
 
 urlpatterns += router.urls

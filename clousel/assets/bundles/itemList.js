@@ -56,8 +56,6 @@
 
 	var _reactRouter = __webpack_require__(187);
 
-	__webpack_require__(172);
-
 	var _searchableItemList = __webpack_require__(244);
 
 	var _searchableItemList2 = _interopRequireDefault(_searchableItemList);
@@ -66,12 +64,13 @@
 
 	var resultContainer = document.getElementById('js-result');
 	var url = resultContainer.getAttribute('data-request-url');
+	var title = resultContainer.getAttribute('data-page-title');
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
 	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: function component() {
-	      return _react2.default.createElement(_searchableItemList2.default, { items_fetch_url: url });
+	      return _react2.default.createElement(_searchableItemList2.default, { items_fetch_url: url, page_title: title });
 	    } })
 	), resultContainer);
 
@@ -23110,6 +23109,17 @@
 	  }
 
 	  _createClass(AbstractBaseList, [{
+	    key: 'getChildContext',
+	    value: function getChildContext() {
+	      var _this2 = this;
+
+	      return {
+	        item_refresh: function item_refresh() {
+	          return _this2.fetchItems();
+	        }
+	      };
+	    }
+	  }, {
 	    key: 'getListComponent',
 	    value: function getListComponent(data) {}
 	  }, {
@@ -23122,23 +23132,23 @@
 	  }, {
 	    key: 'fetchItems',
 	    value: function fetchItems() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      this.setStateOfLoading();
 
 	      (0, _ajax.fetch)(this.props.items_fetch_url, this.buildQueryForFetching(), function (res) {
 	        if (!res.body.results[0]) {
-	          _this2.setStateOfError("アイテムが見つかりませんでした．");
+	          _this3.setStateOfError("アイテムが見つかりませんでした．");
 	          return;
 	        }
 
-	        _this2.setState({
+	        _this3.setState({
 	          data: res.body.results,
-	          page_num: Math.ceil(res.body.count / _this2.props.limit),
+	          page_num: Math.ceil(res.body.count / _this3.props.limit),
 	          loading_is_hidden: true
 	        });
 	      }, function (res) {
-	        console.error(_this2.props.items_fetch_url, res.status, res.text);
+	        console.error(_this3.props.items_fetch_url, res.status, res.text);
 	      });
 	    }
 	  }, {
@@ -23169,10 +23179,10 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(next_props) {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      this.setState({}, function () {
-	        _this3.fetchItems();
+	        _this4.fetchItems();
 	      });
 	    }
 	  }, {
@@ -23212,6 +23222,10 @@
 	  limit: AbstractBaseList.LIMIT
 	};
 
+	AbstractBaseList.childContextTypes = {
+	  item_refresh: _react2.default.PropTypes.func
+	};
+
 /***/ },
 /* 180 */
 /***/ function(module, exports, __webpack_require__) {
@@ -23229,6 +23243,8 @@
 	var _superagent = __webpack_require__(173);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
+
+	__webpack_require__(172);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23285,8 +23301,6 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	exports.flippable = flippable;
-	exports.sortable = sortable;
-	exports.searchable = searchable;
 
 	var _react = __webpack_require__(1);
 
@@ -23335,61 +23349,6 @@
 
 
 	  return Flippable;
-	}
-
-	function sortable() {
-	  var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-	  var Sortable = function (_base2) {
-	    _inherits(Sortable, _base2);
-
-	    function Sortable() {
-	      _classCallCheck(this, Sortable);
-
-	      return _possibleConstructorReturn(this, (Sortable.__proto__ || Object.getPrototypeOf(Sortable)).apply(this, arguments));
-	    }
-
-	    _createClass(Sortable, [{
-	      key: 'ordering',
-	      get: function get() {
-	        return this.props.location.query.ordering;
-	      }
-	    }]);
-
-	    return Sortable;
-	  }(base);
-
-	  return Sortable;
-	}
-
-	function searchable() {
-	  var base = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-	  var Searchable = function (_base3) {
-	    _inherits(Searchable, _base3);
-
-	    function Searchable() {
-	      _classCallCheck(this, Searchable);
-
-	      return _possibleConstructorReturn(this, (Searchable.__proto__ || Object.getPrototypeOf(Searchable)).apply(this, arguments));
-	    }
-
-	    _createClass(Searchable, [{
-	      key: 'filters',
-	      get: function get() {
-	        return {
-	          search: this.props.location.query.search,
-	          category: this.props.location.query.category,
-	          min_price: this.props.location.query.min_price,
-	          max_price: this.props.location.query.max_price
-	        };
-	      }
-	    }]);
-
-	    return Searchable;
-	  }(base);
-
-	  return Searchable;
 	}
 
 /***/ },
@@ -28683,8 +28642,6 @@
 
 	var _searchOrdering2 = _interopRequireDefault(_searchOrdering);
 
-	var _mixins = __webpack_require__(181);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28693,8 +28650,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SearchableItemListWithoutRouter = exports.SearchableItemListWithoutRouter = function (_searchable) {
-	  _inherits(SearchableItemListWithoutRouter, _searchable);
+	var SearchableItemListWithoutRouter = exports.SearchableItemListWithoutRouter = function (_ItemListWithoutRoute) {
+	  _inherits(SearchableItemListWithoutRouter, _ItemListWithoutRoute);
 
 	  function SearchableItemListWithoutRouter(props) {
 	    _classCallCheck(this, SearchableItemListWithoutRouter);
@@ -28764,7 +28721,7 @@
 	          _react2.default.createElement(
 	            'h2',
 	            { className: 'p-showcase__title' },
-	            'Search Results',
+	            this.props.page_title,
 	            _react2.default.createElement(
 	              'span',
 	              { className: 'p-showcase__filters-opener', onClick: function onClick(e) {
@@ -28793,6 +28750,21 @@
 	      );
 	    }
 	  }, {
+	    key: 'filters',
+	    get: function get() {
+	      return {
+	        search: this.props.location.query.search,
+	        category: this.props.location.query.category,
+	        min_price: this.props.location.query.min_price,
+	        max_price: this.props.location.query.max_price
+	      };
+	    }
+	  }, {
+	    key: 'ordering',
+	    get: function get() {
+	      return this.props.location.query.ordering;
+	    }
+	  }, {
 	    key: 'base_query',
 	    get: function get() {
 	      var query = this.filters;
@@ -28802,7 +28774,11 @@
 	  }]);
 
 	  return SearchableItemListWithoutRouter;
-	}((0, _mixins.searchable)((0, _mixins.sortable)(_itemList.ItemListWithoutRouter)));
+	}(_itemList.ItemListWithoutRouter);
+
+	SearchableItemListWithoutRouter.propTypes = {
+	  page_title: _react2.default.PropTypes.string.isRequired
+	};
 
 	exports.default = (0, _reactRouter.withRouter)(SearchableItemListWithoutRouter);
 
@@ -30919,7 +30895,7 @@
 	      });
 	      return _react2.default.createElement(
 	        "label",
-	        { className: "c-select" },
+	        { className: "c-select " + this.props.classname },
 	        _react2.default.createElement(
 	          "select",
 	          { value: this.state.value, onChange: function onChange(e) {
@@ -30943,11 +30919,13 @@
 	    id: _react2.default.PropTypes.string,
 	    value: _react2.default.PropTypes.string
 	  })),
-	  default: _react2.default.PropTypes.string
+	  default: _react2.default.PropTypes.string,
+	  classname: _react2.default.PropTypes.string
 	};
 
 	Select.defaultProps = {
-	  default: ""
+	  default: "",
+	  classname: ""
 	};
 
 /***/ },
@@ -31035,13 +31013,14 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'p-showcase__sort-order' },
+	        { className: 'p-showcase__sort-ordering' },
 	        _react2.default.createElement(_select2.default, { handleChangeEvent: function handleChangeEvent(id) {
 	            return _this2.onChange(id);
 	          },
 	          select_id: 'ordering',
 	          list: this.order_set,
-	          'default': this.parseOrdering(this.props.default)
+	          'default': this.parseOrdering(this.props.default),
+	          classname: "p-showcase__sort-ordering-select"
 	        })
 	      );
 	    }

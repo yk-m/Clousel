@@ -1,36 +1,36 @@
 {% extends "base.html" %}
 {% load render_bundle from webpack_loader %}
 
-{% block title %}Dashboard{% endblock title %}
+{% block title %}Dashboard | {{ site.name }}{% endblock title %}
 
 {% block extrahead %}
 {% endblock extrahead %}
 
 {% block header %}
-  {% include "header.html" with compact=True %}
+  {% include "includes/header.html" with compact=True %}
 {% endblock header %}
 
 {% block content %}
-<section class="p-showcase">
-  <div class="p-showcase__header">
-    <h2 class="p-showcase__title">New arrival</h2>
-  </div>
-  <div id="js-item" data-request-url="{{ item_request_url }}"></div>
-  <div class="p-showcase__footer">
-    <p class="c-showall"><a class="c-showall__link" href="{% url 'shop:index' %}#/?ordering=-updated" title="show all"><i class="c-showall__icon--left"></i>show all<i class="c-showall__icon--right"></i></a></p>
-  </div>
-</section>
+  <section class="p-showcase">
+    <div class="p-showcase__header">
+      <h2 class="p-showcase__title">New arrival</h2>
+    </div>
+    <div id="js-item" data-request-url="{{ item_request_url }}"></div>
+    <div class="p-showcase__footer">
+      <p class="c-showall"><a class="c-showall__link" href="{% url 'shop:index' %}#/?ordering=-updated" title="show all"><i class="c-showall__icon--left"></i>show all<i class="c-showall__icon--right"></i></a></p>
+    </div>
+  </section>
 
-<section class="p-showcase">
-  <div class="p-showcase__header">
-    <h2 class="p-showcase__title">Wardrobe</h2>
-  </div>
-  <div id="js-user-item" data-request-url="{{ user_item_request_url }}"></div>
-  <div class="p-showcase__footer">
-    <p class="c-showall"><a class="c-showall__link" href="{% url 'wardrobe:index' %}" title="show all"><i class="c-showall__icon--left"></i>show all<i class="c-showall__icon--right"></i></a></p>
-  </div>
-</section>
-{% render_bundle 'headline' %}
+  <section class="p-showcase">
+    <div class="p-showcase__header">
+      <h2 class="p-showcase__title">Wardrobe</h2>
+    </div>
+    <div id="js-user-item" data-request-url="{{ user_item_request_url }}"></div>
+    <div class="p-showcase__footer">
+      <p class="c-showall"><a class="c-showall__link" href="{% url 'wardrobe:index' %}" title="show all"><i class="c-showall__icon--left"></i>show all<i class="c-showall__icon--right"></i></a></p>
+    </div>
+  </section>
+  {% render_bundle 'headline' %}
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

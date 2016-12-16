@@ -1,5 +1,7 @@
 import logging
 
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -10,6 +12,8 @@ logger = logging.getLogger("debug")
 
 
 def index_view(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pages:dashboard'))
     return render(request, 'pages/index.html')
 
 
@@ -22,5 +26,5 @@ def dashboard_view(request):
     return render(request, 'pages/dashboard.html',
                   {
                     "item_request_url": "/api/items/",
-                    "user_item_request_url": "/api/uploads/",
+                    "user_item_request_url": "/api/wardrobe/",
                   })

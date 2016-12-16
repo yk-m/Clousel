@@ -5,6 +5,7 @@
     +span(6 of 12)
     +susy-breakpoint(0 $screen--smartphone-max, 12)
         +span(12 last)
+    margin: 0 0 $vertical-span 0
 
 .p-item-detail__content
     +span(6 of 12 last)
@@ -13,6 +14,7 @@
 
 .p-item-detail__table
     width: 100%
+    margin: 0 0 $vertical-span 0
 
     caption
         display: none
@@ -31,6 +33,3 @@
     th
         width: 100px
         text-align: left
-
-.p-item-detail__actions
-    @extend %u-ul-reset

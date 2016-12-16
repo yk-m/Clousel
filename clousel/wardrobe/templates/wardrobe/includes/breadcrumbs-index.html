@@ -1,0 +1,6 @@
+{% extends "pages/includes/breadcrumbs-dashboard.html" %}
+{% load i18n %}
+{% block children_of_page_dashboard %}
+  <li><a href="{% url 'wardrobe:index' %}" title="{% trans 'Wardrobe' %}">{% trans 'Wardrobe' %}</a></li>
+  {% block children_of_wardrobe_index %}{% endblock children_of_wardrobe_index %}
+{% endblock children_of_page_dashboard %}
