@@ -19,14 +19,12 @@ $logo-height: 420px
 $logo-height-2: 629px
 $logo-width: 680px
 
-$logo-image: "../images/logo.svg"
-
 @function calc_logo_width($height)
     @return $height / 550px * $logo-width
 
 =logo_image($header-height)
     padding: 0 0 0 (calc_logo_width($header-height) + $horizontal-span*2)
-    background: url(../images/logo.svg) no-repeat
+    background: url($logo-image-url) no-repeat
     background-size: calc_logo_width($header-height) auto
     background-position: $horizontal-span 0
 

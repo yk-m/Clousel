@@ -1,0 +1,5 @@
+{% extends "shop/includes/breadcrumbs-index.html" %}
+{% block children_of_shop_index %}
+  <li><a href="{% url 'shop:detail' pk=item.pk %}" title="{{ item.title }}">{{ item.brand }}</a></li>
+  {% block children_of_shop_detail %}{% endblock children_of_shop_detail %}
+{% endblock children_of_shop_index %}

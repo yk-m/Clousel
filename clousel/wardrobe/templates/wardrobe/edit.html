@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Edit' %} | {{ site.name }}{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "includes/header.html" with compact=True %}
+{% endblock header %}
+
+{% block breadcrumbs %}
+  {% include "wardrobe/includes/breadcrumbs-edit.html" %}
+{% endblock %}
+
+{% block content %}
+  <section class="p-formset--edit">
+    <div class="p-formset--edit__image">
+      <img src="{{ user_item.image.url }}" />
+    </div>
+    <form class="p-formset--edit__form" method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table class="p-formset--edit__table">
+        <caption>Edit</caption>
+        <tbody>
+          {% include "includes/form_as_table.html" with form=form %}
+        </tbody>
+      </table>
+      <input type="submit" value="{% trans 'Edit' %}" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </section>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

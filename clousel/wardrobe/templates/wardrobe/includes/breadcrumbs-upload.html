@@ -1,0 +1,6 @@
+{% extends "wardrobe/includes/breadcrumbs-index.html" %}
+{% load i18n %}
+{% block children_of_wardrobe_index %}
+  <li><a href="{% url 'wardrobe:upload'%}" title="{% trans 'Upload' %}">{% trans 'Upload' %}</a></li>
+  {% block children_of_wardrobe_upload %}{% endblock children_of_wardrobe_upload %}
+{% endblock children_of_wardrobe_index %}

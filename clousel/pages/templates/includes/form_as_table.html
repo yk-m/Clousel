@@ -1,0 +1,33 @@
+{% load filters %}
+{% for field in form %}
+  <tr>
+    {% if field.field.widget|is_checkbox %}
+      <td class="p-formset--checkbox" colspan="2">
+        {{ field }}　{{ field.label_tag }}
+        <div class="p-formset--help">
+          {{ field.help_text }}
+        </div>
+        <div class="p-formset--errorlist">
+          {{ field.errors }}
+        </div>
+      </td>
+    {% else %}
+      <th>{{ field.label_tag }}</th>
+      <td>
+        <div class="p-formset--input">
+          {% if field.field.widget|is_select %}
+            <label class="c-select">{{ field }}</label>
+          {% else %}
+            {{ field }}
+          {% endif %}
+        </div>
+        <div class="p-formset--help">
+          {{ field.help_text }}
+        </div>
+        <div class="p-formset--errorlist">
+          {{ field.errors }}
+        </div>
+      </td>
+    {% endif %}
+  </tr>
+{% endfor %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}{{ page_title }} | {{ site.name }}{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "includes/header.html" with compact=True %}
+{% endblock header %}
+
+{% block breadcrumbs %}
+  {% include breadcrumbs_template %}
+{% endblock %}
+
+{% block content %}
+  <div id="js-result" data-request-url="{{ request_url }}" data-page-title="{{ page_title }}"></div>
+  {% render_bundle 'itemList' %}
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { patch } from '../../ajax'
+import { patch, del } from '../../ajax'
 
 
 export default class UserItem extends React.Component {
@@ -13,18 +13,33 @@ export default class UserItem extends React.Component {
     }
   }
 
-  get purchase_url() {
-    return "/api/uploads/" + this.props.item.pk + "/"
+  get item_url() {
+    return "/api/wardrobe/" + this.props.item.pk + "/"
   }
 
   patch_purchase() {
     patch(
-      this.purchase_url,
+      this.item_url,
       {
         has_bought: !this.state.is_purchased
       },
       (res) => {
         this.setState({is_purchased: !this.state.is_purchased})
+      },
+      (res) => {
+        console.error(this.props.items_fetch_url, res.status, res.text)
+      }
+    )
+  }
+
+  delete_item() {
+    del(
+      this.item_url,
+      (res) => {
+        this.context.item_refresh()
+      },
+      (res) => {
+        console.error(this.props.items_fetch_url, res.status, res.text)
       }
     )
   }
@@ -32,6 +47,14 @@ export default class UserItem extends React.Component {
   onClickPurchaseButton(e) {
     e.preventDefault()
     this.patch_purchase()
+  }
+
+  onClickDeleteButton(e) {
+    e.preventDefault()
+
+    let result = confirm("このアイテムを削除しますか？")
+    if (result)
+      this.delete_item()
   }
 
   get image_class() {
@@ -63,6 +86,9 @@ export default class UserItem extends React.Component {
           <li className={this.purchase_class}>
             <a href="#" onClick={(e) => this.onClickPurchaseButton(e)} title="purchase"></a>
           </li>
+          <li className="p-item__delete">
+            <a href="#" onClick={(e) => this.onClickDeleteButton(e)} title="delete"></a>
+          </li>
         </ul>
       </div>
     )
@@ -71,4 +97,8 @@ export default class UserItem extends React.Component {
 
 UserItem.propTypes = {
   item: React.PropTypes.object.isRequired
+}
+
+UserItem.contextTypes = {
+  item_refresh: React.PropTypes.func
 }

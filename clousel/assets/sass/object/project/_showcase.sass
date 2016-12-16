@@ -16,12 +16,26 @@
     color: $accent-color
     cursor: pointer
 
-.p-showcase__sort-order
-    +span(last 6 of 12)
+%p-showcase__title--right
+    +span(6 of 12 last)
     text-align: right
 
-    label
-        width: span(2)
+.p-showcase__sort-ordering
+    @extend %p-showcase__title--right
+
+.p-showcase__upload
+    @extend %p-showcase__title--right
+
+    a
+        text-decoration: none
+
+.p-showcase__upload-icon
+    margin: 0 .5em 0 0
+    color: $accent-color
+    +icon($icon-upload, inherit)
+
+.p-showcase__sort-ordering-select
+    width: span(2)
 
 .p-showcase__filter-form
     $td-height: 50px

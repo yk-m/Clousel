@@ -1,29 +1,33 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Upload{% endblock title %}
+{% block title %}{% trans 'Upload' %} | {{ site.name }}{% endblock title %}
 
 {% block extrahead %}
 {% endblock extrahead %}
 
 {% block header %}
-  {% include "header.html" with compact=True %}
+  {% include "includes/header.html" with compact=True %}
 {% endblock header %}
 
+{% block breadcrumbs %}
+  {% include "wardrobe/includes/breadcrumbs-upload.html" %}
+{% endblock %}
+
 {% block content %}
-    <section class="p-upload-form">
-      <form method="post" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-          <caption>Upload</caption>
-          <tbody>
-            {{ form.as_table }}
-          </tbody>
-        </table>
-        <input type="submit" value="{% trans 'Upload' %}" />
-        <input type="hidden" name="next" value="{{ next }}" />
-      </form>
-    </section>
+  <section class="p-formset--upload">
+    <form class="p-formset--upload__form" method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table class="p-formset--upload__table">
+        <caption>Upload</caption>
+        <tbody>
+          {% include "includes/form_as_table.html" with form=form %}
+        </tbody>
+      </table>
+      <input type="submit" value="{% trans 'Upload' %}" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </section>
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

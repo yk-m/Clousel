@@ -1,67 +1,71 @@
 {% extends "base.html" %}
 {% load render_bundle from webpack_loader %}
 
-{% block title %}List{% endblock title %}
+{% block title %}{{ item.brand }} | {{ site.name }}{% endblock title %}
 
 {% block extrahead %}
 {% endblock extrahead %}
 
 {% block header %}
-  {% include "header.html" with compact=True %}
+  {% include "includes/header.html" with compact=True %}
 {% endblock header %}
 
+{% block breadcrumbs %}
+  {% include "shop/includes/breadcrumbs-detail.html" %}
+{% endblock %}
+
 {% block content %}
-<div class="p-item-detail">
-  <div class="p-item-detail__image">
-    <img src="{{ item.image.url }}" />
+  <div class="p-item-detail">
+    <div class="p-item-detail__image">
+      <img src="{{ item.image.url }}" />
+    </div>
+    <div class="p-item-detail__content">
+      <table class="p-item-detail__table">
+        <caption>Item Details</caption>
+        <tbody>
+          <tr>
+            <th>カテゴリ</th>
+            <td>{{ item.category|stringformat:'r' }}</td>
+          </tr>
+          <tr>
+            <th>ブランド</th>
+            <td>{{ item.brand }}</td>
+          </tr>
+          <tr>
+            <th>サイズ</th>
+            <td>{{ item.size }}</td>
+          </tr>
+          <tr>
+            <th>価格</th>
+            <td>{{ item.price }}</td>
+          </tr>
+          <tr>
+            <th>商品ランク</th>
+            <td>{{ item.rank }}</td>
+          </tr>
+          <tr>
+            <th>発送元</th>
+            <td>{{ item.delivery_source }}</td>
+          </tr>
+          <tr>
+            <th>配送方法</th>
+            <td>{{ item.delivery_service }}</td>
+          </tr>
+          <tr>
+            <th>発送までの日数</th>
+            <td>{{ item.delivery_days }}</td>
+          </tr>
+          <tr>
+            <th>販売元</th>
+            <td>{{ item.exhibiter }}</td>
+          </tr>
+          <tr>
+            <td colspan="2">{{ item.details|linebreaksbr }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="p-item-detail__content">
-    <table class="p-item-detail__table">
-      <caption>Item Details</caption>
-      <tbody>
-        <tr>
-          <th>カテゴリ</th>
-          <td>{{ item.category|stringformat:'r' }}</td>
-        </tr>
-        <tr>
-          <th>ブランド</th>
-          <td>{{ item.brand }}</td>
-        </tr>
-        <tr>
-          <th>サイズ</th>
-          <td>{{ item.size }}</td>
-        </tr>
-        <tr>
-          <th>価格</th>
-          <td>{{ item.price }}</td>
-        </tr>
-        <tr>
-          <th>商品ランク</th>
-          <td>{{ item.rank }}</td>
-        </tr>
-        <tr>
-          <th>発送元</th>
-          <td>{{ item.delivery_source }}</td>
-        </tr>
-        <tr>
-          <th>配送方法</th>
-          <td>{{ item.delivery_service }}</td>
-        </tr>
-        <tr>
-          <th>発送までの日数</th>
-          <td>{{ item.delivery_days }}</td>
-        </tr>
-        <tr>
-          <th>販売元</th>
-          <td>{{ item.exhibiter }}</td>
-        </tr>
-        <tr>
-          <td colspan="2">{{ item.details|linebreaksbr }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

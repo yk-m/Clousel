@@ -14,6 +14,7 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
+import clousel
 from api.settings import REST_FRAMEWORK
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'compressor',
     'debug_toolbar',
@@ -68,6 +70,8 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SITE_ID = 1
+
 ROOT_URLCONF = 'clousel.urls'
 
 TEMPLATES = [
@@ -75,6 +79,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'clousel/templates'),
+            os.path.join(BASE_DIR, 'clousel/templatetags'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -83,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'clousel.context_processors.site',
             ],
         },
     },

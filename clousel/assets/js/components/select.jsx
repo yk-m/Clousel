@@ -26,7 +26,7 @@ export default class Select extends React.Component {
       return <option key={element.id} value={element.id}>{element.value}</option>
     })
     return (
-      <label className="c-select">
+      <label className={"c-select " + this.props.classname}>
         <select value={this.state.value} onChange={(e) => this.onChange(e)}>
           {options}
         </select>
@@ -41,9 +41,11 @@ Select.propTypes = {
     id: React.PropTypes.string,
     value: React.PropTypes.string
   })),
-  default: React.PropTypes.string
+  default: React.PropTypes.string,
+  classname: React.PropTypes.string,
 }
 
 Select.defaultProps = {
-  default: ""
+  default: "",
+  classname: "",
 }

@@ -1,0 +1,6 @@
+{% extends "includes/breadcrumbs.html" %}
+{% load i18n %}
+{% block breadcrumbs_root %}
+  <li><a href="{% url 'pages:dashboard' %}" title="{% trans 'Dashboard' %}">{% trans 'Dashboard' %}</a></li>
+  {% block children_of_page_dashboard %}{% endblock children_of_page_dashboard %}
+{% endblock breadcrumbs_root %}

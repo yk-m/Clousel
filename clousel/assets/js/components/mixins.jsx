@@ -22,34 +22,3 @@ export function flippable(base = null) {
 
   return Flippable
 }
-
-
-export function sortable(base = null) {
-
-  class Sortable extends base {
-
-    get ordering() {
-      return this.props.location.query.ordering
-    }
-  }
-
-  return Sortable
-}
-
-
-export function searchable(base = null) {
-
-  class Searchable extends base {
-
-    get filters() {
-      return {
-        search: this.props.location.query.search,
-        category: this.props.location.query.category,
-        min_price: this.props.location.query.min_price,
-        max_price: this.props.location.query.max_price
-      }
-    }
-  }
-
-  return Searchable
-}
