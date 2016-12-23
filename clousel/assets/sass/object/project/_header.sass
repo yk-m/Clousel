@@ -22,30 +22,37 @@ $logo-width: 680px
 @function calc_logo_width($height)
     @return $height / 550px * $logo-width
 
-=logo_image($header-height)
+=logo-image($header-height)
     padding: 0 0 0 (calc_logo_width($header-height) + $horizontal-span*2)
     background: url($logo-image-url) no-repeat
     background-size: calc_logo_width($header-height) auto
     background-position: $horizontal-span 0
 
+=logo-size($header-height, $font-size)
+    +logo-image($header-height)
+    height: $header-height
+    line-height: $header-height
+    font-size: $font-size
+
 .p-header__logo
+    +logo-size($header-height, 3rem)
     a, a:hover, a:visited
         color: $black
 
-    +logo_image($header-height)
-    height: $header-height
-    line-height: $header-height
-    font-size: 3rem
+    +breakpoint(0 $screen--smartphone-max)
+        +logo-size($compact-header-height, 2rem)
 
 .p-header--compact__logo
     @extend .p-header__logo
-    +logo_image($compact-header-height)
-    height: $compact-header-height
-    line-height: $compact-header-height
-    font-size: 2rem
+    +logo-size($compact-header-height, 2rem)
 
 
 /// Header Nav
+=header-nav-size($header-height, $font-size)
+    height: $header-height
+    line-height: $header-height
+    font-size: $font-size
+
 .p-header__nav
     ul
         text-align: right
@@ -55,23 +62,21 @@ $logo-width: 680px
         display: inline-block
 
         a
+            +header-nav-size($header-height, 1.5rem)
             display: inline-block
-            height: $header-height
             padding: 0 $horizontal-span
-
-            line-height: $header-height
-            font-size: 1.5rem
 
             &:link, &:visited
                 color: $black
             &:hover
                 color: $gray
 
+            +breakpoint(0 $screen--smartphone-max)
+                +header-nav-size($compact-header-height, 1.3rem)
+
 .p-header--compact__nav
     @extend .p-header__nav
     li
         a
-            height: $compact-header-height
-            line-height: $compact-header-height
-            font-size: 1.3rem
+            +header-nav-size($compact-header-height, 1.3rem)
 

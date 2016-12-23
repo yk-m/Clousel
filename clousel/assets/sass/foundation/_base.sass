@@ -26,6 +26,21 @@ img
 
 
 
+/*  Table
+   ---------------------------------------- */
+
+table
+    width: 100%
+    table-layout: fixed
+
+    caption
+        display: none
+
+    td, th
+        vertical-align: middle
+        // white-space: nowrap
+
+
 /*  Form Elements
    ---------------------------------------- */
 
@@ -33,6 +48,8 @@ input, select
     &:focus
         outline: none
 
+// Firefox向け
+// Select:focus時の線を非表示に
 @-moz-document url-prefix()
     select,
     select:-moz-focusring,

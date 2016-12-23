@@ -48,49 +48,45 @@ export default class SearchFilters extends React.Component {
       <div className="p-showcase__filter-form">
         <form onSubmit={(e) => this.submit(e)}
               onReset={(e) => this.reset(e)}>
-          <table className="p-filters">
-            <caption>Search option</caption>
-            <tbody>
-              <tr>
-                <th>keyword</th>
-                <td>
-                  <input type="text" ref="search" value={this.state.search}
-                         onChange={(e) => this.updateFilter("search", e)} />
-                </td>
-              </tr>
-              <tr>
-                <th>category</th>
-                <td>
-                  {
-                    this.props.categories
-                      ? <Select handleChangeEvent={(id) => this.updateCategory(id)}
-                                select_id="categories"
-                                list={this.props.categories}
-                                default={this.state.category}
-                        />
-                      : null
-                  }
-                </td>
-              </tr>
-              <tr>
-                <th>price</th>
-                <td>
-                  <span>¥<input type="text" ref="min_price" value={this.state.min_price}
-                                placeholder="----" onChange={(e) => this.updateFilter("min_price", e)} /></span>
-                  <span className="u-inline-block">〜</span>
-                  <span>¥<input type="text" ref="max_price" defaultValue={this.state.max_price}
-                                placeholder="----" onChange={(e) => this.updateFilter("max_price", e)} /></span>
-                </td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>
-                  <input type="reset" value="Reset" />
-                  <input type="submit" value="Update" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="p-showcase__filters">
+            <div className="p-showcase__filter-title">keyword</div>
+            <div className="p-showcase__filter-input">
+              <input type="text" ref="search" value={this.state.search}
+                     onChange={(e) => this.updateFilter("search", e)} />
+            </div>
+            <div className="p-showcase__filter-title">category</div>
+            <div className="p-showcase__filter-input">
+              {
+                this.props.categories
+                  ? <Select handleChangeEvent={(id) => this.updateCategory(id)}
+                            select_id="categories"
+                            list={this.props.categories}
+                            default={this.state.category}
+                    />
+                  : null
+              }
+            </div>
+            <div className="p-showcase__filter-title">price</div>
+            <div className="p-showcase__filter-input">
+              <div className="p-showcase__filter-price">
+                <div className="p-showcase__filter-price--yen1">¥</div>
+                <div className="p-showcase__filter-price--input1">
+                  <input type="text" ref="min_price" value={this.state.min_price}
+                         placeholder="----" onChange={(e) => this.updateFilter("min_price", e)} />
+                </div>
+                <div className="p-showcase__filter-price--separator">〜</div>
+                <div className="p-showcase__filter-price--yen2">¥</div>
+                <div className="p-showcase__filter-price--input2">
+                  <input type="text" ref="max_price" defaultValue={this.state.max_price}
+                         placeholder="----" onChange={(e) => this.updateFilter("max_price", e)} />
+                </div>
+              </div>
+            </div>
+            <div className="p-showcase__filter-button">
+              <input type="reset" value="Reset" />
+              <input type="submit" value="Update" />
+            </div>
+          </div>
         </form>
       </div>
     )

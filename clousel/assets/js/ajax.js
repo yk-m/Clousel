@@ -2,7 +2,7 @@ import Request from 'superagent'
 import 'superagent-django-csrf'
 
 
-export function fetch(url, query, success, failure){
+export function fetch(url, query, success, failure) {
   Request
     .get(url)
     .query(query)
@@ -17,7 +17,7 @@ export function fetch(url, query, success, failure){
 }
 
 
-export function post(url, data, success, failure){
+export function post(url, data, success, failure) {
   Request
     .post(url)
     .send(data)
@@ -32,7 +32,7 @@ export function post(url, data, success, failure){
 }
 
 
-export function patch(url, data, success, failure){
+export function patch(url, data, success, failure) {
   Request
     .patch(url)
     .send(data)
@@ -47,7 +47,7 @@ export function patch(url, data, success, failure){
 }
 
 
-export function del(url, success, failure){
+export function del(url, success, failure) {
   Request
     .del(url)
     .end((err, res) => {

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { patch, del } from '../../ajax'
+import { get_querystring } from '../../url'
 
 
 export default class UserItem extends React.Component {
@@ -72,7 +73,7 @@ export default class UserItem extends React.Component {
   render() {
     return (
       <div className="p-item">
-        <a href={"/wardrobe/" + this.props.item.pk}>
+        <a href={"/wardrobe/" + this.props.item.pk + "/" + get_querystring(window.location.href) }>
           <div className="p-item__image">
             <div className="p-image-box">
               <img className={this.image_class} src={this.props.item.image} />

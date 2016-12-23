@@ -36,8 +36,13 @@
     border-top: 3px double $black
     border-bottom: 1px solid $black
 
-    +susy-breakpoint(0 $screen--smartphone-max, 12)
+    +susy-breakpoint($screen--tablet, 12)
         +gallery(6)
+    +susy-breakpoint($screen--smartphone, 12)
+        width: 100%
+        &:nth-child(n)
+            margin-right: 0
+            margin-left: 0
 
     a
         text-decoration: none
@@ -48,7 +53,6 @@
     z-index: 1
     width: 100%
     height: auto
-
 
 $item-caption-height: 3rem
 $item-action-button-size: 2rem
@@ -76,6 +80,9 @@ $item-action-button-size: 2rem
     width: span(1 of 7)
     text-align: center
 
+    a
+        +block-icon-with-height("", $item-action-button-size, $item-caption-height)
+
 %p-item__action--is_inactive
     a
         &:after
@@ -90,25 +97,29 @@ $item-action-button-size: 2rem
     @extend %p-item__action
     @extend %p-item__action--is_inactive
     a
-        +block-icon-with-height($icon-item-like, $item-action-button-size, 3rem)
+        &:after
+            content: $icon-item-like
 
 .p-item__search
     @extend %p-item__action
     @extend %p-item__action--is_inactive
     a
-        +block-icon-with-height($icon-item-search, $item-action-button-size, 3rem)
+        &:after
+            content: $icon-item-search
 
 .p-item__purchase
     @extend %p-item__action
     @extend %p-item__action--is_inactive
     a
-        +block-icon-with-height($icon-item-purchase, $item-action-button-size, 3rem)
+        &:after
+            content: $icon-item-purchase
 
 .p-item__delete
     @extend %p-item__action
     @extend %p-item__action--is_inactive
     a
-        +block-icon-with-height($icon-item-delete, $item-action-button-size, 3rem)
+        &:after
+            content: $icon-item-delete
 
 .p-item__like--is_liked
     @extend .p-item__like

@@ -11,10 +11,6 @@ export default class AbstractBaseList extends React.Component {
   static LIMIT =  12
 
   constructor(props) {
-    if (new.target === AbstractBaseList) {
-      throw new TypeError("Cannot construct Abstract instances directly");
-    }
-
     super(props)
 
     this.state = {

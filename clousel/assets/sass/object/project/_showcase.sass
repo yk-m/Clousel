@@ -9,6 +9,9 @@
     +span(6 of 12)
     margin: 0
 
+    +susy-breakpoint($screen--smartphone, 12)
+        +span(12 last)
+
 .p-showcase__filters-opener
     display: inline-block
     margin: 0 0 0 .75em
@@ -19,6 +22,12 @@
 %p-showcase__title--right
     +span(6 of 12 last)
     text-align: right
+
+    +susy-breakpoint($screen--smartphone, 12)
+        +span(12 last)
+
+        label
+            width: 100%
 
 .p-showcase__sort-ordering
     @extend %p-showcase__title--right
@@ -37,10 +46,26 @@
 .p-showcase__sort-ordering-select
     width: span(2)
 
+    +breakpoint($screen--tablet)
+        width: span(4)
+
+    +breakpoint($screen--smartphone)
+        width: 100%
+        margin: $vertical-span 0 0 0
+
+$filter-height: 50px
+$filter-title-height: 20px
+
 .p-showcase__filter-form
-    $td-height: 50px
     $row-num: 4
-    +slide($td-height*$row-num+$vertical-span*2, $vertical-span, $horizontal-span)
+    $filter-section-height: $filter-height*$row-num + $vertical-span*2
+    +slide($filter-section-height, $vertical-span, $horizontal-span)
+
+    +breakpoint($screen--smartphone-tablet)
+        $row-num: 5
+        $input-num: 3
+        $filter-section-height: $filter-height*$row-num + $filter-title-height*$input-num +  $vertical-span*$input-num + $vertical-span*2
+        +slide($filter-section-height, $vertical-span, $horizontal-span)
 
     padding: $default-gap
     +border-radius($radius)
@@ -48,36 +73,14 @@
     background: $light-gray
     overflow-y: hidden
 
-    table
-        width: 100%
-
-    caption
-        display: none
-
-    tr
-        height: $td-height
-
-        &:last-child
-            text-align: right
-
-    td, th
-        vertical-align: middle
-        white-space: nowrap
-
-    th
-        width: span(1 of 7)
-        text-align: left
-
-    td
-        width: span(6 of 7)
-
     input, button
         padding: $half-gap
 
     input
-        max-width: calc_width(3)
+        width: span(8 of 24)
 
         &[type=submit], &[type=reset]
+            width: auto
             border: none
 
             background: $white
@@ -86,4 +89,58 @@
             &:last-child
                 margin: 0 0 0 $horizontal-span
 
+.p-showcase__filters
+    +container
 
+.p-showcase__filter-title
+    +span(1 of 7)
+    height: $filter-height
+    line-height: $filter-height
+
+    +susy-breakpoint($screen--smartphone-tablet, 7)
+        height: $filter-title-height
+        line-height: $filter-title-height
+        +span(7)
+
+.p-showcase__filter-input
+    +span(6 of 7 last)
+    line-height: $filter-height
+
+    +susy-breakpoint($screen--smartphone-tablet, 7)
+        +span(7)
+        margin: 0 0 $vertical-span 0
+
+        input,
+        .c-select
+            width: 100%
+
+.p-showcase__filter-price
+    +clearfix
+
+.p-showcase__filter-price--yen1,
+.p-showcase__filter-price--yen2,
+.p-showcase__filter-price--separator
+    +span(1 of 24)
+    text-align: center
+
+    +susy-breakpoint($screen--smartphone-tablet, 12)
+        +span(1)
+
+.p-showcase__filter-price--separator
+    +susy-breakpoint($screen--smartphone-tablet, 12)
+        +span(1 last)
+
+.p-showcase__filter-price--input1,
+.p-showcase__filter-price--input2
+    +span(8 of 24)
+
+    +susy-breakpoint($screen--smartphone-tablet, 12)
+        +span(10)
+
+    input
+        width: 100%
+
+.p-showcase__filter-button
+    +span(1 of 1)
+    line-height: $filter-height
+    text-align: right

@@ -12,14 +12,6 @@ export default class AbstractBaseFlippableList extends flippable(AbstractBaseLis
 
   static LIMIT = AbstractBaseFlippableList.PAGINATE.per_page
 
-  constructor(props) {
-    if (new.target === AbstractBaseFlippableList) {
-      throw new TypeError("Cannot construct Abstract instances directly");
-    }
-
-    super(props)
-  }
-
   getListComponent(data) {}
 
   buildQueryForFetching() {

@@ -10,7 +10,7 @@ export default class Category {
       Category.CATEGORIES_URL,
       {},
       (res) => success(Category.format(res.body)),
-      (res) => failure(res)
+      (res) => failure(Category.CATEGORIES_URL, res)
     )
   }
 
