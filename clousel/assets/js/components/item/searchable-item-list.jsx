@@ -50,7 +50,7 @@ export class SearchableItemListWithoutRouter extends ItemListWithoutRouter {
     super.componentDidMount()
     Category.fetch(
       (categories) => this.setState({categories: categories}),
-      (res) => console.log(res)
+      (url, res) => console.error(url, res.status, res.text)
     )
   }
 

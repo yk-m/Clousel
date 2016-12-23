@@ -25,6 +25,7 @@ $pagination-break-me-bg-color: #fff !default
 /*  Definition
    ---------------------------------------- */
 .c-pagination
+    @extend %u-ul-reset
     text-align: center
     list-style-type: none
 
@@ -47,8 +48,7 @@ $pagination-break-me-bg-color: #fff !default
             color: $pagination-font-color--active
 
     .c-pagination__child--is_disabled
-        a
-            display: none
+        display: none
 
     .c-pagination__child--break-me
         padding: $pagination-break-me-padding

@@ -10,3 +10,7 @@ def is_checkbox(value):
 @register.filter(name='is_select')
 def is_checkbox(value):
     return isinstance(value, Select)
+
+@register.filter(name='hash')
+def hash(h, key):
+    return h[key]
