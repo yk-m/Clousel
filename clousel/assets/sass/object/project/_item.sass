@@ -8,7 +8,7 @@
 .p-items--state_loading,
 .p-items--state_error
     position: absolute
-    z-index: 100
+    z-index: $index--p-items
     top: 0
     left: 0
     width: 100%
@@ -20,7 +20,7 @@
     $icon-size: 5rem
     +spin
 
-    z-index: 101
+    z-index: $index--p-items-loading_icon
     margin: $horizontal-span auto 0
 
     +block_icon($icon-item-loading, $icon-size)
@@ -50,7 +50,7 @@
 .p-item__image
     +image-container
     position: relative
-    z-index: 1
+    z-index: $index--p-item-image
     width: 100%
     height: auto
 

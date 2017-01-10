@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<nav class="p-st__menu p-st--effect-push">
+  <div class="p-st__menu-header">
+    <div class="p-st__menu-title">
+      <h1 class="p-st__menu-logo">
+        {{ site.name }}
+      </h1>
+    </div>
+    <div class="p-st__menu-close">
+      <a href="#" title="{% trans 'Close' %}" class="p-st__close"><i class="p-st__close-icon"></i></a>
+    </div>
+  </div>
+  <ul class="p-st__menu-list">
+    <li><a href="{% url 'shop:index' %}" title="{% trans 'Shop' %}">{% trans 'Shop' %}</a></li>
+    <li><a href="{% url 'wardrobe:index' %}" title="{% trans 'Wardrobe' %}">{% trans 'Wardrobe' %}</a></li>
+    <li><a href="{% url 'wardrobe:upload' %}" title="{% trans 'Upload your item' %}">{% trans 'Upload your item' %}</a></li>
+    <li><a href="{% url 'auth_logout' %}" title="{% trans 'Log out' %}">{% trans 'Log out' %}</a></li>
+  </ul>
+</nav>

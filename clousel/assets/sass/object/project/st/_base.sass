@@ -1,0 +1,121 @@
+/*
+ *  Sidebar Transitions
+ *    - Preference
+ *    - Base
+ *    - Effects
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
+$st-menu-width: calc_width(4)
+
+/* ----- Animation ----- */
+$st-transition-duration: .5s
+
+$st-transition--all: all $st-transition-duration
+$st-transition--width: width .1s $st-transition-duration
+$st-transition--height: height .1s $st-transition-duration
+$st-transition--opacity: opacity $st-transition-duration
+$st-transition--transform: transform $st-transition-duration ceaser($easeInOutCubic)
+
+
+
+/*  Base
+   ---------------------------------------- */
+html,
+body,
+.p-st__container,
+.p-st__pusher,
+.p-st__content
+    height: 100%
+
+.p-st__content
+    overflow-y: scroll
+
+.p-st__content,
+.p-st__content-inner
+    position: relative
+
+.p-st__container
+    position: relative
+    overflow: hidden
+
+.p-st__pusher
+    position: relative
+    right: 0
+    z-index: $index--lib-st-overlay
+    height: 100%
+    +transition($st-transition--transform)
+
+.p-st__pusher::after
+    position: absolute
+    top: 0
+    left: 0
+    z-index: $index--lib-st-overlay
+    width: 0
+    height: 0
+    content: ''
+    opacity: 0
+    +transition($st-transition--opacity, $st-transition--width, $st-transition--height)
+
+.p-st--menu-open .p-st__pusher
+    cursor: pointer
+
+.p-st--menu-open .p-st__pusher::after
+    width: 100%
+    height: 100%
+    opacity: 1
+    +transition($st-transition--opacity)
+
+.p-st__menu
+    position: absolute
+    top: 0
+    right: 0
+    z-index: $index--lib-st-menu
+    visibility: hidden
+    width: $st-menu-width
+    height: 100%
+    cursor: default
+    +transition($st-transition--all)
+
+.p-st__menu::after
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    content: ''
+    opacity: 1
+    +transition($st-transition--opacity)
+
+.p-st--menu-open .p-st__menu::after
+    width: 0
+    height: 0
+    opacity: 0
+    +transition($st-transition--opacity, $st-transition--width, $st-transition--height)
+
+/* Fallback example for browsers that don't support 3D transforms (and no JS fallback) */
+.no-csstransforms3d .p-st__pusher,
+.no-js .p-st__pusher
+    padding-right: $st-menu-width
+
+
+
+/*  Effects
+   ---------------------------------------- */
+
+/* ----- Push ----- */
+.p-st--effect-push
+    &.p-st--menu-open .p-st__pusher
+        +translate3d(-$st-menu-width, 0, 0)
+
+    &.p-st__menu
+        +translate3d(100%, 0, 0)
+
+    &.p-st--menu-open &.p-st__menu
+        visibility: visible
+        +transition($st-transition--transform)
+    &.p-st__menu::after
+        display: none
