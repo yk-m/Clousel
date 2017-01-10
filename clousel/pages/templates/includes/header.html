@@ -12,7 +12,7 @@
       <a href="{% url 'pages:index' %}" title="">{{ site.name }}</a>
     </h1>
   </div>
-  <nav class="
+  <div class="l-header__nav
     {% if compact %}
       p-header--compact__nav
     {% else %}
@@ -21,12 +21,10 @@
   ">
     <ul>
       {% if user.is_authenticated %}
-        <li><a href="{% url 'wardrobe:index' %}" title="{% trans 'Wardrobe' %}">{% trans 'Wardrobe' %}</a></li>
-        <li><a href="{% url 'shop:index' %}" title="{% trans 'Shop' %}">{% trans 'Shop' %}</a></li>
-        <li><a href="{% url 'auth_logout' %}" title="{% trans 'Log out' %}">{% trans 'Log out' %}</a></li>
+      <li><a href="#" title="{% trans 'Menu' %}" class="p-st__open" data-effect="p-st--effect-push">{% trans 'Menu' %}<i class="p-header__menu-icon"></i></a></li>
       {% else %}
         <li><a href="{% url 'auth_login' %}" title="{% trans 'Log in' %}">{% trans 'Log in' %}</a></li>
       {% endif %}
     </ul>
-  </nav>
+  </div>
 </header>

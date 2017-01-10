@@ -36,7 +36,7 @@ module.exports = {
   },
 
   resolve: {
-    root: __dirname,
+    root: __dirname + '/assets/js',
     modulesDirectories: ['node_modules', 'bower_components'],
     extensions: ['', '.js', '.jsx']
   },
