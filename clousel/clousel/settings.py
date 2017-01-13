@@ -140,7 +140,7 @@ LANGUAGES = (
     ('en', _('English')),  # (Optional)
 )
 
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Asia/Tokyo'
 

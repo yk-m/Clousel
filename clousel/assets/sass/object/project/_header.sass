@@ -1,16 +1,33 @@
+/*
+ *  HEADER
+ *    - Preference
+ *    - Utility
+ *    - Definition
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - utility/list
+ *        - component/icon
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
 $header-height: calc_height(2)
 $compact-header-height: calc_height(1)
 
-.p-header
-    margin: calc_height(1) auto
-
-    a
-        text-decoration: none
-
-/// Header Logo
+/* ----- Logo ----- */
 $logo-height: 420px
 $logo-width: 680px
 
+
+
+/*  Utility
+   ---------------------------------------- */
+
+/* ----- Logo ----- */
 @function calc_logo_width($height)
     @return $height / 550px * $logo-width
 
@@ -18,7 +35,7 @@ $logo-width: 680px
     padding: 0 0 0 (calc_logo_width($header-height) + $horizontal-span*2)
     background: url($logo-image-url) no-repeat
     background-size: calc_logo_width($header-height) auto
-    background-position: $horizontal-span 0
+    background-position: $horizontal-span center
 
 =logo-size($header-height, $font-size)
     +logo-image($header-height)
@@ -26,6 +43,26 @@ $logo-width: 680px
     line-height: $header-height
     font-size: $font-size
 
+/* ----- Navigation ----- */
+=header-nav-size($header-height, $font-size)
+    height: $header-height
+    line-height: $header-height
+    font-size: $font-size
+
+
+
+/*  Definition
+   ---------------------------------------- */
+.p-header
+    margin: 0 0 $vertical-span
+    padding: $vertical-span 0
+    border-bottom: .5px solid rgba($gray, .2)
+    box-shadow: 0px 0px 10px $light-gray
+
+    a
+        text-decoration: none
+
+/* ----- Logo ----- */
 .p-header__logo
     +logo-size($header-height, 3rem)
     margin: 0
@@ -35,17 +72,12 @@ $logo-width: 680px
     +breakpoint(0 $screen--smartphone-max)
         +logo-size($compact-header-height, 2rem)
 
+/*  Compact  */
 .p-header--compact__logo
     @extend .p-header__logo
     +logo-size($compact-header-height, 2rem)
 
-
-/// Header Nav
-=header-nav-size($header-height, $font-size)
-    height: $header-height
-    line-height: $header-height
-    font-size: $font-size
-
+/* ----- Navigation ----- */
 .p-header__nav
     ul
         @extend %u-ul-reset
@@ -68,12 +100,14 @@ $logo-width: 680px
             +breakpoint(0 $screen--smartphone-max)
                 +header-nav-size($compact-header-height, 1.3rem)
 
+/*  Compact  */
 .p-header--compact__nav
     @extend .p-header__nav
     li
         a
             +header-nav-size($compact-header-height, 1.3rem)
 
+/*  Menu Opener  */
 .p-header__menu-icon
-    +icon($icon-menu, 20px)
-    margin: 0 0 0 10px
+    +icon($icon-menu, $icon-font-size)
+    margin: 0 0 0 $horizontal-span/2

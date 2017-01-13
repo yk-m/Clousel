@@ -1,11 +1,10 @@
-import registration.backends.default.urls
 from django.conf.urls import include, url
-from django.contrib.auth.views import logout
+
+from .views import detail_view, edit_view, delete_view
+
 
 urlpatterns = [
-    url(r'^logout/$',
-        logout,
-        {'template_name': 'registration/logout.html', 'next_page': '/'},
-        name='auth_logout'),
-    url(r'^', include('registration.backends.default.urls')),
+    url(r'^detail/$', detail_view, name='detail'),
+    url(r'^edit/$', edit_view, name='edit'),
+    url(r'^delete/$', delete_view, name='delete'),
 ]

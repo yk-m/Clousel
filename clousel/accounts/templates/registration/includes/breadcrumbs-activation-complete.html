@@ -1,0 +1,6 @@
+{% extends "registration/includes/breadcrumbs-register.html" %}
+{% load i18n %}
+{% block children_of_registration_register %}
+  <li><a href="{% url 'registration_activation_complete' %}" title="{% trans 'Account Activated' %}">{% trans 'Account Activated' %}</a></li>
+  {% block children_of_activation_complete %}{% endblock children_of_activation_complete %}
+{% endblock children_of_registration_register %}

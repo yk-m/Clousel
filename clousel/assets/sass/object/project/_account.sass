@@ -1,0 +1,74 @@
+/*
+ *  ACCOUNT
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - layout/main
+ *        - component/icon
+ */
+
+
+
+.p-account
+    @extend .l-middle
+
+    a i::after
+        text-decoration: none
+
+    a:hover i::after
+        color: $gray
+
+.p-account__icon
+    +span(2 of 6)
+    line-height: 5rem
+
+.p-account__user-icon
+    +icon($icon-user, 5rem)
+
+.p-account__profile
+    +span(4 of 6 last)
+
+.p-account__name
+    margin: 0
+    line-height: 5rem
+
+.p-account__date-of-birth
+    margin: 0
+
+.p-account__info
+    +span(6 of 6 last)
+        text-decoration: none
+    margin: calc_height(1) 0
+
+    dl
+        margin: 0
+
+    dt, dd
+        padding: $vertical-span 0
+
+    dt
+        float: left
+        clear: both
+        width: span(2 of 6) + gutter(6)
+    dd
+        margin: 0
+        border-bottom: 1px solid $light-gray
+
+.p-account__edit
+    margin: $vertical-span 0 0
+    text-align: left
+
+    a
+        color: $gray
+
+.p-account__edit-icon
+    +icon($icon-edit, 1em)
+    margin: 0 0 0 $horizontal-span
+
+.p-account__delete
+    margin: calc_height(1) 0 0
+    text-align: right
+
+    a
+        color: $gray

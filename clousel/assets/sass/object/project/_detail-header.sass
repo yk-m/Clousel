@@ -1,0 +1,32 @@
+/*
+ *  DETAIL HEADER
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ */
+
+
+
+.p-detail-header
+    +container
+
+%p-detail-header__title
+    margin: 0 0 $vertical-span 0
+
+.p-detail-header__title
+    @extend %p-detail-header__title
+    +span(2 of 2 last)
+
+.p-detail-header__title--left
+    @extend %p-detail-header__title
+    +span(1 of 2)
+
+.p-detail-header__title--right
+    @extend %p-detail-header__title
+    +span(1 of 2 last)
+
+.p-detail-header__category
+    display: inline-block
+    margin: 0 0 0 .6em
+    font-size: .6em

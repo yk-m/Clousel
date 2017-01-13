@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load render_bundle from webpack_loader %}
 
 {% block title %}Dashboard | {{ site.name }}{% endblock title %}
@@ -11,6 +12,12 @@
 {% endblock header %}
 
 {% block content %}
+  <section class="p-search">
+    <h2 class="p-search__title">Search</h2>
+    <a class="p-search__button" href="{% url 'wardrobe:upload' %}" title="{% trans 'Upload an item' %}">{% trans 'Upload your item' %}</a>
+    <a class="p-search__button" href="{% url 'wardrobe:index' %}" title="{% trans 'Pick Item from Wardrobe' %}">{% trans 'Pick item from Wardrobe' %}</a>
+  </section>
+
   <section class="p-showcase">
     <div class="p-showcase__header">
       <h2 class="p-showcase__title">New arrival</h2>

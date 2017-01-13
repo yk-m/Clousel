@@ -16,6 +16,13 @@
 
 {% block content %}
   <section class="p-formset--upload">
+    <div class="p-formset__header">
+      <p>
+          {% blocktrans %}
+          Please rest assured, you are the only one who can see your image.
+          {% endblocktrans %}
+      </p>
+    </div>
     <form class="p-formset--upload__form" method="post" action="" enctype="multipart/form-data">
       {% csrf_token %}
       <table class="p-formset--upload__table">

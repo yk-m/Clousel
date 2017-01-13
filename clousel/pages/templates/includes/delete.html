@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load staticfiles %}
+<script type="text/javascript">
+  function onDeleteClick() {
+    var result = confirm("{{ message }}")
+    if (result === true) {
+      location.href = "{{ url }}"
+    }
+
+    return false
+  }
+</script>

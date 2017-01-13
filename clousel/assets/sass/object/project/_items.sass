@@ -1,3 +1,28 @@
+/*
+ *  ITEMS
+ *    - Preference
+ *    - Container
+ *    - Item
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - utility/list
+ *        - component/icon
+ *        - project/image
+ */
+
+
+
+/*  Preference
+   ---------------------------------------- */
+$item-caption-height: 3rem
+$item-action-button-size: 2rem
+
+
+
+/*  Container
+   ---------------------------------------- */
 .p-item-list
     position: relative
     min-height: calc_height(2)
@@ -29,6 +54,10 @@
 .p-items--state_error p
     font-size: 2rem
 
+
+
+/*  Item
+   ---------------------------------------- */
 .p-item
     +gallery(3 of 12)
     margin-top: $vertical-span
@@ -36,13 +65,8 @@
     border-top: 3px double $black
     border-bottom: 1px solid $black
 
-    +susy-breakpoint($screen--tablet, 12)
+    +susy-breakpoint($screen--smartphone-tablet, 12)
         +gallery(6)
-    +susy-breakpoint($screen--smartphone, 12)
-        width: 100%
-        &:nth-child(n)
-            margin-right: 0
-            margin-left: 0
 
     a
         text-decoration: none
@@ -54,9 +78,7 @@
     width: 100%
     height: auto
 
-$item-caption-height: 3rem
-$item-action-button-size: 2rem
-
+/* ----- Description ----- */
 .p-item__caption
     @extend %u-ul-reset
     height: $item-caption-height
@@ -72,16 +94,20 @@ $item-action-button-size: 2rem
         &:first-child
             margin-left: 0
 
-.p-item__price, .p-item__title
+.p-item__price,
+.p-item__title
     width: span(5 of 7)
     text-align: left
 
+/*  Actions  */
 %p-item__action
     width: span(1 of 7)
     text-align: center
 
     a
         +block-icon-with-height("", $item-action-button-size, $item-caption-height)
+            +breakpoint($screen--smartphone)
+                font-size: 1.5rem
 
 %p-item__action--is_inactive
     a
