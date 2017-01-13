@@ -4,6 +4,10 @@
 {% block title %}{% trans "Log in" %}{% endblock %}
 
 
+{% block breadcrumbs %}
+  {% include "registration/includes/breadcrumbs-login.html" %}
+{% endblock %}
+
 {% block no_form_section_header %}{% endblock %}
 
 {% block form_title %}Login{% endblock %}

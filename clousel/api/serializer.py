@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model, password_validation
 from django.core import exceptions
 from rest_framework import serializers
@@ -5,6 +7,8 @@ from rest_framework import serializers
 from accounts.models import Profile
 from action.models import Like, PurchaseHistory
 from clothing.models import Category, Clothing
+from registration import signals
+from registration.models import RegistrationProfile
 from shop.models import Item
 from wardrobe.models import UserItem
 
@@ -17,6 +21,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class BasicUserSerializer(serializers.ModelSerializer):
+    SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
     profile = ProfileSerializer()
 
     class Meta:
@@ -51,6 +56,15 @@ class BasicUserSerializer(serializers.ModelSerializer):
         user = self.Meta.model.objects.create_user(**validated_data)
         Profile.objects.create(user=user, **profile_data)
 
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            new_user=user,
+            site=get_current_site(self.context['request']),
+            send_email=self.SEND_ACTIVATION_EMAIL,
+            request=self.context['request'],
+        )
+        signals.user_registered.send(sender=self.__class__,
+                                     user=new_user,
+                                     request=self.context['request'])
         return user
 
 

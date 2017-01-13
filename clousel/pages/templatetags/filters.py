@@ -1,7 +1,12 @@
 from django import template
+from django.forms import FileInput
 from django.forms.fields import CheckboxInput, Select
 
 register = template.Library()
+
+@register.filter(name='is_file')
+def is_file(value):
+    return isinstance(value, FileInput)
 
 @register.filter(name='is_checkbox')
 def is_checkbox(value):

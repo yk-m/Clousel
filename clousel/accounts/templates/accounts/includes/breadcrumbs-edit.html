@@ -1,0 +1,6 @@
+{% extends "accounts/includes/breadcrumbs-detail.html" %}
+{% load i18n %}
+{% block children_of_accounts_detail %}
+  <li><a href="{% url 'accounts:edit' %}" title="{% trans 'Edit' %}">{% trans 'Edit' %}</a></li>
+  {% block children_of_accounts_edit %}{% endblock children_of_accounts_edit %}
+{% endblock children_of_accounts_detail %}

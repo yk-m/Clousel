@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}{% trans 'Account' %} | {{ site.name }}{% endblock title %}
+
+{% block extrahead %}
+  <script type="text/javascript">
+    function onDeleteClick() {
+      var result = confirm("{% trans 'アカウントを削除してもいいですか？' %}")
+      if (result === true) {
+        location.href = "{% url 'accounts:delete' %}"
+      }
+
+      return false
+    }
+  </script>
+{% endblock extrahead %}
+
+{% block header %}
+  {% include "includes/header.html" with compact=True %}
+{% endblock header %}
+
+{% block breadcrumbs %}
+  {% include "accounts/includes/breadcrumbs-detail.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="p-account">
+    <div class="p-account__icon">
+      <i class="p-account__user-icon"></i>
+    </div>
+    <div class="p-account__profile">
+      <h1 class="p-account__name">{{ user.profile.name|default:"---" }}</h1>
+      <p class="p-account__date-of-birth">Born on {{ user.profile.date_of_birth|default:"---" }}<a href="{% url 'accounts:edit' %}" title="{% trans 'Edit profile' %}"><i class="p-account__edit-icon"></i></a></p>
+    </div>
+    <div class="p-account__info">
+      <dl>
+        <dt>{% trans 'Email address' %}</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>{% trans 'Password' %}</dt>
+        <dd>●●●●●●●●<a href="{% url 'auth_password_change' %}" title="{% trans 'Change password' %}"><i class="p-account__edit-icon"></i></a></dd>
+      </dl>
+      <p class="p-account__delete">
+        <a href="#" onclick="return onDeleteClick()" title="{% trans 'Delete this account?' %}">Delete this account?</a>
+      </p>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

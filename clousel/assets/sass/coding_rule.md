@@ -43,7 +43,7 @@
 4. フォント関連のプロパティ
     - text-align, vertical-align, line-height, font
 5. 色に関するプロパティ
-    - color, background
+    - background, color, opacity
 6. それ以外
     - cursor
 
@@ -54,6 +54,11 @@
  *    - Foo
  *    - Bar
  *    - Foo
+ *    
+ *    * Dependencies
+ *        - component/foo
+ *        - project/bar
+ *        - utility/foo
  */
 
 

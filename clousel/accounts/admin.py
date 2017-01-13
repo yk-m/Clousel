@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .forms import EmailUserChangeForm, EmailUserCreationForm, ProfileForm
+from .forms import EmailUserCreationForm, EmailUserChangeFormForAdmin, ProfileForm
 from .models import EmailUser, Profile
 
 
@@ -13,7 +13,7 @@ class ProfileInline(admin.StackedInline):
 
 class EmailUserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
-    form = EmailUserChangeForm
+    form = EmailUserChangeFormForAdmin
     add_form = EmailUserCreationForm
 
     # The fields to be used in displaying the User model.

@@ -7,7 +7,7 @@
 {% block extrahead %}
   <script type="text/javascript">
     function onDeleteClick() {
-      var result = confirm("{% trans 'このアイテムを削除しますか？' %}")
+      var result = confirm("{% trans 'Are you sure you want to delete this item?' %}")
       if (result === true) {
         location.href = "{% url 'wardrobe:delete' pk=user_item.pk %}"
       }
@@ -26,10 +26,10 @@
 {% endblock %}
 
 {% block content %}
-  <div class="p-page-header">
-    <h2 class="p-page-header__title">
+  <div class="p-detail-header">
+    <h2 class="p-detail-header__title">
       {{ user_item.title }}
-      <span class="p-page-header__span">[{{ user_item.category|stringformat:'r' }}]</span>
+      <span class="p-detail-header__category">[{{ user_item.category|stringformat:'r' }}]</span>
     </h2>
   </div>
   <div class="p-user-item-detail">
@@ -38,14 +38,14 @@
     </div>
     <div class="p-user-item-detail__content">
       <ul class="p-user-item-detail__actions">
-        <li><a href="{% url 'wardrobe:similar' pk=user_item.pk %}" title="{% trans '似ているアイテムを探す' %}">
-          {% trans '似ているアイテムを探す' %}
+        <li class="p-user-item-detail__action"><a href="{% url 'wardrobe:similar' pk=user_item.pk %}" title="{% trans 'Find similar items' %}">
+          {% trans 'Find similar items' %}
         </a></li>
-        <li><a href="{% url 'wardrobe:suitable' pk=user_item.pk %}" title="{% trans '似合うアイテムを探す' %}">
-          {% trans '似合うアイテムを探す' %}
+        <li class="p-user-item-detail__action"><a href="{% url 'wardrobe:suitable' pk=user_item.pk %}" title="{% trans 'Find suitable items' %}">
+          {% trans 'Find suitable items' %}
         </a></li>
-        <li class="p-user-item-detail__action--weak"><a href="{% url 'wardrobe:edit' pk=user_item.pk %}" title="{% trans 'このアイテムを編集する' %}">{% trans '編集' %}</a></li>
-        <li class="p-user-item-detail__action--weak"><a href="#" onclick="return onDeleteClick()" title="{% trans 'このアイテムを削除する' %}">{% trans '削除' %}</a></li>
+        <li class="p-user-item-detail__action--weak"><a href="{% url 'wardrobe:edit' pk=user_item.pk %}" title="{% trans 'Edit this item' %}"><i class="p-user-item-detail__edit-icon"></i></a></li>
+        <li class="p-user-item-detail__action--weak"><a href="#" onclick="return onDeleteClick()" title="{% trans 'Delete this item' %}"><i class="p-user-item-detail__delete-icon"></i></a></li>
       </ul>
     </div>
   </div>

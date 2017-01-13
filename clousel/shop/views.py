@@ -12,7 +12,7 @@ def index_view(request):
         {
             "request_url": "/api/items/",
             "page_title": "Shop items",
-            "breadcrumbs_template": "shop/includes/breadcrumbs-index.html"
+            "breadcrumbs_template": "includes/breadcrumbs-empty.html"
         },
     )
 

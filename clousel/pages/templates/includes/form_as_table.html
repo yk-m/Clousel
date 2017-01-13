@@ -2,30 +2,37 @@
 {% for field in form %}
   <tr>
     {% if field.field.widget|is_checkbox %}
-      <td class="p-formset--checkbox" colspan="2">
+      <td class="p-formset__checkbox" colspan="2">
         {{ field }}　{{ field.label_tag }}
-        <div class="p-formset--help">
-          {{ field.help_text }}
+        <div class="p-formset__errorlist">
+          {{ field.errors|safe }}
         </div>
-        <div class="p-formset--errorlist">
-          {{ field.errors }}
+        <div class="p-formset__help">
+          {{ field.help_text|safe }}
         </div>
       </td>
     {% else %}
       <th>{{ field.label_tag }}</th>
       <td>
-        <div class="p-formset--input">
-          {% if field.field.widget|is_select %}
+        {% if field.field.widget|is_select %}
+          <div class="p-formset__select">
             <label class="c-select">{{ field }}</label>
-          {% else %}
+          </div>
+        {% elif field.field.widget|is_file %}
+          <div class="p-formset__file">
             {{ field }}
-          {% endif %}
+          </div>
+        {% else %}
+          <div class="p-formset__input">
+            {{ field }}
+          </div>
+        {% endif %}
         </div>
-        <div class="p-formset--help">
-          {{ field.help_text }}
+        <div class="p-formset__errorlist">
+          {{ field.errors|safe }}
         </div>
-        <div class="p-formset--errorlist">
-          {{ field.errors }}
+        <div class="p-formset__help">
+          {{ field.help_text|safe }}
         </div>
       </td>
     {% endif %}

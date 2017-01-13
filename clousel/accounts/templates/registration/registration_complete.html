@@ -3,6 +3,11 @@
 
 {% block title %}{% trans "Activation email sent" %}{% endblock %}
 
+
+{% block breadcrumbs %}
+  {% include "registration/includes/breadcrumbs-register-complete.html" %}
+{% endblock %}
+
 {% block message_section %}
 <p>{% trans "Please check your email to complete the registration process." %}</p>
 {% endblock %}

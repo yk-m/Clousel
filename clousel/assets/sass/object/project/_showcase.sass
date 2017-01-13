@@ -1,10 +1,24 @@
+/*
+ *  SHOWCASE
+ *    - Header
+ *    - Filters
+ *    - Footer
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - component/icon
+ */
+
+
+
+/*  Header
+   ---------------------------------------- */
 .p-showcase__header
     +clearfix
     margin: 0 0 $vertical-span
 
-.p-showcase__footer
-    margin: 0 0 calc_height(1)
-
+/* ----- Title Section ----- */
 .p-showcase__title
     +span(6 of 12)
     margin: 0
@@ -19,6 +33,7 @@
     color: $accent-color
     cursor: pointer
 
+/* ----- Title Section - Right side ----- */
 %p-showcase__title--right
     +span(6 of 12 last)
     text-align: right
@@ -29,19 +44,9 @@
         label
             width: 100%
 
+/*  Shop items  */
 .p-showcase__sort-ordering
     @extend %p-showcase__title--right
-
-.p-showcase__upload
-    @extend %p-showcase__title--right
-
-    a
-        text-decoration: none
-
-.p-showcase__upload-icon
-    margin: 0 .5em 0 0
-    color: $accent-color
-    +icon($icon-upload, inherit)
 
 .p-showcase__sort-ordering-select
     width: span(2)
@@ -53,9 +58,26 @@
         width: 100%
         margin: $vertical-span 0 0 0
 
+/*  Wardrobe  */
+.p-showcase__upload
+    @extend %p-showcase__title--right
+
+    a
+        text-decoration: none
+
+.p-showcase__upload-icon
+    margin: 0 .5em 0 0
+    color: $accent-color
+    +icon($icon-upload, inherit)
+
+
+
+/*  Filters
+   ---------------------------------------- */
 $filter-height: 50px
 $filter-title-height: 20px
 
+/* ----- Form ----- */
 .p-showcase__filter-form
     $row-num: 4
     $filter-section-height: $filter-height*$row-num + $vertical-span*2
@@ -89,6 +111,7 @@ $filter-title-height: 20px
             &:last-child
                 margin: 0 0 0 $horizontal-span
 
+/* ----- Fields ----- */
 .p-showcase__filters
     +container
 
@@ -144,3 +167,10 @@ $filter-title-height: 20px
     +span(1 of 1)
     line-height: $filter-height
     text-align: right
+
+
+
+/*  Footer
+   ---------------------------------------- */
+.p-showcase__footer
+    margin: 0 0 calc_height(1)

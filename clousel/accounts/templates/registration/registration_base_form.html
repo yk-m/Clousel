@@ -11,7 +11,7 @@
     <table class="p-formset__table">
       <caption>{% block form_title %}{% endblock %}</caption>
       <tbody>
-        {{ form.as_table }}
+        {% include "includes/form_as_table.html" with form=form %}
       </tbody>
     </table>
     {% block form_footer %}{% endblock %}

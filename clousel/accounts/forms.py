@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -25,6 +27,13 @@ class EmailUserCreationForm(forms.ModelForm):
         model = get_user_model()
         fields = ('email', )
 
+    def clean_password1(self):
+        password1 = self.cleaned_data.get("password1")
+        self.instance.email = self.cleaned_data.get('email')
+        password_validation.validate_password(
+            self.cleaned_data.get('password1'), self.instance)
+        return password1
+
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -33,9 +42,6 @@ class EmailUserCreationForm(forms.ModelForm):
                 _("The two password fields didn't match."),
                 code='password_mismatch',
             )
-        self.instance.email = self.cleaned_data.get('email')
-        password_validation.validate_password(
-            self.cleaned_data.get('password2'), self.instance)
         return password2
 
     def save(self, commit=True):
@@ -48,7 +54,20 @@ class EmailUserCreationForm(forms.ModelForm):
 
 
 class EmailUserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
+    """A form for updating users."""
+
+    class Meta:
+        model = get_user_model()
+        fields = ('email', )
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs['instance']   # instanceがない場合はKeyError
+        super().__init__(*args, **kwargs)
+
+
+class EmailUserChangeFormForAdmin(EmailUserChangeForm):
+    """
+    A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
     password hash display field.
     """
@@ -56,11 +75,7 @@ class EmailUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password',)
-
-    def __init__(self, *args, **kwargs):
-        instance = kwargs['instance']   # instanceがない場合はKeyError
-        super().__init__(*args, **kwargs)
+        fields = ('email', 'password', 'is_active', )
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -69,19 +84,75 @@ class EmailUserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
+class DateDropdownWidget(forms.MultiWidget):
+
+    def __init__(self, attrs=None, year_range=None, month_range=None, day_range=None):
+        YEARS = year_range or range(1900, datetime.date.today().year)[::-1]
+        MONTHES = month_range or range(1,13)
+        DAYS = day_range or range(1,32)
+
+        years = map( lambda x: (x,x), YEARS )
+        months = map(lambda x:(x,x), MONTHES )
+        days = map( lambda x: (x,x), DAYS )
+
+        widgets = (
+                forms.Select(choices=years),
+                forms.Select(choices=months),
+                forms.Select(choices=days),
+                )
+        super(DateDropdownWidget, self).__init__(widgets, attrs)
+
+    def format_output(self,widgets):
+        format = """
+            <div class="p-formset__datefield">
+                <label class="c-select">%s</label>
+                <label class="c-select">%s</label>
+                <label class="c-select">%s</label>
+            </div>
+        """
+        return format % (widgets[0], widgets[1], widgets[2])
+
+    def decompress(self,value):
+        if value:
+            return [value.year, value.month, value.day]
+        return [None,None,None]
+
+
+class DateField(forms.MultiValueField):
+    widget = DateDropdownWidget
+
+    def __init__(self,*args,**kwargs):
+        fields = (
+                forms.IntegerField( required=True),
+                forms.IntegerField( required=True),
+                forms.IntegerField( required=True ),
+                )
+        super(DateField, self).__init__(fields, *args, **kwargs )
+
+    def compress(self, data_list):
+        EMPTY_VALUES = [None, '']
+        ERROR_EMPTY = "Fill the fields."
+        ERROR_INVALID = "Enter a valid date."
+        if data_list:
+            if list(filter(lambda x: x in EMPTY_VALUES, data_list)):
+                raise forms.ValidationError(ERROR_EMPTY)
+
+            try:
+                return datetime.datetime(*map(lambda x:int(x),data_list))
+            except ValueError:
+                raise forms.ValidationError(ERROR_INVALID)
+        return None
+
+
 class ProfileForm(forms.ModelForm):
+    date_of_birth = DateField()
 
     class Meta:
         model = Profile
-        fields = ('name', 'date_of_birth')
+        fields = ('name', 'date_of_birth', )
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')   # the user instance
+        instance = kwargs['instance']   # instanceがない場合はKeyError
         super().__init__(*args, **kwargs)
 
-    def save(self, commit=True):
-        profile = super().save(commit=False)
-        profile.user = self.user
-        if commit:
-            profile.save()
-        return profile
+

@@ -24,7 +24,6 @@ from .serializer import (BasicUserSerializer, CategorySerializer,
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
-    permission_classes = (IsOwnerOrCreateOnly, )
 
     def get_queryset(self):
         """一覧を取得する際に，管理者権限をもつユーザはすべてのユーザの情報を，

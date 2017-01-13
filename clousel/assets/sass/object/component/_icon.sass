@@ -3,20 +3,33 @@
  *    - Inline Icon
  *    - Block Icon
  *    - Animation
+ *
+ *    * Dependencies
+ *        - compass/css3
+ *        - ceaser-easing
  */
+
+
+
+/*  Preferences
+   ---------------------------------------- */
+$c-icon-font-family: sans-serif !default
 
 
 
 /*  Inline Icon
    ---------------------------------------- */
+=icon-minimal($variable)
+    font-family: $c-icon-font-family
+    content: $variable
+
 =icon-with-height($variable, $size, $height)
     &:after
+        +icon-minimal($variable)
         font-style: normal
         line-height: $height
         font-size: $size
-        font-family: $icon-font-family
         vertical-align: middle
-        content: $variable
         @content
 
 =icon($variable, $size)

@@ -2,6 +2,6 @@
 {% load i18n %}
 {% load filters %}
 {% block children_of_page_dashboard %}
-  <li><a href="{% url 'wardrobe:index' %}#/?{{request.META|hash:'QUERY_STRING'}}" title="{% trans 'Wardrobe' %}">{% trans 'Wardrobe' %}</a></li>
+  <li><a href="{% url 'wardrobe:index' %}" title="{% trans 'Wardrobe' %}">{% trans 'Wardrobe' %}</a></li>
   {% block children_of_wardrobe_index %}{% endblock children_of_wardrobe_index %}
 {% endblock children_of_page_dashboard %}

@@ -1,9 +1,26 @@
+/*
+ *  IMAGE
+ *    - Utility
+ *    - Definition
+ *
+ *    * Dependencies
+ *        - foundation/utility
+ */
+
+
+
+/*  Utility
+   ---------------------------------------- */
 =image-container()
     &:before
         display: block
         padding-top: 100%
         content: ""
 
+
+
+/*  Definition
+   ---------------------------------------- */
 .p-image-box
     position: absolute
     top: 0
@@ -27,6 +44,6 @@
 .p-image--landscape
     @extend .p-image
     left: 50%
-    transform: translateX(-50%)
+    +translateX(-50%)
     width: auto
     height: 100%

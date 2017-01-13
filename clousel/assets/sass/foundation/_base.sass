@@ -1,14 +1,18 @@
 /*
  *  BASE
  *    - Basic
+ *    - Table
  *    - Form Elements
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
  */
 
 
 
 /*  Basic
    ---------------------------------------- */
-
 +border-box-sizing
 
 body
@@ -30,7 +34,6 @@ img
 
 /*  Table
    ---------------------------------------- */
-
 table
     width: 100%
     table-layout: fixed
@@ -40,12 +43,11 @@ table
 
     td, th
         vertical-align: middle
-        // white-space: nowrap
+
 
 
 /*  Form Elements
    ---------------------------------------- */
-
 input, select
     &:focus
         outline: none
@@ -56,10 +58,10 @@ input, select
     select,
     select:-moz-focusring,
     select::-moz-focus-inner
-        color: transparent !important
+        border: 0
         text-shadow: 0 0 0 #000 !important
         background-image: none !important
-        border: 0
+        color: transparent !important
 
 input, button
     padding: $default-gap
@@ -76,7 +78,15 @@ input
     &[type=file]
         padding: 0
 
+%button
+    display: inline-block
+    border: 1px solid $accent-color
+    text-align: center
+    text-decoration: none
+    background: $white
+    color: $accent-color
+
 button, *[type=submit], *[type=reset]
-    border: solid 1px $accent-color
-    +border-radius($radius)
+    @extend %button
+    min-width: calc_width(2)
     cursor: pointer

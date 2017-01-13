@@ -1,0 +1,31 @@
+/*
+ *  SEARCH
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - project/button
+ */
+
+
+
+.p-search
+    margin: 0 0 calc_height(2)
+    text-align: center
+
+.p-search__title
+    width: calc_width(3)
+    margin: 0 auto $vertical-span
+    padding: $default-gap
+
+.p-search__button
+    @extend %p-button
+    width: calc_width(3)
+    margin: 0 0 0 $horizontal-span
+
+    &:first-of-type
+        margin-left: 0
+
+    +breakpoint($screen--smartphone-tablet)
+        width: 100%
+        margin: 0 0 $vertical-span
