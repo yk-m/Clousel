@@ -6,6 +6,7 @@
       {% block form_section_header %}{% endblock %}
     </div>
   {% endblock %}
+  {% include "includes/non_field_errors.html" with form=form %}
   <form class="p-formset__form" method="post" action="">
     {% block form_header %}{% endblock %}
     <table class="p-formset__table">

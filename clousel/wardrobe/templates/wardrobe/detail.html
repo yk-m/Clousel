@@ -4,18 +4,7 @@
 
 {% block title %}{{ user_item.title }} | {{ site.name }}{% endblock title %}
 
-{% block extrahead %}
-  <script type="text/javascript">
-    function onDeleteClick() {
-      var result = confirm("{% trans 'Are you sure you want to delete this item?' %}")
-      if (result === true) {
-        location.href = "{% url 'wardrobe:delete' pk=user_item.pk %}"
-      }
-
-      return false
-    }
-  </script>
-{% endblock extrahead %}
+{% block extrahead %}{% endblock extrahead %}
 
 {% block header %}
   {% include "includes/header.html" with compact=True %}
@@ -45,10 +34,11 @@
           {% trans 'Find suitable items' %}
         </a></li>
         <li class="p-user-item-detail__action--weak"><a href="{% url 'wardrobe:edit' pk=user_item.pk %}" title="{% trans 'Edit this item' %}"><i class="p-user-item-detail__edit-icon"></i></a></li>
-        <li class="p-user-item-detail__action--weak"><a href="#" onclick="return onDeleteClick()" title="{% trans 'Delete this item' %}"><i class="p-user-item-detail__delete-icon"></i></a></li>
+        <li class="p-user-item-detail__action--weak"><a class="js-modal--open" data-modal="js-item-delete-modal" href="#" title="{% trans 'Delete this item' %}"><i class="p-user-item-detail__delete-icon"></i></a></li>
       </ul>
     </div>
   </div>
+  {% include "wardrobe/includes/modal-delete-item.html" %}
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

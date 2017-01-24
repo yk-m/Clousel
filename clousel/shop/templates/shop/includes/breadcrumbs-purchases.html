@@ -1,0 +1,6 @@
+{% extends "shop/includes/breadcrumbs-index.html" %}
+{% load i18n %}
+{% block children_of_shop_index %}
+  <li><a href="{% url 'shop:purchases' %}" title="{% trans 'Purchases' %}">{% trans 'Purchases' %}</a></li>
+  {% block children_of_shop_purchases %}{% endblock children_of_shop_purchases %}
+{% endblock children_of_shop_index %}

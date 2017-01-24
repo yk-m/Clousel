@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -7,6 +8,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from accounts.forms import (EmailUserChangeForm, EmailUserCreationForm,
                             ProfileForm)
+from accounts.models import Profile
+
+logger = logging.getLogger("debug")
 
 
 class EmailUserCreationFormTest(TestCase):
@@ -16,7 +20,7 @@ class EmailUserCreationFormTest(TestCase):
     def test_init(self):
         self.Form()
 
-    def test_valid_data(self):
+    def test_create_valid_data(self):
         form = self.Form({
             'email': "miffy@example.com",
             'password1': "dickbruna",
@@ -26,14 +30,14 @@ class EmailUserCreationFormTest(TestCase):
         user = form.save()
         self.assertEqual(user.email, "miffy@example.com")
 
-    def test_blank_data(self):
+    def test_create_blank_data(self):
         form = self.Form({})
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error('email', code='required'))
         self.assertTrue(form.has_error('password1', code='required'))
         self.assertTrue(form.has_error('password2', code='required'))
 
-    def test_different_password(self):
+    def test_create_different_password(self):
         form = self.Form({
             'email': "miffy@example.com",
             'password1': "dickbruna_01",
@@ -42,7 +46,7 @@ class EmailUserCreationFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error('password2', code='password_mismatch'))
 
-    def test_short_password(self):
+    def test_create_short_password(self):
         """
         `MinimumLengthValidator <https://docs.djangoproject.com/ja/1.10/topics/auth/passwords/#django.contrib.auth.password_validation.MinimumLengthValidator>`_
         が正常に動作しているか検証しています．
@@ -56,9 +60,9 @@ class EmailUserCreationFormTest(TestCase):
             'password2': "bruna"
         })
         self.assertFalse(form.is_valid())
-        self.assertTrue(form.has_error('password2', code='password_too_short'))
+        self.assertTrue(form.has_error('password1', code='password_too_short'))
 
-    def test_similar_password(self):
+    def test_create_similar_password(self):
         """
         `UserAttributeSimilarityValidator <https://docs.djangoproject.com/ja/1.10/topics/auth/passwords/#django.contrib.auth.password_validation.UserAttributeSimilarityValidator>`_
         が正常に動作しているか検証しています．
@@ -73,9 +77,9 @@ class EmailUserCreationFormTest(TestCase):
         })
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error(
-            'password2', code='password_too_similar'))
+            'password1', code='password_too_similar'))
 
-    def test_common_password(self):
+    def test_create_common_password(self):
         """
         `CommonPasswordValidator <https://docs.djangoproject.com/ja/1.10/topics/auth/passwords/#django.contrib.auth.password_validation.CommonPasswordValidator>`_
         が正常に動作しているか検証しています．
@@ -87,9 +91,9 @@ class EmailUserCreationFormTest(TestCase):
         })
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error(
-            'password2', code='password_too_common'))
+            'password1', code='password_too_common'))
 
-    def test_numeric_password(self):
+    def test_create_numeric_password(self):
         """
         `NumericPasswordValidator <https://docs.djangoproject.com/ja/1.10/topics/auth/passwords/#django.contrib.auth.password_validation.NumericPasswordValidator>`_
         が正常に動作しているか検証しています．
@@ -101,7 +105,7 @@ class EmailUserCreationFormTest(TestCase):
         })
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error(
-            'password2', code='password_entirely_numeric'))
+            'password1', code='password_entirely_numeric'))
 
 
 class EmailUserChangeFormTest(TestCase):
@@ -121,7 +125,7 @@ class EmailUserChangeFormTest(TestCase):
         with self.assertRaises(KeyError):
             self.Form()
 
-    def test_valid_data(self):
+    def test_create_valid_data(self):
         form = self.Form({
             'email': "nijntje.pluis@example.com"
         }, instance=self.user)
@@ -129,7 +133,7 @@ class EmailUserChangeFormTest(TestCase):
         user = form.save()
         self.assertEqual(user.email, "nijntje.pluis@example.com")
 
-    def test_blank_data(self):
+    def test_create_blank_data(self):
         form = self.Form({}, instance=self.user)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error('email', code='required'))
@@ -146,25 +150,26 @@ class ProfileFormTest(TestCase):
             email='miffy@example.com', password='')
 
     def test_init(self):
-        self.Form(user=self.user)
+        self.Form(instance=self.user.profile)
 
-    def test_init_without_user(self):
+    def test_init_without_instance(self):
         with self.assertRaises(KeyError):
             self.Form()
 
-    def test_valid_data(self):
+    def test_update_valid_data(self):
         form = self.Form({
             'name': "Miffy",
-            'date_of_birth': datetime.date(1955, 1, 1)
-        }, user=self.user)
+            'date_of_birth_0': 1955,
+            'date_of_birth_1': 1,
+            'date_of_birth_2': 1
+        }, instance=self.user.profile)
+        logger.error(form.errors)
         self.assertTrue(form.is_valid())
         profile = form.save()
         self.assertEqual(profile.name, "Miffy")
         self.assertEqual(profile.date_of_birth, datetime.date(1955, 1, 1))
 
-    def test_blank_data(self):
-        form = self.Form({}, user=self.user)
-        self.assertTrue(form.is_valid())
-        profile = form.save()
-        self.assertEqual(profile.name, "")
-        self.assertEqual(profile.date_of_birth, None)
+    def test_create_blank_data(self):
+        form = self.Form({}, instance=self.user.profile)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.has_error('date_of_birth', code='required'))

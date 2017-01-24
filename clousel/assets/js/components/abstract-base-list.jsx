@@ -1,14 +1,15 @@
 import React from 'react'
 
-import { fetch } from '../ajax'
-import { flippable } from './mixins'
-import Loader from './loader'
-import ErrorReporter from './error-reporter'
+import { fetch, failure } from 'utils/ajax'
+import { flippable } from 'components/mixins'
+import Loader from 'components/loader'
+import ErrorReporter from 'components/error-reporter'
 
 
 export default class AbstractBaseList extends React.Component {
 
   static LIMIT =  12
+  static ITEMS_NOT_FOUND = gettext("Items not found.")
 
   constructor(props) {
     super(props)
@@ -23,7 +24,7 @@ export default class AbstractBaseList extends React.Component {
 
   getChildContext() {
     return {
-      item_refresh: () => this.fetchItems()
+      item_refresh: () => this.fetch_items()
     }
   }
 
@@ -35,7 +36,7 @@ export default class AbstractBaseList extends React.Component {
     }
   }
 
-  fetchItems() {
+  fetch_items() {
     this.setStateOfLoading()
 
     fetch(
@@ -43,7 +44,7 @@ export default class AbstractBaseList extends React.Component {
       this.buildQueryForFetching(),
       (res) => {
         if (!res.body.results[0]) {
-          this.setStateOfError("アイテムが見つかりませんでした．")
+          this.setStateOfError(AbstractBaseList.ITEMS_NOT_FOUND)
           return
         }
 
@@ -53,9 +54,7 @@ export default class AbstractBaseList extends React.Component {
           loading_is_hidden: true,
         })
       },
-      (res) => {
-        console.error(this.props.items_fetch_url, res.status, res.text)
-      }
+      (res) => failure(this.props.items_fetch_url, res)
     )
   }
 
@@ -78,12 +77,12 @@ export default class AbstractBaseList extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchItems()
+    this.fetch_items()
   }
 
   componentWillReceiveProps(next_props) {
     this.setState({}, () => {
-      this.fetchItems()
+      this.fetch_items()
     })
   }
 

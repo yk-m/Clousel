@@ -19,26 +19,18 @@ class UserOwned(models.Model):
     registered = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = ("own", "item")
         abstract = True
-
-    def save(self, *args, **kwargs):
-        # あるユーザが同じアイテムについての情報を重複して登録できないように
-        try:
-            i = self.__class__.objects.get(owner=self.owner, item=self.item)
-            i.registered = timezone.now()
-            i.save()
-        except self.__class__.DoesNotExist:
-            super(UserOwned, self).save(*args, **kwargs)
 
 
 class Like(UserOwned):
 
     class Meta:
+        unique_together = ("owner", "item")
         verbose_name_plural = 'likes'
 
 
 class PurchaseHistory(UserOwned):
 
     class Meta:
+        unique_together = ("owner", "item")
         verbose_name_plural = 'purchase history'

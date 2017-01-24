@@ -112,3 +112,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.email
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+models.signals.post_save.connect(create_user_profile, sender=settings.AUTH_USER_MODEL)

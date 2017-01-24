@@ -1,0 +1,87 @@
+/*
+ *  SIDEBAR TRANSITIONS -- MENU
+ *    - Body
+ *    - Header
+ *    - List
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - utility/list
+ *        - component/icon
+ *        - project/header
+ */
+
+
+
+/*  Body
+   ---------------------------------------- */
+.p-nav
+    margin: $default-gap
+
+
+
+/*  Header
+   ---------------------------------------- */
+.p-nav__header
+    margin: $vertical-span 0
+
+.p-nav__close
+    width: 100%
+    height: $compact-header-height
+    line-height: $compact-header-height
+    text-align: right
+
+    a
+        display: inline-block
+        text-decoration: none
+
+        &:hover
+            color: $gray
+
+.p-nav__close-icon
+    +icon($icon-menu-close, $icon-font-size)
+        margin: 0 0 0 $horizontal-span/2
+
+
+
+/*  List
+   ---------------------------------------- */
+.p-nav__list
+    @extend %u-ul-reset
+
+    li
+        position: relative
+        border-bottom: 1px solid $light-gray
+
+        a
+            display: block
+            padding: $vertical-span 0
+            text-decoration: none
+            +transition(border 0.3s, box-shadow 0.3s)
+
+            &::after
+                display: block
+                position: absolute
+                bottom: -1px
+                left: -1px
+                z-index: 10
+                height: 1px
+                width: 0px
+                background-color: $accent-color
+                content: ''
+                +transition(all .3s ceaser($easeInOutCubic))
+
+            &:hover::after
+                width: 100%
+                width: calc(100% + 1px)
+
+.p-nav__li--sub
+    margin: 0 0 0 $horizontal-span
+
+    a
+        &::before
+            display: inline-block
+            margin: 0 .5em 0 0
+            color: $accent-color
+            +icon-minimal($icon-indent)

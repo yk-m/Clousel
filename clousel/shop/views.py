@@ -18,6 +18,32 @@ def index_view(request):
 
 
 @login_required
+def likes_view(request):
+    return render(
+        request,
+        'shop/index.html',
+        {
+            "request_url": "/api/items/likes/",
+            "page_title": "Likes",
+            "breadcrumbs_template": "shop/includes/breadcrumbs-likes.html"
+        },
+    )
+
+
+@login_required
+def purchases_view(request):
+    return render(
+        request,
+        'shop/index.html',
+        {
+            "request_url": "/api/items/purchases/",
+            "page_title": "Items you already have",
+            "breadcrumbs_template": "shop/includes/breadcrumbs-purchases.html"
+        },
+    )
+
+
+@login_required
 def detail_view(request, pk):
     item = get_object_or_404(Item, pk=pk)
     return render(request, 'shop/detail.html',

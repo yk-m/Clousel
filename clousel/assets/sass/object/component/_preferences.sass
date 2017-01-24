@@ -44,14 +44,16 @@ $c-icon-font-family: $icon-font-family
 
 /*  Modal
    ---------------------------------------- */
+$modal-width: calc_width(6)
+$modal-height: auto
+$modal-margin: 0 $horizontal-span
+$modal-top: 10vh
+$modal-zindex: $index--modal
 $modal-bg-color: $white
-$modal-content-width: $wrapper-width
-$modal-content-gap: $default-gap
-$modal-closebutton-top: $vertical-span
-$modal-closebutton-right: $horizontal-span
-$modal-closebutton-size: 50px
-$modal-closebutton-color: $accent-color
-$modal-closebutton-content: $icon-modal-close
+
+$modal-overlay-zindex: $index--modal-overlay
+$modal-overlay-color: $overlay-color
+$modal-transition-duration: .3s
 
 
 
@@ -68,6 +70,8 @@ $pagination-break-me-padding: 0
 $pagination-break-me-radius: 0
 $pagination-break-me-font-color: $black
 $pagination-break-me-bg-color: transparent
+$pagination-mobile-breakpoint: $screen--smartphone
+$pagination-mobile-margin: $half-gap
 
 
 
@@ -81,3 +85,15 @@ $showall-icon-color: $accent-color
 $showall-icon-left-content: ""
 $showall-icon-right-content: $icon-look
 $showall-icon-margin: .5em
+
+
+
+/*  Sidebar
+   ---------------------------------------- */
+$sb-menu-index: $index--sidebar-menu
+$sb-menu-width: calc_width(4)
+$sb-menu-background: $white
+$sb-overlay-zindex: $index--sidebar-overlay
+$sb-overlay-color: $overlay-color
+$sb-transition-duration: .5s
+$sb-transition-function: ceaser($easeInOutCubic)

@@ -1,14 +1,14 @@
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model, password_validation
+from django.contrib.sites.shortcuts import get_current_site
 from django.core import exceptions
+from registration import signals
+from registration.models import RegistrationProfile
 from rest_framework import serializers
 
 from accounts.models import Profile
 from action.models import Like, PurchaseHistory
 from clothing.models import Category, Clothing
-from registration import signals
-from registration.models import RegistrationProfile
 from shop.models import Item
 from wardrobe.models import UserItem
 
@@ -31,20 +31,17 @@ class BasicUserSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         user_data = data.copy()
-        user_data.pop('profile')
-        user_data.pop('password')
-        user = self.Meta.model(**user_data)
-        try:
-            user.validate_unique()
-        except exceptions.ValidationError as e:
-            raise serializers.ValidationError(e.messages)
-
-        password = data.get('password')
         errors = dict()
+
         try:
+            password = user_data.pop('password')
+            user_data.pop('profile', None)
+            user = self.Meta.model(**user_data)
             password_validation.validate_password(password=password, user=user)
         except exceptions.ValidationError as e:
             errors['password'] = list(e.messages)
+        except KeyError as e:
+            pass
 
         if errors:
             raise serializers.ValidationError(errors)
@@ -54,7 +51,9 @@ class BasicUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
         user = self.Meta.model.objects.create_user(**validated_data)
-        Profile.objects.create(user=user, **profile_data)
+        for (key, value) in profile_data.items():
+            setattr(user.profile, key, value)
+        user.profile.save()
 
         new_user = RegistrationProfile.objects.create_inactive_user(
             new_user=user,
@@ -67,14 +66,22 @@ class BasicUserSerializer(serializers.ModelSerializer):
                                      request=self.context['request'])
         return user
 
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop('profile')
+        Profile.objects.update_or_create(user=instance,
+                                         defaults=profile_data)
+        return super().update(instance, validated_data)
+
 
 class FullUserSerializer(BasicUserSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('pk', 'email', 'password', 'profile',
-                  'is_admin', 'last_login', 'date_joined', )
-        read_only_fields = ('pk', 'last_login', 'date_joined', )
+        fields = (
+            'pk', 'email', 'password', 'profile',
+            'is_admin', 'last_login', 'date_joined',
+        )
+        read_only_fields = ('pk', 'email', 'last_login', 'date_joined', )
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -86,13 +93,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ClothingSerializer(serializers.ModelSerializer):
-    category = serializers.SerializerMethodField()
+    category_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Clothing
-        fields = ('pk', 'image', 'orientation', 'category', )
+        fields = ('pk', 'image', 'orientation', 'category_name', )
 
-    def get_category(self, obj):
+    def get_category_name(self, obj):
         return repr(obj.category)
 
 
@@ -100,9 +107,13 @@ class UserItemSerializer(ClothingSerializer):
 
     class Meta:
         model = UserItem
-        fields = ('pk', 'owner', 'title', 'image', 'orientation', 'category',
-                  'has_bought', 'created', 'updated', )
+        fields = (
+            'pk', 'owner', 'title', 'image', 'orientation',
+            'category', 'category_name',
+            'has_bought', 'created', 'updated',
+        )
         read_only_fields = ('owner', 'created', 'updated', )
+        extra_kwargs = {'category': {'write_only': True}}
 
 
 class ItemSerializer(ClothingSerializer):
@@ -113,12 +124,14 @@ class ItemSerializer(ClothingSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'image', 'orientation', 'category',
-                  'price', 'brand', 'exhibiter',
-                  'delivery_days', 'delivery_service', 'delivery_source',
-                  'rank', 'size', 'image_url', 'page_url', 'details',
-                  'created', 'updated',
-                  'likes', 'purchases', 'is_liked', 'is_purchased', )
+        fields = (
+            'pk', 'image', 'orientation', 'category_name',
+            'price', 'brand', 'exhibiter',
+            'delivery_days', 'delivery_service', 'delivery_source',
+            'rank', 'size', 'image_url', 'page_url', 'details',
+            'created', 'updated',
+            'likes', 'purchases', 'is_liked', 'is_purchased',
+        )
         read_only_fields = ('created', 'updated', )
 
     def get_likes(self, obj):
@@ -163,7 +176,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
-        fields = ('item', )
+        fields = ('item', 'registered', )
 
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):
@@ -171,4 +184,4 @@ class PurchaseHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PurchaseHistory
-        fields = ('item', )
+        fields = ('item', 'registered', )

@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
 <html>
@@ -6,35 +7,42 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
   <title>{% block title %}{% endblock %}</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:300|Quicksand:300' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Quicksand:300|Lato' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/4.1.0/sanitize.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}">
+
+  <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
   {% block extrahead %}{% endblock %}
 </head>
 
-<body>
-  <div id="p-st__container" class="p-st__container">
-     <div class="p-st__pusher">
+<body ontouchstart="">
+  <div id="js-sb" class="c-sb">
+    <div class="c-sb__pusher">
+      <div id="js-sb__menu" class="c-sb__menu c-sb--effect-push">
         {% include "includes/nav.html" %}
-        <div class="p-st__content">
-           <div class="p-st__content-inner">
-              {% block header %}{% endblock %}
-              <div class="p-breadcrumbs">
-                {% block breadcrumbs %}{% endblock %}
-              </div>
-              <main class="l-main">
-                {% block content %}{% endblock %}
-              </main>
-              {% block footer %}{% endblock %}
-           </div>
+      </div>
+      <div class="c-sb__content">
+        <div class="c-sb__content-inner">
+          {% block header %}{% endblock %}
+          <div class="p-breadcrumbs">
+            {% block breadcrumbs %}{% endblock %}
+          </div>
+          <main class="l-main">
+            {% block content %}{% endblock %}
+          </main>
+          {% block footer %}{% endblock %}
         </div>
-     </div>
+      </div>
+    </div>
   </div>
 
-  <script type="text/javascript" src="{% static 'lib/st/modernizr.custom.js' %}"></script>
-  <script type="text/javascript" src="{% static 'lib/st/classie.js' %}"></script>
-  <script type="text/javascript" src="{% static 'lib/st/sidebarEffects.js' %}"></script>
+  {% block bottom_js_section %}
+    {% render_bundle 'events' %}
+  {% endblock %}
 </body>
 </html>

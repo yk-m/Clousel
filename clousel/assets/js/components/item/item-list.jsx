@@ -1,8 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 
-import AbstractBaseFlippableList from '../abstract-base-flippable-list'
-import Items from './items'
+import AbstractBaseFlippableList from 'components/abstract-base-flippable-list'
+import Items from 'components/item/items'
 
 
 export class ItemListWithoutRouter extends AbstractBaseFlippableList {

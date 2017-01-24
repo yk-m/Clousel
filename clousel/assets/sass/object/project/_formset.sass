@@ -30,9 +30,17 @@
     label
         width: 100%
 
+/* ----- Header ----- */
+.p-formset__header
+    padding: $default-gap
+    background: $light-gray
+
+    p
+        margin: 0
+
 /* ----- Table ----- */
 .p-formset__table
-    margin: 0 0 $vertical-span
+    margin: $vertical-span 0
     text-align: left
 
     th, td
@@ -52,49 +60,48 @@
         width: span(4 of 6)
 
 /* ----- Fields ----- */
-.p-formset__select,
 .p-formset__file,
-    margin-top: $vertical-span
-
+.p-formset__select,
+.p-formset__date,
 .p-formset__checkbox
-    input
-        display: none
-    label
-        display: block
-        margin: 0
-        padding: 0
-        color: $gray
-        cursor: pointer
+    margin: $vertical-span 0
 
-        &::before
-            +icon-minimal($icon-checkbox)
-            margin-right: $horizontal-span/2
+.p-formset__select,
+.p-formset__date
+    +breakpoint($screen--smartphone-tablet)
+        margin-top: 0
 
-    input:checked + label
-        color: $green
-        &::before
-            +icon-minimal($icon-checkbox-checked)
+        .c-select
+            padding: $vertical-span 0
 
-.p-formset__datefield
+.p-formset__date
     letter-spacing: -0.5em
 
     .c-select
         width: 30%
-        margin: $vertical-span 5% 0
+        margin: 0 5% $vertical-span
         letter-spacing: normal
 
         &:first-child, &:last-child
             margin-left: 0
             margin-right: 0
 
+        &:last-child
+            margin-bottom: 0
+
         +breakpoint($screen--smartphone-tablet)
             width: 100%
             margin-left: 0
             margin-right: 0
 
+.p-formset__checkbox
+
+    label
+        cursor: pointer
+
 /* ----- List ----- */
 %p-formset__list
-    margin: $default-gap
+    margin: $default-gap 0
 
     ul
         @extend %u-ul-reset
@@ -106,7 +113,6 @@
             &::before
                 display: inline-block
                 margin: 0 .5em 0 -1.5em
-                +icon-minimal($icon-listmarker)
 
 .p-formset__help
     @extend %p-formset__list
@@ -116,6 +122,7 @@
         li
             &::before
                 color: $green
+                +icon-minimal($icon-form-help)
 
 .p-formset__errorlist
     @extend %p-formset__list
@@ -125,10 +132,9 @@
         li
             &::before
                 color: $red
+                +icon-minimal($icon-form-error)
 
-// .p-formset__header
 // .p-formset__footer
-// .p-formset__message
 
 
 
@@ -152,14 +158,14 @@
 
 .p-formset--edit__image
     +span(1 of 2)
-    +susy-breakpoint(0 $screen--smartphone-max, 2)
+    +susy-breakpoint($screen--smartphone-tablet, 2)
         +span(2 last)
     margin: 0 0 $vertical-span 0
 
 .p-formset--edit__form
     @extend .p-formset__form
     +span(1 of 2 last)
-    +susy-breakpoint(0 $screen--smartphone-max, 2)
+    +susy-breakpoint($screen--smartphone-tablet, 2)
         +span(2 last)
 
 .p-formset--edit__table

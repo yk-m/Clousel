@@ -3,7 +3,6 @@ from django.conf.urls import include, url
 from django.contrib.auth.views import logout
 from django.views.generic.base import RedirectView
 
-
 urlpatterns = [
     url(r'^logout/$',
         logout,

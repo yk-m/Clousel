@@ -1,61 +1,21 @@
 import React from 'react'
 
-import { patch, del } from '../../ajax'
-import { get_querystring } from '../../url'
-
 
 export default class UserItem extends React.Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      is_purchased: this.props.item.has_bought
-    }
+  static MESSAGES = {
+    PURCHASE: gettext("This one is mine."),
+    DELETE: gettext("Delete this item.")
   }
 
-  get item_url() {
-    return "/api/wardrobe/" + this.props.item.pk + "/"
-  }
-
-  patch_purchase() {
-    patch(
-      this.item_url,
-      {
-        has_bought: !this.state.is_purchased
-      },
-      (res) => {
-        this.setState({is_purchased: !this.state.is_purchased})
-      },
-      (res) => {
-        console.error(this.props.items_fetch_url, res.status, res.text)
-      }
-    )
-  }
-
-  delete_item() {
-    del(
-      this.item_url,
-      (res) => {
-        this.context.item_refresh()
-      },
-      (res) => {
-        console.error(this.props.items_fetch_url, res.status, res.text)
-      }
-    )
-  }
-
-  onClickPurchaseButton(e) {
+  onClickPurchaseButton = (e) => {
     e.preventDefault()
-    this.patch_purchase()
+    this.props.onClickPurchaseButton(this.props.item.pk)
   }
 
-  onClickDeleteButton(e) {
+  onClickDeleteButton = (e) => {
     e.preventDefault()
-
-    let result = confirm("このアイテムを削除しますか？")
-    if (result)
-      this.delete_item()
+    this.props.onClickDeleteButton(this.props.item.pk)
   }
 
   get image_class() {
@@ -65,7 +25,7 @@ export default class UserItem extends React.Component {
   }
 
   get purchase_class() {
-    if (!this.state.is_purchased)
+    if (!this.props.item.has_bought)
       return "p-item__purchase"
     return "p-item__like--is_purchased"
   }
@@ -73,7 +33,7 @@ export default class UserItem extends React.Component {
   render() {
     return (
       <div className="p-item">
-        <a href={"/wardrobe/" + this.props.item.pk + "/" + get_querystring(window.location.href) }>
+        <a href={`/wardrobe/${this.props.item.pk}/` }>
           <div className="p-item__image">
             <div className="p-image-box">
               <img className={this.image_class} src={this.props.item.image} />
@@ -85,10 +45,12 @@ export default class UserItem extends React.Component {
             {this.props.item.title}
           </li>
           <li className={this.purchase_class}>
-            <a href="#" onClick={(e) => this.onClickPurchaseButton(e)} title="purchase"></a>
+            <a href="#" onClick={this.onClickPurchaseButton}
+                        title={UserItem.MESSAGES.PURCHASE}></a>
           </li>
           <li className="p-item__delete">
-            <a href="#" onClick={(e) => this.onClickDeleteButton(e)} title="delete"></a>
+            <a href="#" onClick={this.onClickDeleteButton}
+                        title={UserItem.MESSAGES.DELETE}></a>
           </li>
         </ul>
       </div>
@@ -97,9 +59,7 @@ export default class UserItem extends React.Component {
 }
 
 UserItem.propTypes = {
-  item: React.PropTypes.object.isRequired
-}
-
-UserItem.contextTypes = {
-  item_refresh: React.PropTypes.func
+  item: React.PropTypes.object.isRequired,
+  onClickPurchaseButton: React.PropTypes.func.isRequired,
+  onClickDeleteButton: React.PropTypes.func.isRequired,
 }

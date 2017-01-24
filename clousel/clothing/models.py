@@ -55,10 +55,13 @@ class Clothing(models.Model):
     UPLOAD_TO_DIR = "images/"
     ORIENTATION = ('landscape', 'portrait', 'square')
 
+    image_width = models.PositiveIntegerField()
+    image_height = models.PositiveIntegerField()
     image = models.ImageField(
         upload_to=get_image_upload_to_path,
         null=False,
         blank=False,
+        width_field='image_width', height_field='image_height'
     )
     category = TreeForeignKey(
         Category,
@@ -79,9 +82,9 @@ class Clothing(models.Model):
 
     @cached_property
     def orientation(self):
-        if (self.image.height < self.image.width):
+        if (self.image_height < self.image_width):
             return Clothing.ORIENTATION[0]
-        if (self.image.height > self.image.width):
+        if (self.image_height > self.image_width):
             return Clothing.ORIENTATION[1]
         return Clothing.ORIENTATION[2]
 

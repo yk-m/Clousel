@@ -1,8 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 
-import AbstractBaseList from '../abstract-base-list'
-import UserItems from './user-items'
+import AbstractBaseList from 'components/abstract-base-list'
+import UserItems from 'components/user-item/user-items'
 
 
 export default class UserItemHeadline extends AbstractBaseList {

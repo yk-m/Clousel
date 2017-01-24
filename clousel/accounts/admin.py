@@ -2,7 +2,8 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .forms import EmailUserCreationForm, EmailUserChangeFormForAdmin, ProfileForm
+from .forms import (EmailUserChangeFormForAdmin, EmailUserCreationForm,
+                    ProfileForm)
 from .models import EmailUser, Profile
 
 

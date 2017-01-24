@@ -1,8 +1,8 @@
 import logging
 
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from shop.models import Item
@@ -12,6 +12,7 @@ logger = logging.getLogger("debug")
 
 
 def index_view(request):
+    logger.error(request)
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('pages:dashboard'))
     return render(request, 'pages/index.html')

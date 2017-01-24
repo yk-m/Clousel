@@ -19,6 +19,7 @@ class EmailUserManagerTest(TestCase):
             password="dickbruna",
         )
         self.assertTrue(isinstance(user, EmailUser))
+        self.assertTrue(isinstance(user.profile, Profile))
         self.assertFalse(user.is_admin)
         self.assertFalse(user.is_superuser)
         self.assertFalse(user.is_staff)
@@ -29,11 +30,12 @@ class EmailUserManagerTest(TestCase):
             password="dickbruna",
         )
         self.assertTrue(isinstance(user, EmailUser))
+        self.assertTrue(isinstance(user.profile, Profile))
         self.assertTrue(user.is_admin)
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
-    def test_blank_email(self):
+    def test_create_blank_email(self):
         with self.assertRaises(ValueError):
             EmailUser.objects.create_user(email='')
 
@@ -101,14 +103,5 @@ class ProfileTest(TestCase):
         self.assertEqual(str(Profile._meta.verbose_name_plural), "profiles")
 
     def test_string_representation(self):
-        profile = Profile(user=self.user, name="Miffy")
+        profile = Profile(user=self.user)
         self.assertEqual(str(profile), profile.user.email)
-
-    def test_create(self):
-        profile = Profile.objects.create(
-            user=self.user,
-            name="Miffy",
-            date_of_birth=datetime.date(1955, 1, 1)
-        )
-        self.assertEqual(profile.user, self.user)
-        self.assertEqual(self.user.profile, profile)

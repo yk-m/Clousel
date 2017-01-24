@@ -15,7 +15,7 @@ export default class Select extends React.Component {
     this.setState({value: next_props.default})
   }
 
-  onChange(e) {
+  onChange = (e) => {
     let value = e.target.value
     this.setState({value: value})
     this.props.handleChangeEvent(value)
@@ -27,7 +27,7 @@ export default class Select extends React.Component {
     })
     return (
       <label className={"c-select " + this.props.classname}>
-        <select value={this.state.value} onChange={(e) => this.onChange(e)}>
+        <select value={this.state.value} onChange={this.onChange}>
           {options}
         </select>
       </label>

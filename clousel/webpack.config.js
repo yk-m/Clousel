@@ -6,9 +6,11 @@ module.exports = {
   context: __dirname,
 
   entry: {
-    itemList:  __dirname + '/assets/js/item-list',
-    userItemList:  __dirname + '/assets/js/user-item-list',
-    headline:  __dirname + '/assets/js/headline',
+    // itemList: __dirname + '/assets/js/item-list',
+    // userItemList:  __dirname + '/assets/js/user-item-list',
+    // headline:  __dirname + '/assets/js/headline',
+    events: [__dirname + '/assets/js/events'],
+    entrypoint: __dirname + '/assets/js/entrypoint',
   }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
   output: {

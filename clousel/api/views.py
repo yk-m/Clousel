@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from mptt.forms import TreeNodeChoiceField
-from rest_framework import filters, generics, mixins, viewsets
+from rest_framework import filters, generics, mixins, status, viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
@@ -15,7 +15,7 @@ from clothing.models import Category
 from shop.models import Item
 from wardrobe.models import UserItem
 
-from .permissions import IsOwner, IsOwnerOrCreateOnly
+from .permissions import IsAuthenticatedOrCreateOnly, IsOwner
 from .serializer import (BasicUserSerializer, CategorySerializer,
                          FullUserSerializer, ItemSerializer, LikeSerializer,
                          ProfileSerializer, PurchaseHistorySerializer,
@@ -24,6 +24,7 @@ from .serializer import (BasicUserSerializer, CategorySerializer,
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
+    permission_classes = (IsAuthenticatedOrCreateOnly,)
 
     def get_queryset(self):
         """一覧を取得する際に，管理者権限をもつユーザはすべてのユーザの情報を，
@@ -50,6 +51,12 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             return BasicUserSerializer
 
+    def destroy(self, request, pk, format=None):
+        user = self.get_object()
+        user.is_active = False
+        user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -60,17 +67,15 @@ class UserItemViewSet(viewsets.ModelViewSet):
     queryset = UserItem.objects.all()
     serializer_class = UserItemSerializer
     permission_classes = (IsOwner, )
+    filter_backends = (filters.OrderingFilter, )
+    ordering_fields = ('pk', 'updated', )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
-        """一覧を取得する際に，管理者権限をもつユーザはすべてのユーザアイテムの情報を，
-        一般ユーザは自分のユーザアイテムのみの情報をそれぞれ返すようフィルタリングしています．"""
-        if self.request.user.is_superuser:
-            return UserItem.objects.all()
-        else:
-            return UserItem.objects.filter(owner=self.request.user.id)
+        """一覧を取得する際に，自分のアイテムの情報のみを返すようフィルタリングしています．"""
+        return UserItem.objects.filter(owner=self.request.user.id).order_by('-updated')
 
 
 class ItemListView(generics.ListAPIView):
@@ -171,15 +176,14 @@ class ItemDetailView(mixins.RetrieveModelMixin,
             return Response(response)
 
         if request.method == 'POST':
-            l = object(
-                owner=request.user,
-                item=item,
-            )
-            l.save()
+            object.objects.update_or_create(owner=request.user, item=item)
             return Response(status=201)
 
-        get_object_or_404(object, owner=request.user, item=item).delete()
-        return Response(status=200)
+        if request.method == 'DELETE':
+            get_object_or_404(object, owner=request.user, item=item).delete()
+            return Response(status=204)
+
+        return Response(status=405)
 
     @detail_route(methods=['get', 'post', 'delete'])
     def like(self, request, pk=None):

@@ -58,3 +58,9 @@ export function del(url, success, failure) {
       success(res)
     })
 }
+
+
+export function failure(url, res) {
+  console.error(url, res.status, res.text)
+}
+
