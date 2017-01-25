@@ -1,0 +1,10 @@
+{% extends "includes/modal.html" %}
+{% load i18n %}
+
+{% block modal_content %}
+  {% trans 'Are you sure you want to delete your account?' %}
+  <ul class="p-confirm__buttons">
+    <li class="p-confirm__no"><a class="js-modal--close" href="#" title="No">No</a></li>
+    <li class="p-confirm__yes"><a href="{% url 'accounts:delete' %}" title="Yes">Yes</a></li>
+  </ul>
+{% endblock modal_content %}

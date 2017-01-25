@@ -9,13 +9,20 @@ from .views import (CategoryListView, ItemDetailView, LikeListView,
                     UserViewSet)
 
 urlpatterns = [
-    url(r'api-token-auth/$', views.obtain_jwt_token),
-    url(r'categories/$', CategoryListView.as_view()),
-    url(r'likes/$', LikeListView.as_view()),
-    url(r'purchases/$', PurchaseHistoryListView.as_view()),
-    url(r'items/$', SearchableItemListView.as_view()),
-    url(r'wardrobe/(?P<pk>[0-9]+)/similar/$', SimilarListView.as_view()),
-    url(r'wardrobe/(?P<pk>[0-9]+)/suitable/$', SuitableListView.as_view()),
+    url(r'^api-token-auth/$',
+        views.obtain_jwt_token, name='token'),
+    url(r'^categories/$',
+        CategoryListView.as_view(), name='category-list'),
+    url(r'^items/$',
+        SearchableItemListView.as_view(), name='item-list'),
+    url(r'^items/likes/$',
+        LikeListView.as_view(), name='like-list'),
+    url(r'^items/purchases/$',
+        PurchaseHistoryListView.as_view(), name='purchase-list'),
+    url(r'^wardrobe/(?P<pk>[0-9]+)/similar/$',
+        SimilarListView.as_view(), name='wardrobe-detail-similar'),
+    url(r'^wardrobe/(?P<pk>[0-9]+)/suitable/$',
+        SuitableListView.as_view(), name='wardrobe-detail-suitable'),
 ]
 
 router = routers.SimpleRouter()

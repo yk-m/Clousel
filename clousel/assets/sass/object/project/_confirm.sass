@@ -1,0 +1,90 @@
+/*
+ *  CONFIRM
+ *    - Body
+ *    - Header
+ *    - Content
+ *
+ *    * Dependencies
+ *        - foundation/variables
+ *        - foundation/utility
+ *        - utility/list
+ *        - component/icon
+ *        - project/header
+ */
+
+
+
+/*  Body
+   ---------------------------------------- */
+.p-confirm
+    padding: $default-gap
+
+
+
+/*  Header
+   ---------------------------------------- */
+.p-confirm__header
+    margin: 0 0 $vertical-span
+
+.p-confirm__close
+    width: 100%
+    height: $compact-header-height
+    line-height: $compact-header-height
+    text-align: right
+
+    a
+        display: inline-block
+        text-decoration: none
+
+        &:hover
+            color: $gray
+
+.p-confirm__close-icon
+    +icon($icon-modal-close, $icon-font-size)
+        margin: 0 0 0 $horizontal-span/2
+
+
+
+/*  Content
+   ---------------------------------------- */
+.p-confirm__content
+    margin: 0
+
+.p-confirm__buttons
+    @extend %u-ul-reset
+    margin: calc_height(1) 0 $vertical-span
+    text-align: right
+    letter-spacing: -0.5em
+
+%p-confirm__button
+    $button-width: calc_width(1)
+    display: inline-block
+    width: $button-width
+    letter-spacing: normal
+
+    &:first-child
+        margin-right: $horizontal-span
+
+    $breakpoint: $horizontal-span*5 + $button-width*2
+    +breakpoint(0 $breakpoint)
+        width: 45%
+
+        &:first-child
+            margin-right: 10%
+
+    a
+        display: inline-block
+        width: 100%
+        margin: 0
+        padding: $half-gap
+        background: $black
+        text-align: center
+
+        +reset-a-style
+            color: $white
+
+.p-confirm__yes
+    @extend %p-confirm__button
+
+.p-confirm__no
+    @extend %p-confirm__button

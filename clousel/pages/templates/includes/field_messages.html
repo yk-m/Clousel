@@ -1,0 +1,19 @@
+{% load filters %}
+{% if field.errors %}
+  <div class="p-formset__errorlist">
+    {{ field.errors|safe }}
+  </div>
+{% endif %}
+{% if field.help_text %}
+  <div class="p-formset__help">
+    {% if field.help_text|is_list %}
+      <ul>
+        {% for help in field.help_text %}
+          <li>{{ help|escape }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      {{ field.help_text|safe }}
+    {% endif %}
+  </div>
+{% endif %}
