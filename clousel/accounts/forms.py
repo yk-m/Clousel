@@ -15,12 +15,12 @@ class EmailUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(
         label=_('Password'),
         widget=forms.PasswordInput,
-        help_text=password_validation.password_validators_help_text_html(),
+        help_text=password_validation.password_validators_help_texts(),
     )
     password2 = forms.CharField(
         label=_('Password confirmation'),
         widget=forms.PasswordInput,
-        help_text=_("Enter the same password as before, for verification."),
+        help_text=[_("Enter the same password as before, for verification.")],
     )
 
     class Meta:
@@ -88,46 +88,44 @@ class DateDropdownWidget(forms.MultiWidget):
 
     def __init__(self, attrs=None, year_range=None, month_range=None, day_range=None):
         YEARS = year_range or range(1900, datetime.date.today().year)[::-1]
-        MONTHES = month_range or range(1,13)
-        DAYS = day_range or range(1,32)
+        MONTHES = month_range or range(1, 13)
+        DAYS = day_range or range(1, 32)
 
-        years = map( lambda x: (x,x), YEARS )
-        months = map(lambda x:(x,x), MONTHES )
-        days = map( lambda x: (x,x), DAYS )
+        years = map(lambda x: (x, x), YEARS)
+        months = map(lambda x: (x, x), MONTHES)
+        days = map(lambda x: (x, x), DAYS)
 
         widgets = (
-                forms.Select(choices=years),
-                forms.Select(choices=months),
-                forms.Select(choices=days),
-                )
+            forms.Select(choices=years),
+            forms.Select(choices=months),
+            forms.Select(choices=days),
+        )
         super(DateDropdownWidget, self).__init__(widgets, attrs)
 
-    def format_output(self,widgets):
+    def format_output(self, widgets):
         format = """
-            <div class="p-formset__datefield">
-                <label class="c-select">%s</label>
-                <label class="c-select">%s</label>
-                <label class="c-select">%s</label>
-            </div>
+            <label class="c-select">%s</label>
+            <label class="c-select">%s</label>
+            <label class="c-select">%s</label>
         """
         return format % (widgets[0], widgets[1], widgets[2])
 
-    def decompress(self,value):
+    def decompress(self, value):
         if value:
             return [value.year, value.month, value.day]
-        return [None,None,None]
+        return [None, None, None]
 
 
 class DateField(forms.MultiValueField):
     widget = DateDropdownWidget
 
-    def __init__(self,*args,**kwargs):
+    def __init__(self, *args, **kwargs):
         fields = (
-                forms.IntegerField( required=True),
-                forms.IntegerField( required=True),
-                forms.IntegerField( required=True ),
-                )
-        super(DateField, self).__init__(fields, *args, **kwargs )
+            forms.IntegerField(required=True),
+            forms.IntegerField(required=True),
+            forms.IntegerField(required=True),
+        )
+        super(DateField, self).__init__(fields, *args, **kwargs)
 
     def compress(self, data_list):
         EMPTY_VALUES = [None, '']
@@ -138,7 +136,7 @@ class DateField(forms.MultiValueField):
                 raise forms.ValidationError(ERROR_EMPTY)
 
             try:
-                return datetime.datetime(*map(lambda x:int(x),data_list))
+                return datetime.datetime(*map(lambda x: int(x), data_list))
             except ValueError:
                 raise forms.ValidationError(ERROR_INVALID)
         return None
@@ -154,5 +152,3 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         instance = kwargs['instance']   # instanceがない場合はKeyError
         super().__init__(*args, **kwargs)
-
-

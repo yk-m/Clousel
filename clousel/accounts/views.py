@@ -34,10 +34,7 @@ def detail_view(request):
 @login_required
 def edit_view(request):
     user = request.user
-    if not hasattr(user, 'profile'):
-        profile = Profile.objects.create(user=user)
-    else:
-        profile = user.profile
+    profile, created = Profile.objects.get_or_create(user=user)
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, prefix="profile")
