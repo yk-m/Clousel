@@ -20,9 +20,11 @@
 
   <section class="p-showcase">
     <div class="p-showcase__header">
-      <h2 class="p-showcase__title">New arrival</h2>
+      <h2 class="p-showcase__title">
+        <a href="{% url 'shop:index' %}#/?ordering=-updated" title="New arrival">New arrival</a>
+      </h2>
     </div>
-    <div id="js-item" data-request-url="{{ item_request_url }}"></div>
+    <div id="js-dashboard-item" data-request-url="{{ item_request_url }}"></div>
     <div class="p-showcase__footer">
       <p class="c-showall"><a class="c-showall__link" href="{% url 'shop:index' %}#/?ordering=-updated" title="show all"><i class="c-showall__icon--left"></i>show all<i class="c-showall__icon--right"></i></a></p>
     </div>
@@ -30,14 +32,19 @@
 
   <section class="p-showcase">
     <div class="p-showcase__header">
-      <h2 class="p-showcase__title">Wardrobe</h2>
+      <h2 class="p-showcase__title">
+        <a href="{% url 'wardrobe:index' %}" title="Wardrobe">Wardrobe</a>
+      </h2>
     </div>
-    <div id="js-user-item" data-request-url="{{ user_item_request_url }}"></div>
+    <div id="js-dashboard-user-item" data-request-url="{{ user_item_request_url }}"></div>
     <div class="p-showcase__footer">
       <p class="c-showall"><a class="c-showall__link" href="{% url 'wardrobe:index' %}" title="show all"><i class="c-showall__icon--left"></i>show all<i class="c-showall__icon--right"></i></a></p>
     </div>
   </section>
-  {% render_bundle 'headline' %}
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}
+
+{% block bottom_js_section %}
+  {% render_bundle 'entrypoint' %}
+{% endblock %}

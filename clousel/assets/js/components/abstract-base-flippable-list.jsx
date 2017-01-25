@@ -1,11 +1,11 @@
 import React from 'react'
 import deepEqual from 'deep-equal'
 
-import { flippable } from './mixins'
-import Loader from './loader'
-import Paginate from './paginate'
-import ErrorReporter from './error-reporter'
-import AbstractBaseList from './abstract-base-list'
+import { flippable } from 'components/mixins'
+import Loader from 'components/loader'
+import Paginate from 'components/paginate'
+import ErrorReporter from 'components/error-reporter'
+import AbstractBaseList from 'components/abstract-base-list'
 
 
 export default class AbstractBaseFlippableList extends flippable(AbstractBaseList) {
@@ -25,7 +25,7 @@ export default class AbstractBaseFlippableList extends flippable(AbstractBaseLis
     return {}
   }
 
-  jumpTo(page, base_query) {
+  jump_to(page, base_query) {
     let query = base_query || this.base_query
     query.page = page
 
@@ -54,7 +54,7 @@ export default class AbstractBaseFlippableList extends flippable(AbstractBaseLis
                            current_page={this.current_page}
                            margin_pages_displayed={AbstractBaseFlippableList.PAGINATE.margin_pages_displayed}
                            page_range_displayed={AbstractBaseFlippableList.PAGINATE.page_range_displayed}
-                           handlePaginationClick={(page) => this.jumpTo(page)} />
+                           handlePaginationClick={(page) => this.jump_to(page)} />
     }
 
     return (

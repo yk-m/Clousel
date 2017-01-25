@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate'
 
 export default class Paginate extends React.Component {
 
-  onClickPagination(data) {
+  onClickPagination = (data) => {
     this.props.handlePaginationClick(data.selected + 1)
   }
 
@@ -19,7 +19,7 @@ export default class Paginate extends React.Component {
                        forceSelected={this.props.current_page}
                        marginPagesDisplayed={this.props.margin_pages_displayed}
                        pageRangeDisplayed={this.props.page_range_displayed}
-                       clickCallback={(data) => this.onClickPagination(data)}
+                       clickCallback={this.onClickPagination}
                        containerClassName={"c-pagination"}
                        previousClassName={"c-pagination__child--to_prev"}
                        nextClassName={"c-pagination__child--to_next"}

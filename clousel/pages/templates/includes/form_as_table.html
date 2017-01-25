@@ -2,14 +2,11 @@
 {% for field in form %}
   <tr>
     {% if field.field.widget|is_checkbox %}
-      <td class="p-formset__checkbox" colspan="2">
-        {{ field }}　{{ field.label_tag }}
-        <div class="p-formset__errorlist">
-          {{ field.errors|safe }}
+      <td colspan="2">
+        <div class="p-formset__checkbox">
+          {{ field }}　{{ field.label_tag }}
         </div>
-        <div class="p-formset__help">
-          {{ field.help_text|safe }}
-        </div>
+        {% include "includes/field_messages.html" %}
       </td>
     {% else %}
       <th>{{ field.label_tag }}</th>
@@ -22,18 +19,17 @@
           <div class="p-formset__file">
             {{ field }}
           </div>
+        {% elif field.field.widget|is_date_dropdown %}
+          <div class="p-formset__date">
+            {{ field }}
+          </div>
         {% else %}
           <div class="p-formset__input">
             {{ field }}
           </div>
         {% endif %}
         </div>
-        <div class="p-formset__errorlist">
-          {{ field.errors|safe }}
-        </div>
-        <div class="p-formset__help">
-          {{ field.help_text|safe }}
-        </div>
+        {% include "includes/field_messages.html" %}
       </td>
     {% endif %}
   </tr>

@@ -1,78 +1,23 @@
 import React from 'react'
 
-import { post, del } from '../../ajax'
-import { get_querystring } from '../../url'
-
 
 export default class Item extends React.Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      is_liked: this.props.item.is_liked,
-      is_purchased: this.props.item.is_purchased
-    }
+  static MESSAGES = {
+    LIKE: gettext("I like this item."),
+    PURCHASE: gettext("I have this item."),
   }
 
-  get like_url() {
-    return "/api/items/" + this.props.item.pk + "/like/"
-  }
-
-  get purchase_url() {
-    return "/api/items/" + this.props.item.pk + "/purchase/"
-  }
-
-  post_like() {
-    post(
-      this.like_url, {},
-      (res) => {
-        this.setState({is_liked: true})
-      }
-    )
-  }
-
-  delete_like() {
-    del(
-      this.like_url,
-      (res) => {
-        this.setState({is_liked: false})
-      }
-    )
-  }
-
-  post_purchase() {
-    post(
-      this.purchase_url, {},
-      (res) => {
-        this.setState({is_purchased: true})
-      }
-    )
-  }
-
-  delete_purchase() {
-    del(
-      this.purchase_url,
-      (res) => {
-        this.setState({is_purchased: false})
-      }
-    )
-  }
-
-  onClickLikeButton(e) {
+  onClickLikeButton = (e) => {
     e.preventDefault()
-    if (this.state.is_liked)
-      this.delete_like()
-    else
-      this.post_like()
+    this.props.onClickLikeButton(this.props.item.pk,
+                                 this.props.item.is_liked)
   }
 
-  onClickPurchaseButton(e) {
+  onClickPurchaseButton = (e) => {
     e.preventDefault()
-    if (this.state.is_purchased)
-      this.delete_purchase()
-    else
-      this.post_purchase()
+    this.props.onClickPurchaseButton(this.props.item.pk,
+                                     this.props.item.is_purchased)
   }
 
   get image_class() {
@@ -82,13 +27,13 @@ export default class Item extends React.Component {
   }
 
   get like_class() {
-    if (!this.state.is_liked)
+    if (!this.props.item.is_liked)
       return "p-item__like"
     return "p-item__like--is_liked"
   }
 
   get purchase_class() {
-    if (!this.state.is_purchased)
+    if (!this.props.item.is_purchased)
       return "p-item__purchase"
     return "p-item__like--is_purchased"
   }
@@ -96,7 +41,7 @@ export default class Item extends React.Component {
   render() {
     return (
       <div className="p-item">
-        <a href={"/shop/" + this.props.item.pk + "/" + get_querystring(window.location.href) }>
+        <a href={`/shop/${this.props.item.pk}/`}>
           <div className="p-item__image">
             <div className="p-image-box">
               <img className={this.image_class} src={this.props.item.image} />
@@ -108,10 +53,12 @@ export default class Item extends React.Component {
             ¥{this.props.item.price}
           </li>
           <li className={this.like_class}>
-            <a href="#" onClick={(e) => this.onClickLikeButton(e)} title="like"></a>
+            <a href="#" onClick={this.onClickLikeButton}
+                        title={Item.MESSAGES.LIKE}></a>
           </li>
           <li className={this.purchase_class}>
-            <a href="#" onClick={(e) => this.onClickPurchaseButton(e)} title="purchase"></a>
+            <a href="#" onClick={this.onClickPurchaseButton}
+                        title={Item.MESSAGES.PURCHASE}></a>
           </li>
         </ul>
       </div>
@@ -120,5 +67,7 @@ export default class Item extends React.Component {
 }
 
 Item.propTypes = {
-  item: React.PropTypes.object.isRequired
+  item: React.PropTypes.object.isRequired,
+  onClickLikeButton: React.PropTypes.func.isRequired,
+  onClickPurchaseButton: React.PropTypes.func.isRequired,
 }

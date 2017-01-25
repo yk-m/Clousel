@@ -10,9 +10,14 @@
    ---------------------------------------- */
 
 /* ----- Font Family ----- */
-$header-font-family: "Quicksand", sans-serif
+$font--hiragino: "Hiragino Sans", "Hiragino Kaku Gothic ProN"
+$font--yu-gothic: "游ゴシック Medium", "游ゴシック体", "Yu Gothic Medium", YuGothic
+$font--meiryo: "メイリオ", "Meiryo"
+
+$japanese-font-family: $font--hiragino, $font--yu-gothic, $font--meiryo
+$header-font-family: "Quicksand", $japanese-font-family, sans-serif
 $body-font-family: $header-font-family
-// $body-font-family: "Lato", sans-serif
+$info-font-family: "Lato", $japanese-font-family, sans-serif
 
 /* ----- Size ----- */
 $root-font-size: 62.5%
@@ -39,15 +44,17 @@ $icon-checkbox: $pe-7s-less
 $icon-checkbox-checked: $pe-7s-check
 $icon-close: $pe-7s-close
 $icon-edit: $pe-7s-note
+$icon-form-help: $pe-7s-check
+$icon-form-error: $pe-7s-close-circle
 $icon-indent: $pe-7s-angle-right
 $icon-item-like: $pe-7s-like2
 $icon-item-purchase: $pe-7s-portfolio
 $icon-item-delete: $pe-7s-trash
 $icon-item-search: $pe-7s-search
 $icon-item-loading: $pe-7s-science
-$icon-listmarker: $pe-7s-check
 $icon-menu: $pe-7s-menu
 $icon-menu-close: $pe-7s-angle-right-circle
+$icon-modal-close: $pe-7s-close-circle
 $icon-look: $pe-7s-look
 $icon-upload: $pe-7s-upload
 $icon-user: $pe-7s-user
@@ -65,12 +72,12 @@ body, input, button, select
     font: normal #{$body-font-size}/#{$body-line-height} $body-font-family
 
 /* ----- Headings ----- */
-h1, h2
+h1, h2, h3
     font-family: $header-font-family
     font-weight: normal
+
+header
+    font-family: $header-font-family
 
 th
     font-weight: normal
-
-header nav
-    font-family: $header-font-family

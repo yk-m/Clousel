@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Select from '../select'
+import Select from 'components/select'
 
 
 export default class SearchOrdering extends React.Component {
@@ -9,11 +9,11 @@ export default class SearchOrdering extends React.Component {
     super(props)
 
     this.order_set = [
-      {id: "default", key: null, by: null, value: "default"},
-      {id: "priceAsc", key: "price", by: "asc", value: "price(ascending)"},
-      {id: "priceDesc", key: "price", by: "desc", value: "price(descending)"},
-      {id: "updatedAsc", key: "updated", by: "asc", value: "oldest"},
-      {id: "updatedDesc", key: "updated", by: "desc", value: "latest"}
+      {id: "default", key: null, by: null, value: gettext("Category")},
+      {id: "priceAsc", key: "price", by: "asc", value: gettext("Price: low to high")},
+      {id: "priceDesc", key: "price", by: "desc", value: gettext("Price: high to low")},
+      {id: "updatedAsc", key: "updated", by: "asc", value: gettext("Oldest")},
+      {id: "updatedDesc", key: "updated", by: "desc", value: gettext("Latest")}
     ]
 
     this.list = this.order_set.map((element) => {
@@ -21,15 +21,15 @@ export default class SearchOrdering extends React.Component {
     })
   }
 
-  onChange(id) {
+  onChange = (id) => {
     this.props.handleOrderingChange(
-      this.generateOrdering(
+      this.generate_ordering(
         this.order_set.find((element) => { return element.id === id })
       )
     )
   }
 
-  generateOrdering(ordering) {
+  generate_ordering(ordering) {
     if (!ordering || !ordering.id)
       return null
 
@@ -38,18 +38,18 @@ export default class SearchOrdering extends React.Component {
     return ordering.key
   }
 
-  parseOrdering(ordering) {
+  parse_ordering(ordering) {
     if (!ordering || ordering === "")
       return "default"
 
     if (ordering[0] === "-") {
-      return this.findOrdering(ordering.substr(1), "desc")
+      return this.find_ordering(ordering.substr(1), "desc")
     }
 
-    return this.findOrdering(ordering, "asc")
+    return this.find_ordering(ordering, "asc")
   }
 
-  findOrdering(key, by) {
+  find_ordering(key, by) {
     return this.order_set.find((ordering) => {
       if (ordering.key !== key)
         return false
@@ -60,10 +60,10 @@ export default class SearchOrdering extends React.Component {
   render() {
     return (
       <div className="p-showcase__sort-ordering">
-        <Select handleChangeEvent={(id) => this.onChange(id)}
+        <Select handleChangeEvent={this.onChange}
                 select_id="ordering"
                 list={this.order_set}
-                default={this.parseOrdering(this.props.default)}
+                default={this.parse_ordering(this.props.default)}
                 classname={"p-showcase__sort-ordering-select"}
         />
       </div>

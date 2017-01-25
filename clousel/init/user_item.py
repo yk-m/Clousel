@@ -7,7 +7,6 @@ from django.core.files.base import ContentFile
 from clothing.models import Category
 from wardrobe.models import UserItem
 
-
 directory = os.listdir('/srv/app/data/user_images/')
 user = get_user_model().objects.get(pk=22)
 category = Category.objects.get(pk=1)
@@ -26,4 +25,3 @@ for filename in directory:
             save=False,
         )
         i.save()
-

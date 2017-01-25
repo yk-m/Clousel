@@ -4,18 +4,7 @@
 
 {% block title %}{% trans 'Account' %} | {{ site.name }}{% endblock title %}
 
-{% block extrahead %}
-  <script type="text/javascript">
-    function onDeleteClick() {
-      var result = confirm("{% trans 'アカウントを削除してもいいですか？' %}")
-      if (result === true) {
-        location.href = "{% url 'accounts:delete' %}"
-      }
-
-      return false
-    }
-  </script>
-{% endblock extrahead %}
+{% block extrahead %}{% endblock extrahead %}
 
 {% block header %}
   {% include "includes/header.html" with compact=True %}
@@ -42,10 +31,12 @@
         <dd>●●●●●●●●<a href="{% url 'auth_password_change' %}" title="{% trans 'Change password' %}"><i class="p-account__edit-icon"></i></a></dd>
       </dl>
       <p class="p-account__delete">
-        <a href="#" onclick="return onDeleteClick()" title="{% trans 'Delete this account?' %}">Delete this account?</a>
+        <a class="js-modal--open" data-modal="js-item-delete-modal" href="#" title="{% trans 'Delete this account?' %}">Delete this account?</a>
       </p>
     </div>
   </div>
+
+  {% include "accounts/includes/modal-delete-user.html" %}
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

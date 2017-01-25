@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 
-from .views import detail_view, index_view, upload_view, edit_view, delete_view, similar_view, suitable_view
+from .views import (delete_view, detail_view, edit_view, index_view,
+                    similar_view, suitable_view, upload_view)
 
 urlpatterns = [
     url(r'^$', index_view, name="index"),

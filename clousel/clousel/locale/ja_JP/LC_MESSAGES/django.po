@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 18:57+0900\n"
+"POT-Creation-Date: 2017-01-21 23:08+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,78 +17,103 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: clousel/settings.py:130
+#: clousel/settings.py:140
 msgid "Japanese"
-msgstr ""
+msgstr "日本語"
 
-#: clousel/settings.py:131
+#: clousel/settings.py:141
 msgid "English"
-msgstr ""
+msgstr "英語"
 
-#: clousel/templates/header.html:18
-msgid "About us"
-msgstr ""
-
-#: clousel/templates/header.html:20
-msgid "Log out"
-msgstr ""
-
-#: clousel/templates/header.html:22
-#: accounts/templates/registration/login.html:4
-#: accounts/templates/registration/login.html:15
-msgid "Log in"
-msgstr ""
-
-#: accounts/forms.py:12
+#: accounts/forms.py:16 accounts/templates/accounts/detail.html:41
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
-#: accounts/forms.py:14
+#: accounts/forms.py:21
 msgid "Password confirmation"
-msgstr ""
+msgstr "確認用パスワード"
 
-#: accounts/forms.py:26
-msgid "Passwords don't match"
-msgstr ""
+#: accounts/forms.py:23
+msgid "Enter the same password as before, for verification."
+msgstr "確認のため，同じパスワードを入力してください．"
 
-#: accounts/models.py:10
-msgid "Users must have an email address"
-msgstr ""
+#: accounts/forms.py:42
+msgid "The two password fields didn't match."
+msgstr "パスワードが一致しません．"
 
-#: accounts/models.py:28
+#: accounts/models.py:14
+msgid "The given email must be set"
+msgstr "メールアドレスは必須項目です．"
+
+#: accounts/models.py:49 accounts/templates/accounts/detail.html:39
 msgid "Email address"
-msgstr ""
+msgstr "メールアドレス"
+
+#: accounts/templates/accounts/detail.html:5
+#: accounts/templates/accounts/includes/breadcrumbs-detail.html:4
+#: pages/templates/includes/nav.html:21
+msgid "Account"
+msgstr "アカウント"
+
+#: accounts/templates/accounts/detail.html:10
+msgid "Are you sure you want to delete your account?"
+msgstr "このアカウントを削除してもいいですか？"
+
+#: accounts/templates/accounts/detail.html:35
+msgid "Edit profile"
+msgstr "プロフィールを編集する．"
+
+#: accounts/templates/accounts/detail.html:42
+#: accounts/templates/registration/includes/breadcrumbs-password-change.html:4
+#: accounts/templates/registration/password_change_form.html:4
+#: accounts/templates/registration/password_change_form.html:21
+msgid "Change password"
+msgstr "パスワードを変更する．"
+
+#: accounts/templates/accounts/detail.html:45
+msgid "Delete this account?"
+msgstr "このアカウントを削除しますか？"
+
+#: accounts/templates/accounts/edit.html:4
+#: accounts/templates/accounts/edit.html:27
+#: accounts/templates/accounts/includes/breadcrumbs-edit.html:4
+#: wardrobe/templates/wardrobe/edit.html:4
+#: wardrobe/templates/wardrobe/edit.html:30
+#: wardrobe/templates/wardrobe/includes/breadcrumbs-edit.html:4
+msgid "Edit"
+msgstr "編集"
 
 #: accounts/templates/registration/activate.html:4
 msgid "Activation Failure"
-msgstr ""
+msgstr "アカウント有効化失敗"
 
 #: accounts/templates/registration/activate.html:7
 msgid "Account activation failed."
-msgstr ""
+msgstr "アカウントの有効化に失敗しました．"
 
 #: accounts/templates/registration/activation_complete.html:4
 #: accounts/templates/registration/activation_complete_admin_pending.html:4
+#: accounts/templates/registration/includes/breadcrumbs-activation-complete.html:4
 msgid "Account Activated"
-msgstr ""
+msgstr "アカウント有効化完了"
 
-#: accounts/templates/registration/activation_complete.html:8
+#: accounts/templates/registration/activation_complete.html:13
 #: accounts/templates/registration/activation_complete_admin_pending.html:8
 msgid "Your account is now activated."
-msgstr ""
+msgstr "あなたのアカウントが有効化されました．"
 
-#: accounts/templates/registration/activation_complete.html:10
+#: accounts/templates/registration/activation_complete.html:15
 msgid "You can log in."
-msgstr ""
+msgstr "ログインすることができます．"
 
 #: accounts/templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
-msgstr ""
+msgstr "管理者による承認が終わり次第，ログインできるようになります．"
 
 #: accounts/templates/registration/activation_email.html:6
 #: accounts/templates/registration/admin_approve_email.html:6
 msgid "registration"
-msgstr ""
+msgstr "アカウント登録"
 
 #: accounts/templates/registration/activation_email.html:11
 #, python-format
@@ -100,6 +125,13 @@ msgid ""
 "    and your address will be removed from our records.\n"
 "    "
 msgstr ""
+"\n"
+"    %(site_name)sにご登録いただきありがとうございます．\n"
+"    本メールにお心あたりが無い場合，どなたかが誤ってお客さまのメールアドレス"
+"を入力した可能性があります．\n"
+"    本メールを破棄していただければ仮登録のままとなり，当情報は自動的に削除さ"
+"れますのでご安心ください．\n"
+"    "
 
 #: accounts/templates/registration/activation_email.html:18
 #, python-format
@@ -110,6 +142,11 @@ msgid ""
 "    %(expiration_days)s days:\n"
 "    "
 msgstr ""
+"\n"
+"    会員登録を完了するには，%(expiration_days)s日以内に下記URLをクリックし"
+"て，\n"
+"    新規会員登録を完了してください．\n"
+"    "
 
 #: accounts/templates/registration/activation_email.html:30
 #: accounts/templates/registration/admin_approve_email.html:23
@@ -120,6 +157,9 @@ msgid ""
 "    %(site_name)s Management\n"
 "    "
 msgstr ""
+"\n"
+"    %(site_name)s 開発チーム\n"
+"    "
 
 #: accounts/templates/registration/activation_email.txt:2
 #, python-format
@@ -129,6 +169,12 @@ msgid ""
 "%(site_name)s.  If this wasn't you, please ignore this email\n"
 "and your address will be removed from our records.\n"
 msgstr ""
+"\n"
+"%(site_name)sにご登録いただきありがとうございます．\n"
+"本メールにお心あたりが無い場合，どなたかが誤ってお客さまのメールアドレスを入"
+"力した可能性があります．\n"
+"本メールを破棄していただければ仮登録のままとなり，当情報は自動的に削除されま"
+"すのでご安心ください．\n"
 
 #: accounts/templates/registration/activation_email.txt:7
 #, python-format
@@ -137,6 +183,9 @@ msgid ""
 "To activate this account, please click the following link within the next\n"
 "%(expiration_days)s days:\n"
 msgstr ""
+"\n"
+"会員登録を完了するには，%(expiration_days)s日以内に下記URLをクリックして，\n"
+"新規会員登録を完了してください．\n"
 
 #: accounts/templates/registration/activation_email.txt:14
 #, python-format
@@ -145,11 +194,13 @@ msgid ""
 "Sincerely,\n"
 "%(site_name)s Management\n"
 msgstr ""
+"\n"
+"%(site_name)s 開発チーム\n"
 
 #: accounts/templates/registration/activation_email_subject.txt:1
 #: accounts/templates/registration/admin_approve_complete_email_subject.txt:1
 msgid "Account activation on"
-msgstr ""
+msgstr "アカウントが有効化されました"
 
 #: accounts/templates/registration/admin_approve.html:4
 msgid "Approval Failure"
@@ -226,73 +277,92 @@ msgstr ""
 msgid "Account approval on"
 msgstr ""
 
-#: accounts/templates/registration/login.html:19
-msgid "Forgot your password?"
-msgstr ""
-
-#: accounts/templates/registration/login.html:19
-msgid "Reset it"
-msgstr ""
-
+#: accounts/templates/registration/includes/breadcrumbs-login.html:4
+#: accounts/templates/registration/login.html:4
 #: accounts/templates/registration/login.html:20
-msgid "Not a member?"
-msgstr ""
+#: pages/templates/includes/header.html:28
+msgid "Log in"
+msgstr "ログイン"
 
-#: accounts/templates/registration/login.html:20
+#: accounts/templates/registration/includes/breadcrumbs-password-change-confirm.html:4
+#: accounts/templates/registration/includes/breadcrumbs-password-reset-confirm.html:4
+#: accounts/templates/registration/password_reset_confirm.html:4
+msgid "Confirm password reset"
+msgstr "パスワードリセットの確認"
+
+#: accounts/templates/registration/includes/breadcrumbs-password-change-done.html:4
+#: accounts/templates/registration/includes/breadcrumbs-password-reset-complete.html:4
+#: accounts/templates/registration/password_change_done.html:4
+msgid "Password changed"
+msgstr "パスワードが変更されました"
+
+#: accounts/templates/registration/includes/breadcrumbs-password-reset-done.html:4
+#: accounts/templates/registration/password_reset_done.html:4
+msgid "Password reset"
+msgstr "パスワードがリセットされました"
+
+#: accounts/templates/registration/includes/breadcrumbs-password-reset.html:4
+#: accounts/templates/registration/password_reset_form.html:4
+#: accounts/templates/registration/password_reset_form.html:28
+msgid "Reset password"
+msgstr "パスワードのリセット"
+
+#: accounts/templates/registration/includes/breadcrumbs-register-complete.html:4
+#: accounts/templates/registration/registration_complete.html:4
+msgid "Activation email sent"
+msgstr "メールを送信しました"
+
+#: accounts/templates/registration/includes/breadcrumbs-register.html:4
+#: accounts/templates/registration/login.html:26
 msgid "Register"
-msgstr ""
+msgstr "登録"
+
+#: accounts/templates/registration/login.html:25
+msgid "Forgot your password?"
+msgstr "パスワードを忘れてしまいましたか？"
+
+#: accounts/templates/registration/login.html:25
+msgid "Reset it"
+msgstr "リセット"
+
+#: accounts/templates/registration/login.html:26
+msgid "Not a member?"
+msgstr "メンバーではないですか？"
 
 #: accounts/templates/registration/logout.html:4
 msgid "Logged out"
-msgstr ""
+msgstr "ログアウト"
 
 #: accounts/templates/registration/logout.html:7
 msgid "Successfully logged out"
-msgstr ""
+msgstr "ログアウトに成功しました"
 
-#: accounts/templates/registration/password_change_done.html:4
-msgid "Password changed"
-msgstr ""
-
-#: accounts/templates/registration/password_change_done.html:7
+#: accounts/templates/registration/password_change_done.html:12
 msgid "Password successfully changed!"
-msgstr ""
-
-#: accounts/templates/registration/password_change_form.html:4
-#: accounts/templates/registration/password_change_form.html:15
-msgid "Change password"
-msgstr ""
+msgstr "パスワードの変更に成功しました．"
 
 #: accounts/templates/registration/password_reset_complete.html:4
 msgid "Password reset complete"
-msgstr ""
+msgstr "パスワードリセット完了"
 
-#: accounts/templates/registration/password_reset_complete.html:8
+#: accounts/templates/registration/password_reset_complete.html:13
 msgid "Your password has been reset!"
-msgstr ""
+msgstr "パスワードはリセットされました．"
 
-#: accounts/templates/registration/password_reset_complete.html:9
+#: accounts/templates/registration/password_reset_complete.html:14
 #, python-format
 msgid "You may now <a href=\"%(login_url)s\">log in</a>"
-msgstr ""
+msgstr "<a href=\"%(login_url)s\">ログイン</a>してください"
 
-#: accounts/templates/registration/password_reset_confirm.html:4
-msgid "Confirm password reset"
-msgstr ""
-
-#: accounts/templates/registration/password_reset_confirm.html:7
+#: accounts/templates/registration/password_reset_confirm.html:12
 msgid "Enter your new password below to reset your password:"
-msgstr ""
+msgstr "下記のフォームに新しいパスワードを入力してください．"
 
-#: accounts/templates/registration/password_reset_confirm.html:16
+#: accounts/templates/registration/password_reset_confirm.html:23
 msgid "Set password"
-msgstr ""
+msgstr "決定"
 
-#: accounts/templates/registration/password_reset_done.html:4
-msgid "Password reset"
-msgstr ""
-
-#: accounts/templates/registration/password_reset_done.html:8
+#: accounts/templates/registration/password_reset_done.html:13
 msgid ""
 "\n"
 "    We have sent you an email with a link to reset your password. Please "
@@ -321,60 +391,54 @@ msgid ""
 "it\n"
 "into your web browser:\n"
 msgstr ""
+"\n"
+"パスワードをリセットするには，以下のリンクをクリックしてください．\n"
 
 #: accounts/templates/registration/password_reset_email.html:18
-msgid "Your username, in case you've forgotten:"
-msgstr ""
-
-#: accounts/templates/registration/password_reset_email.html:21
 msgid "Best regards"
-msgstr ""
+msgstr "よろしくお願いいたします．"
 
-#: accounts/templates/registration/password_reset_email.html:22
+#: accounts/templates/registration/password_reset_email.html:19
 msgid "Management"
-msgstr ""
+msgstr "%(site_name)s 開発チーム"
 
-#: accounts/templates/registration/password_reset_form.html:4
-#: accounts/templates/registration/password_reset_form.html:20
-msgid "Reset password"
-msgstr ""
-
-#: accounts/templates/registration/password_reset_form.html:8
+#: accounts/templates/registration/password_reset_form.html:14
 msgid ""
 "\n"
 "    Forgot your password? Enter your email in the form below and we'll send "
 "you instructions for creating a new one.\n"
 "    "
 msgstr ""
+"\n"
+"    パスワードを忘れた方は，メールアドレスを入力の上送信ボタンをクリックして"
+"ください．    ご登録のメールアドレスにパスワード再登録用のURLを送信いたしま"
+"す。\n"
+"    "
 
 #: accounts/templates/registration/registration_closed.html:4
 msgid "Registration is closed"
-msgstr ""
+msgstr "登録が完了しました．"
 
 #: accounts/templates/registration/registration_closed.html:7
 msgid "Sorry, but registration is closed at this moment. Come back later."
-msgstr ""
+msgstr "登録はすでに終了しています．少し時間をおいてから確認してください．"
 
-#: accounts/templates/registration/registration_complete.html:4
-msgid "Activation email sent"
-msgstr ""
-
-#: accounts/templates/registration/registration_complete.html:7
+#: accounts/templates/registration/registration_complete.html:12
 msgid "Please check your email to complete the registration process."
-msgstr ""
+msgstr "アカウント認証プロセスを完了しているか確認してください．"
 
 #: accounts/templates/registration/registration_form.html:4
 msgid "Register for an account"
-msgstr ""
+msgstr "アカウントを登録する"
 
-#: accounts/templates/registration/registration_form.html:15
-#: accounts/templates/registration/resend_activation_form.html:15
+#: accounts/templates/registration/registration_form.html:22
+#: accounts/templates/registration/resend_activation_form.html:17
 msgid "Submit"
-msgstr ""
+msgstr "送信"
 
 #: accounts/templates/registration/resend_activation_complete.html:4
 msgid "Account Activation Resent"
-msgstr ""
+msgstr "アクティベーションメールを再送信しました．"
 
 #: accounts/templates/registration/resend_activation_complete.html:8
 #, python-format
@@ -383,19 +447,177 @@ msgid ""
 "  We have sent an email to %(email)s with further instructions.\n"
 "  "
 msgstr ""
+"\n"
+"  %(email)s にさらなる情報を含んだメールを送信しました．\n"
+"  "
 
 #: accounts/templates/registration/resend_activation_form.html:4
 msgid "Resend Activation Email"
-msgstr ""
+msgstr "アクティベーションメールを再送信します．"
 
-#: accounts/views.py:15
+#: accounts/views.py:20
 msgid "success"
-msgstr ""
+msgstr "成功"
 
-#: accounts/views.py:18
+#: accounts/views.py:23
 msgid "disabled account"
+msgstr "アクティブでないアカウントです．"
+
+#: accounts/views.py:26
+msgid "invalid login"
+msgstr "不正なログインです．"
+
+#: pages/templates/includes/header.html:26
+msgid "Menu"
 msgstr ""
 
-#: accounts/views.py:21
-msgid "invalid login"
+#: pages/templates/includes/nav.html:11
+msgid "Close"
 msgstr ""
+
+#: pages/templates/includes/nav.html:15
+#: pages/templates/pages/includes/breadcrumbs-dashboard.html:4
+msgid "Dashboard"
+msgstr ""
+
+#: pages/templates/includes/nav.html:16
+#: wardrobe/templates/wardrobe/includes/breadcrumbs-index.html:5
+msgid "Wardrobe"
+msgstr ""
+
+#: pages/templates/includes/nav.html:17 pages/templates/pages/dashboard.html:17
+#: wardrobe/templates/wardrobe/index.html:22
+msgid "Upload your item"
+msgstr "アイテムをアップロードする"
+
+#: pages/templates/includes/nav.html:18
+#: shop/templates/shop/includes/breadcrumbs-index.html:5
+msgid "Shop"
+msgstr ""
+
+#: pages/templates/includes/nav.html:19
+#: shop/templates/shop/includes/breadcrumbs-likes.html:4
+msgid "Likes"
+msgstr ""
+
+#: pages/templates/includes/nav.html:20
+msgid "Items you already have"
+msgstr ""
+
+#: pages/templates/includes/nav.html:21
+msgid "Account info"
+msgstr "アカウント情報"
+
+#: pages/templates/includes/nav.html:22
+msgid "Log out"
+msgstr "ログアウト"
+
+#: pages/templates/pages/dashboard.html:17
+msgid "Upload an item"
+msgstr "アイテムをアップロードする"
+
+#: pages/templates/pages/dashboard.html:18
+msgid "Pick Item from Wardrobe"
+msgstr "Wardrobeから選ぶ"
+
+#: pages/templates/pages/dashboard.html:18
+msgid "Pick item from Wardrobe"
+msgstr "Wardrobeから選ぶ"
+
+#: pages/templates/pages/includes/breadcrumbs-index.html:4
+msgid "Home"
+msgstr "ホーム"
+
+#: shop/templates/shop/detail.html:28
+msgid "Category"
+msgstr "カテゴリ"
+
+#: shop/templates/shop/detail.html:32
+msgid "Brand"
+msgstr "ブランド"
+
+#: shop/templates/shop/detail.html:36
+msgid "Size"
+msgstr "サイズ"
+
+#: shop/templates/shop/detail.html:40
+msgid "Price"
+msgstr "価格"
+
+#: shop/templates/shop/detail.html:44
+msgid "Rank"
+msgstr "商品ランク"
+
+#: shop/templates/shop/detail.html:48
+msgid "Delivery source"
+msgstr "発送元"
+
+#: shop/templates/shop/detail.html:52
+msgid "Delivery service"
+msgstr "配送方法"
+
+#: shop/templates/shop/detail.html:56
+msgid "Delivery days"
+msgstr "発送までの日数"
+
+#: shop/templates/shop/detail.html:60
+msgid "Exhibiter"
+msgstr "販売元"
+
+#: shop/templates/shop/includes/breadcrumbs-purchases.html:4
+msgid "Purchases"
+msgstr ""
+
+#: wardrobe/forms.py:16
+msgid "This one is mine."
+msgstr "これは私が持っているアイテムです"
+
+#: wardrobe/models.py:15
+msgid "No title"
+msgstr ""
+
+#: wardrobe/templates/wardrobe/detail.html:10
+msgid "Are you sure you want to delete this item?"
+msgstr "本当にこのアイテムを削除してもいいですか？"
+
+#: wardrobe/templates/wardrobe/detail.html:41
+#: wardrobe/templates/wardrobe/detail.html:42
+msgid "Find similar items"
+msgstr "似ているアイテムを探す"
+
+#: wardrobe/templates/wardrobe/detail.html:44
+#: wardrobe/templates/wardrobe/detail.html:45
+msgid "Find suitable items"
+msgstr "似合うアイテムを探す"
+
+#: wardrobe/templates/wardrobe/detail.html:47
+msgid "Edit this item"
+msgstr "このアイテムを編集する"
+
+#: wardrobe/templates/wardrobe/detail.html:48
+msgid "Delete this item"
+msgstr "このアイテムを削除する"
+
+#: wardrobe/templates/wardrobe/includes/breadcrumbs-similar.html:4
+msgid "Similar items"
+msgstr "似ているアイテム"
+
+#: wardrobe/templates/wardrobe/includes/breadcrumbs-suitable.html:4
+msgid "Suitable items"
+msgstr "似合うアイテム"
+
+#: wardrobe/templates/wardrobe/includes/breadcrumbs-upload.html:4
+#: wardrobe/templates/wardrobe/upload.html:4
+#: wardrobe/templates/wardrobe/upload.html:34
+msgid "Upload"
+msgstr "アップロード"
+
+#: wardrobe/templates/wardrobe/upload.html:21
+msgid ""
+"\n"
+"          Please rest assured, you are the only one who can see your image.\n"
+"          "
+msgstr ""
+"\n"
+"          アップロードされた画像はあなたしか見ることができません．\n"
+"          "

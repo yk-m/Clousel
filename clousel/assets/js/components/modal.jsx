@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class Modal extends React.Component {
 
-  onClickCloseButton(e) {
+  onClickCloseButton = (e) => {
     e.preventDefault()
     this.props.onClickCloseButton()
   }
@@ -23,9 +23,9 @@ export default class Modal extends React.Component {
           this.props.is_hidden_modal
           ? null
           : <div className="c-modal">
-              <div className="c-modal__container" onClick={(e) => this.onClickCloseButton(e)}>
+              <div className="c-modal__container" onClick={this.onClickCloseButton}>
                 <div className="c-modal__close">
-                  <a onClick={(e) => this.onClickCloseButton(e)}></a>
+                  <a onClick={this.onClickCloseButton}></a>
                 </div>
                 <div className="c-modal__body">
                   {this.props.children}

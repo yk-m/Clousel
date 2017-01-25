@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load render_bundle from webpack_loader %}
 
 {% block title %}{{ item.brand }} | {{ site.name }}{% endblock title %}
@@ -24,39 +25,39 @@
         <caption>Item Details</caption>
         <tbody>
           <tr>
-            <th>カテゴリ</th>
+            <th>{% trans 'Category' %}</th>
             <td>{{ item.category|stringformat:'r' }}</td>
           </tr>
           <tr>
-            <th>ブランド</th>
+            <th>{% trans 'Brand' %}</th>
             <td>{{ item.brand }}</td>
           </tr>
           <tr>
-            <th>サイズ</th>
+            <th>{% trans 'Size' %}</th>
             <td>{{ item.size }}</td>
           </tr>
           <tr>
-            <th>価格</th>
+            <th>{% trans 'Price' %}</th>
             <td>{{ item.price }}</td>
           </tr>
           <tr>
-            <th>商品ランク</th>
+            <th>{% trans 'Rank' %}</th>
             <td>{{ item.rank }}</td>
           </tr>
           <tr>
-            <th>発送元</th>
+            <th>{% trans 'Delivery source' %}</th>
             <td>{{ item.delivery_source }}</td>
           </tr>
           <tr>
-            <th>配送方法</th>
+            <th>{% trans 'Delivery service' %}</th>
             <td>{{ item.delivery_service }}</td>
           </tr>
           <tr>
-            <th>発送までの日数</th>
+            <th>{% trans 'Delivery days' %}</th>
             <td>{{ item.delivery_days }}</td>
           </tr>
           <tr>
-            <th>販売元</th>
+            <th>{% trans 'Exhibiter' %}</th>
             <td>{{ item.exhibiter }}</td>
           </tr>
           <tr>

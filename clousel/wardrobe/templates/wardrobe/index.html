@@ -22,9 +22,12 @@
         <a href="{% url 'wardrobe:upload' %}" title="{% trans 'Upload your item' %}"><i class="p-showcase__upload-icon"></i>{% trans 'Upload your item' %}</a>
       </div>
     </div>
-    <div id="js-result" data-request-url="{{ request_url }}"></div>
-    {% render_bundle 'userItemList' %}
+    <div id="js-user-item" data-request-url="{{ request_url }}"></div>
   </section>
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}
+
+{% block bottom_js_section %}
+  {% render_bundle 'entrypoint' %}
+{% endblock %}

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import AbstractBaseList from '../abstract-base-list'
-import Items from './items'
+import AbstractBaseList from 'components/abstract-base-list'
+import Items from 'components/item/items'
 
 
 export default class ItemHeadline extends AbstractBaseList {

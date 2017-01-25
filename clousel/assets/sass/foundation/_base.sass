@@ -15,6 +15,11 @@
    ---------------------------------------- */
 +border-box-sizing
 
+*
+    -webkit-tap-highlight-color: rgba($black, 0)
+    -webkit-font-smoothing: antialiased
+    +selection($light-gray, $black)
+
 body
     margin: 0
     padding: 0
@@ -24,6 +29,13 @@ body
 a
     text-decoration: underline
     color: $black
+
+=reset-a-style
+    text-decoration: none
+
+    &:link, &:visited, &:hover
+        color: $black
+        @content
 
 img
     height: auto
@@ -66,10 +78,13 @@ input, select
 input, button
     padding: $default-gap
     border: none
+    +border-radius($radius)
     background: transparent
 
 input
-    &[type=text], &[type=password], &[type=email]
+    &[type=text],
+    &[type=password],
+    &[type=email]
         border-bottom: solid 1px $black
 
         +input-placeholder
@@ -86,7 +101,9 @@ input
     background: $white
     color: $accent-color
 
-button, *[type=submit], *[type=reset]
+button,
+input[type=submit],
+input[type=reset]
     @extend %button
     min-width: calc_width(2)
     cursor: pointer

@@ -2,28 +2,14 @@
 
 <header class="p-header l-header">
   <div class="l-header__logo">
-    <!-- <h1 class="
-      {% if compact %}
-        p-header--compact__logo
-      {% else %}
-        p-header__logo
-      {% endif %}
-    "> -->
     <h1 class="p-header--compact__logo">
       <a href="{% url 'pages:index' %}" title="">{{ site.name }}</a>
     </h1>
   </div>
-  <!-- <div class="l-header__nav
-    {% if compact %}
-      p-header--compact__nav
-    {% else %}
-      p-header__nav
-    {% endif %}
-  "> -->
   <div class="l-header__nav p-header--compact__nav">
     <ul>
       {% if user.is_authenticated %}
-      <li><a href="#" title="{% trans 'Menu' %}" class="p-st__open" data-effect="p-st--effect-push">{% trans 'Menu' %}<i class="p-header__menu-icon"></i></a></li>
+      <li><a href="#" title="{% trans 'Menu' %}" class="js-sidebar--open" data-effect="c-sb--effect-push">{% trans 'Menu' %}<i class="p-header__menu-icon"></i></a></li>
       {% else %}
         <li><a href="{% url 'auth_login' %}" title="{% trans 'Log in' %}">{% trans 'Log in' %}</a></li>
       {% endif %}

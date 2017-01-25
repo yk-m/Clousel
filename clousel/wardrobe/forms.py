@@ -12,7 +12,8 @@ class UserItemForm(forms.ModelForm):
         queryset=Category.objects.all()
     )
     image = forms.ImageField(widget=forms.FileInput)
-    has_bought = forms.BooleanField(label=_('This one is mine.'), label_suffix='', required=False)
+    has_bought = forms.BooleanField(
+        label=_('This one is mine.'), label_suffix='', required=False)
 
     class Meta:
         model = UserItem

@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.i18n import javascript_catalog
 
 import accounts.auth_urls
 import accounts.urls
@@ -26,6 +27,10 @@ import shop.urls
 import wardrobe.urls
 from wardrobe.views import image_view
 
+js_info_dict = {
+    'packages': ('assets', ),
+}
+
 urlpatterns = [
     url(r'^', include(pages.urls, namespace="pages")),
     url(r'^accounts/', include(accounts.auth_urls)),
@@ -33,9 +38,10 @@ urlpatterns = [
     url(r'^shop/', include(shop.urls, namespace="shop")),
     url(r'^wardrobe/', include(wardrobe.urls, namespace="wardrobe")),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include(api.urls)),
+    url(r'^api/', include(api.urls, namespace="api")),
     url(r'^media/user/images/((?P<filename>[0-9a-z.]+))$',
-        image_view, name="userimages"),
+        image_view, name="user-image"),
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL + 'shop_item/',

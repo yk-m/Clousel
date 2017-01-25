@@ -23,6 +23,8 @@ $pagination-break-me-padding: 0 !default
 $pagination-break-me-radius: $pagination-radius !default
 $pagination-break-me-font-color: #2b2b2b !default
 $pagination-break-me-bg-color: #fff !default
+$pagination-mobile-breakpoint: 0 412px !default
+$pagination-mobile-margin: 0 6px !default
 
 
 
@@ -36,6 +38,9 @@ $pagination-break-me-bg-color: #fff !default
     li
         display: inline-block
         margin: $pagination-margin
+
+        +breakpoint($pagination-mobile-breakpoint)
+            margin: $pagination-mobile-margin
 
         a
             display: inline-block

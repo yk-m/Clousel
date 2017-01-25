@@ -2,10 +2,10 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { withRouter } from 'react-router'
 
-import Category from '../../category'
-import { ItemListWithoutRouter } from './item-list'
-import SearchFilters from '../search/search-filters'
-import SearchOrdering from '../search/search-ordering'
+import Category from 'utils/category'
+import { ItemListWithoutRouter } from 'components/item/item-list'
+import SearchFilters from 'components/search/search-filters'
+import SearchOrdering from 'components/search/search-ordering'
 
 
 export class SearchableItemListWithoutRouter extends ItemListWithoutRouter {
@@ -54,21 +54,21 @@ export class SearchableItemListWithoutRouter extends ItemListWithoutRouter {
     )
   }
 
-  updateFilters(filters) {
+  updateFilters = (filters) => {
     let base_query = filters
     base_query.ordering = this.ordering
 
-    this.jumpTo(1, base_query)
+    this.jump_to(1, base_query)
   }
 
-  updateOrdering(ordering) {
+  updateOrdering = (ordering) => {
     let base_query = this.filters
     base_query.ordering = ordering
 
-    this.jumpTo(1, base_query)
+    this.jump_to(1, base_query)
   }
 
-  handleFiltersToggleEvent() {
+  handleFiltersToggleEvent = (e) => {
     this.setState({filters_are_hidden: !this.state.filters_are_hidden})
   }
 
@@ -78,9 +78,9 @@ export class SearchableItemListWithoutRouter extends ItemListWithoutRouter {
         <div className="p-showcase__header">
           <h2 className="p-showcase__title">
             {this.props.page_title}
-            <span className="p-showcase__filters-opener" onClick={(e) => this.handleFiltersToggleEvent(e)}>[option]</span>
+            <span className="p-showcase__filters-opener" onClick={this.handleFiltersToggleEvent}>[option]</span>
           </h2>
-          <SearchOrdering handleOrderingChange={(ordering) => this.updateOrdering(ordering)}
+          <SearchOrdering handleOrderingChange={this.updateOrdering}
                           default={this.ordering}/>
         </div>
         <ReactCSSTransitionGroup transitionName="slide"
@@ -88,7 +88,7 @@ export class SearchableItemListWithoutRouter extends ItemListWithoutRouter {
                                  transitionLeaveTimeout={500}>
           {
             this.state.filters_are_hidden
-            ? null : <SearchFilters handleFiltersChange={(filters) => this.updateFilters(filters)}
+            ? null : <SearchFilters handleFiltersChange={this.updateFilters}
                                     categories={this.state.categories}
                                     defaults={this.filters} />
           }

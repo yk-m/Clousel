@@ -15,8 +15,11 @@
 {% endblock %}
 
 {% block content %}
-  <div id="js-result" data-request-url="{{ request_url }}" data-page-title="{{ page_title }}"></div>
-  {% render_bundle 'itemList' %}
+  <div id="js-item" data-request-url="{{ request_url }}" data-page-title="{{ page_title }}"></div>
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}
+
+{% block bottom_js_section %}
+  {% render_bundle 'entrypoint' %}
+{% endblock %}

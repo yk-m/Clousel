@@ -2,8 +2,8 @@ import mimetypes
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.core.exceptions import SuspiciousFileOperation
+from django.core.urlresolvers import reverse
 from django.db import InternalError
 from django.forms import ModelChoiceField
 from django.http import HttpResponse, HttpResponseRedirect
@@ -29,13 +29,6 @@ def index_view(request):
 
 
 @login_required
-def detail_view(request, pk):
-    user_item = get_object_or_404(UserItem, owner=request.user, pk=pk)
-    return render(request, 'wardrobe/detail.html',
-                  {"user_item": user_item})
-
-
-@login_required
 def upload_view(request):
     if request.method == 'POST':
         form = UserItemForm(request.POST, request.FILES)
@@ -46,6 +39,14 @@ def upload_view(request):
         form = UserItemForm()
 
     return render(request, 'wardrobe/upload.html', {'form': form})
+
+
+@login_required
+def detail_view(request, pk):
+    user_item = get_object_or_404(UserItem, owner=request.user, pk=pk)
+    user_item.save(update_fields=['updated'])
+    return render(request, 'wardrobe/detail.html',
+                  {"user_item": user_item})
 
 
 @login_required
